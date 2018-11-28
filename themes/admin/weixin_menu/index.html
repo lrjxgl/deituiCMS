@@ -1,0 +1,79 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+	{include file="weixin/side.html"}
+    
+     <div class="main-body">
+		 {include file="weixin_menu/nav.html"}
+			 <div class="pd-10">当前微信：{$weixin.title}</div>
+      <table class="tbs">
+        <thead>
+        <tr>
+          <td>id</td>
+          <td>名称</td>
+          <td>类型</td>
+          <td>排序</td>
+          <td>操作</td>
+        </tr>
+        </thead>
+        {foreach item=c from=$data}
+        <tr>
+          <td>{$c.id}</td>
+          <td>{$c.title}</td>
+          <td>{$w_type_list[$c['w_type']]}</td>
+          <td>{$c.orderindex}</td>
+          <td>[<a href="{$appadmin}?m=weixin_menu&a=add&id={$c.id}&wid={$smarty.get.wid}">编辑</a>]
+					 [<a href="javascript:;" class="js-delete" url="{$appadmin}?m=weixin_menu&a=delete&id={$c.id}&wid={$smarty.get.wid}">删除</a>]</td>
+        </tr>
+        {if $c.child}
+        {foreach item=cc from=$c.child}
+        <tr>
+          <td>{$cc.id}</td>
+          <td>|__{$cc.title}</td>
+          <td>{$w_type_list[$cc['w_type']]}</td>
+          <td>{$cc.orderindex}</td>
+          <td>[<a href="{$appadmin}?m=weixin_menu&a=add&id={$cc.id}&wid={$smarty.get.wid}">编辑</a>]
+           [<a href="javascript:;" class="js-delete" url="{$appadmin}?m=weixin_menu&a=delete&id={$cc.id}&wid={$smarty.get.wid}">删除</a>]</td>
+        </tr>
+        {/foreach}
+        {/if}
+        
+        {/foreach}
+      </table>
+      <div>{$pagelist}</div>
+    </div>
+  
+ 
+
+
+{include file="footer.html"}
+<script>
+$(function(){
+	$(".CreateMenu").bind("click",function(e){
+		e.preventDefault();
+		$.get("{$appadmin}?m=weixin_menu&a=createmenu&wid={$weixin.id}",function(data){
+			if(data.errcode==0){
+				alert('生成成功');
+			}else{
+				alert('生成失败');
+			}
+		},"json");
+	});
+	
+	$(".DeteleMenu").bind("click",function(e){
+		e.preventDefault();
+		$.get("{$appadmin}?m=weixin_menu&a=deletemenu&wid={$weixin.id}",function(data){
+			if(data.errcode==0){
+				alert('删除成功');
+			}else{
+				alert('删除失败');
+			}
+		},"json");
+	});
+	
+	
+});
+</script>  
+</body>
+</html>

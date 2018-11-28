@@ -1,0 +1,93 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+{include file='ad/nav.html'}
+<div class="main-body">
+ 
+
+<div class="search-form">
+<form method="get" action="{$appadmin}">
+<input type="hidden" name="m" value="ad" />
+<input type="hidden" name="a" value="default" />
+<select name="tag_id" id="tag_id" class="w150">
+{get data=t_c model=ad_tags fun=tagList(0,0)}
+<option  value="0">请选择</option>
+{foreach key=k item=c from=$t_c}
+<option value="{$k}" {if get('tag_id') eq $k} selected="selected"{/if}>{$c.title}({$c.width}*{$c.height})</option>
+{/foreach}
+</select>
+<select name="tag_2nd_id" id="tag_2nd_id" class="w150">
+<option  value="0">请选择</option>
+{if get('tag_id')}
+{get data=t_c model=ad_tags fun=tagList(get('tag_id','i'),0)}
+{foreach key=k item=c from=$t_c}
+<option value="{$k}" {if get('tag_2nd_id') eq $k} selected="selected"{/if}>{$c.title}({$c.width}*{$c.height})</option>
+{/foreach}
+{/if}
+</select>
+<button type="submit" class="btn">搜索</button>
+</form>
+</div>
+ <table class="tbs">
+ 	<thead>
+  <tr>
+   <td>id</td>
+   <td>分类</td>
+   <td>标题</td>
+   
+    
+   <td>开始时间</td>
+   <td>结束时间</td>
+   <td>图片地址</td>
+   <td>排序</td>
+   <td>状态</td>
+   <td>添加时间</td>
+   <td>价格</td>
+   <td>对象ID</td>
+<td>操作</td>
+  </tr>
+  </thead>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$tag_list[$c['tag_id']]['title']}<br />{$tag_list[$c['tag_id_2nd']]['title']}</td>
+   <td>{$c.title}</td>
+ 
+   
+   <td>{$c.starttime|date:Y-m-d H:m}</td>
+   <td>{$c.endtime|date:Y-m-d H:m}</td>
+   <td>{if $c.imgurl}<img src="{$c.imgurl|images_site}.100x100.jpg" style="width:50px;height:50px;" />{else}无图{/if}</td>
+   <td>{$c.orderindex}</td>
+   <td> 
+   			 
+           
+          {if $c.status eq 2}
+           <img src="/static/admin/img/yes.gif" class="ajax_no"  rurl="{$appadmin}?m=ad&a=status&id={$c.id}&status=2" url="{$appadmin}?m=ad&a=status&id={$c.id}&status=1" />
+           {else}
+           <img src="/static/admin/img/no.gif"  class="ajax_yes" url="{$appadmin}?m=ad&a=status&id={$c.id}&status=2" rurl="{$appadmin}?m=ad&a=status&id={$c.id}&status=1" />  
+          {/if}
+   </td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+   <td>{$c.price}</td>
+   <td>{$c.object_id}</td>
+<td>
+ 
+<a href="admin.php?m=ad&a=add&id={$c.id}">编辑</a> 
+<a href="javascript:;" class="delete" url="admin.php?m=ad&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+</div>
+{include file="footer.html"}
+<script>
+$(function(){
+	$("#tag_id").bind("change",function(){
+		$.get("{$appadmin}?m=ad&a=tag_id_2nd&tag_id="+$(this).val(),function(data){
+			$("#tag_2nd_id").empty().append(data);
+		})
+	});
+});
+</script>

@@ -1,0 +1,47 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+<ul class="nav nav-tabs">
+	<li class="active">
+		<a href="{$appadmin}?m=sites">{$lang.sites_admin}</a>
+	</li>
+	<li>
+		<a href="{$appadmin}?m=sites&a=add">{$lang.sites_add}</a>
+	</li>
+</ul>
+
+
+<table width="100%" class="table table-bordered">
+	<tr>
+		<td width="8%" align="center">siteid</td>
+		<td width="32%" align="center">{$lang.sitename}</td>
+		<td width="20%" align="center">{$lang.domain}</td>
+		<td width="20%" align="center">{$lang.title}</td>
+		<td width="20%" align="center">{$lang.operation}</td>
+	</tr>
+	{foreach item=s from=$data}
+	<tr>
+		<td align="center">{$s.siteid}</td>
+		<td align="center">{$s.sitename}</td>
+		<td align="center">
+			<a href="http://{$s.domain}" target="_blank">{$s.domain}</a>
+		</td>
+		<td align="center">{$s.title}</td>
+		<td align="center">
+			<a href="{$appadmin}?m=sites&a=add&siteid={$s.siteid}">{$lang.edit}</a>
+			<a href="http://{$s.domain}" target="_blank">{$lang.look} </a>
+			{if $ssadmin.isfounder}
+			<a href="{$appadmin}?m=iframe&a=top&setsite=1&siteid={$s.siteid}" target="header-frame">切换</a>{/if}</td>
+	</tr>
+	{/foreach}
+	<tr>
+		<td align="center">&nbsp;</td>
+		<td align="center">&nbsp;</td>
+		<td align="center">&nbsp;</td>
+		<td align="center">&nbsp;</td>
+		<td align="center">&nbsp;</td>
+	</tr>
+</table>
+
+{include file='footer.html'}

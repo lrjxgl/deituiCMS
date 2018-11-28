@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">{$data.title}</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			<div class="pd-10 bg-fff">
+				<div class="d-content"> {$data.content} </div>
+			</div>
+		</div>
+		{include file="footer.html"}
+		<?php wx_jssdk();?>
+		<script type="text/javascript">
+			wxshare_title="{$data.title}";
+			{if $data.imgurl} 
+			 wxshare_imgUrl="{$data.imgurl|images_site}.100x100.jpg";
+			 {/if}
+		</script>
+	</body>
+	
+</html>

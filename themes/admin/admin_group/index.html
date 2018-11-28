@@ -1,0 +1,38 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+<div class="tabs-border">
+	<a href="/admin.php?m=admin_group" class="item active">管理组列表</a>
+	<a href="/admin.php?m=admin_group&a=add" class="item">添加</a>
+</div>
+<div class="main-body">
+
+<table class="tbs">
+	<colgroup>
+		<col width="100" />
+		<col width="200" />
+	</colgroup>
+	<thead>
+  <tr>
+    <td  >ID</td>
+    <td  >组名</td>
+    <td  >操作</td>
+  </tr>
+	</thead>
+  {foreach item=t from=$zulist}
+  <tr>
+    <td  >{$t.id}</td>
+    <td  >{$t.title}</td>
+    <td ><a href="{$appadmin}?m=admin_group&a=add&id={$t.id}">编辑</a>
+		 <a href="javascript:;" url="{$appadmin}?m=admin_group&a=delete&id={$t.id}"  class="js-delete" >删除</a></td>
+  </tr>
+  {/foreach}
+  
+  
+</table>
+{$pagelist}
+
+</div> 
+
+{include file='footer.html'}

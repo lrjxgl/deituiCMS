@@ -1,0 +1,172 @@
+body{
+	margin: 0;
+	padding: 0;
+}
+.pointer{
+	cursor: pointer;
+}
+.topBox{
+	top:0px; 
+	height: 50px;
+	position: absolute;
+	left: 220px;
+	right: 0px;
+	background-color: #fafafa;
+	border-bottom: 1px solid #efefef;
+}
+ 
+.leftBox{
+	width: 220px;
+	height: 100%;
+	overflow: auto;
+	background-color: #212529;
+}
+.rightBox{
+	position: absolute;
+	left: 220px;
+	top: 55px;
+	bottom:0px;
+	right:0px;
+}
+.miniSide .leftBox{
+	display: none;
+}
+.miniSide .rightBox,.miniSide .topBox{
+	left:0px;
+}
+.miniSide .icon-goLeft:before{
+	content: "\e600";
+}
+.mainFrame{
+	width: 100%;
+	border: 0;
+	height: 100%;
+}
+/****顶部***/
+.topa{
+	line-height: 50px;
+	border-bottom: 1px solid #eee;
+}
+.top-item{
+	height: 50px;
+	line-height: 50px;
+	min-width: 50px;
+	cursor: pointer;
+	box-sizing: border-box;
+	text-align: center;
+	display: inline-block;
+	text-decoration: none;
+	position:relative;
+}
+.top-item:hover{
+	border-bottom: 3px solid #ddd;
+}
+.top-item-btn{
+	position: relative;
+	 
+	height: 36px;
+	line-height: 36px;
+	padding: 0px 10px;
+	border-radius: 10px;
+	cursor: pointer;
+	box-sizing: border-box;
+	text-align: center;
+	display: inline-block;
+	text-decoration: none;
+	color: #646464;
+	border: 1px solid #ddd;
+	margin-right: 10px;
+	
+}
+.top-item-btn.active{
+	color: #007aff;
+}
+.top-item .iconfont{
+	caption-side: #323232;
+	font-size: 18px;
+}
+.abs-menu{
+	position:absolute;
+	top:45px;
+	background-color:#fff;
+	display:block;
+	border:1px solid #ddd;
+	width: 100px;
+	left:-30px;
+	padding:10px 0px;
+}
+.abs-menu-item{
+	line-height:36px;
+	padding:0px 10px;
+	cursor:pointer;
+} 
+.topb{
+	line-height: 40px;
+	border-bottom: 1px solid #eee;
+	
+	display: none;
+}
+.topb-item{
+	height: 40px;
+	line-height: 40px;
+	padding: 0px 10px;
+	cursor: pointer;
+	box-sizing: border-box;
+	text-align: center;
+	display: inline-block;
+	color: #646464;
+	font-size: 14px;
+	border-right: 1px solid #eee;
+}
+.topb-item:hover{
+	background-color: #eee;
+}
+.topb-item .iconfont{
+	caption-side: #646464;
+	font-size: 16px;	
+}
+.topb-item .icon-close{
+	margin-left: 5px;
+	color: #999;
+}
+/****左边****/
+.sitename{
+	background-color: #AA3130 !important;
+	color:#fff;
+	font-size: 16px;
+	line-height: 50px;
+	text-align: center;
+}
+.menu{
+	
+}
+.menu-title{
+	line-height: 56px;
+	color: #fff;
+	padding: 0px 20px;
+	background-color: #323232;
+	cursor: pointer;
+}
+.menu-bar{
+	width: 5px;
+	height: 55px;
+	background-color: #28A745;
+	position: absolute;
+	left: 0px;
+}
+.menu-box{
+	display: none;
+	color: #fff;
+	padding: 10px 0px;
+}
+.menu-active .menu-box{
+	display: block;
+}
+.menu-item{
+	line-height: 40px;
+	padding-left: 42px;
+	cursor: pointer;
+}
+.menu-item-active{
+	color: #007aff;
+}

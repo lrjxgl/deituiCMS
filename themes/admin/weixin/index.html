@@ -1,0 +1,39 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+{include file='weixin/nav.html'}
+<div class="main-body">
+	
+ <table class="tbs">
+	 <thead>
+  <tr>
+   <td>id</td>
+ 
+   <td>微信token</td>
+   <td>微信名</td>
+   <td>状态</td>
+    
+   <td>接口地址</td>
+<td width="200">操作</td>
+  </tr>
+	</thead>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   
+   <td>{$c.token}</td>
+   <td>{$c.title}</td>
+   <td>{if $c.status eq 0}验证{else}运营{/if}</td>
+   
+   <td><a href="/index.php?m=weixin_openapi&wid={$c.id}">http://{$smarty.server.HTTP_HOST}/index.php?m=weixin_openapi&wid={$c.id}</a></td>
+<td><a href="admin.php?m=weixin&a=add&id={$c.id}">编辑</a>
+ 
+ <a href="admin.php?m=weixin&a=setWeixin&id={$c.id}">进入管理</a> <a href="javascript:;" class="delete" url="admin.php?m=weixin&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+ 
+{include file="footer.html"}

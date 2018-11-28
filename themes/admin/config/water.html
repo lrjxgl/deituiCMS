@@ -1,0 +1,54 @@
+ 
+<table class="table-add">
+
+            <tr>
+    <td height="30" align="right">开启水印：</td>
+    <td height="30"><input name="water_on" type="radio"  value="1" {if $data.water_on eq 1} checked="checked" {/if} />开启 
+        <input type="radio" name="water_on"  value="0" {if $data.water_on eq 0} checked="checked" {/if} />关闭</td>
+  </tr>
+  <tr>
+    <td width="156" height="30" align="right">水印类型：</td>
+    <td width="581" height="30"><input name="water_type" type="radio"  value="0" {if $data.water_type eq 0} checked="checked" {/if}/>图片水印 
+        <input type="radio" name="water_type"  value="1"  {if $data.water_type eq 1} checked="checked" {/if} />文字水印</td>
+  </tr>
+  <tr>
+    <td height="30" align="right">水印位置：</td>
+    <td height="30">
+    <select name="water_pos" id="water_pos">
+    <option value="9" {if $data.water_pos eq 9} selected="selected"{/if}>右下</option>
+    <option value="0" {if $data.water_pos eq 0} selected="selected"{/if}>随机</option>
+    <option value="1" {if $data.water_pos eq 1} selected="selected"{/if}>左上</option>
+    <option value="2" {if $data.water_pos eq 2} selected="selected"{/if}>中上</option>
+    <option value="3" {if $data.water_pos eq 3} selected="selected"{/if}>右上</option>
+    <option value="4" {if $data.water_pos eq 4} selected="selected"{/if}>左中</option>
+    <option value="5" {if $data.water_pos eq 5} selected="selected"{/if}>中中</option>
+    <option value="6" {if $data.water_pos eq 6} selected="selected"{/if}>右中</option>
+    <option value="7" {if $data.water_pos eq 7} selected="selected"{/if}>左下</option>
+    <option value="8" {if $data.water_pos eq 8} selected="selected"{/if}>中下</option>
+    </select></td>
+  </tr>
+  <tr>
+    <td height="30" align="right">文字大小：</td>
+    <td height="30"><input class="w100" name="water_size" type="text" id="water_size" size="8" value="{$data.water_size}" />
+      px</td>
+  </tr>
+  <tr>
+    <td height="30" align="right">水印文字：</td>
+    <td height="30"><input name="water_str" type="text" id="water_str" size="40" value="{$data.water_str}" /></td>
+  </tr>
+  <tr>
+    <td height="30" align="right">水印图片：</td>
+    <td height="30">
+			<div class="js-upload-item">
+				<input type="file" id="upa" class="js-upload-file" style="display: none;" />
+				<div class="upimg-btn js-upload-btn">+</div>
+				<input type="hidden" name="water_img" class="js-imgurl" value="{$data.water_img}" />
+				<div class="js-imgbox">
+					{if $data.water_img}
+					<img src="{$data.water_img|images_site}.100x100.jpg">
+					{/if}
+				</div>
+			</div>
+		</td>
+  </tr>
+</table>

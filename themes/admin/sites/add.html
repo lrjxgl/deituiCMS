@@ -1,0 +1,82 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+ 
+<div class="tabs-border">
+	<a href="{$appadmin}?m=sites" class="item active">网站信息</a>
+</div>
+
+<form method="post" action="{$appadmin}?m=sites&a=save">
+	<input type="hidden" name="siteid" value="{$data.siteid}" />
+	<table class="table-add">
+		<col style="width: 90px;" />
+		<tr>
+			<td  align="right">网站名称：</td>
+			<td  ><input name="sitename" type="text" id="sitename" value="{$data.sitename}" /></td>
+		</tr>
+		<tr>
+			<td align="right">域名：</td>
+			<td><input name="domain" type="text" id="domain" value="{$data.domain}" /></td>
+		</tr>
+
+		<tr>
+			<td align="right">logo：</td>
+			<td>
+				<div class="js-upload-item">
+					<input type="file" id="upa" class="js-upload-file" style="display: none;" />
+					<div class="upimg-btn js-upload-btn">+</div>
+					<input type="hidden" name="logo" class="js-imgurl" value="{$data.logo}" />
+					<div class="js-imgbox">
+						{if $data.logo}
+						<img src="{$data.logo|images_site}.100x100.jpg">
+						{/if}
+					</div>
+				</div>
+			</td>
+		</tr>
+
+		 
+
+		<tr>
+			<td align="right">关站：</td>
+			<td><input type="radio" name="is_open" id="radio" value="1" {if $data.is_open eq 1} checked="checked" {/if} /> 开启
+				<input type="radio" name="is_open" id="radio2" value="2" {if $data.is_open eq 2} checked="checked" {/if} /> 关闭
+			</td>
+		</tr>
+		<tr>
+			<td align="right">关站原因：</td>
+			<td><textarea name="close_why" id="close_why" cols="45" rows="5">{$data.close_why}</textarea></td>
+		</tr>
+		<tr>
+			<td align="right">标题：</td>
+			<td><input name="title" type="text" id="title" value="{$data.title}" class="w600" /></td>
+		</tr>
+		<tr>
+			<td align="right">关键字：</td>
+			<td><input name="keywords" type="text" id="keywords" value="{$data.keywords}" class="w600" /></td>
+		</tr>
+		<tr>
+			<td align="right">描述：</td>
+			<td><textarea name="description" id="description" cols="45" rows="5">{$data.description}</textarea></td>
+		</tr>
+		<tr>
+			<td align="right">icp：</td>
+			<td><input name="icp" type="text" id="icp" value="{$data.icp}" /></td>
+		</tr>
+	 
+		<tr>
+			<td align="right">统计代码：</td>
+			<td><textarea name="statjs" cols="45" rows="5" id="statjs">{$data.statjs}</textarea></td>
+		</tr>
+		 
+	 
+	</table>
+	<div class="btn-row-submit js-submit" ungo="1">保存</div>
+</form>
+ 
+
+{include file='footer.html'}
+<script src="/static/admin/js/upload.js"> </script>
+</body>
+</html>

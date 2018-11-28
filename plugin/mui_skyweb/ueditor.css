@@ -1,0 +1,14 @@
+.ueditor{
+	background-color: #fff;
+}
+.ueditor h3{
+	    display: block;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: bold;
+}
+.ueditor p{
+	margin: 5px 0;
+	font-size: 16px;
+	color: #444;
+}

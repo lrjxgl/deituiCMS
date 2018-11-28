@@ -1,0 +1,77 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+	<div class="tabs-border">
+		<a class="item active" href="/admin.php?m=category">分类列表</a>
+		<a class="item" href="/admin.php?m=category&a=add">添加</a>
+	</div>
+<div class="main-body"> 
+
+<div class="tabs-border tabs-border-inner"> 
+{foreach key=k item=c from=$modellist}
+<a class="item  {if $tablename eq $c.tablename}active{/if}" href="{$appadmin}?m=category&tablename={$c.tablename}">{$c.title}</a>
+{/foreach}
+<a class="item fr" href="{$appadmin}?m=category&pid={$nextpid}&tablename={$tablename}">&lt;&lt; 上级分类</a>
+
+</div>
+
+ 
+<table  class="tbs">
+	<thead>
+<tr>
+<td width="82" align="center">分类ID</td>
+<td  >名称</td>
+<td width="97" align="center">层级</td>
+ 
+<td width="100" align="center">表名</td>
+<td width="90" align="center">排序</td>
+<td width="71" align="center">状态</td>
+<td width="323" align="center">操作</td>
+</tr>
+</thead>
+{foreach item=c from=$catlist}
+<tr>
+  <td align="center">{$c.catid}</td>
+  <td align="left"><a href="{$appadmin}?m=category&pid={$c.catid}&tablename={$c.tablename}">{$c.cname}</a>  </td>
+  <td align="center">{$c.level}</td>
+  
+  <td align="center">{$c.tablename}</td>
+  <td align="center"><input type="text" class="w50 blur_update" value="{$c.orderindex}" size="6"   url="{$appadmin}?m=category&a=orderindex&catid={$c.catid}&tablename={$c.tablename}" /></td>
+  <td align="center">{if $c.status eq 1}<img class="ajax_no" src="static/images/yes.gif" url="{$appadmin}?m=category&a=changestatus&catid={$c.catid}&status=2" rurl="{$appadmin}?m=category&a=changestatus&catid={$c.catid}&status=1" />{else}<img class="ajax_yes" src="static/images/no.gif" url="{$appadmin}?m=category&a=changestatus&catid={$c.catid}&status=1" rurl="{$appadmin}?m=category&a=changestatus&catid={$c.catid}&status=2" />{/if}</td>
+  <td align="center"> 
+  <a href="{$appadmin}?m=category&a=add&pid={$c.catid}&tablename={$c.tablename}" style="color:red;">添加子类</a>
+  <a href="{$appadmin}?m=category&a=addmore&catid={$c.catid}&tablename={$c.tablename}" style="color:red;">批量添加</a>  
+  <br>
+  
+  <a href="{$appadmin}?m=category&a=add&catid={$c.catid}&tablename={$c.tablename}">编辑</a> 
+  <a href="javascript:;" class="del" url="{$appadmin}?m=category&a=delete&catid={$c.catid}">删除</a></td>
+</tr>
+{if $c.child}
+{foreach item=cc from=$c.child}
+<tr>
+  <td align="center">{$cc.catid}</td>
+  <td align="left">|__<a href="{$appadmin}?m=category&pid={$cc.catid}&tablename={$cc.tablename}">{$cc.cname}</a></td>
+  <td align="center">{$cc.level}</td>
+ 
+  <td align="center">{$cc.tablename}</td>
+  <td align="center"><input type="text" class="w50 blur_update" value="{$cc.orderindex}" size="6"   url="{$appadmin}?m=category&a=orderindex&catid={$cc.catid}&tablename={$cc.tablename}" /></td>
+  <td align="center">{if $cc.status eq 1}<img class="ajax_no" src="static/images/yes.gif" url="{$appadmin}?m=category&a=changestatus&catid={$cc.catid}&status=2" rurl="{$appadmin}?m=category&a=changestatus&catid={$cc.catid}&status=1" />{else}<img class="ajax_yes" src="static/images/no.gif" url="{$appadmin}?m=category&a=changestatus&catid={$cc.catid}&status=1" rurl="{$appadmin}?m=category&a=changestatus&catid={$cc.catid}&status=2" />{/if}</td>
+  <td align="center">
+   <a href="{$appadmin}?m=category&a=add&pid={$cc.catid}&tablename={$cc.tablename}" style="color:red;">添加子类</a>
+   <a href="{$appadmin}?m=category&a=addmore&catid={$cc.catid}&tablename={$cc.tablename}" style="color:red;">批量添加</a>  
+ 
+  <a href="{$appadmin}?m=category&a=add&catid={$cc.catid}&tablename={$cc.tablename}">编辑</a>
+  <a href="javascript:;" class="del" url="{$appadmin}?m=category&a=delete&catid={$cc.catid}&tablename={$cc.tablename}">删除</a>
+  </td>
+</tr>
+{/foreach} 
+
+{/if}
+
+{/foreach} 
+</table>
+
+</div>
+
+{include file='footer.html'}

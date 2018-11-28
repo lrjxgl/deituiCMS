@@ -1,0 +1,118 @@
+<!DOCTYPE  html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="tabs-border">
+			<a class="item active" href="/admin.php?m=category">分类列表</a>
+			<a class="item" href="/admin.php?m=category&a=add">添加</a>
+		</div>
+		<div class="main-body">
+
+
+			<form method="post" action="{$appadmin}?m=category&a=save">
+				<input type="hidden" name="catid" value="{$data.catid}">
+				{if $parent}
+				<input type="hidden" name="pid" value="{$parent.catid}" />
+				{/if}
+				<table class="table-add">
+
+					<tr>
+						<td>模型：</td>
+						<td>
+							{if !$parent}<select name="tablename" id="tablename" {if $data.tablename} disabled="disabled" {/if}> 
+							{foreach item=m key=k from=$modellist} 
+							<option value="{$m.tablename}" {if $data.tablename eq $m.tablename or $tablename eq $m.tablename} selected="selected" {/if}>{$m.title}</option>
+								{/foreach}
+							</select>
+							{else}
+							{$tablename}
+							{/if}
+						</td>
+					</tr>
+					{if $catlist}
+					<tr>
+						<td>上级分类：</td>
+						<td><select name="pid">
+								<option value="0">请选择</option>
+								{foreach item=c from=$catlist}
+								<option value="{$c.catid}" {if $data.pid eq $c.catid} selected="selected" {/if}>{$c.cname} </option> 
+								{foreach item=c_2 from=$c.child} 
+								<option value="{$c_2.catid}" {if $data.pid eq $c_2.catid} selected="selected" {/if}
+								 class="o_c_2">|__{$c_2.cname}</option>
+								{foreach item=c_3 from=$c_2.child}
+								<option value="{$c_3.catid}" {if $data.pid eq $c_3.catid} selected="selected" {/if} class="o_c_3">
+									|____{$c_3.cname}</option>
+								{/foreach}
+								{/foreach}
+								{/foreach}
+							</select></td>
+					</tr>
+
+					{/if}
+
+					<tr>
+						<td>名称：</td>
+						<td><label for="cname"></label>
+							<input name="cname" type="text" id="cname" value="{$data.cname}"></td>
+					</tr>
+
+					<tr>
+						<td>状态：</td>
+						<td><input name="status" type="radio" id="radio2" value="1" {if $data.status neq 2} checked="checked" {/if} />
+							显示
+							<input type="radio" name="status" id="radio3" value="2" {if $data.status eq 2} checked="checked" {/if} />
+							隐藏</td>
+					</tr>
+
+					<tr>
+						<td>排序：</td>
+						<td><input name="orderindex" type="text" id="orderindex" value="{if $data}{$data.orderindex}{else}9999{/if}"></td>
+					</tr>
+
+
+					<tr>
+						<td>seo标题：</td>
+						<td><textarea name="title" id="title" class="w600 h100">{$data.title}</textarea></td>
+					</tr>
+					<tr>
+						<td>seo关键字：</td>
+						<td><textarea name="keywords" id="keywords" class="w600 h100">{$data.keywords}</textarea></td>
+					</tr>
+					<tr>
+						<td>seo描述：</td>
+						<td><textarea name="description" id="description" class="w600 h100">{$data.description}</textarea></td>
+					</tr>
+
+			 
+						<td >图标：</td>
+						<td>
+							<div class="js-upload-item">
+								<input type="file" id="upa" class="js-upload-file" style="display: none;" />
+								<div class="upimg-btn js-upload-btn">+</div>
+								<input type="hidden" name="logo" class="js-imgurl" value="{$nav.logo}" />
+								<div class="js-imgbox">
+									{if $nav.logo}
+									<img src="{$nav.logo|images_site}.100x100.jpg">
+									{/if}
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>列表模板：</td>
+						<td><input name="list_tpl" type="text" id="list_tpl" class="w600" value="{$data.list_tpl}" /></td>
+					</tr>
+					<tr>
+						<td>详情模板：</td>
+						<td><input name="show_tpl" type="text" id="show_tpl" class="w600" value="{$data.show_tpl}" /></td>
+					</tr>
+
+
+				</table>
+				<div class="btn-row-submit js-submit">保存</div>
+			</form>
+		</div>
+		{include file='footer.html'}
+		<script src="/static/admin/js/upload.js"> </script>
+	</body>
+	</html>	

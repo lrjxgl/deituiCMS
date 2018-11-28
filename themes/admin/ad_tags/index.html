@@ -1,0 +1,75 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+{include file='ad/nav.html'}
+<div class="main-body">
+ 
+
+ <table class="tbs">
+ 	<thead>
+  <tr>
+   <td>tag_id</td>
+   <td>标题</td>
+   <td>唯一代号</td>
+   <td>排序</td>
+  
+   <td>状态</td>
+   <td>添加时间</td>
+  
+   <td>宽度</td>
+   <td>高度</td>
+<td>操作</td>
+  </tr>
+  </thead>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.tag_id}</td>
+   <td>{$c.title}</td>
+   <td>{$c.tagno}</td>
+   <td>{$c.orderindex}</td>
+ 
+   <td>{if $c.status eq 1  }
+           <img src="{$skins}img/no.gif"  class="ajax_yes" url="/{$appadmin}?m=ad_tags&a=status&tag_id={$c.tag_id}&status=2" rurl="/{$appadmin}?m=ad_tags&a=status&tag_id={$c.tag_id}&status=1" /> 
+          {else}
+           <img src="{$skins}img/yes.gif" class="ajax_no"  rurl="/{$appadmin}?m=ad_tags&a=status&tag_id={$c.tag_id}&status=2" url="/{$appadmin}?m=ad_tags&a=status&tag_id={$c.tag_id}&status=1" /> 
+          {/if}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+    
+   <td>{$c.width}</td>
+   <td>{$c.height}</td>
+<td><a href="admin.php?m=ad_tags&a=add&tag_id={$c.tag_id}">编辑</a> 
+	 <a href="javascript:;" class="delete" url="admin.php?m=ad_tags&a=delete&tag_id={$c.tag_id}">删除</a></td>
+  </tr>
+  
+  {if $c.child}
+   </tr>
+ {foreach item=cc from=$c.child}
+<tr>
+   <td>{$cc.tag_id}</td>
+   <td>|__{$cc.title}</td>
+   <td>{$cc.tagno}</td>
+   <td>{$cc.orderindex}</td>
+    <td>{if $cc.status eq 1 }
+           <img src="{$skins}img/no.gif"  class="ajax_yes" url="/{$appadmin}?m=ad_tags&a=status&tag_id={$cc.tag_id}&status=2" rurl="/{$appadmin}?m=ad_tags&a=status&tag_id={$cc.tag_id}&status=1" /> 
+          {else}
+           <img src="{$skins}img/yes.gif" class="ajax_no"  rurl="/{$appadmin}?m=ad_tags&a=status&tag_id={$cc.tag_id}&status=2" url="/{$appadmin}?m=ad_tags&a=status&tag_id={$cc.tag_id}&status=1" /> 
+          {/if}</td>
+   <td>{$cc.dateline|date:Y-m-d}</td>
+    
+   <td>{$cc.width}</td>
+   <td>{$cc.height}</td>
+<td><a href="admin.php?m=ad_tags&a=add&tag_id={$cc.tag_id}">编辑</a> 
+	 
+	<a href="javascript:;" class="delete" url="admin.php?m=ad_tags&a=delete&tag_id={$cc.tag_id}">删除</a></td>
+  </tr>
+   {/foreach}
+  {/if}
+   {/foreach}
+   
+   
+ </table>
+<div>{$pagelist}</div>
+</div>
+ 
+{include file="footer.html"}

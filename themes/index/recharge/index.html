@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+	 
+	<div class="header">
+		<div class="header-back"></div>
+		<div class="header-title">在线充值</div>
+	</div>
+	<div class="header-row"></div>
+    <div class="main-body">
+ 
+<form id="rcform" class="row-box" method="post" action="/index.php?m=recharge&a=recharge">
+ <div class="flex flex-center">
+ 	<div class="input-flex-label">支付方式</div>
+ 	<div class="flex-1">
+ 		<div class="paylist" id="paylist">
+    	{foreach item=c key=k name=p from=$pay_type_list}
+        {if $smarty.foreach.p.first}
+        <input type="hidden" name="pay_type" id="pay_type" value="{$k}">
+         <div class="paylist-item active" v="{$k}">{$c}</div>
+        {else}
+        <div class="paylist-item" v="{$k}">{$c}</div> 
+        {/if}
+        
+        {/foreach}
+        </div>
+ 	</div>
+ </div>
+ <div class="input-flex">
+ 	<div class="input-flex-label">充值金额</div>
+ 
+ 	<input class="input-flex-text" type="text" name="order_price" id="order_price" value="1" >
+ 	 
+ </div>
+ 
+<button type="submit" id="rcbtn"    class="btn-row-submit">确认充值</button>
+</form>
+
+ 
+
+</div>
+ 
+{include file="footer.html"}
+ 
+<script>
+$(function(){
+	$(document).on("click","#paylist .item",function(){
+		$("#paylist .item").removeClass("active");
+		$("#pay_type").val($(this).attr("v"));
+		$(this).addClass("active");
+	});
+	
+	 
+});
+</script>
+</div>
+</body>
+</html>

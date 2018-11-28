@@ -1,0 +1,41 @@
+{include file="header.html"}
+ <ul class="nav nav-tabs">
+<li class="active"><a href="{$appadmin}?m=weixin_user&wid={$weixin.id}">微信用户</a></li>
+ 
+</ul>
+<div class="main-body">
+ <table class="tbs">
+ 	<thead>
+  <tr>
+    
+   <td>用户</td>
+   <td>第一次</td>
+   <td>关注时间</td>
+   <td>更新时间</td>
+   <td>取消关注</td>
+   <td>状态</td>
+  
+    
+   <td>回复次数</td>
+<td>操作</td>
+  </tr>
+  </thead>
+ {foreach item=c from=$data}
+<tr>
+   
+   <td>{$c.openid}</td>
+   <td>{$c.dateline|date:Y-m-d H:m}</td>
+   <td>{$c.add_time|date:m-d H:m}</td>
+   <td>{$c.last_time|date:m-d H:m}</td>
+   <td>{$c.del_time|date:m-d H:m}</td>
+   <td>{if $c.status}已关注{else}未关注{/if}</td>
+ 
+   <td>{$c.reply_num}</td>
+<td><a href="javascript:;" class="delete" url="admin.php?m=weixin_user&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+ 
+{include file="footer.html"}

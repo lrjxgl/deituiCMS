@@ -1,0 +1,5 @@
+options={
+		initialFrameWidth:"100%",
+		  
+		 
+};

@@ -1,0 +1,5 @@
+
+/* CSS Document */
+*{margin:0; padding:0px;}
+.gomsg{border:5px solid #ccc; border-radius:5px; padding:10px; margin:0 auto; max-width:600px; width:100%;}
+.header,.footer{margin:0 auto; max-width:960px; width:96%; border:1px solid #ccc;  line-height:40px; text-align:center; margin-bottom:10px;margin-top:10px} 

@@ -1,0 +1,64 @@
+<!DOCTYPE>
+<html>
+{include file="head.html"}
+
+<body>
+ <div class="header">
+	 <div class="header-title">微信支付</div>
+ </div>
+ <div class="main-body">
+      <div style=" line-height:40px; width:210px; text-align:center;">
+     	你需要支付{$order.money}元。
+     </div>
+     <div class="btn-group">
+			<div class="btn btn-success" type="button" onClick="callpay()" >确定支付</div>
+			<a href="/" class="btn btn-success">返回首页</a>
+     </div>
+ </div>
+
+{include file="footer.html"}
+    
+ 
+ 
+ <script type="text/javascript">
+
+		//调用微信JS api 支付
+	function jsApiCall()
+	{
+		WeixinJSBridge.invoke(
+			'getBrandWCPayRequest',
+			{$jsApiParameters},
+			function(res){
+				WeixinJSBridge.log(res.err_msg);
+				if(res.err_msg=='get_brand_wcpay_request:ok'){
+						skyToast('支付成功');
+						setTimeout(function(){
+							window.location="{$url}";
+						},1000)
+					}else{
+						skyToast('支付失败');
+					}
+				
+			}
+		);
+	}
+
+	function callpay()
+	{
+		if (typeof WeixinJSBridge == "undefined"){
+		    if( document.addEventListener ){
+		        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+		    }else if (document.attachEvent){
+		        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+		        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+		    }
+		}else{
+		    jsApiCall();
+		}
+	}
+	$(function(){
+		callpay()
+	})
+	</script>
+</body>
+</html>

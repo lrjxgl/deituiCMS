@@ -1,0 +1,61 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+ <div class="tabs-border">
+	 <a href="/admin.php?m=refund" class="item active">退款列表</a>
+ </div>
+ 
+<div class="main-body"> 
+ 	<form class="search-form" method="get" action="{$appadmin}">
+	<input type="hidden" name="m" value="refund" /> 
+时间：从
+	<input  class="w100" type="text" id="stime" name="stime" value="{$smarty.get.stime|html}" /> 
+	到
+	<input  class="w100" type="text" id="etime" name="etime" value="{$smarty.get.etime|html}" /> 
+	
+ 
+	<input type="submit" value="搜索" class="btn" />
+</form>
+ <table class="tbs">
+<thead>  <tr>
+   <td>id</td>
+   
+   <td>支付方式</td>
+   <td>退款时间</td>
+   <td>金额</td>
+    
+   <td>支付原订单</td>
+   
+    
+ 
+  </tr>
+</thead> {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+    
+   <td>{$c.paytype}</td>
+   <td>{$c.createtime}</td>
+   <td>{$c.money}</td>
+   <td>{$c.recharge_id}</td>
+   
+    
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+<script src="/plugin/laydate/laydate.js"></script>
+<script>
+	laydate.render({
+		elem:"#stime",
+		type: 'date'
+	})
+	laydate.render({
+		elem:"#etime",
+		type: 'date'
+	})
+</script>	
+</body>
+</html>

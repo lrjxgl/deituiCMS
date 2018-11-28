@@ -1,0 +1,161 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+{include file="ad/nav.html"}
+<div class="main-body">
+ 
+    <form method="post" action="admin.php?m=ad&a=save">
+    <input type="hidden" name="id" style="display:none;" value="{$data.id}" >
+    <input type="hidden" id="img_width" value="{if $tag_2nd}{$tag_2nd.width|intval}{else}{$tag.width|intval}{/if}" />
+    <input type="hidden" id="img_height" value="{if $tag_2nd}{$tag_2nd.height|intval}{else}{$tag.height|intval}{/if}" />
+      <table class="table-add">
+        
+        <tr>
+          <td width="100">分类id：</td>
+          <td>
+          <select class="w100" name="tag_id" id="ajax_tag_id">
+          <option value="0">请选择</option>
+          {foreach item=c key=k from=$tag_list}
+          <option value="{$k}" {if $k eq $data.tag_id or $k eq get_post("tag_id")} selected="selected"{/if}>{$c.title}({$c.width}*{$c.height})</option>
+          {/foreach}
+          </select>
+        	
+            <select class="w150" name="tag_id_2nd" id="ajax_tag_id_2nd" {if !$tag_list_2nd}style="display:none"{/if}>
+          <option value="0">请选择</option>
+          {foreach item=c key=k from=$tag_list_2nd}
+          <option value="{$k}" {if $k eq $data.tag_id_2nd or $k eq get_post("tag_2nd_id")} selected="selected"{/if}>{$c.title}({$c.width}*{$c.height})</option>
+          {/foreach}
+          </select>
+        
+        </td> 
+        </tr>
+        <tr>
+          <td>标题：</td>
+          <td><input type="text" name="title" id="title" class="w600" value="{$data.title}" ></td>
+        </tr>
+        <tr>
+          <td>描述：</td>
+          <td><textarea name="info" id="info"  class="w600" >{$data.info}</textarea></td>
+        </tr>
+        <tr>
+          <td>链接1：</td>
+          <td><input type="text" name="link1" id="link1"  class="w600"  value="{$data.link1}" ></td>
+        </tr>
+        <tr>
+          <td>链接2：</td>
+          <td><input type="text" name="link2" id="link2"  class="w600"  value="{$data.link2}" ></td>
+        </tr>
+        <tr>
+          <td>开始时间：</td>
+          <td><input readonly="" type="text" name="starttime" id="starttime" value="{if $data}{$data.starttime|date:Y-m-d H:m:s}{/if}" ></td>
+        </tr>
+        <tr>
+          <td>结束时间：</td>
+          <td><input readonly="" type="text" name="endtime" id="endtime" value="{if $data}{$data.endtime|date:Y-m-d H:m:s}{/if}" ></td>
+        </tr>
+        <tr>
+          <td>图片地址：</td>
+          <td>
+						<div class="js-upload-item">
+							<input type="file" id="upa" class="js-upload-file" style="display: none;" />
+							<div class="upimg-btn js-upload-btn">+</div>
+							<input type="hidden" name="imgurl" class="js-imgurl" value="{$data.imgurl}" />
+							<div class="js-imgbox">
+								{if $data.imgurl}
+								<img src="{$data.imgurl|images_site}.100x100.jpg">
+								{/if}
+							</div>
+						</div>
+						
+					</td>
+        </tr>
+        
+        <tr>
+          <td>图片地址2：</td>
+          <td>
+						<div class="js-upload-item">
+							<input type="file" id="upa2" class="js-upload-file" style="display: none;" />
+							<div class="upimg-btn js-upload-btn">+</div>
+							<input type="hidden" name="imgurl2" class="js-imgurl" value="{$data.imgurl2}" />
+							<div class="js-imgbox">
+								{if $data.imgurl2}
+								<img src="{$data.imgurl2|images_site}.100x100.jpg">
+								{/if}
+							</div>
+						</div>
+					</td>
+        </tr>
+        
+        <tr>
+          <td>排序：</td>
+          <td><input type="text" name="orderindex" id="orderindex" value="{$data.orderindex}" ></td>
+        </tr>
+        <tr>
+          <td>状态：</td>
+          <td><input type="radio" name="status" value="1" {if $data.status eq 1} checked="checked"{/if} />隐藏 &nbsp; 
+          <input type="radio" name="status" value="2" {if $data.status eq 2} checked="checked"{/if} />显示</td>
+        </tr>
+        {if $data}
+        <tr>
+          <td>添加时间：</td>
+          <td>{$data.dateline|date:Y-m-d}</td>
+        </tr>
+        {/if}
+        <tr>
+          <td>价格：</td>
+          <td><input type="text" name="price" id="price" value="{$data.price}" ></td>
+        </tr>
+        <tr>
+          <td>对象ID：</td>
+          <td><input type="text" name="object_id" id="object_id" value="{$data.object_id}" ></td>
+        </tr>
+        
+    
+      </table>
+      <div class="btn-row-submit js-submit">保存</div>
+    </form>
+  </div>
+ {include file="footer.html"}
+<script language="javascript">
+$(document).ready(function(){
+	$("#ajax_tag_id").bind("change",function(){
+		$.get("{$appadmin}?m=ad_tags&a=child&tag_id="+$(this).val(),function(data){
+			$("#img_width").val(data.width);
+			$("#img_height").val(data.height);
+			if(data.error==0){
+				var len=data.data.length;
+				var opt="<option value=0>请选择</option>";
+				for(var i=0;i<len;i++){
+					opt+="<option value=\""+data.data[i].tag_id+"\">"+data.data[i].title+"("+data.data[i].width+"*"+data.data[i].height+")</option>";
+				}
+				$("#ajax_tag_id_2nd").empty().append(opt).show();
+			}else{
+				$("#ajax_tag_id_2nd").empty().append("<option value=0>请选择</option>").hide();
+			}
+		},"json");
+	});
+	
+	$("#ajax_tag_id_2nd").bind("change",function(){
+		$.get("{$appadmin}?m=ad_tags&a=child&tag_id="+$(this).val(),function(data){
+			$("#img_width").val(data.width);
+			$("#img_height").val(data.height);
+		},"json")
+	});
+	
+});
+</script>
+<script src="/static/admin/js/upload.js"> </script>
+<script src="/plugin/laydate/laydate.js"></script>
+<script>
+	laydate.render({
+		elem:"#starttime",
+		type: 'datetime'
+	})
+	laydate.render({
+		elem:"#endtime",
+		type: 'datetime'
+	})
+</script>
+</body>
+</html>

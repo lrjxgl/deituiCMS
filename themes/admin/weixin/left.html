@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+ 
+ 
+ 
+{if $weixin} 
+<div class="mtitle">{$weixin.title}</div>
+{else}
+<div class="mtitle">微信管理</div>
+{/if}
+<div class="menu"  style="display:block" >
+<ul>
+{if !$weixin} 
+<li><a href="{$appadmin}?m=weixin"  target="main-frame">微信管理</a></li>
+{/if}
+<li><a href="{$appadmin}?m=weixin_command&wid={$weixin.id}"  target="main-frame">微信命令</a></li>
+<li><a href="{$appadmin}?m=weixin_sucai&wid={$weixin.id}"  target="main-frame">微信素材</a></li>
+<li><a href="{$appadmin}?m=weixin_menu&wid={$weixin.id}"  target="main-frame">微信菜单</a></li>
+<li><a href="{$appadmin}?m=weixin_reply&wid={$weixin.id}"  target="main-frame">微信消息</a></li>
+<li><a href="{$appadmin}?m=weixin_user&wid={$weixin.id}"  target="main-frame">微信用户</a></li>
+<!--<li><a href="{$appadmin}?m=weixin_link&wid={$weixin.id}"  target="main-frame">微信友情链接</a></li>-->
+ 
+</ul>
+</div>
+ 
+
+<div class="ztitle">版权声明</div>
+<div class="zbox" style="">
+<a href="{$appadmin}?m=ifram&a=main"></a>
+版权归<a href="http://www.deitui.com" target="_blank">得推网络</a>所有<br>
+</div>
+</body>
+</html>

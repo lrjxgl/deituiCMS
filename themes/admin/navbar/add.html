@@ -1,0 +1,88 @@
+<!DOCTYPE  html>
+<html>
+	{include file="head.html"}
+	<body>
+	<div class="tabs-border">
+		<a href="{$appadmin}?m=navbar" class="item">导航管理</a>
+		<a href="{$appadmin}?m=navbar&a=add" class="item active">导航添加</a>
+	</div>
+		<div class="main-body">
+			<form action="admin.php?m=navbar&a=save" method="post">
+				<input type="hidden" name="id" value="{$nav.id}">
+				<table class="table-add">
+
+
+					{if !$parent}
+					<tr>
+						<td height="30" align="right">跳转目标：</td>
+						<td><select name="target" id="target">
+								<option value="_self">self</option>
+								<option value="_blank" {if $nav.target eq '_blank' } selected="selected" {/if}>_blank </option> </select> </td>
+								 </tr> {/if} {if $parent} <tr>
+						<td width="16%" height="30" align="right">上级分类：</td>
+						<td width="84%">
+							<input type="hidden" name="pid" value="{$parent.id}">
+							{$parent.title}</td>
+					</tr>
+					{/if}
+					<tr>
+						<td height="30" align="right">名称：</td>
+						<td><input name="title" type="text" value="{$nav.title}" />
+
+					</tr>
+					<tr>
+						<td height="30" align="right">链接：</td>
+						<td><input name="link_url" type="text" id="link_url" value="{$nav.link_url}" size="40" /></td>
+					</tr>
+					{if !$parent}
+					<tr>
+						<td height="30" align="right">位置：</td>
+						<td><select name="group_id" id="group_id">
+								{foreach item=g key=k from=$group_list}
+								<option value="{$k}" {if $k eq $nav.group_id} selected{/if}>{$g} </option> {/foreach} </select> </td> </tr> {/if}
+					<tr>
+						<td align="right">Icon：</td>
+						<td>
+							<input type="text" name="icon" value="{$nav.icon}" />
+						</td>
+					</tr>			
+					<tr>
+						<td align="right">图标：</td>
+						<td>
+							<div class="js-upload-item">
+								<input type="file" id="upa" class="js-upload-file" style="display: none;" />
+								<div class="upimg-btn js-upload-btn">+</div>
+								<input type="hidden" name="logo" class="js-imgurl" value="{$nav.logo}" />
+								<div class="js-imgbox">
+									{if $nav.logo}
+									<img src="{$nav.logo|images_site}.100x100.jpg">
+									{/if}
+								</div>
+							</div>
+							
+							 
+						</td>
+					</tr>
+
+					<tr>
+						<td height="30" align="right">m： </td>
+						<td><input name="m" type="text" id="m" value="{$nav.m}" /></td>
+					</tr>
+					<tr>
+						<td height="30" align="right">a：</td>
+						<td><input name="a" type="text" id="a" value="{$nav.a}" /></td>
+					</tr>
+					<tr>
+						<td height="30" align="right">排序：</td>
+						<td><input name="orderindex" type="text" id="orderindex" value="{$nav.orderindex}" /></td>
+					</tr>
+
+				</table>
+				<div class="btn-row-submit js-submit">保存</div>
+
+			</form>
+		</div>
+		{include file='footer.html'}
+		<script src="/static/admin/js/upload.js"></script>
+	</body>
+</html>

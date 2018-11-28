@@ -1,0 +1,45 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+	<div class="tabs-border">
+		<a href="/admin.php?m=admin" class="item">管理员列表</a>
+		<a href="/admin.php?m=admin&a=add" class="item">添加</a>
+		<a class="item  active">编辑</a>
+	</div>
+<div class="main-body">
+<form action="{$appadmin}?m=admin&a=edit&op=db&id={$data.id}" method="post" autocomplete="off">
+<table class="table-add">
+  <tr>
+    <td  align="right">用户名：</td>
+    <td  ><input name="adminname" type="text" id="adminname" value="{$data.username}" size="40" readonly /></td>
+  </tr>
+  <tr>
+    <td  align="right">密码：</td>
+    <td><input name="password" type="password" id="pwd1" size="40" /></td>
+  </tr>
+  <tr>
+    <td  align="right">确认密码：</td>
+    <td><input name="password2" type="password" id="pwd2" size="40" /></td>
+  </tr>
+  
+    <tr>
+    <td  align="right">所属组：</td>
+    <td><select name="group_id" id="zuid">
+    {foreach item=z from=$grouplist}
+    <option value="{$z.id}" {if $data.group_id eq $z.id} selected="selected"{/if}>{$z.title}</option>
+    {/foreach}
+    </select></td>
+  </tr>
+  
+  
+  
+  
+</table>
+	<div class="btn-row-submit js-submit">保存</div> 
+</form>
+</div> 
+
+{include file='footer.html'}
+</boody>
+</html>

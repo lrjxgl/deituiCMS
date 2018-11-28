@@ -1,0 +1,129 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+<div class="tabs-border">
+	<a class="item active" href="/admin.php?m=article">文章列表</a>
+	<a class="item" href="/admin.php?m=article&a=add">添加文章</a>
+</div> 
+ 
+<div class="main-body">
+<div class="search-form">
+<form method="get" action="{$appadmin}">
+<input type="hidden" name="m" value="article" />
+
+ID:<input class="w100" type="text" name="id" value="{$smarty.get.id|intval}" class="w50" />
+状态：<select name="type" class="w100">
+	<option value="all">全部</option>
+	<option value="new" {if get('type') eq 'new' }selected="selected"{/if}>未审核</option>
+    <option value="pass" {if get('type') eq 'pass' }selected="selected"{/if}>已审核</option>
+    <option value="forbid" {if get('type') eq 'forbid' }selected="selected"{/if}>已禁止</option>
+</select>
+分类：    <select name="catid" class="w100">
+    <option value="0">请选择</option>
+    {foreach item=c from=$catlist}
+                <option value="{$c.catid}" {if get('catid') eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
+                {foreach item=c_2 from=$c.child}
+                	<option value="{$c_2.catid}" {if get('catid') eq $c_2.catid} selected="selected"{/if} class="o_c_2">|__{$c_2.cname}</option>
+                    {foreach item=c_3 from=$c_2.child}
+                    <option value="{$c_3.catid}" {if get('catid') eq $c_3.catid} selected="selected"{/if} class="o_c_3"> |____{$c_3.cname}</option>
+                    {/foreach}
+                {/foreach}
+                {/foreach}
+    </select>
+主题：<input type="text" class="w150" name="title" value="{$smarty.get.title}" class="w200" />
+推荐：<select name="s_recommend" class="w100">
+<option value="0">请选择</option>
+<option value="1" {if get('s_recommend') eq 1} selected="selected"{/if}>是</option>
+<option value="2" {if get('s_recommend') eq 2} selected="selected"{/if}>否</option>
+</select>
+
+<input type="submit" value="搜索" class="btn" />
+</form>
+</div>
+<div class="main-body">
+	<form method="post" action="{$appadmin}?m=article&a=category">
+ <table class="tbs">
+<thead>  <tr>
+   <td>id</td>
+   <td>标题</td>
+   <td>图片</td>
+   <td>分类</td>
+   <td>喜欢</td>
+   <td>收藏</td>
+   <td>状态</td>
+   <td>推荐</td>
+   
+   <td>创建时间</td>
+<td>操作</td>
+  </tr>
+</thead> {foreach item=c from=$data}
+<tr>
+   <td><input type="checkbox" class="ids"  name="ids[]" value="{$c.id}" /> {$c.id}</td>
+   <td>{$c.title}</td>
+   <td>
+		 {if $c.imgurl}
+   		<img src="{$c.imgurl}.100x100.jpg" width="50" />
+			{/if}
+    </td>
+   <td>{$c.cat_name}</td>
+   <td>{$c.love_num}</td>
+   <td>{$c.fav_num}</td>
+    
+   <td>
+   	 {if $c.status eq 2}
+   <img src='/static/admin/img/yes.gif' class="ajax_no" url='{$appadmin}?m=article&a=status&id={$c.id}&status=4' rurl='{$appadmin}?m=article&a=status&id={$c.id}&status=2'>
+    {else}
+    <img src='/static/admin/img/no.gif' class="ajax_yes" url='{$appadmin}?m=article&a=status&id={$c.id}&status=2' rurl='{$appadmin}?m=article&a=status&id={$c.id}&status=4'>
+    {/if}
+   </td>
+   <td>
+   	{if $c.is_recommend eq 1}
+   <img src='/static/admin/img/yes.gif' class="ajax_no" url='{$appadmin}?m=article&a=recommend&id={$c.id}&is_recommend=0' rurl='{$appadmin}?m=article&a=recommend&id={$c.id}&is_recommend=2'>
+    {else}
+    <img src='/static/admin/img/no.gif' class="ajax_yes" url='{$appadmin}?m=article&a=recommend&id={$c.id}&is_recommend=1' rurl='{$appadmin}?m=article&a=recommend&id={$c.id}&is_recommend=0'>
+    {/if}
+   </td>
+   
+   <td>{$c.createtime}</td>
+<td><a href="admin.php?m=article&a=add&id={$c.id}">编辑</a>
+ 
+	<a href="/index.php?m=article&a=show&id={$c.id}" target="_blank">查看</a> 
+	<a href="javascript:;" class="delete" url="admin.php?m=article&a=delete&ajax=1&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+ <div style="padding:10px;">
+	分类：    <select name="catid" class="w100">
+    <option value="0">请选择</option>
+    {foreach item=c from=$catlist}
+                <option value="{$c.catid}" {if get('catid') eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
+                {foreach item=c_2 from=$c.child}
+                	<option value="{$c_2.catid}" {if get('catid') eq $c_2.catid} selected="selected"{/if} class="o_c_2">|__{$c_2.cname}</option>
+                    {foreach item=c_3 from=$c_2.child}
+                    <option value="{$c_3.catid}" {if get('catid') eq $c_3.catid} selected="selected"{/if} class="o_c_3"> |____{$c_3.cname}</option>
+                    {/foreach}
+                {/foreach}
+                {/foreach}
+    </select>
+    
+    <input type="submit" class="btn" value="修改分类" />
+</div>
+<div>{$pagelist}</div>
+</div> 
+
+{include file="footer.html"}
+<script>
+	$(document).on("click",".js-article-send",function(){
+		var id=$(this).attr("data-id");
+		var obj=$(this);
+		$.post("/admin.php?m=shop_article&a=articleSave&ajax=1&id="+id,function(res){
+			skyToast(res.message);
+			if(!res.error){
+				obj.parents("tr").remove();
+			}
+		},"json")
+	})
+</script>
+</body>
+</html>

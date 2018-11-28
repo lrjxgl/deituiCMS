@@ -1,0 +1,108 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+ <div class="tabs-border">
+ 	<a class="item" href="/admin.php?m=article">文章列表</a>
+ 	<a class="item active" href="/admin.php?m=article&a=add">文章编辑</a>
+ </td> 
+<div class="main-body">
+	<form method="post" action="admin.php?m=article&a=save">
+		<input type="hidden" name="id" style="display:none;" value="{$data.id}">
+		<table class="table-add">
+		<tr>
+			<td>标题：</td>
+			<td><input type="text" name="title" id="title" value="{$data.title}"></td>
+		</tr>	
+		<tr>
+			<td>分类：</td>
+			<td>
+			<select name="catid" id="catid" class="input-flex-select w200">
+			    <option value="0">请选择</option>
+			    {foreach item=c from=$catlist}
+			                <option value="{$c.catid}" {if $data.catid eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
+			                {foreach item=c_2 from=$c.child}
+			                	<option value="{$c_2.catid}" {if $data.catid eq $c_2.catid} selected="selected"{/if} class="o_c_2">|__{$c_2.cname}</option>
+			                    {foreach item=c_3 from=$c_2.child}
+			                    <option value="{$c_3.catid}" {if $data.catid eq $c_3.catid} selected="selected"{/if} class="o_c_3"> |____{$c_3.cname}</option>
+			                    {/foreach}
+			                {/foreach}
+			                {/foreach}
+			    </select>
+			</td>		
+		</tr>
+		<tr>
+			<td>图片：</td>
+			<td>
+				<div class="js-upload-item">
+					<input type="file" id="upa" class="js-upload-file" style="display: none;" />
+					<div class="upimg-btn js-upload-btn">+</div>
+					<input type="hidden" name="imgurl" class="js-imgurl" value="{$data.imgurl}" />
+					<div class="js-imgbox">
+						{if $data.imgurl}
+						<img src="{$data.imgurl|images_site}.100x100.jpg">
+						{/if}
+					</div>
+				</div>
+		  </td>
+		</tr>
+		<tr>
+			<td>作者</td>
+			<td>
+				<input type="text" name="author" value="{$data.author}" />
+			</td>
+		</tr>
+		<tr>
+			<td>喜欢数：</td>
+			<td><input type="text" name="love_num" id="love_num" value="{$data.love_num}"></td>
+		</tr>	
+		<tr>
+			<td>收藏：</td>
+			<td><input type="text" name="fav_num" id="fav_num" value="{$data.fav_num}"></td>
+		<tr>
+			<td>描述：</td>
+			<td>
+				<textarea name="description" id="description" class="w600 h60">{$data.description}</textarea>
+			</td>
+		</tr>	
+		 
+		<tr>
+			<td>推荐：</td>
+			<td>
+				<input type="radio" name="is_recommend" value="1" {if $data.is_recommend} checked{/if}  /> 推荐
+				&nbsp;&nbsp;
+				<input type="radio" name="is_recommend" value="0"  {if !$data.is_recommend} checked{/if}/> 不推荐
+				
+			</td>
+		</tr>
+		
+		<tr>
+			<td>创建时间：</td>
+			<td>{$data.createtime}</td>
+		</tr>
+		<tr>
+			<td>内容</td>
+			<td>
+				<script type="text/plain" id="content" name="content" >{$data.content}</script>
+			</td>
+		</tr>
+		</table>
+		<div class="btn-row-submit js-submit">保存</div>
+	</form>
+</td>
+{include file="footer.html"}
+{php loadEditor();}
+ 
+<script language="javascript" src="/static/admin/js/upload.js"></script>
+<script language="javascript">
+ 
+var editor=UE.getEditor('content',options);
+
+$(document).on("click","#js-view",function(){
+	var html=editor.getContent();
+	html='<div class="d-content">'+html+'</td>'
+	showbox("文章预览",html,375,500);
+})
+</script>
+</body>
+</html>

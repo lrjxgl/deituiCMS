@@ -1,0 +1,62 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+{include file='ad/nav.html'}
+<div class="main-body">
+  
+    <form method='post' action='admin.php?m=ad_tags&a=save'>
+    <input type='hidden' name='tag_id' style='display:none;' value='{$data.tag_id}' >
+      <table class='table table-bordered' width='100%'>
+        <col style="width: 90px; text-align: right;" />
+        <tr>
+          <td>标题：</td>
+          <td><input type='text' name='title' id='title' value='{$data.title}' ></td>
+        </tr>
+        
+        <tr>
+          <td>上级分类：</td>
+          <td><select name="pid">
+          	<option value="0">请选择</option>
+            {foreach item=c key=k from=$pid_list}
+            <option value="{$k}" {if $k eq $data.pid} selected="selected"{/if}>{$c.title}</option>
+            {/foreach}
+          </select> </td>
+        </tr>
+        
+        <tr>
+        	<td>唯一代号：</td>
+            <td><input type="text" name="tagno" value="{$data.tagno}" /></td>
+        </tr>
+        
+        <tr>
+          <td>排序：</td>
+          <td><input type='text' name='orderindex' id='orderindex' value='{$data.orderindex}' ></td>
+        </tr>
+        <tr>
+          <td>状态：</td>
+          <td><input type="radio" name="status" value="1" {if $data.status eq 1} checked="checked"{/if} />隐藏 &nbsp; 
+          <input type="radio" name="status" value="2" {if $data.status eq 2} checked="checked"{/if} />显示</td>
+        </tr>
+        {if $data}
+        <tr>
+          <td>添加时间：</td>
+          <td>{$data.dateline|date:Y-m-d H:i:s}</td>
+        </tr>
+        {/if}
+         
+        <tr>
+          <td>图片宽度：</td>
+          <td><input type='text' name='width' id='width' value='{$data.width}' ></td>
+        </tr>
+        <tr>
+          <td>图片高度：</td>
+          <td><input type='text' name='height' id='height' value='{$data.height}' ></td>
+        </tr>
+        
+      </table>
+      <div class="btn-row-submit js-submit">保存</div>
+    </form>
+  </div>
+ 
+{include file="footer.html"}

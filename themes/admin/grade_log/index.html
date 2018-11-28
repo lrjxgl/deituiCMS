@@ -1,0 +1,34 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='jflog_nav.html'}
+ <table class='table table-bordered' width='100%'>
+  <tr>
+   <td>id</td>
+   <td>时间</td>
+   <td>用户id</td>
+   <td>操作类型</td>
+   <td>日志内容</td>
+ 
+   <td>积分</td>
+  
+<td>操作</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+   <td>{$c.userid}</td>
+   <td>{$config[grade_log_type_list][$c[type_id]]}</td>
+   <td>{$c.content}</td>
+    
+   <td>{$c.grade}</td>
+   
+<td> <a href="javascript:;" class="delete" url="admin.php?m=grade_log&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+</div>
+{include file="footer.html"}

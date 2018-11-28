@@ -1,0 +1,62 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+	<div class="tabs-border">
+		<a class="item" href="{$appadmin}?m=user_auth">认证审核</a>
+		<a class="item active" href="{$appadmin}?m=user_auth&a=old">认证会员</a>
+	</div>
+   <div class="main-body"> 
+    <div class="pd-10">共{$rscount}条记录</div>
+   
+    <form method="get" action="{$appadmin}" class="search-form">
+    <input type="hidden" name="m" value="user_auth" />
+    <input type="hidden" name="a" value="old">
+    userid:<input class="w60" type="text" name="userid" value="{$smarty.get.userid|intval}"  />
+    姓名：<input class="w150" type="text" name="truename" value="{$smarty.get.truename|html}" />
+    电话：<input class="w150" type="text" name="telephone" value="{$smarty.get.telephone|html}" />
+    <input type="submit" value="搜索" class="btn btn-success" />
+    </form>
+   
+    <table class="tbs">
+    	<thead>
+    	<tr>
+        <td width="50">ID</td>
+ 
+        <td width="60">姓名</td>
+        <td width="70">电话</td>
+         <td width="120">身份证</td> 
+        <td width="100">提交时间</td>
+        <td width="50">状态</td>
+       
+        </tr>
+        </thead>
+       {foreach item=c from=$data}
+       <tr>
+        <td>{$c.userid}</td>
+     
+        <td>{$c.truename}</td>
+        <td>{$c.telephone}</td>
+        <td>{$c.user_card}</td>
+        <td>{$c.lasttime|date:Y-m-d}</td>
+        <td>{if $c.status eq 0}未审核{elseif $c.status eq 1}已通过{else}未通过{/if}</td> 
+         
+        </tr>
+       {/foreach} 
+    
+    </table>
+    {$pagelist}
+   
+</div>
+{include file="footer.html"}
+<script>
+$(function(){
+	$(".setLogin").on("click",function(){
+		$.get($(this).attr("url"),function(data){
+			skyToast('切换登录成功');
+		});
+	});
+})
+</script>
+</body>
+</html>

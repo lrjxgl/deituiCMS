@@ -1,0 +1,56 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+ 
+<div class="tabs-border">
+	<a class="item active" href="/admin.php?m=refund_apply">退款申请列表</a>
+</div>
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>id</td>
+   
+   <td>支付方式</td>
+   <td>创建时间</td>
+   <td>金额</td>
+    
+   <td>内容</td>
+   
+<td>操作</td>
+  </tr>
+</thead> {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   
+   <td>{$c.paytype}</td>
+   <td>{$c.createtime}</td>
+   <td>{$c.money}</td>
+    
+   <td>{$c.content}</td>
+   
+<td>
+	<a href="javascript:;" class="js-pass" v="{$c.id}">确认退款</a>
+	 
+	<a href="javascript:;" class="js-delete" url="admin.php?m=refund_apply&a=delete&ajax=1&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+{include file="footer.html"}
+<script>
+	$(function(){
+		$(document).on("click",".js-pass",function(){
+			var obj=$(this);
+			if(confirm("确认退款给用户吗？")){
+				$.get("/admin.php?m=refund_apply&a=pass&ajax=1&id="+$(this).attr("v"),function(data){
+					obj.parents("tr").remove();
+					skyToast(data.message);
+				},"json")
+			}			
+		})
+	})
+</script>
+</body>
+</html>

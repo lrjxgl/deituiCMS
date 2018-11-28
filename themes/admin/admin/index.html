@@ -1,0 +1,37 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+<div class="tabs-border">
+	<a href="/admin.php?m=admin" class="item active">管理员列表</a>
+	<a href="/admin.php?m=admin&a=add" class="item">添加</a>
+</div>
+<div class="main-body">
+ 
+
+<table class="tbs">
+	<thead>
+  <tr>
+    <td width="92" height="30" align="center">ID</td>
+    <td width="231" align="center">用户名</td>
+    <td width="213" align="center">所数组</td>
+    <td width="204" align="center">操作</td>
+  </tr>
+	</thead>
+  {foreach item=t from=$adminlist}
+  <tr>
+    <td height="25" align="center">{$t.id}</td>
+    <td align="center">{$t.username}</td>
+    <td align="center">{$grouplist[$t.group_id]}</td>
+    <td align="center"><a href="{$appadmin}?m=admin&a=edit&id={$t.id}">编辑</a> 
+		{if !$t.isfounder}<a href="javascript:;" class="js-delete" url="{$appadmin}?m=admin&a=del&id={$t.id}">删除</a>{/if}</td>
+  </tr>{/foreach}
+ 
+  
+</table>
+
+{$pagelist}
+</div> 
+{include file='footer.html'}
+</body>
+</html>

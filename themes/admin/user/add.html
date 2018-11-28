@@ -1,0 +1,83 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+<div class="tabs-border">
+	<a class="item active" href="admin.php?m=user">用户管理</a>
+	<a class="item" href="admin.php?m=user&a=add">用户添加</a>
+</div>
+<div class="main-body"> 
+<form method="post" id="form" action="{const.APPADMIN}?m=user&a=save">
+<input type="hidden" name="userid" value="{$data.userid}">
+<table class="table-add">
+
+<tr>
+    	<td width="90">账号：</td>
+        <td width=""><input type="text" name="username" value="{$data.username}"></td>
+    </tr>
+	<tr>
+    	<td >昵称：</td>
+        <td><input type="text" name="nickname" value="{$data.nickname}"></td>
+    </tr>
+    
+     
+    
+    <tr>
+	  <td>手机：</td>
+	  <td><input name="telephone" type="text" id="telephone" value="{$data.telephone}"></td>
+	  </tr>
+	<tr>
+     <tr>
+     	<td >密码：</td>
+     	<td><input type="text" name="password" value="{$data.password}"></td>
+     </tr>
+     <tr>
+     <td>重复密码：</td>
+     <td><input name="password2" type="text"  value="{$data.password2}"></td>
+     </tr>
+     <tr>
+    <tr>
+    	<td>头像</td>
+        <td>
+					<div class="js-upload-item">
+						<input type="file" id="upa" class="js-upload-file" style="display: none;" />
+						<div class="upimg-btn js-upload-btn">+</div>
+						<input type="hidden" name="user_head" class="js-imgurl" value="{$data.user_head}" />
+						<div class="js-imgbox">
+							{if $data.user_head}
+							<img src="{$data.user_head|images_site}.100x100.jpg">
+							{/if}
+						</div>
+					</div>
+				</td>
+    </tr>
+    
+	 
+	<tr>
+	  <td>用户类型：</td>
+	  <td><select name="user_type">
+      	{foreach item=c key=k from=$user_type_list}
+        <option value="{$k}" {if $k eq $data.user_type} selected{/if}>{$c}</option>
+        {/foreach}
+      </select></td>
+	  </tr>
+	<tr>
+	  <td>账户状态：</td>
+	  <td><select name="status">
+      	<option  value="99" {if $data.status eq 99} selected{/if}>已禁止</option>
+      	<option value="1" {if $data.status eq 1} selected{/if}>已通过</option>
+        <option value="10"  {if $data.status eq 10} selected{/if}>待审核</option>
+      </select></td>
+	  </tr>
+ 
+ 
+    
+</table>
+<div class="btn-row-submit js-submit">保存</div>
+</form>
+
+</div>
+{include file="footer.html"}
+<script src="/static/admin/js/upload.js"> </script>
+</body>
+</html>

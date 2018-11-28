@@ -1,0 +1,42 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+{include file="weixin/side.html"}
+
+
+<div class="main-body">
+	{include file='weixin_command/nav.html'}
+	<div class="pd-10">当前微信：{$weixin.title}</div>
+
+ <table class="tbs">
+ 	<thead>
+  <tr>
+   <td>id</td>
+   <td>微信id</td>
+   <td>命令名称</td>
+   <td>命令</td>
+   <td>命令类型</td>
+   <td>内容</td>
+   <td>dateline</td>
+<td>操作</td>
+  </tr>
+  </thead>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$weixin_list[$c['wid']]['title']}</td>    
+   <td>{$c.title} {if $c.isdefault}<span style="color:red;">默认</span>{/if}</td>
+   <td>{$c.command}</td>
+   <td>{$type_list[$c.type_id]}</td>
+   <td>{$c.content|cutstr:24}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+<td><a href="admin.php?m=weixin_command&a=add&id={$c.id}&wid={$c.wid}">编辑</a> 
+<a href="javascript:;" class="delete" url="admin.php?m=weixin_command&a=delete&id={$c.id}&wid={$c.wid}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+ 
+{include file="footer.html"}

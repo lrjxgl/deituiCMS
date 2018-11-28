@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+{include file="head.html"}
+<body>
+ 
+ 
+  <div class="tabs-border" style="margin-bottom: 10px;">
+		<a href="/admin.php?m=tixian" class="item  {if get('type') eq ''}active{/if}">新申请</a>
+		<a href="/admin.php?m=tixian&type=confirm" class="item {if get('type') eq 'confirm'}active{/if}">待转账</a>
+		<a href="/admin.php?m=tixian&type=finish" class="item {if get('type') eq 'finish'}active{/if}">已完成</a>
+		<a href="/admin.php?m=tixian&type=all" class="item {if get('type') eq 'all'}active{/if}">全部提现</a>
+	</div>
+ <div class="main-body">
+ 	<form class="search-form" method="get" action="{$appadmin}">
+	<input type="hidden" name="m" value="tixian" /> 
+	<input type="hidden" id="type" name="type" value="{$smarty.get.type|html}" /> 
+	姓名：<input class="w100" type="text" id="yhk_huming" name="yhk_huming" value="{$smarty.get.yhk_huming|html}" />
+	下单时间：从
+	<input  class="w100" type="text" id="stime" name="stime" value="{$smarty.get.stime|html}" /> 
+	到
+	<input  class="w100" type="text" id="etime" name="etime" value="{$smarty.get.etime|html}" /> 
+	
+	<a class="js-down-excel pointer" >导出excel</a>
+	<input type="submit" value="搜索" class="btn" />
+</form>
+ 	<div class="list">
+  
+    
+   {foreach item=t from=$data}
+  <div class="item" onclick="window.location='{$appadmin}?m=tixian&a=show&id={$t.id}'">
+    <div class="hd">
+    	<span class="status">{$t.status_name}</span>
+    	<span class="status">来自：{if $t.k=='shop'}商家{else}用户{/if}</span>
+    	提现金额：<span class="status">￥{$t.money}</span>
+    	<span class="fr">{$t.dateline|date:Y-m-d H:i:s}</span></div>
+    
+     <div class="info">{$t.info}</div>
+ 
+     <div class="content">
+     	提现至
+     {if $t.paytype=="alipay"}
+     <span class="status">支付宝</span>
+     {elseif $t.paytype=="wxpay"}
+     <span class="status">微信</span>
+     {else}
+   	  银行卡
+     {/if}
+     	{if $t.paytype neq 'bank'}
+     	<span>姓名：{$t.yhk_huming}</span>
+        <span>账号：{$t.yhk_haoma}</span>
+     	{/if}
+     	{if $t.paytype=="bank"}
+     	 
+	     	<span>户名：{$t.yhk_huming}</span>
+	        <span>号码：{$t.yhk_haoma}</span>
+	       
+	        <br>
+	        <span>银行：{$t.yhk_name}</span>
+	        <span>开户地址：{$t.yhk_address}</span>
+        {/if}
+        <span>电话：{$t.telephone}</span>
+     </div> 
+    {if $t.reply}<div class="content">{$t.reply} 处理时间：{$t.redateline|date:Y-m-d H:i:s}</div>{/if}
+    
+   </div>
+  {/foreach} 
+  </div>
+  <div>{$pagelist}</div>
+  
+</div>
+
+<style>
+	.list .item{
+		cursor: pointer;
+		font-size: 14px;
+		line-height: 1.5;
+		color: #646464;
+ 
+		margin-bottom: 10px;
+		 
+		 
+		 
+		border: 5px solid #ddd;;
+ 
+		padding: 20px;
+		box-sizing: border-box;
+	}
+	.list .status{
+		color: #f60;
+		margin-right: 20px;
+	}
+</style>
+{include file="footer.html"}
+<script src="/plugin/laydate/laydate.js"></script>
+<script>
+	laydate.render({
+		elem:"#stime",
+		type: 'date'
+	})
+	laydate.render({
+		elem:"#etime",
+		type: 'date'
+	})
+	$(document).on("click",".js-down-excel",function(){
+		var type=$("#type").val();
+		var yhk_huming=$("#yhk_huming").val();
+		var stime=$("#stime").val();
+		var etime=$("#etime").val();
+		var url="/admin.php?m=tixian&a=excel";
+		url=url+"&type="+type;
+		url=url+"&yhk_huming="+encodeURI(yhk_huming);
+		url=url+"&stime="+stime;
+		url=url+"&etime="+etime;
+		window.location=url;
+	})
+</script>
+</body>
+</html>

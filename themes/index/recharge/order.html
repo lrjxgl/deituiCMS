@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="goBack mui-icon mui-icon-left-nav mui-pull-left" href="/index.php?m=user"></a>
+	    <h1 class="mui-title">订单支付</h1>
+	</header>
+ 
+    <div class="mui-content">
+ 
+ 
+<form id="rcform" class="row-box" method="post" action="/index.php?m=recharge&a=recharge" target="_blank">
+<input type="hidden" name="order_id" value="{$data.order_id}" />
+<input type="hidden" name="table" value="{$table}"> 
+ 
+  <div class="flex-table">
+ 	<div class="label">支付方式</div>
+ 	<div class="box">
+ 		<div class="paylist" id="paylist">
+    	{foreach item=c key=k name=p from=$pay_type_list}
+        {if $smarty.foreach.p.first}
+        <input type="hidden" name="pay_type" id="pay_type" value="{$k}">
+         <div class="item active" v="{$k}">{$c}</div>
+        {else}
+        <div class="item" v="{$k}">{$c}</div> 
+        {/if}
+        
+        {/foreach}
+        </div>
+ 	</div>
+ </div>
+ <div class="flex-table">
+ 	<div class="label">支付金额</div>
+ 	<div class="box">
+ 		￥{$data.money}元
+ 	</div>
+ </div>
+ 
+<button type="submit" id="rcbtn"   class="mui-btn mui-btn-block mui-btn-success">确认支付</button> 
+</form>
+
+ 
+
+</button>
+ 
+ 
+ 
+<script>
+$(function(){
+	$(document).on("click","#paylist .item",function(){
+		$("#paylist .item").removeClass("active");
+		$("#pay_type").val($(this).attr("v"));
+		$(this).addClass("active");
+	});
+	 
+});
+</script>
+ 
+</body>
+</html>

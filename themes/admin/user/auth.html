@@ -1,0 +1,43 @@
+{include file="header.html"}
+<div class="row">
+	<div class="span12">
+    <ul class="nav nav-tabs">
+    	<li><a href="{$appadmin}?m=user">用户管理</a></li>
+        <li><a href="{$appadmin}?m=user&a=add">用户添加</a></li>
+        <li class="active"><a href="{$appadmin}?m=user&a=auth">实名认证</a></li>
+    </ul>
+    <h3><small>共{$rscount}条记录</small></h3>
+     
+    <table class="table table-bordered" width="100%">
+    	<tr>
+        <td width="11%">ID</td>
+        <td>账号</td>
+        <td width="17%">昵称</td>
+        <td width="10%">账户余额</td>
+        <td width="8%">金币</td>
+        <td width="8%">积分</td>
+        <td width="10%">状态</td>
+        <td>注册时间</td>
+        <td width="10%">类型</td>
+        <td width=" ">操作</td>
+        </tr>
+       {foreach item=c from=$data}
+       <tr>
+        <td>{$c.userid}</td>
+        <td>{$c.username}</td>
+        <td>{$c.nickname}</td>
+        <td>{$c.money}</td>
+        <td width="8%">{$c.gold}</td>
+        <td width="8%">{$c.grade}</td>
+        <td>{if $c.status eq 1}已通过{elseif $c.status eq 10}未审核{else}已禁止{/if}</td>
+        <td>{$c.dateline|date:Y-m-d}</td>
+        <td>{$user_type_list[$c.user_type]}</td>
+        <td> <a href="{const.APPADMIN}?m=user&a=add&userid={$c.userid}">编辑</a> </td>
+        </tr>
+       {/foreach} 
+    
+    </table>
+    {$pagelist}
+    </div>
+</div>
+{include file="footer.html"}
