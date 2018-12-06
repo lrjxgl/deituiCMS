@@ -9,7 +9,7 @@ class commentControl extends skymvc{
 		 
 		$tablename=get_post("tablename","h");
 		if(!in_array($tablename,$this->tables)){
-			$this->goAll("参数出错",1);
+			//$this->goAll("参数出错",1);
 		}
 		$table=$tablename;
 		$tableComment=$tablename."_comment";
@@ -79,6 +79,7 @@ class commentControl extends skymvc{
 		$per_page=$per_page<$rscount?$per_page:0;
 		$this->smarty->goAssign(array(
 			"list"=>$data,
+			"rscount"=>$rscount,
 			"per_page"=>$per_page,
 			"comment_object_id"=>$objectid,
 			"comment_tablename"=>$table,
@@ -93,12 +94,13 @@ class commentControl extends skymvc{
 		$id=get_post("id","i");
 		$tablename=get_post("tablename","h");
 		if(!in_array($tablename,$this->tables)){
-			$this->goAll("参数出错".$tablename,1);
+			//$this->goAll("参数出错".$tablename,1);
 		}
 		$table=$tablename;
 		$tableComment=$tablename."_comment";
 		$data=M($tableComment)->postData();
-		
+		$fields=M($tablename)->getFields();
+		$idField=$fields[0]['Field'];
 		if($id){
 			
 			$row=M($tableComment)->selectRow("id=".$id);
@@ -110,10 +112,12 @@ class commentControl extends skymvc{
 		}else{
 			$data['userid']=$userid;
 			$row=M($table)->selectRow(array(
-				"where"=>" id=".$data['objectid'],
+				"where"=>" {$idField}=".$data['objectid'],
 				 
 			));
-			M($table)->changenum("comment_num",1,"id=".$data['objectid']);
+			$fields=M($tablename)->getFields();
+			$idField=$fields[0]['Field'];
+			M($table)->changenum("comment_num",1,"{$idField}=".$data['objectid']);
 			$data['ip']=ip();
 			$data['ip_city']=ipcity($data['ip'],1);
 		 
@@ -128,6 +132,7 @@ class commentControl extends skymvc{
 				M("notice")->add(array(
 					"content"=>"有人评论了你：".$data['content'],
 					"userid"=>intval($row['userid']),
+					"template_id"=>"comment",
 					"linkurl"=>array(
 						"path"=>"/",
 						"m"=>$tablename,
@@ -162,7 +167,7 @@ class commentControl extends skymvc{
 		
 		$tablename=get_post("tablename","h");
 		if(!in_array($tablename,$this->tables)){
-			$this->goAll("参数出错",1);
+			//$this->goAll("参数出错",1);
 		}
 		
 		$tableComment=$tablename."_comment";
@@ -207,8 +212,10 @@ class commentControl extends skymvc{
 		$id=get("id","i");
 		$tablename=get("tablename","h");
 		if(!in_array($tablename,$this->tables)){
-			$this->goAll("参数出错",1);
-		}	
+			//$this->goAll("参数出错",1);
+		}
+		$fields=M($tablename)->getFields();
+		$idField=$fields[0]['Field'];
 		$tableComment=$tablename."_comment";
 		$row=M($tableComment)->selectRow("id=".$id);
 		$userid=M("login")->userid;
@@ -221,7 +228,7 @@ class commentControl extends skymvc{
 		M($tableComment)->update(array(
 			"status"=>11
 		),"id=".$id);
-		M($tablename)->changenum("comment_num",-1,"id=".$row['objectid']);
+		M($tablename)->changenum("comment_num",-1,"{$idField}=".$row['objectid']);
 		$this->goAll("删除成功");
 	}
 	 
@@ -230,7 +237,7 @@ class commentControl extends skymvc{
 		$id=get("id","i");
 		$tablename=get("tablename","h");
 		if(!in_array($tablename,$this->tables)){
-			$this->goAll("参数出错",1);
+			//$this->goAll("参数出错",1);
 		}	
 		$tableComment=$tablename."_comment";
 		$row=M($tableComment)->selectRow("id=".$id);

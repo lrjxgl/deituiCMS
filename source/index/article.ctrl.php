@@ -34,7 +34,131 @@
 			);
 			$this->smarty->display("article/index.html");
 		}
+		public function onList(){
+			$where=" status=2  ";
+			$type=get_post('type','h');
+			$parent=$cat_2nd=$cat_3nd=array();
+			$catid=get('catid','i');
+			if($catid){	
+				$cat=M("category")->selectRow(array("where"=>"catid=$catid"));
+				$seo=array(
+					"title"=>$cat['title'],
+					"description"=>$cat['description']
+				);
+				$cat_top=$cat;
+				if($cat['pid']){
+					
+					$parent=M("category")->selectRow(array("where"=>"catid=".$cat['pid']));
+					if($cat['pid']){
+						$parent=M("category")->selectRow(array("where"=>array("catid"=>$cat['pid'])));
+						if($parent['pid']){
+							$cat_2nd=$parent;
+							$cat_top=M("category")->selectRow(array("where"=>array("catid"=>$parent['pid'])));
+							$cat_3nd=$cat;
+						}else{
+							$cat_top=$parent;
+							$cat_2nd=$cat;
+						}			 
+					}
+					
+				}
+			
+				$children=M("category")->children($catid);
+				if(empty($children)){
+					if($cat['level']>2){
+						$children=M("category")->children($parent['catid']);
+					}
+				}
+				$tpl=M("category")->getTpl($cat['catid'],1);
+				$cids=M("category")->id_family($catid);
+				if(!empty($cids)){
+					$where.=" AND catid in("._implode($cids).") ";
+				}else{
+					$where.=" AND 1=2 ";
+				}
+				
+				$catlist=M("category")->children($catid) ;
+				if(empty($catlist)){
+					$catlist=M("category")->children($cat['pid']) ;
+				}
+			}elseif($type){
+				$catlist=M("category")->select(array(
+					"where"=>"type='".$type."' AND pid=0 "
+				));
+			}else{
+				$catlist=M("category")->children(0) ;
+			}
+			
+			 
+			$rscount=true;
+			
+			
+			$url="/index.php?m=list&catid=".$catid;
+			
+			$keyword=get('keyword','h');
+			if($keyword){
+				$where.=" AND title like '%".$keyword."%' ";
+				$url.="&keyword=".urlencode($keyword);
+			}
+			
+			$vtpl="article/list.html";
+			$tpl=$tpl?$tpl:$vtpl;
+			$orderby=get('orderby','h');
+			$order=" id DESC";
+			if($orderby){
+				switch($orderby){
+					 
+					case "price":
+							$order=" price ASC";
+						break;
+					case  "id":
+							$order=" id DESC";
+						break;
+					case  "sold_num":
+							$order=" sold_num DESC";
+						break;
+
+					default :
+							$order=" id DESC";
+						break;
+				}
+				$url.="&orderby=".$orderby;
+			}
+			$start=get_post('per_page','i');
+			$limit=20;
+			 
+			$option=array(
+				"where"=>$where,
+				"start"=>$start,
+				"limit"=>$limit,
+				"order"=>$order
+			);
+			$data=M("article")->Dselect($option,$rscount);
+			 
+			$pagelist=$this->pagelist($rscount,$limit,$url);
 		
+			
+			
+		
+		 	//end分页
+			$per_page=$start+$limit;
+			$per_page=$per_page>=$rscount?0:$per_page;
+			$this->smarty->goassign(array(
+				"list"=>$data,
+				"rscount"=>$rscount,
+				"pagelist"=>$pagelist,
+				"catlist"=>$catlist,
+				"per_page"=>$per_page,
+				"cat"=>$cat,
+				"children"=>$children,
+				"parent"=>$parent,
+				"cat_top"=>$cat_top,
+				"cat_2nd"=>$cat_2nd,
+				"cat_3nd"=>$cat_3nd,
+				"seo"=>$seo
+			));
+			$this->smarty->display($tpl);
+		}
 		public function onShow(){
 			$id=get_post("id","i");
 			$data=M("article")->selectRow(array("where"=>"id={$id}"));
@@ -43,23 +167,9 @@
 			}
 			$data['timeago']=timeago(strtotime($data['createtime']));
 			$cat=M("category")->selectRow("catid=".$data['catid']);
-			$shopid=get("shopid","i");
+		 
 			$userid=M("login")->userid;
-			if($shopid){
-				$shop=M("shop")->selectRow(array(
-					"where"=>" shopid=".$shopid,
-					"fields"=>"shopid,logo,shopname"
-				));
-				
-				$shop['isfav']=0;
-				if($userid){
-					$fav=M("fav")->selectRow("tablename='shop' AND object_id=".$shopid." AND userid=".$userid);
-					if($fav){
-						$shop['isfav']=1;
-					}
-				}
-				$shop['logo']=images_site($shop['logo']);
-			}
+			
 			$data['content']=M("article_data")->selectOne(array(
 				"where"=>" id=".$id,
 				"fields"=>"content"
@@ -73,7 +183,7 @@
 			}
 			//是否收藏
 			$isfav=0;
-			$fav=M("fav")->selectRow("tablename='article' AND userid=".$userid." AND object_id=".$id);
+			$fav=M("fav")->selectRow("tablename='article' AND userid=".$userid." AND objectid=".$id);
 			if($fav){
 				$isfav=1;
 			}
@@ -81,21 +191,31 @@
 				"title"=>$data['title'],
 				"description"=>$data['description']
 			);
-			 
+			if(!empty($data['imgsdata'])){
+				$imgs=explode(",",$data['imgsdata']);
+				foreach($imgs as $v){
+					$imgsdata[]=array(
+						"trueimgurl"=>images_site($v),
+						"imgurl"=>$v
+					);
+				}
+			} 
 			$this->smarty->goAssign(array(
 				"seo"=>$seo,
 				"islove"=>$islove,
 				"isfav"=>$isfav,
 				"data"=>$data,
-				"shop"=>$shop,
-				"shopid"=>$shopid,
+				 
 				"cat"=>$cat,
-				"comment_object_id"=>$id,
+				"comment_objectid"=>$id,
 				"comment_tablename"=>"article",
 				"comment_f_userid"=>$data['shopid'],
-				 
+				"imgsdata"=>$imgsdata 
 			));
-			$this->smarty->display("article/show.html");
+			$tpl="article/show.html";
+			$tpl=$data['tpl']?$data['tpl']:$tpl;
+		 
+			$this->smarty->display($tpl);
 		}
 		
 	}

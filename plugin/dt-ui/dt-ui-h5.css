@@ -6,18 +6,10 @@
  page{
 	 
  }
- 
  html,body{
 	 margin: 0;
 	 padding: 0;
 	 background-color: #efeff4;
-}
-.fullBody{
-	position: absolute;
-	top: 0;
-	left:0;
-	right: 0;
-	bottom: 0;
 }
 p,ol,ul,li{
 	margin: 0;
@@ -123,6 +115,7 @@ image{
  .f16{font-size: 16px!important;}
  .f14{font-size:14px!important;}
  .f12{font-size: 12px!important;}
+ .fw-600{font-weight:600;}
  /***col1 2 3 内容字体差异 主标题 副标题 描述****/
  .cl1{color: #323232!important;}
  .cl2{color: #646464!important;}
@@ -479,9 +472,7 @@ button{
 	border: 0;
 }
  .btn {
- 	padding: 0px 20px;
- 	line-height: 34px;
- 	height: 36px;
+ 	padding: 18px 20px;
  	background-color: #007AFF;
  	color: #fff;
  	font-size: 14px;
@@ -489,30 +480,28 @@ button{
  	cursor: pointer;
  	border-radius: 10px;
  	text-align: center;
+	line-height: 1.5;
  }
 
  .btn-small {
- 	padding: 0px 12px;
+ 	padding: 8px 12px;
  	font-size: 14px;
  	background-color: #007AFF;
  	color: #fff;
  	display: inline-flex;
  	cursor: pointer;
- 	line-height: 28px;
- 	height: 30px;
+ line-height: 1.5;
  	border-radius: 5px;
  }
 
  .btn-mini {
- 	padding: 0px 2px;
+ 	padding: 4px 2px;
  	font-size: 12px;
  	background-color: #007AFF;
  	color: #fff;
  	display: inline-flex;
- 	
  	cursor: pointer;
- 	line-height: 20px;
- 	height: 22px;
+	line-height: 1.5;
  }
  .btn-icon{
 	 flex-direction: row;
@@ -527,7 +516,8 @@ button{
  	margin: 20px auto;
  	background-color: #007bff;
  	text-align: center;
- 	line-height: 40px;
+ 	padding: 12px 0px;
+	line-height: 1.5;
  	color: #fff !important;
  	font-size: 16px;
  	border-radius: 6px;
@@ -539,6 +529,7 @@ button{
 .btn-group{
 	display: flex;
 	flex-direction: row;
+	justify-content: center;
 }
  .btn-primary {
  	color: #fff;
@@ -577,7 +568,7 @@ button{
  }
 
  .btn-light {
- 	color: #212529;
+ 	color: #999;
  	background-color: #f8f9fa;
  	border-color: #f8f9fa;
  }
@@ -660,7 +651,20 @@ button{
  	background-color: transparent !important;
 	border: 0;
  }
+ .btn-round {
+ 	width: 60px;
+ 	height: 60px;
+ 	background-color: #f60;
+ 	align-items: center;
+ 	justify-content: center;
+ 	border-radius: 50%;
+ 	color: #fff;
+ 	font-family: iconfont;
+ }
  
+ .btn-round:before {
+ 	font-size: 24px;
+ }
  /****点赞 喜欢按钮****/
 
  .btn-love {
@@ -958,8 +962,7 @@ button{
 .input-flex-note{
 	margin-left:3px;
 	color:#666;
-	justify-content:center;
-	
+	justify-content:center;	
 }
 .input-flex-btn {
 	width: 100px;
@@ -1219,6 +1222,7 @@ button{
 	font-family: iconfont;
 	font-style: normal;
 	color: #646464;
+	font-size: 18px;
 }
 .row-item:after{
 	display: inline-flex;
@@ -1226,6 +1230,10 @@ button{
 	content: "\e6a3";
 	color: #999;
 	 
+}
+.row-item-title{
+	flex: 1;
+	font-size: 16px;
 }
 .row-item-text{
 	cursor:initial;
@@ -1303,6 +1311,7 @@ button{
 }
 .mtlist-img{
 	max-width: 100%;
+	height: auto;
 }
 .mtlist-item-money{
 	display: flex;
@@ -1438,14 +1447,13 @@ button{
 	margin-bottom: 5px;
 }
 .m-navPic-icon:before{
-	font-size: 20px;
+	font-size: 30px;
 	color: #ed6d53;
 }
 .m-navPic-title{
 	font-size: 14px;
 	color: #323232;
-}
-.alert-mask{
+}.alert-mask{
 	background-color: #333;
 	opacity: 0.2;
 	position: fixed;
@@ -1638,6 +1646,7 @@ button{
 	 padding-bottom: 7px;
 	 align-items: center;
 	 z-index: 998;
+	 box-shadow: 0 1px 6px #ccc;
  }
  
  .header-logo{
@@ -1696,26 +1705,10 @@ button{
 	align-items:center;
 
  }
- .header-back-fixed{
-	 position: fixed;
-	 left: 0px;
-	 top: 5px;	 
-	 width: 40px;
-	 height: 40px;
-	 border-radius: 50%;
-	 line-height: 40px;
-	 color: #646464;
-	 font-size: 20px;
-	 text-align: center;
-	 cursor: pointer;
- }
- .header-back-fixed:after{
-	 font-family: "iconfont" !important;
-	 content: "\e679";
- }
  .header-back{
 	 margin-right: 5px;
 	 cursor: pointer;
+	 position: absolute;
  }
  .header-back:after{
 	 font-family: "iconfont" !important;
@@ -1728,12 +1721,30 @@ button{
 		display: inline-flex;
 		font-size: 20px;
  }
+ .header-back-fixed{
+ 	position: fixed;
+ 	left: 0px;
+ 	top: 5px;	 
+ 	width: 40px;
+ 	height: 40px;
+ 	border-radius: 50%;
+ 	line-height: 40px;
+ 	color: #646464;
+ 	font-size: 20px;
+ 	text-align: center;
+	cursor: pointer;
+ }
+ .header-back-fixed:after{
+ 	font-family: "iconfont" !important;
+ 	content: "\e679";
+ }
  .header-title{
 	 color: #333;
 	 font-size: 16px;
 	 text-align: center;
 	 flex: 1;
 	 line-height: 30px;
+	 padding:0px 30px;
  }
  .header-right{
  	margin-right: 5px;
@@ -1849,7 +1860,19 @@ button{
 	color: #007bff;
 }
 
-
+.footerBox{
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	z-index: 100;
+	background-color: #fafafa;
+	border-top: 1px solid #eee;
+	font-size: 14px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
  
 /*****详情******/
 .d-userbox{
@@ -1918,6 +1941,7 @@ button{
 	 align-items: center;
 	 font-size: 14px;
 	 margin-right: 5px;
+	 color: #646464;
  }
  .row-box-more:after{
 	 display: inline-flex;
@@ -1946,6 +1970,12 @@ button{
  .paylist-item-active{
  	color: #f60;
  	border: 1px solid #f60;
+ }
+ .emptyData{
+	 padding: 20px;
+	 font-size: 20px;
+	 text-align: center;
+	 color: #646464;
  }/****tabs-border***/
 .tabs-border{
 	display: flex;
@@ -1954,7 +1984,7 @@ button{
 	line-height: 36px;
 	padding: 0px 5px;
 	background-color: #fff;
-	cursor: pointer;
+ 
 }
 .tabs-border-item{
 	flex: 1;

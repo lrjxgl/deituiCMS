@@ -1,0 +1,9 @@
+<FilesMatch "\.(bak|inc|lib|sh|tpl|lbi|dwt|html)$">
+    order deny,allow
+    deny from all
+</FilesMatch>
+
+RewriteEngine on
+RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization},last]
+ 
+

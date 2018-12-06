@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+
+	{include file="head.html"}
+
+	<body>
+		<div class="header">
+			<div class="header-back goBack"></div>
+			<div class="header-title">绑定账号</div>
+		</div>
+		<div class="header-row"></div>
+
+		<div class="main-body">
+			<div>
+				<div class="pd-10">尊敬的{$ouser.nickname}，感谢您首次使用微信登陆。如有账号请绑定，若无账号，可直接创建新账号。</div>
+				<div class="btn-group">
+					<div class="btn-small js-bindBtn mgr-20">绑定账号</div>
+
+					<div class="btn-small js-foundBtn">创建新账号</div>
+				</div>
+			</div>
+			<div class="modal-group js-bindModal">
+				<div class="modal-mask"></div>
+				<!--绑定账号弹窗-->
+				<div class="modal ">
+					<div class="modal-header">
+						<div class="modal-title">绑定已有账号</div>
+						<div class="modal-close icon-close"></div>
+					</div>
+					<div class="modal-body">
+						<div class="input-flex">
+
+							<div class="input-flex-label">手机号码</div>
+							<input type="text" id="telephone" placeholder="请输入手机号码" class="input-flex-text js-sendSms" />
+						</div>
+						<div class="input-flex mgb-10">
+
+							<div class="input-flex-label">验&ensp;证&ensp;码</div>
+							<input type="text" class="input-flex-text" id="yzm" placeholder="请输入验证码" />
+							<div class="input-flex-btn btn-light js-sendBtn">获取验证码</div>
+						</div>
+						<div class="btn-group">
+							<div class="btn-small mgr-10" id="bindSubmit">确认绑定</div>
+							<div class="btn-small modal-cancel">取消</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--询问确认注册新账号-->
+			<div class="modal-group js-foundModal">
+				<div class="modal-mask"></div>
+				<div class="alert">
+					<div class="alert-header">
+						确认注册
+					</div>
+					<div class="alert-msg">
+						确认创建新账号？
+					</div>
+					<div class="alert-ft">
+						<div class="alert-ft-btn alert-ft-success" id="createSubmit">确定</div>
+						<div class="alert-ft-btn alert-ft-fail modal-cancel">取消</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		{include file="footer.html"}
+
+		<script type="text/javascript">
+		 
+			$(function() {
+				//绑定账号
+				$('.js-bindBtn').click(function() {
+					$('.js-bindModal').show();
+					 
+				})
+				//监听输入框，输入事件
+				$('.js-sendSms').keyup(function() {
+					if ($(this).val() != '') {
+						$('.js-sendBtn').removeClass('disabledCls')
+					} else {
+						$('.js-sendBtn').addClass('disabledCls')
+					}
+				})
+				//创建新账号
+				$('.js-foundBtn').click(function() {
+					$('.js-foundModal').show();
+					 
+				})
+				 
+				$(document).on("click", ".js-sendBtn", function() {
+					var telephone = $("#telephone").val();
+					$.get("/index.php?m=openlogin&a=sendsms&ajax=1", {
+						telephone: telephone
+					}, function(res) {
+						skyToast(res.message);
+						if (!res.error) {
+							smsCountDown.init();
+						}
+					}, "json")
+				})
+
+				$(document).on("click", "#bindSubmit", function() {
+					var telephone = $("#telephone").val();
+					var yzm = $("#yzm").val();
+					$.post("/index.php?m=openlogin&a=bindSave&ajax=1", {
+						telephone: telephone,
+						yzm: yzm
+					}, function(res) {
+						skyToast(res.message);
+						if (!res.error) {
+							window.location = "/";
+						}
+					}, "json")
+				})
+				$(document).on("click", "#createSubmit", function() {
+
+					$.get("/index.php?m=openlogin&a=createuser&ajax=1", function(res) {
+						skyToast(res.message);
+						if (!res.error) {
+							window.location = "/";
+						}
+					}, "json")
+				})
+
+			})
+		</script>
+	</body>
+
+</html>

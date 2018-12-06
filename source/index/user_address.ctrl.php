@@ -69,33 +69,10 @@
 			if($id){
 				$data=M("user_address")->selectRow("id={$id} AND userid=".M("login")->userid);
 				if(empty($data)) $this->goall("数据不存在",1);
-				$city_list=M("district")->dist_list(array("where"=>"upid=".$data['province_id']." "));
-				$town_list=M("district")->dist_list(array("where"=>"upid=".$data['city_id']." "));
-				
-				$ids=array($data['province_id'],$data['city_id'],$data['town_id']);
-				$rss=M("district")->dist_list(array(
-					"where"=>" id in("._implode($ids).") "
-				));
-				$pct="";
-				if(isset($rss[$data['province_id']])){
-					$pct.=$rss[$data['province_id']];
-				}
-				if(isset($rss[$data['city_id']])){
-					$pct.=$rss[$data['city_id']];
-				}
-				if(isset($rss[$data['town_id']])){
-					$pct.=$rss[$data['town_id']];
-				}
-				
 			}
-			$province_list=M("district")->dist_list(array("where"=>"upid=".DISTRICTID,"start"=>0,"limit"=>1000000));
 			
 			$this->smarty->goassign(array(
 				"data"=>$data,
-				"province_list"=>$province_list,
-				"city_list"=>$city_list,
-				"town_list"=>$town_list,
-				"pct"=>$pct
 			));
 			$this->smarty->display("user_address/add.html");
 		}

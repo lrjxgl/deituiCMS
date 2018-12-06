@@ -1,42 +1,31 @@
 <!DOCTYPE html>
 <html>
-{include file="head.html"}
-<body> 
- 
-<header class="mui-bar mui-bar-nav">
-    <a href="/index.php?m=user" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-    <h1 class="mui-title">充值记录</h1>
-</header>
- 
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">充值记录</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			 
+			{if !$rscount}
+				<div class="emptyData">暂无充值记录</div>
+			 
+			{else}
+				{foreach item=item from=$list}
+				<div class="row-box mgb-5">
+					<div class="flex  bd-mp-5">
+						<div class="flex-1 cl-money">￥{$item.money}</div>
+						<div class="cl3">{$item.timeago}</div>
+						<div class="btn-mini btn-outline-success pdl-5 pdr-5  mgl-10">{$item.status_name}</div>
+					</div>
+					<div class="cl3">{$item.orderinfo}</div>
 
-    <div class="mui-content">
- 
- 
-<div class="uclist">
- {foreach item=c from=$data}
-                  <div class="item">
-                    <div class="hd">
-                    		<span class="left">状态：{if $c.status eq 1}成功{else}失败{/if}</span> 
-                            <span class="right">订单：{$c.orderno}</span>
-                    </div>
-                    <div class="t">
-                    	<span class="left">{$c.dateline|date:Y-m-d H:i:s}</span> 
-                        <span class="right">{if $c.pay_type eq 'alipay'}支付宝{elseif $c.pay_type eq 'tenpay'}财付通{elseif $c.pay_type eq 'mibao'}密保卡{else}直接充值{/if} ￥{$c.money}元
-                        </span>
-                    </div>
-                     
-                  
-                    
-                    <div class="content">{$c.orderinfo}</div>
-                  </div>
-                  {/foreach}
-
- 
-                
-</div>
-<div class="pages">{$pagelist}</div>
-</div>
- 
- 
-</body>
+				</div>
+				{/foreach}
+			{/if}
+		</div>
+		{include file="footer.html"}
+	</body>
 </html>

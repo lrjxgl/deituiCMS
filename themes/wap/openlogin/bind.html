@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+	{include file="head.html"}
+
+	<body class="bg-fff">
+		<header class="mui-bar mui-bar-nav headWhite">
+		    <a class="goBack mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">绑定账号</h1>
+		</header>
+		<div class="mui-content bg-fff">
+			<div>
+				<div class="pad06">尊敬的{$ouser.nickname}，感谢您首次使用微信登陆创无纸境。如有账号请绑定，若无账号，可直接创建新账号。</div>
+				<div class="bigBtnBox">
+					<button class="js-bindBtn">绑定账号</button>
+				</div>
+				<div class="bigBtnBox">
+					<button class="js-foundBtn">创建新账号</button>
+				</div>
+			</div>
+			<div class="maskCls disNone"></div>
+			<!--绑定账号弹窗-->
+		    <div class="bindPopup disNone js-bindPopup">
+		    	<div class="icon-text-input-row">
+		    		<div class="iconfont icon-shouji"></div>
+		    		<div>手机号码</div>
+		    		<input type="text" id="telephone" placeholder="请输入手机号码" class="js-sendSms" />
+		    	</div>
+		    	<div class="icon-text-input-row">
+		    		<div class="iconfont icon-yanzhengma"></div>
+		    		<div>验&ensp;证&ensp;码</div>
+		    		<input type="text" id="yzm" placeholder="请输入验证码" />
+		    		<div class="sendCode disabledCls js-sendBtn">获取验证码</div>
+		    	</div>
+		    	<div class="popupBtn">
+		    		<div class="btn" id="bindSubmit">确认绑定</div>
+		    		<div class="btn js-close">取消</div>
+		    	</div>
+		    </div>
+		    <!--询问确认注册新账号-->
+		    <div class="confirmPopup disNone js-foundPopup">
+		    	<div class="titleCls">确认注册</div>
+		    	<div class="msg">确认创建新账号？</div>
+		    	<div class="popupBtn">
+		    		<div class="btn" id="createSubmit">确定</div>
+		    		<div class="btn js-close">取消</div>
+		    	</div>
+		    </div>
+		</div>
+		{include file="footer.html"}
+		 
+		<script type="text/javascript">
+			mui.init()
+			$(function(){
+				//绑定账号
+				$('.js-bindBtn').click(function(){
+					$('.maskCls').removeClass('disNone');
+					$('.js-bindPopup').removeClass('disNone')
+				})
+				//监听输入框，输入事件
+				$('.js-sendSms').keyup(function(){
+					if($(this).val()!=''){
+						$('.js-sendBtn').removeClass('disabledCls')
+					}else{
+						$('.js-sendBtn').addClass('disabledCls')
+					}
+				})
+				//创建新账号
+				$('.js-foundBtn').click(function(){
+					$('.maskCls').removeClass('disNone');
+					$('.js-foundPopup').removeClass('disNone')
+				})
+				//取消创建
+				$('.js-close').click(function(){
+					$('.maskCls').addClass('disNone');
+					$('.js-foundPopup,.js-bindPopup').addClass('disNone')
+				})
+				$(document).on("click",".js-sendBtn",function(){
+					var telephone=$("#telephone").val();
+					$.get("/index.php?m=openlogin&a=sendsms&ajax=1",{
+						telephone:telephone
+					},function(res){
+						mui.toast(res.message);
+						if(!res.error){
+							smsCountDown.init();
+						}
+					},"json")
+				})
+
+				$(document).on("click","#bindSubmit",function(){
+					var telephone=$("#telephone").val();
+					var yzm=$("#yzm").val();
+					$.post("/index.php?m=openlogin&a=bindSave&ajax=1",{
+						telephone:telephone,
+						yzm:yzm
+					},function(res){
+						mui.toast(res.message);
+						if(!res.error){
+							window.location="/";
+						}
+					},"json")
+				})
+				$(document).on("click","#createSubmit",function(){
+					 
+					$.get("/index.php?m=openlogin&a=createuser&ajax=1",function(res){
+						mui.toast(res.message);
+						if(!res.error){
+							window.location="/";
+						}
+					},"json")
+				})
+				
+			})
+			
+		</script>
+	</body>
+
+</html>

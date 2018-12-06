@@ -128,6 +128,9 @@ class userControl extends skymvc{
 		if(empty($user)){
 			$this->goall("请先绑定账号",1,0,"/index.php?m=register&a=openreg");
 		}
+		$this->smarty->goAssign(array(
+			"user"=>$user
+		));
 		$this->smarty->display("user/password.html");
 	}
 	
@@ -142,7 +145,7 @@ class userControl extends skymvc{
 		}
 		$data['salt']=rand(1000,9999);
 		$data['password']=umd5(post('password','h').$data['salt']);
-		M("user")->update($data,"userid=".$user['userid']);
+		M("user_password")->update($data,"userid=".$user['userid']);
 		$this->goall("密码修改成功",0);
 	}
 	
@@ -158,17 +161,16 @@ class userControl extends skymvc{
 	}
 	
 	public function onPayPwdSave(){
-		$oldpassword=post('oldpassword','h');
+		$password=post('password','h');
+		$paypwd=post("paypwd");
 		$user=M("user_password")->selectRow(array("where"=>"userid=".$this->userid));
-		if($user['paypwd'] && $user['paypwd']!=umd5($oldpassword)){
-			$this->goall("旧密码出错",1);
+		if($user['password']!=umd5($password.$user['salt'])){
+			$this->goall("登录密码出错",1);
 		}
-		if(post('password')!=post('password2')){
-			$this->goall("两次输入的密码不一致",1);
-		}
+		
 		 
-		$data['paypwd']=umd5(post('password','h'));
-		M("user")->update($data,"userid=".$user['userid']);
+		$data['paypwd']=umd5($paypwd);
+		M("user_password")->update($data,"userid=".$user['userid']);
 		$this->goall("支付密码修改成功");
 	}
 	

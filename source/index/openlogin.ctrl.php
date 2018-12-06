@@ -10,10 +10,16 @@ class openloginControl extends skymvc{
 	}
 	
 	public function onBind(){
-		if(!isset($_SESSION['ssopenlogin'])){
+		$openToken=get("openToken");
+		if(!$id=cache()->get($openToken)){
+			if(isset($_SESSION['ssopenlogin'])){
+				$id=intval($_SESSION['ssopenlogin']['id']);
+			}
+		} 
+		if(!$id){
 			$this->goAll("暂无权限",1);
 		}
-		$id=intval($_SESSION['ssopenlogin']['id']);
+	 
 		$ouser=M("openlogin")->selectRow("id=".$id);
 		$this->smarty->goAssign(array(
 			"ouser"=>$ouser
@@ -42,7 +48,7 @@ class openloginControl extends skymvc{
 			"tpl"=>"code"
 			
 		);
-		$res=M("email")->sendSms($telephone,$content);
+		$res=M("sms")->sendSms($telephone,$content);
 		
 		$key="openlogin_binduser".$telephone.$yzm;
 		
@@ -57,20 +63,27 @@ class openloginControl extends skymvc{
 	
 	/**绑定已有账号**/
 	public function onBindSave(){
-		if(!isset($_SESSION['ssopenlogin'])){
+		$openToken=get("openToken");
+		if(!$id=cache()->get($openToken)){
+			if(isset($_SESSION['ssopenlogin'])){
+				$id=intval($_SESSION['ssopenlogin']['id']);
+			}
+		} 
+		if(!$id){
 			$this->goAll("暂无权限",1);
 		}
+		$ouser=M("openlogin")->selectRow("id=".$id);
 		$yzm=get_post('yzm','h');
 		$telephone=get_post('telephone','h');
 		$key="openlogin_binduser".$telephone.$yzm;
 		if(!cache()->get($key)){
 			$this->goAll("手机验证码出错",1);
 		}
-		$id=intval($_SESSION['ssopenlogin']['id']);
+ 
 		//验证短信
 		$user=M("user")->selectRow(array(
 			"where"=>" telephone='".$telephone."' ",
-			"fields"=>" userid,nickname,user_head,gender,password"
+			"fields"=>" userid,nickname,user_head,gender"
 		));
 		if(empty($user)){
 			$this->goALl("账号不存在",1);
@@ -80,19 +93,35 @@ class openloginControl extends skymvc{
 			"userid"=>$user['userid'],
 		),"id=".$id);
 		M('login')->set("ssuser",$user);
-		$authcode=jiami($user['userid']."|".umd5(substr($user['password'],0,12)));
+		$puser=M("user_password")->selectRow("userid=".$user['userid']);
+		$auth=M("login")->setCode($puser);
+		$authcode=$auth['authcode'];
 		setcookie("authcode",$authcode,time()+3600000,"/",DOMAIN);
-		$this->goAll("绑定成功");
+		$rdata=array(
+			"authcode"=>$authcode,
+			"authcodeLong"=>$auth['authcodeLong'],
+			"openid"=>$ouser['openid']	
+		);
+		$this->goAll("绑定成功",0,$rdata);
 		//header("Location: /index.php");
 	}
 	/***创建新账号***/
 	public function onCreateUser(){
 		
-		if(!isset($_SESSION['ssopenlogin'])){
+		$openToken=get("openToken");
+		if(!$id=cache()->get($openToken)){
+			if(isset($_SESSION['ssopenlogin'])){
+				$id=intval($_SESSION['ssopenlogin']['id']);
+			}
+		} 
+		if(!$id){
 			$this->goAll("暂无权限",1);
 		}
-		$id=intval($_SESSION['ssopenlogin']['id']);
 		$ouser=M("openlogin")->selectRow("id=".$id);
+		if($ouser['userid']){
+			
+			$this->goAll("当前账号已经绑定",1);
+		}
 		//创建账号
 		$nickname=$ouser['nickname'];
 		//生成账户
@@ -106,11 +135,7 @@ class openloginControl extends skymvc{
 		$data=array(
 			"nickname"=>$u,
 			"username"=>$u, 
-			"xfrom"=>$ouser['xfrom'],
-			"openid"=>$ouser['openid'],
-			"createtime"=>date("Y-m-d H:i:s"),
-			
-			"lastfeed"=>time(),			
+			"createtime"=>date("Y-m-d H:i:s"),		
 		);
 		if($ouser['user_head']){
 			$data['user_head']=$ouser['user_head'];
@@ -126,11 +151,27 @@ class openloginControl extends skymvc{
 			"userid"=>$userid
 		),"id=".$id);
 		M("invite")->invite_reg($userid,$data['username']);
-		$user=M("user")->getRow("SELECT * FROM ".table('user')." WHERE userid='$userid' ");
+		$user=M("user")->getUser($userid);
 		M('login')->set("ssuser",$user);
-		$authcode=jiami($user['userid']."|".umd5(substr($user['password'],0,12)));
+		//密码
+		$salt=rand(1000,9000);
+		$password=umd5(time().$salt);
+		$puser=array(
+			"userid"=>$userid,
+			"password"=>$password,
+			"salt"=>$salt
+		);
+		M("user_password")->insert($puser);
+		
+		$auth=M("login")->setCode($puser);
+		$authcode=$auth['authcode'];
 		setcookie("authcode",$authcode,time()+3600000,"/",DOMAIN);
-		$this->goAll("账号创建成功");
+		$rdata=array(
+			"authcode"=>$authcode,
+			"authcodeLong"=>$auth['authcodeLong'],
+			"openid"=>$ouser['openid']	
+		);
+		$this->goAll("账号创建成功",0,$rdata);
 	}
 	
 }

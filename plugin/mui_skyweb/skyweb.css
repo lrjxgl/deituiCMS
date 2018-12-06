@@ -38,6 +38,9 @@
 	color: #333;
 	
 }
+[gourl]{
+	cursor: pointer;
+}
 .flex{
 	display: flex;
 }

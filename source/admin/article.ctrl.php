@@ -98,17 +98,28 @@
 		
 		public function onAdd(){
 			$id=get_post("id","i");
+			$imgsdata=array();
 			if($id){
 				$data=M("article")->selectRow(array("where"=>"id={$id}"));
 				$data['content']=M("article_data")->selectOne(array(
 					"where"=>" id=".$id,
 					"fields"=>"content"
 				));
+				if(!empty($data['imgsdata'])){
+					$imgs=explode(",",$data['imgsdata']);
+					foreach($imgs as $v){
+						$imgsdata[]=array(
+							"trueimgurl"=>images_site($v),
+							"imgurl"=>$v
+						);
+					}
+				}
 			}
 			$catlist=M("category")->children(0,"article");
 			$this->smarty->goassign(array(
 				"data"=>$data,
-				"catlist"=>$catlist
+				"catlist"=>$catlist,
+				"imgsdata"=>$imgsdata
 			));
 			$this->smarty->display("article/add.html");
 		}

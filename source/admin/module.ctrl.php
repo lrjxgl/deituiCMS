@@ -82,12 +82,15 @@ class moduleControl extends skymvc{
 		$mod_dir=post('mod_dir','h');
 		$mod_table=post('mod_table','h');
 		$mod_info=post('mod_info','h');
+		if(substr($mod_table,0,4)!='mod_'){
+			$this->goAll("请确保主表是以mod_开头",1);
+		}
 		//检测表名
 		if(M("module")->selectRow(array("where"=>" tablename='".$mod_table."'"))){
-			$this->gomsg("主表已经存在了");
+			$this->goAll("主表已经存在了",1);
 		}
 		if(file_exists("module/{$mod_dir}")){
-			$this->gomsg($this->lang['module_exists']);
+			$this->goAll("插件已经存在",1);
 		}
 		umkdir("module/{$mod_dir}/source/admin");
 		 
@@ -105,7 +108,7 @@ class '.$mod_dir.'Control extends skymvc{
 	public function __construct(){
 		parent::__construct();
 	}
-	
+
 	public function onDefault(){
 		$this->smarty->display("index.html");
 	}
@@ -113,44 +116,77 @@ class '.$mod_dir.'Control extends skymvc{
 
 ?>';
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/source/index/{$mod_dir}.ctrl.php",$str);
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/source/admin/{$mod_dir}.ctrl.php",$str);
+		
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/source/shop/{$mod_dir}.ctrl.php",$str);
+		$str='<?php
+		class '.$mod_dir.'Control extends skymvc{
+			
+			public function __construct(){
+				parent::__construct();
+			}
+			public function onMenu(){
+				$this->smarty->display("menu.html");
+			}
+			public function onDefault(){
+				$this->smarty->display("index.html");
+			}
+		}
+		
+		?>';
+		file_put_contents(ROOT_PATH."module/{$mod_dir}/source/admin/{$mod_dir}.ctrl.php",$str);
 		//建立主表model
 		$str='<?php
 class '.$mod_table.'Model extends model{
-	public $base;
+	public $table="'.$mod_table.'";
 	public function __construct(&$base){
 		parent::__construct($base);
-		$this->base=$base;
-		$this->table="'.$mod_table.'";
 	}
 }
 
 ?>';
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/source/model/".$mod_table.".model.php",$str);
 		//建立模板文件
-		$str='{include file="header.html" }
-		<h1>开始开发模块吧</h1>
+		$str='<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+		<h1>开始开发插件吧</h1>
 		{include file="footer.html" } 
+</body>
+		</html>
 		';
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/index/index.html",$str);
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/admin/index.html",$str);
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/shop/index.html",$str);
-		$str='{include file=\'header.html\'}
+		$str='<!DOCTYPE html>
+<html>
+{include file="head.html"}
 <script language="javascript">
 function movenew()
 {
-	document.location=\'{$url}\';
+	document.location="{$url}";
 }
 setTimeout(movenew,2000);
 
 </script>
-<div class="well">
-{$message}，如果没有自动跳转请点击 <a href="{$url}">跳转</a>
-
-</div> 
-
-{include file=\'footer.html\' }';
+<style>
+	.gomsg{
+		width: 300px;
+		margin: 50px auto;
+		border: 3px solid #ddd;
+		border-radius: 5px;
+		padding: 20px; 
+		
+	}
+</style>
+<body>
+{include file="header.html"}
+<div class="main-body">	 
+    <div class="gomsg">{$message}，如果没有自动跳转请点击 <a href="{$url}">跳转</a></div>    
+</div>
+{include file="footer.html"}
+</body>
+</html>';
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/index/gomsg.html",$str);	
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/admin/gomsg.html",$str);	
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/shop/gomsg.html",$str);	
@@ -162,28 +198,28 @@ setTimeout(movenew,2000);
 		$str='<head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<title>许愿墙</title>
-<meta property="qc:admins" content="32662172176121755676375" />
-<link href="/plugin/skyweb/skyweb.css" rel="stylesheet">
-<script src="/plugin/skyweb/jquery.js"></script>
-<script src="/plugin/skyweb/skyweb.js"></script>
-<link href="{$skins}images/app.css" rel="stylesheet" />
+<title>'.$mod_name.'</title>
 </head>
 ';
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/admin/head.html",$str);
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/index/head.html",$str);
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/shop/head.html",$str);
-		//header
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/admin/header.html",'');
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/index/header.html",'');
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/shop/header.html",'');
-		
-		//End header
+	
 		//footer
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/admin/footer.html",'');
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/index/footer.html",'');
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/shop/footer.html",'');
 		//End footer
+		//menu.html
+		$str='<div class="menu menu-active">
+	<div class="menu-title">'.$mod_name.'</div>
+	<div class="menu-box">
+		<div gourl="/moduleadmin.php?m='.$mod_dir.'&t=1" class="menu-item">功能一</div>
+		<div gourl="/moduleadmin.php?m='.$mod_dir.'&t=2"  class="menu-item">功能二</div>
+		<div gourl="/moduleadmin.php?m='.$mod_dir.'&t=3"  class="menu-item">功能三</div>
+	</div>
+</div>';
+file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/admin/menu.html",$str);
 		//创建配置文件
 		$str='<?php
 $config=array(
@@ -192,8 +228,8 @@ $config=array(
  	"version"=>1.0,//当前版本
 	"info"=>"'.$mod_info.'",//模块信息
 	"table_pre"=>"'.TABLE_PRE.'",//表前缀
-	"adminurl"=>"moduleadmin.php?m='.$mod_dir.'",
-	"check_update"=>"http://www.skymvc.com",
+	"adminurl"=>"moduleadmin.php?m='.$mod_dir.'&a=menu",
+	"check_update"=>"http://www.deitui.com",
 );
 ?>';
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/config.php",$str);
@@ -205,13 +241,12 @@ $config=array(
 		));
 		//创建model_id
  		
-		$c=file_get_contents(ROOT_PATH."module/{$mod_dir}/module.php");
-		$MD=strtoupper($mod_dir);
-		$str=preg_replace("/define\(\"{$MD}_MODEL_ID\",(\d)\)/iUs",'define("'.$MD.'_MODEL_ID",2)',$str);
+		
+		$str='<?php define("MODULE_'.strtoupper($mod_dir).'_ID",'.$model_id.'); ?>';
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/module.php",$str);
 		
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/install.sql","");
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/uninstall.sql","");
+		file_put_contents(ROOT_PATH."module/{$mod_dir}/install.sql.php","");
+		file_put_contents(ROOT_PATH."module/{$mod_dir}/uninstall.sql.php","");
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/install.lock","success");
 		$this->gomsg($this->lang['module_ctreate_success'],APPADMIN."?m=module");
 	}

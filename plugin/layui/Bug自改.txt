@@ -1,0 +1,3 @@
+编辑器
+pre
+i.code..replace(/</g, "&lt;").replace(/>/g, "&gt;")

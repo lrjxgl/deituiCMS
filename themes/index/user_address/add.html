@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">收货地址编辑</div>
+			 
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+ 
+       
+        <form id="form" style="padding: 10px; background-color: #fff;" method='post' action='/index.php?m=user_address&a=save'>
+          <input type='hidden' name='id' id='id' value='{$data.id}' >
+          <div class="input-flex" >
+          	<div class="input-flex-label">省市</div>
+          	<input type="hidden" name="province_id" id="province_id" value="{$data.province_id}" />
+          	<input type="hidden" name="city_id" id="city_id" value="{$data.city_id}" />
+          	<input type="hidden" name="town_id" id="town_id" value="{$data.town_id}" />
+          	<input type="text" value="{$data.pct_address}" placeholder="请选择地区" class="input-flex-text" id="choice-district"   />
+          </div>
+          <div class="input-flex">
+          	<div class="input-flex-label">姓名</div>
+          	<input type='text' name='truename' class="input-flex-text" id='truename' value='{$data.truename}' >
+          </div>
+          <div class="input-flex">
+          	<div class="input-flex-label">电话</div>
+          	<input type='text' name='telephone' class="input-flex-text"  id='telephone' value='{$data.telephone}' >
+          </div>	
+          <div class="input-flex">
+          	<div class="input-flex-label">详细地址</div>
+          	 <input type='text' class="input-flex-text" name='address' id='address' value='{$data.address}' >
+          </div>
+          
+           <div id="submit" class="btn-row-submit">保存</div>
+            
+        </form>
+      </div>
+ <div id="cityResult3"></div>
+ {include file="footer.html"}
+ 
+  <script src="/plugin/iosSelect/iosSelect.js"></script>
+	<link href="/plugin/iosSelect/iosSelect.css" rel="stylesheet" />
+  <script>
+  	$(document).on("click","#submit",function(){
+  		$.post("/index.php?m=user_address&a=save&ajax=1",$("#form").serialize(),function(data){
+  			skyToast(data.message);
+  			if(!data.error){
+  				goBack();
+  			}
+  		},"json")
+  	})
+  </script>
+	<script src="/static/areaData.js"></script>
+  <script type="text/javascript">
+    var selectContactDom = $("#choice-district");
+    var $province_id = $('#province_id');
+    var $city_id = $('#city_id');
+		var $town_id=$("#town_id");
+    selectContactDom.bind('click', function () {
+ 
+        var oneLevelId = $province_id.val();
+        var twoLevelId = $city_id.val();
+        var threeLevelId = $town_id.val();
+        var iosSelect = new IosSelect(3, 
+            [iosProvinces, iosCitys, iosCountys],
+            {
+                title: '地址选择',
+                itemHeight: 35,
+                relation: [1, 1],
+                oneLevelId: oneLevelId,
+                twoLevelId: twoLevelId,
+                threeLevelId: threeLevelId,
+                callback: function (selectOneObj, selectTwoObj, selectThreeObj) {
+                   $province_id.val(selectOneObj.id); 
+                   
+                   $city_id.val(selectTwoObj.id);
+									 $town_id.val(selectThreeObj.id);
+                    selectContactDom.val(selectOneObj.value + ' ' + selectTwoObj.value + ' ' + selectThreeObj.value);
+                }
+        });
+    });
+</script>
+
+</body>
+</html>

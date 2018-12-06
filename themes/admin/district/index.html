@@ -1,0 +1,48 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+<div class="tabs-border">
+	<a class="item active" href="?m=district">省市列表</a>
+	<a class="item" href="?m=district&a=add">添加</a>
+</div>	
+<div class="main-body">
+	<div class="pd-10"> 
+{if $parent}
+&lt;&lt;<a href="{$appadmin}?m=district&upid={$parent.upid}">{$parent.name}</a>
+{else}
+地区编辑
+{/if}
+</div>
+ <table class="tbs">
+ 	<thead>
+  <tr>
+   <td>id</td>
+   <td>name</td>
+   <td>level</td>
+   <td>usetype</td>
+   <td>upid</td>
+   <td>displayorder</td>
+<td>操作</td>
+  </tr>
+  </thead>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td><a href="{$appadmin}?m=district&upid={$c.id}">{$c.name}</a></td>
+   <td>{$c.level}</td>
+   <td>{$c.usetype}</td>
+   <td>{$c.upid}</td>
+   <td>{$c.displayorder}</td>
+<td>
+<a href="{$appadmin}?m=district&a=addchild&upid={$c.id}">添加下级</a>
+<a href="{$appadmin}?m=district&a=add&id={$c.id}">编辑</a>  
+<a href="javascript:;" class="delete" url="{$appadmin}?m=district&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

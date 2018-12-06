@@ -5,10 +5,18 @@
  <div class="tabs-border">
  	<a class="item" href="/admin.php?m=article">文章列表</a>
  	<a class="item active" href="/admin.php?m=article&a=add">文章编辑</a>
- </td> 
+ </div> 
 <div class="main-body">
 	<form method="post" action="admin.php?m=article&a=save">
+		
 		<input type="hidden" name="id" style="display:none;" value="{$data.id}">
+		<div class="tabs-box">
+			<div class="js-tabs tabs-border">
+					<a class="item active" href="#base">基本信息</a>
+						 
+						<a class="item" href="#other">扩展</a>
+				</div>
+			<div class="tabs-item active" id="base">	
 		<table class="table-add">
 		<tr>
 			<td>标题：</td>
@@ -75,7 +83,17 @@
 				
 			</td>
 		</tr>
-		
+		<tr>
+        <td>访问数：</td>
+        <td><input type="text" name="view_num" id="view_num" value="{$data.view_num}" ></td>
+      </tr>
+     
+      
+      
+      <tr>
+        <td>详情模板：</td>
+        <td><input class="w300" type="text" name="tpl" id="tpl" value="{$data.tpl}" >(如果需要可以指定模板)</td>
+      </tr>
 		<tr>
 			<td>创建时间：</td>
 			<td>{$data.createtime}</td>
@@ -87,13 +105,51 @@
 			</td>
 		</tr>
 		</table>
+		</div>
+		 
+        <div class="tabs-item active" id="other">
+        	<table class="table-add">
+            	 <tr>
+        <td class="w90">产品价格：</td>
+        <td><input type="text" name="price" id="price" value="{$data.price}" ></td>
+      </tr>
+      <tr>
+        <td>市场价格：</td>
+        <td><input type="text" name="market_price" id="market_price" value="{$data.market_price}" ></td>
+      </tr>
+      <tr>
+        <td>库存数：</td>
+        <td><input type="text" name="total_num" id="total_num" value="{$data.total_num}" ></td>
+      </tr>
+      <tr>
+        <td>销售数：</td>
+        <td><input type="text" name="sold_num" id="sold_num" value="{$data.sold_num}" ></td>
+      </tr>
+      <tr>
+        <td>积分：</td>
+        <td><input type="text" name="grade" id="sold_num" value="{$data.grade}" ></td>
+      </tr>
+       
+       <tr>
+      	<td>图集</td>
+        <td>
+        	<input type="hidden" id="imgsdata" name="imgsdata" value="{$data.imgsdata}" />
+     	 {include file="inc/uploader-data.html"} 
+        </td>
+      </tr>
+      
+            </table>
+        </div>
 		<div class="btn-row-submit js-submit">保存</div>
 	</form>
 </td>
 {include file="footer.html"}
 {php loadEditor();}
  
+ 
 <script language="javascript" src="/static/admin/js/upload.js"></script>
+<script src="/plugin/lrz/lrz.bundle.js"></script>
+<script src="{$skins}inc/uploader-data.js"></script>
 <script language="javascript">
  
 var editor=UE.getEditor('content',options);

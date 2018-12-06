@@ -26,7 +26,13 @@
 					运营
 					<input type="radio" name="status" value="1" {if $data.status eq 1} checked="checked" {/if} /></td>
 			</tr>
-
+			<tr>
+				<td>登录方式</td>
+				<td>
+					<input type="radio" name="openlogin" value="0" {if $data.openlogin neq 1}checked{/if} /> 直接登录
+					<input type="radio" name="openlogin" value="1" {if $data.openlogin eq 1}checked{/if} /> 三方登录
+				</td>
+			</tr>
 			<tr>
 				<td>appId</td>
 				<td><input type="text" name="appid" value="{$data.appid}" /></td>

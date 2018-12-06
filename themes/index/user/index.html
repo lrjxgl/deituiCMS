@@ -46,33 +46,55 @@
 		<div class="main-body">
 			<div class="uhead" v-if="pageLoad">
 
-				<image class="uhead-img" src="http://img.deitui.com/?w=200&h=200&text=Logo&fontsize=36&textcolor=fff&bgcolor=ed6d53"></image>
+				<image class="uhead-img" src="{$data.user_head}.100x100.jpg"></image>
 
 				<div class="uhead-box">
-					<div class="uhead-nick">老雷</div>
+					<div class="uhead-nick">{$data.nickname}</div>
 					<div class="uhead-rnum flex">
 						余额 ￥
-						<text class="f14 cl-money mgl-5">10</text>
+						<text class="f14 cl-money mgl-5">{$data.money}</text>
 					</div>
 					<div class="uhead-rnum flex">
 						金币
-						<text class="cl-money mgl-5 mgr-5">10</text>
+						<text class="cl-money mgl-5 mgr-5">{$data.gold}</text>
 
 						积分
-						<text class="cl-money mgl-5">10</text>
+						<text class="cl-money mgl-5">{$data.grade}</text>
 
 					</div>
 				</div>
-				<navigator gourl="/index.php?m=user&a=set" class="flex-center btn-small btn-link iconfont icon-settings"></navigator>
+				<div gourl="/index.php?m=user&a=set" class="flex-center btn-small btn-link iconfont icon-settings"></div>
 			</div>
-			<div class=" bg-fff mgb-5">
-				<div gourl="/index.php?m=notice&a=my" class="row-item"> 
-					<div class="row-item-icon icon-text f18"></div>
-					<div class="flex-1 f16">我的消息</div>
+			<div class="m-navPic mgb-10">
+				<div gourl="/module.php?m=book_order&a=my" class="m-navPic-item">
+					<view class="m-navPic-icon icon-ketang"></view>
+					<view class="m-navPic-title">我的课堂</view>
 				</div>
-				<div gourl="/index.php?m=notice&a=my" class="row-item"> 
-					<div class="row-item-icon icon-text f18"></div>
-					<div class="flex-1 f16">我的消息</div>
+			</div>
+			<div class="m-navPic mgb-10">
+				<div gourl="/index.php?m=notice&a=my" class="m-navPic-item">
+					<view class="m-navPic-icon icon-notice"></view>
+					<view class="m-navPic-title">我的消息</view>
+				</div>
+				<div gourl="/index.php?m=pay_log&a=my" class="m-navPic-item">
+					<view class="m-navPic-icon icon-moneybag"></view>
+					<view class="m-navPic-title">消费记录</view>
+				</div>
+				<div gourl="/index.php?m=recharge&a=my" class="m-navPic-item">
+					<view class="m-navPic-icon icon-moneybag"></view>
+					<view class="m-navPic-title">充值记录</view>
+				</div>
+				<div gourl="/index.php?m=fav&a=my" class="m-navPic-item">
+					<view class="m-navPic-icon icon-favor"></view>
+					<view class="m-navPic-title">我的收藏</view>
+				</div>
+				<div gourl="/index.php?m=comment&a=my&tablename=article" class="m-navPic-item">
+					<view class="m-navPic-icon icon-comment"></view>
+					<view class="m-navPic-title">我的评论</view>
+				</div>
+				<div gourl="/index.php?m=user_address&a=my" class="m-navPic-item">
+					<view class="m-navPic-icon icon-addressbook"></view>
+					<view class="m-navPic-title">收货地址</view>
 				</div>
 			</div> 
 		</div>

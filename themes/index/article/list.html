@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">文章</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			<div class="tabs-border">
+					<a class="tabs-border-item active js-cat" v="0">全部</a>
+					 
+					{foreach item=c from=$catlist}	
+					<a class="tabs-border-item js-cat" v="{$c.catid}">{$c.cname}</a>
+					{/foreach}
+				</div>
+			<div class="pd-10 bg-fff">
+				{foreach item=c from=$list}
+				<a href="/index.php?m=article&a=show&id={$c.id}" class="row-item">
+					<div class="flex-1">{$c.title}</div>
+				</a>
+				{/foreach}
+			</div>
+		</div>
+		{include file="footer.html"}
+		
+	</body>
+</html>

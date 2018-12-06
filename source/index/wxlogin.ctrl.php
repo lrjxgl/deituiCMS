@@ -90,7 +90,7 @@ public function oncallback()
 			{
 				$this->goall('微信接口错误',1,0,'/index.php?m=index');
 			}
-			$user=M("user")->getRow("SELECT *  FROM ".table('user')." WHERE openid='".$data['openid']."' AND xfrom='weixin' ")
+			$user=M("openlogin")->getRow("SELECT *  FROM ".table('user')." WHERE openid='".$data['openid']."' AND xfrom='weixin' ");
 			if($user)
 			{
 				M('login')->set("ssuser",$user);
