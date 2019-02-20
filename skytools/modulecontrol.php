@@ -113,22 +113,25 @@ $str='<?php
 		}
 		
 		public function onDefault(){
-			$where="";
+			$where=" status in(0,1,2)";
 			$url="/module.php?m='.$c.'&a=default";
 			$limit=20;
 			$start=get("per_page","i");
 			$option=array(
-				"start"=>intval(get_post(\'per_page\')),
+				"start"=>$start,
 				"limit"=>$limit,
 				"order"=>" '.$p_key.' DESC",
 				"where"=>$where
 			);
 			$rscount=true;
 			$data=M("'.$model.'")->select($option,$rscount);
+			$per_page=$start+$limit;
+			$per_page=$per_page>$rscount?0:$per_page;
 			$pagelist=$this->pagelist($rscount,$limit,$url);
 			$this->smarty->goassign(
 				array(
-					"data"=>$data,
+					"list"=>$data,
+					"per_page"=>$per_page,
 					"pagelist"=>$pagelist,
 					"rscount"=>$rscount,
 					"url"=>$url
@@ -140,22 +143,25 @@ $str='<?php
 		
 		$list && $str.='
 		public function onList(){
-			$where="";
+			$where=" status in(0,1,2)";
 			$url="/module.php?m='.$c.'&a=default";
 			$limit=20;
 			$start=get("per_page","i");
 			$option=array(
-				"start"=>intval(get_post(\'per_page\')),
+				"start"=>$start,
 				"limit"=>$limit,
 				"order"=>" '.$p_key.' DESC",
 				"where"=>$where
 			);
 			$rscount=true;
 			$data=M("'.$model.'")->select($option,$rscount);
+			$per_page=$start+$limit;
+			$per_page=$per_page>$rscount?0:$per_page;
 			$pagelist=$this->pagelist($rscount,$limit,$url);
 			$this->smarty->goassign(
 				array(
-					"data"=>$data,
+					"list"=>$data,
+					"per_page"=>$per_page,
 					"pagelist"=>$pagelist,
 					"rscount"=>$rscount,
 					"url"=>$url
@@ -168,10 +174,7 @@ $str='<?php
 		$show&& $str.='
 		public function onShow(){
 			$'.$p_key.'=get_post("'.$p_key.'","i");
-			if($'.$p_key.'){
-				$data=M("'.$model.'")->selectRow(array("where"=>"'.$p_key.'={$'.$p_key.'}"));
-				
-			}
+			$data=M("'.$model.'")->selectRow(array("where"=>"'.$p_key.'=".$'.$p_key.'));
 			$this->smarty->goassign(array(
 				"data"=>$data
 			));
@@ -182,7 +185,7 @@ $str='<?php
 		public function onAdd(){
 			$'.$p_key.'=get_post("'.$p_key.'","i");
 			if($'.$p_key.'){
-				$data=M("'.$model.'")->selectRow(array("where"=>"'.$p_key.'={$'.$p_key.'}"));
+				$data=M("'.$model.'")->selectRow(array("where"=>"'.$p_key.'=".$'.$p_key.'));
 				
 			}
 			$this->smarty->goassign(array(
@@ -235,7 +238,7 @@ if(!file_exists(ROOT_PATH."module/{$module}/source/{$dir}/{$c}.ctrl.php") or $co
 		$defaulttpl=ROOT_PATH.MODULESKINS."/{$dir}/{$tpldir}/index.html";		
 		$tplcontent=file_get_contents("tpl/$tpl");
 		//生成列表页
-		$con=file_get_contents("http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/sqllist.php?table=".$table."&data=data");
+		$con=file_get_contents("http://".$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF'])."/sqllist.php?table=".$table."&data=list");
 		preg_match("/<pre.*>(.*)<\/pre>/iUs",$con,$d);
 		$content=str_replace(array("[nav]","[tpl]"),array("{include file='{$tpldir}/nav.html'}",html($d[1])),$tplcontent);
 		$content=str_replace("[操作]",'<a href="/module.php?m='.$c.'&a=add&'.$p_key.'={$c.'.$p_key.'}">编辑</a> <a href="/module.php?m='.$c.'&a=show&'.$p_key.'={$c.'.$p_key.'}">查看</a> <a href="javascript:;" class="js-delete" url="/module.php?m='.$c.'&a=delete&'.$p_key.'={$c.'.$p_key.'}">删除</a>',$content);

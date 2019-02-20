@@ -45,7 +45,7 @@ class ossuploadControl extends skymvc{
 		$content_length_range = array();
 		array_push($content_length_range, 'content-length-range');
 		array_push($content_length_range, 0);
-		array_push($content_length_range, 104857500);
+		array_push($content_length_range, 104857500009);
 		array_push($conditions, $content_length_range);
 		$options['conditions'] = $conditions;
 		$policy = base64_encode(stripslashes(json_encode($options)));

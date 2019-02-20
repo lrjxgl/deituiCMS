@@ -121,7 +121,7 @@ class userControl extends skymvc{
 	} 
 	
 	public function onPasswordSave(){
-		$userid=get('userid','i');
+		$userid=post('userid','i');
 		$password=post('password','h');
 		$password2=post('password2','h');
 		if($password!=$password2){
@@ -129,7 +129,17 @@ class userControl extends skymvc{
 		}
 		$data['salt']=$salt=rand(1000,9999);
 		$data['password']=umd5($password.$salt);
-		M("user")->update($data,"userid=".$userid);
+		$row=M("user_password")->selectRow("userid=".$userid);
+		if(empty($row)){
+			M("user_password")->insert(array(
+				"salt"=>$salt,
+				"password"=>$data['password'],
+				"userid"=>$userid
+			));
+		}else{
+			M("user_password")->update($data,"userid=".$userid);
+		}
+		
 		$this->goAll("保存成功");
 	}
 	

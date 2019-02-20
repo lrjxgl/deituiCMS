@@ -18,14 +18,8 @@ class open_weixinControl extends skymvc{
 			$where="";
 		}
 		$this->wx=M("weixin")->selectRow(array("where"=>$where,"order"=>"id DESC"));
-		$backurl=get_post('backurl','h');
-		if(!$backurl){
-			$backurl=$_SERVER['HTTP_REFERER'];
-		}
-		if(preg_match("/login/i",$backurl)){
-			$backurl="/index.php";
-		}
-		$this->REDIRECT_URI=HTTP_HOST."/index.php?m=open_weixin&a=callback&backurl=".urlencode($backurl)."&wid=".$this->wx['id'];
+		 
+		$this->REDIRECT_URI=HTTP_HOST."/index.php?m=open_weixin&a=callback&wid=".$this->wx['id'];
 		
 	}
 	public function upload_oss($files){
@@ -55,23 +49,24 @@ class open_weixinControl extends skymvc{
 	
 public function onGeturl()
 {
-	$backurl=get('backurl','x'); 
-	setcookie("ckwxback",$backurl,time()+3600*24*14,"/",DOMAIN);
-	$url=" https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$this->wx['appid']."&redirect_uri=".urlencode($this->REDIRECT_URI)."&backurl=".urlencode($backurl)."&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+	$backurl=get('backurl','x');
+	 if($backurl==""){
+		 $backurl="/";
+	 }
+	$_SESSION["backurl"]=$backurl; 
+	$url=" https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$this->wx['appid']."&redirect_uri=".urlencode($this->REDIRECT_URI)."&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 	header("Location: $url");
 	exit();
 }
 
 public function oncallback()
 {
-	$backurl=base64_decode($_COOKIE['ckwxback']);
-	if(!$backurl){
-		$backurl=$_SERVER['HTTP_REFERER'];
-	}
+	$backurl=$_SESSION["backurl"];
+	 
 	if(preg_match("/login/i",$backurl)){
 		$backurl="/index.php";
 	}
-	
+	 
 	$c=file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=".$this->wx['appid']."&secret=".$this->wx['appkey']."&code=".$_GET['code']."&grant_type=authorization_code");
 	$data=json_decode($c,true);
   
@@ -98,7 +93,7 @@ public function oncallback()
 					$auth=M("login")->setCode($puser);
 					$authcode=$auth['authcode'];
 					setcookie("authcode",$authcode,time()+3600000,"/",DOMAIN);													
-					header("Location: /index.php");
+					header("Location:".$backurl);
 					exit;
 				}else{
 					$_SESSION['ssopenlogin']=$ouser;
@@ -159,7 +154,7 @@ public function openlogin($ouser){
 		//直接登录
 		//生成账户
 		$i=0;
-		$u=$ouser['nickname'];
+		$nickname=$u=$ouser['nickname'];
 		while(M("user")->getOne("SELECT userid FROM ".table('user')." WHERE  nickname='$u' or username='$u' "))
 		{
 			$i++;
@@ -199,7 +194,14 @@ public function openlogin($ouser){
 		$auth=M("login")->setCode($puser);
 		$authcode=$auth['authcode'];
 		setcookie("authcode",$authcode,time()+3600000,"/",DOMAIN);
-		$this->goall('注册登陆成功',0,0,'/index.php');
+		//绑定消息通知
+		M("apppush")->insert(array(
+			"userid"=>$userid,
+			"appname"=>$ouser["xfrom"],
+			"openid"=>$ouser["openid"],
+			"dateline"=>time(),
+		));
+		$this->goall('注册登陆成功',0,0,$_SESSION["backurl"]);
 	} 
 }
 	

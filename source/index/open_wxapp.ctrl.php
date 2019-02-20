@@ -143,7 +143,7 @@ class open_wxappControl extends skymvc{
 		}else{
 			//生成账户
 			$i=0;
-			$u=$ouser['nickname'];
+			$nickname=$u=$ouser['nickname'];
 			while(M("user")->getOne("SELECT userid FROM ".table('user')." WHERE  nickname='$u' or username='$u' "))
 			{
 				$i++;

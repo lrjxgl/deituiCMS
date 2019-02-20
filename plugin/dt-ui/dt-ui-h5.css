@@ -43,6 +43,9 @@ navigator{
 image{
 	display: flex;
 }
+[gourl]{
+	cursor: pointer;
+}
 .pointer{
 	cursor: pointer;
 }
@@ -472,7 +475,7 @@ button{
 	border: 0;
 }
  .btn {
- 	padding: 18px 20px;
+ 	padding: 8px 20px;
  	background-color: #007AFF;
  	color: #fff;
  	font-size: 14px;
@@ -480,7 +483,7 @@ button{
  	cursor: pointer;
  	border-radius: 10px;
  	text-align: center;
-	line-height: 1.5;
+	line-height: 1;
  }
 
  .btn-small {
@@ -490,8 +493,9 @@ button{
  	color: #fff;
  	display: inline-flex;
  	cursor: pointer;
- line-height: 1.5;
+ line-height: 1;
  	border-radius: 5px;
+	text-align: center;
  }
 
  .btn-mini {
@@ -502,6 +506,7 @@ button{
  	display: inline-flex;
  	cursor: pointer;
 	line-height: 1.5;
+	text-align: center;
  }
  .btn-icon{
 	 flex-direction: row;
@@ -517,7 +522,7 @@ button{
  	background-color: #007bff;
  	text-align: center;
  	padding: 12px 0px;
-	line-height: 1.5;
+	line-height: 1;
  	color: #fff !important;
  	font-size: 16px;
  	border-radius: 6px;
@@ -578,7 +583,10 @@ button{
  	background-color: #343a40;
  	border-color: #343a40;
  }
-
+.btn-disable{
+	background-color: #eee;
+	color: #999;
+}
  .btn-outline-primary {
  	color: #007bff;
  	background-color: transparent !important;
@@ -1615,6 +1623,7 @@ button{
 }
 .modal-title{
 	flex: 1;
+	font-size: 16px;
 }
 .modal-close{
 	font-family: iconfont;
@@ -1873,7 +1882,13 @@ button{
 	flex-direction: row;
 	align-items: center;
 }
- 
+ .footerFix{
+ 	position: fixed;
+ 	bottom: 0px;
+ 	left: 0px;
+ 	right: 0px;
+ 	z-index: 100;
+ } 
 /*****详情******/
 .d-userbox{
 	display: flex;
@@ -1900,6 +1915,10 @@ button{
 	color: #646464;
 	 
 }
+.d-img{
+	width: 100%;
+	height: auto;
+}
 .d-title{
 	font-size: 16px;
 	margin-bottom: 8px;
@@ -1912,6 +1931,9 @@ button{
 	color: #555;
 	font-size: 14px;
 }
+.d-img{
+	width: 100%;
+}
 .d-content{
 	font-size: 14px;
 	color: #646464;
@@ -1920,6 +1942,12 @@ button{
 }
 .d-content img{
 	max-width: 100%;
+}
+.market-price{
+	color: #929292;
+	text-decoration: line-through;
+	font-style: italic;
+	font-size: 14px;
 }
 /***row-box***/
  .row-box{

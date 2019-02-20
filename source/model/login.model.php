@@ -84,6 +84,7 @@ class loginModel extends model{
 			//return false;
 		}
 		//判断是否过期
+		/*
 		if($data['e']<time()){
 			if(isset($data['el'])){
 				if($data['el']<time()){
@@ -94,6 +95,7 @@ class loginModel extends model{
 			}
 			
 		}
+		*/
 		return $data;
 		
 	}  

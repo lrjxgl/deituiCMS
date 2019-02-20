@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>deituiCMS系统安装</title>
+<title>skycms系统安装</title>
 <style type="text/css">
 *{margin:0; padding:0;}
 .body{width:800px; margin:0 auto; margin-top:100px;}
@@ -19,7 +19,7 @@ td{border-bottom:1px solid #ccc; padding:3px 4px;}
 
 <body style="background:url(skins/bg.jpg);">
 <div class="body" >
-<div class="head">deituiCMS系统</div>
+<div class="head">得推校园O2O系统</div>
 <?php if ($this->_var['step'] == 1): ?>
 <div class="title">正在执行第一步：数据库配置</div>
 <div  class="box">

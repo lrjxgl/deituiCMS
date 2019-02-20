@@ -102,6 +102,13 @@ class openloginControl extends skymvc{
 			"authcodeLong"=>$auth['authcodeLong'],
 			"openid"=>$ouser['openid']	
 		);
+		//绑定通知账号
+		M("apppush")->insert(array(
+			"userid"=>$userid,
+			"appname"=>$ouser["xfrom"],
+			"openid"=>$ouser["openid"],
+			"dateline"=>time(),
+		));
 		$this->goAll("绑定成功",0,$rdata);
 		//header("Location: /index.php");
 	}
@@ -171,6 +178,13 @@ class openloginControl extends skymvc{
 			"authcodeLong"=>$auth['authcodeLong'],
 			"openid"=>$ouser['openid']	
 		);
+		//绑定消息通知
+		M("apppush")->insert(array(
+			"userid"=>$userid,
+			"appname"=>$ouser["xfrom"],
+			"openid"=>$ouser["openid"],
+			"dateline"=>time(),
+		));
 		$this->goAll("账号创建成功",0,$rdata);
 	}
 	

@@ -123,12 +123,12 @@ $str='<?php
 		}
 		
 		public function onDefault(){
-			$where="";
+			$where="status in(0,1,2)";
 			$url="/'.$dir.'.php?m='.$c.'&a=default";
 			$limit=20;
 			$start=get("per_page","i");
 			$option=array(
-				"start"=>intval(get_post(\'per_page\')),
+				"start"=>$start,
 				"limit"=>$limit,
 				"order"=>" '.$p_key.' DESC",
 				"where"=>$where
@@ -136,9 +136,12 @@ $str='<?php
 			$rscount=true;
 			$data=M("'.$model.'")->select($option,$rscount);
 			$pagelist=$this->pagelist($rscount,$limit,$url);
+			$per_page=$start+$limit;
+			$per_page=$per_page>$rscount?0:$per_page;
 			$this->smarty->goassign(
 				array(
 					"data"=>$data,
+					"per_page"=>$per_page,
 					"pagelist"=>$pagelist,
 					"rscount"=>$rscount,
 					"url"=>$url
@@ -150,12 +153,12 @@ $str='<?php
 		
 		$list && $str.='
 		public function onList(){
-			$where="";
+			$where=" status in(0,1,2)";
 			$url="/'.$dir.'.php?m='.$c.'&a=default";
 			$limit=20;
 			$start=get("per_page","i");
 			$option=array(
-				"start"=>intval(get_post(\'per_page\')),
+				"start"=>$start,
 				"limit"=>$limit,
 				"order"=>" '.$p_key.' DESC",
 				"where"=>$where
@@ -163,11 +166,14 @@ $str='<?php
 			$rscount=true;
 			$data=M("'.$model.'")->select($option,$rscount);
 			$pagelist=$this->pagelist($rscount,$limit,$url);
+			$per_page=$start+$limit;
+			$per_page=$per_page>$rscount?0:$per_page;
 			$this->smarty->goassign(
 				array(
 					"data"=>$data,
 					"pagelist"=>$pagelist,
 					"rscount"=>$rscount,
+					"per_page"=>$per_page,
 					"url"=>$url
 				)
 			);
@@ -178,10 +184,7 @@ $str='<?php
 		$show&& $str.='
 		public function onShow(){
 			$'.$p_key.'=get_post("'.$p_key.'","i");
-			if($'.$p_key.'){
-				$data=M("'.$model.'")->selectRow(array("where"=>"'.$p_key.'={$'.$p_key.'}"));
-				
-			}
+			$data=M("'.$model.'")->selectRow(array("where"=>"'.$p_key.'=".$'.$p_key.'));
 			$this->smarty->goassign(array(
 				"data"=>$data
 			));
@@ -192,7 +195,7 @@ $str='<?php
 		public function onAdd(){
 			$'.$p_key.'=get_post("'.$p_key.'","i");
 			if($'.$p_key.'){
-				$data=M("'.$model.'")->selectRow(array("where"=>"'.$p_key.'={$'.$p_key.'}"));
+				$data=M("'.$model.'")->selectRow(array("where"=>"'.$p_key.'=".$'.$p_key.'));
 				
 			}
 			$this->smarty->goassign(array(

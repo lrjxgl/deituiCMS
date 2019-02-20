@@ -15,7 +15,7 @@
 </style>
 <body>
 <div class="header">
-	<div class="header-title">书香来</div>
+	<div class="header-title">deituiCMS</div>
 </div>
 <div class="header-row"></div>
 <div class="main-body">
@@ -43,34 +43,7 @@
 	</a>
 	{/foreach}
 	</div>
-	<!--课堂-->
- 
-	<?php 
-		$bookList=MM("book","book")->Dselect(array(
-			"where"=>" status=2 AND isrecommend=1",
-			"limit"=>4
-		));
-		$this->_var['bookList']=$bookList;
-	?>
-	<div class="row-box-hd pdl-10">
-		<div class="flex-1 f20">课堂推荐</div>
-		<div gourl="/module.php?m=book" class="row-box-more">更多</div>
-	</div>
-	<div class="flexlist">
-	{foreach item=c from=$bookList}
-	<a class="flexlist-item" href="/module.php?m=book&a=show&bookid={$c.bookid}" >
-		<img class="flexlist-img" src="{$c.imgurl}.100x100.jpg" />
-		<div class="flex-1">
-			<div class="flexlist-title">{$c.title}</div>
-			<view class="flex">
-				<view class="flex-1 flex">￥<text class="cl-money">{$c.money}</text></view>
-				<view class="cl3">销{$c.buy_num}件</view>
-			</view>
-			<div class="flexlist-desc">{$c.description}</div>
-		</div>
-	</a>
-	{/foreach}
-	</div>
+	 
 </div> 
 {include file="footer-nav.html"}
 {include file="footer.html"}

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML> 
+<html>
+<head>
+<title>Swipe 2</title>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/> 
+ 
+ 
+
+</head>
+<body>
+
+<h1>Swipe 2</h1>
+
+
+
+<div id='slides-flash' style='max-width:500px; height:222px; margin:0 auto' class='swipejs'>
+  <div class='swipejs-wrap'>
+    
+  
+  </div>
+  <div class="swipejs-num"></div>
+              <div class="swipejs-prev" onclick='mySwipe.prev()'><i class="iconfont icon-zuo"></i></div>
+      <div   class="swipejs-next" onclick='mySwipe.next()'><i class="iconfont icon-you"></i></div>
+      <div class="swipejs-nav-bg"></div>
+      <div class="swipejs-nav"><span class="index">1</span> / <span class="total"></span></div>
+</div>
+
+
+
+ 
+
+
+
+ <link href="swipe.css" rel="stylesheet">
+<script src="/plugin/jquery/jquery.js"></script>
+<script src='swipe.js'></script>
+<script>
+for(var i=0;i<10;i++){
+	$(".swipejs-wrap").append('<div class="item"><b>'+i+'</b></div>');
+}
+// pure JS
+var elem = document.getElementById('slides-flash');
+window.mySwipe_total=$("#slides-flash .item").length;
+		
+		$("#slides-flash .total").html(mySwipe_total);
+		for(var i=0;i<mySwipe_total;i++){
+			$("#slides-flash .swipejs-num").append("<i></i>");
+		}
+		$("#slides-flash .swipejs-num i").eq(0).addClass("active");
+		window.mySwipe = Swipe(elem, {
+		  startSlide: 0,
+		  auto: 3000,
+		   callback: function(pos, element) {
+			    if (mySwipe_total < 3) {
+                            i = ((pos + 1) > 2) ? (pos - 1) : (pos + 1)
+                        } else {
+                            i = pos + 1;
+                        }
+				$("#slides-flash .swipejs-num i").removeClass("active");		
+				$("#slides-flash .swipejs-num i").eq(i-1).addClass("active")		
+				$("#slides-flash .index").html(i);
+				  
+			}
+		});
+
+// with jQuery
+// window.mySwipe = $('#mySwipe').Swipe().data('Swipe');
+
+</script>
