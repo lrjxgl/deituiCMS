@@ -8,6 +8,9 @@ class commentControl extends skymvc{
 	public function onDefault(){
 		 
 		$tablename=get_post("tablename","h");
+		if(empty($tablename)){
+			$tablename="article";
+		}
 		if(!in_array($tablename,$this->tables)){
 			//$this->goAll("参数出错",1);
 		}
@@ -93,6 +96,9 @@ class commentControl extends skymvc{
 		$userid=M("login")->userid;
 		$id=get_post("id","i");
 		$tablename=get_post("tablename","h");
+		if(empty($tablename)){
+			$tablename="article";
+		}
 		if(!in_array($tablename,$this->tables)){
 			//$this->goAll("参数出错".$tablename,1);
 		}
@@ -166,6 +172,9 @@ class commentControl extends skymvc{
 		$userid=M("login")->userid;
 		
 		$tablename=get_post("tablename","h");
+		if(empty($tablename)){
+			$tablename="article";
+		}
 		if(!in_array($tablename,$this->tables)){
 			//$this->goAll("参数出错",1);
 		}
@@ -176,7 +185,7 @@ class commentControl extends skymvc{
 		$limit=24;
 		
 		$where=" userid=".$userid;
-		 
+		$where.=" AND status in(0,1,2) "; 
 		$option=array(
 			"where"=>$where,
 			"start"=>$start,
@@ -211,6 +220,9 @@ class commentControl extends skymvc{
 	public function onDelete(){
 		$id=get("id","i");
 		$tablename=get("tablename","h");
+		if(empty($tablename)){
+			$tablename="article";
+		}
 		if(!in_array($tablename,$this->tables)){
 			//$this->goAll("参数出错",1);
 		}
@@ -236,6 +248,9 @@ class commentControl extends skymvc{
 		M("login")->checkLogin();
 		$id=get("id","i");
 		$tablename=get("tablename","h");
+		if(empty($tablename)){
+			$tablename="article";
+		}
 		if(!in_array($tablename,$this->tables)){
 			//$this->goAll("参数出错",1);
 		}	

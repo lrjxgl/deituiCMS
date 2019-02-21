@@ -7,7 +7,19 @@ class navbarModel extends model{
 		$this->table="navbar";	
 	}
 	public function navlist($gid,$pid=0){
-		return $this->select(array("where"=>array("group_id"=>$gid,"pid"=>$pid,"status"=>1),"order"=>"orderindex asc"));
+		$option=array(
+			"where"=>array("group_id"=>$gid,"pid"=>$pid,"status"=>1),
+			"order"=>"orderindex asc"
+		);
+		$res=$this->select($option);
+		if($res){
+			foreach($res as $k=>$rs){
+				$rs["logo"]=images_site($rs["logo"]);
+				$res[$k]=$rs;
+			}
+		}
+		return $res;
+		
 	}
 	
 	public function getTarget(){
@@ -25,15 +37,37 @@ class navbarModel extends model{
 		return array(
 			1=>"后台顶部", 
 			2=>"后台左边", 
-			3=>"pc头部", 
-			4=>"uniApp", 
-			5=>"pc底部", 
-	 
-			7=>"用户中心",
-			8=>"wap导航",
-			9=>"app主导航",
-			11=>"微信小程序",
+			4=>"wap", 
+			14=>"uniApp", 	 
+			7=>"wap用户",
+			17=>"uniApp用户",
+			
+		 
+			
 		);
+	}
+	/***根据组获取所有导航**/
+	public function getListByGroup($gid){
+		$res=$this->select(array(
+			"where"=>" group_id=".$gid." AND status=1 ",
+			"order"=>" orderindex ASC"
+		));
+		if($res){
+			$data=array();
+			$child=array();
+			foreach($res as $rs){
+				if($rs["pid"]==0){
+					$data[]=$rs;
+				}else{
+					$child[$rs["pid"]][]=$rs;
+				}
+			}
+			foreach($data as $k=>$v){
+				$v["child"]=$child[$v["id"]];
+				$data[$k]=$v;
+			}
+			return $data;
+		}
 	}
 }
 ?>

@@ -29,13 +29,15 @@ class favControl extends skymvc
 		$userid=M("login")->userid;
 		$fields=M($tablename)->getFields();
 		$idField=$fields[0]['Field'];
+		$start=get_post('per_page','i');
+		$limit=24;
 		switch($tablename){
 			case "article":
 				$sql="select a.* 
 					from ".table('fav')." as f 
 					left join ".table('article')." as a  
 					on f.objectid=a.id 
-					where f.userid=".$userid." AND f.tablename='article' AND a.status=2 
+					where f.userid=".$userid." AND f.tablename='article'  
 				";
 				break;
 			default:
@@ -43,12 +45,17 @@ class favControl extends skymvc
 					from ".table('fav')." as f 
 					left join ".table($tablename)." as a  
 					on f.objectid=a.{$idField} 
-					where f.userid=".$userid." AND f.tablename='{$tablename}' AND a.status=2 
+					where f.userid=".$userid." AND f.tablename='{$tablename}'  
 				";
 				break;
 			 
 				
 		}
+		$sql.=" order by f.id DESC limit $start,$limit ";
+		$rscount=M("fav")->selectOne(array(
+			"where"=>" userid=".$userid." AND tablename='{$tablename}'",
+			"fields"=>" count(*) "
+		)); 
 		$list=M($tablename)->getAll($sql);
 		if($list){
 			foreach($list as $k=>$v){
@@ -57,8 +64,11 @@ class favControl extends skymvc
 				$list[$k]=$v;
 			}
 		}
+		$per_page=$start+$limit;
+		$per_page=$per_page<$rscount?$per_page:0;
 		$this->smarty->goAssign(array(
-			"list"=>$list
+			"list"=>$list,
+			"per_page"=>$per_page
 		));
 	}
 	

@@ -188,7 +188,16 @@ class categoryModel extends model{
 	}
 	
 	 
-	
+	public function cat_list($where=""){
+
+		$c=$this->select(array("where"=>$where,"fields"=>"cname,catid","limit"=>100));	
+		if($c){
+			foreach($c as $v){
+				$data[$v['catid']]=$v['cname'];
+			}
+		}
+		return $data;
+	}
 	
 }
 

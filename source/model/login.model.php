@@ -107,7 +107,7 @@ class loginModel extends model{
 		}else{
 			$authcode=$_COOKIE['authcode'];
 		}	 
-		if($authcode=='' or $authcode=='null') return false;
+		if($authcode=='' or !$authcode) return false;
 		$arr=$this->getCode($authcode); 
 		
 		$userid=intval($arr['u']);
@@ -137,7 +137,7 @@ class loginModel extends model{
 			}else{
 				if(isset($arr['el'])){
 					$auth=$this->setCode($puser,true);
-					setcookie("authcode",$authcode['authcode'],time()+3600000,"/",DOMAIN);
+					setcookie("authcode",$auth['authcode'],time()+3600000,"/",DOMAIN);
 				}				
 				$this->userid=$user['userid']; 
 				$this->set("ssuser",$user);

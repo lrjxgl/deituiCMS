@@ -7,19 +7,32 @@
 			<div class="header-title">{$data.title}</div>
 		</div>
 		<div class="header-row"></div>
-		<div class="main-body">
+		<div class="main-body mgb-10">
+			<div class="row-box">
 			<div class="d-title">{$data.title}</div>
+			<div class="d-tool bg-white">
+				{$data.author}  {$data.createtime|cutstr:11}
+			</div>
+			</div>
 			<div class="pd-10 bg-fff">
 				<div class="d-content"> {$data.content} </div>
 			</div>
 		</div>
+		{include file="inc/comment.html"}
 		{include file="footer.html"}
+		<script src="{$skins}inc/comment.js"></script>
 		<?php wx_jssdk();?>
 		<script type="text/javascript">
 			wxshare_title="{$data.title}";
 			{if $data.imgurl} 
 			 wxshare_imgUrl="{$data.imgurl|images_site}.100x100.jpg";
 			 {/if}
+		</script>
+		<script>
+			setTimeout(function(){
+				$.get("/index.php?m=article&a=addclick&id={$data.id}&ajax=1")
+			},3000);
+			
 		</script>
 	</body>
 	

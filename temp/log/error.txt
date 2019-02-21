@@ -496,3 +496,11 @@
 
 ---2019-02-19 08:41:09--/module.php?m=book--
 <div class='item'>错误类型：WARNING<br> 内容：include(D:/www/deituiCMSBase/module/book/source/index/index.ctrl.php): failed to open stream: No such file or directory  错误位置：D:\www\deituiCMSBase\skymvc\skymvc.php 行：330 </div>
+
+---2019-02-20 19:35:59--/--
+<div class='item'>错误类型：WARNING<br> 内容：mysqli::__construct(): (HY000/2002): ����Ŀ����������ܾ����޷����ӡ�
+  错误位置：D:\www\deituiCMSBase\skymvc\class\cls_mysqli.php 行：62 </div>
+
+---2019-02-20 19:36:02--/--
+<div class='item'>错误类型：WARNING<br> 内容：mysqli::__construct(): (HY000/2002): ����Ŀ����������ܾ����޷����ӡ�
+  错误位置：D:\www\deituiCMSBase\skymvc\class\cls_mysqli.php 行：62 </div>
