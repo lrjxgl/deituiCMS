@@ -37,7 +37,7 @@ function userinit(&$base){
 	}	 
  
 	C()->smarty->assign(array(
-		"skins"=>$skins."/",
+		"skins"=>"/".$skins."/",
 		"appindex"=>APPINDEX,
 		"appadmin"=>APPADMIN
 	));

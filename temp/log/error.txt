@@ -504,3 +504,7 @@
 ---2019-02-20 19:36:02--/--
 <div class='item'>错误类型：WARNING<br> 内容：mysqli::__construct(): (HY000/2002): ����Ŀ����������ܾ����޷����ӡ�
   错误位置：D:\www\deituiCMSBase\skymvc\class\cls_mysqli.php 行：62 </div>
+
+---2019-02-22 08:54:31--/admin.php--
+<div class='item'>错误类型：WARNING<br> 内容：mysqli::__construct(): (HY000/2002): ����Ŀ����������ܾ����޷����ӡ�
+  错误位置：D:\www\deituiCMSBase\skymvc\class\cls_mysqli.php 行：62 </div>

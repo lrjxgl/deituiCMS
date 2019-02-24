@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-	{include file="head.html"}
+	<?php echo $this->fetch('head.html'); ?>
 	<style>
 		body{
 			background-color: #efefef;
@@ -47,7 +47,7 @@
 			</div>
 			
 		</div>
-		{include file="footer.html"}
+		<?php echo $this->fetch('footer.html'); ?>
 		<script src="/plugin/echarts/echarts.common.min.js"></script>
 		<script>
 		var myChart = echarts.init(document.getElementById('pv'));

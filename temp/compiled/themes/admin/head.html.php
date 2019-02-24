@@ -4,6 +4,6 @@
 <title>书香来</title>
 <link href="//at.alicdn.com/t/font_902011_gf4ip479r5r.css" rel="stylesheet" />
 <link href="/plugin/dt-ui/dt-ui-pc.css" rel="stylesheet" />
-<link href="/static/admin/css/app.css?{$smarty.now}" rel="stylesheet" />
+<link href="/static/admin/css/app.css?<?php echo time(); ?>" rel="stylesheet" />
 </head>
 

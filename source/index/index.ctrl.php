@@ -6,7 +6,7 @@ class indexControl extends skymvc
 		parent::__construct();
 	}
 	
-	
+	 
 
 	public function onDefault()
 	{
