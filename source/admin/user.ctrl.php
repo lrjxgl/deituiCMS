@@ -63,8 +63,7 @@ class userControl extends skymvc{
 	public function onSave(){
 		$userid=get_post("userid","i");
 		$data=M("user")->postData();
-		$password=post('password','h');
-		$password2=post('password2','h');
+		 
 		 
 		 
 		if($userid){
@@ -91,8 +90,7 @@ class userControl extends skymvc{
 			
 			M("user")->update($data,array('userid'=>$userid));
 		}else{
-			$data['salt']=$salt=rand(1000,9999);
-			$data['password']=umd5($password.$salt); 
+			 
 			if(M("user")->selectRow("username='".$data['username']."'")){
 					$this->goall("账号已经存在",1);
 				}

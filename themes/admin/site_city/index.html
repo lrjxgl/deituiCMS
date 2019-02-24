@@ -1,0 +1,41 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+{include file='site_city/nav.html'}
+<div class="main-body">
+{if $parent}<h3><a href="{$appadmin}?m=site_city&pid={$parent.pid}">返回上一级</a></h3>{/if}
+ <table class='table table-bordered' width='100%'>
+  <tr>
+   <td>sc_id</td>
+   <td>区域名称</td>
+   <td>城市关联id</td>
+   <td>纬度</td>
+   <td>精度</td>
+   <td>排序</td>
+   <td>状态</td>
+   <td>上级分类</td>
+<td>操作</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.sc_id}</td>
+   <td>{$c.title}</td>
+   <td>{$c.cityid}</td>
+   <td>{$c.lat}</td>
+   <td>{$c.lng}</td>
+   <td>{$c.orderindex}</td>
+   <td>{if $c.status}<img src="/static/images/yes.gif" class="ajax_no" url="{const.APPADMIN}?m=site_city&a=status&sc_id={$c.sc_id}&status=0" rurl="{const.APPADMIN}?m=site_city&a=status&sc_id={$c.sc_id}&status=1">{else}<img src="/static/images/no.gif"  class="ajax_yes" url="{const.APPADMIN}?m=site_city&a=status&sc_id={$c.sc_id}&status=1" rurl="{const.APPADMIN}?m=site_city&a=status&sc_id={$c.sc_id}&status=0">{/if}</td>
+   <td>
+   {if $parent.pid}{$id_title[$parent.pid]}{/if}
+   {if $c.pid}{$id_title[$c.pid]}{else}顶级{/if}</td>
+<td><a href="admin.php?m=site_city&a=add&sc_id={$c.sc_id}">编辑</a> <a href="admin.php?m=site_city&pid={$c.sc_id}">下级区域</a> <a href="javascript:;" class="delete" url="admin.php?m=site_city&a=delete&sc_id={$c.sc_id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+ 
+{include file="footer.html"}
+</body>
+</html>

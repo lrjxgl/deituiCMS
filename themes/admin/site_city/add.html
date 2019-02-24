@@ -1,0 +1,110 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+{include file='site_city/nav.html'}
+<div class="main-body">
+    <form method='post' action='admin.php?m=site_city&a=save'>
+      <input type='hidden' name='sc_id' style='display:none;' value='{$data.sc_id}' >
+      <table class='table table-bordered' width='100%'>
+      	<tr>
+          <td width="83">上级分类：</td>
+          <td colspan="2">
+          
+          	<select id="pid_top" name="pid[]">
+            <option value="0">请选择</option>
+            {foreach item=c key=k  from=$pid_top_list}
+            <option value="{$k}" {if $sc_top.sc_id eq $k} selected="selected"{/if}>{$c}</option>
+            {/foreach}
+            </select>
+            
+            <select id="pid_2nd" name="pid[]">
+            <option value="0">请选择</option>
+            {foreach item=c key=k  from=$pid_2nd_list}
+            <option value="{$k}" {if $sc_2nd.sc_id eq $k} selected="selected"{/if}>{$c}</option>
+            {/foreach}
+            
+            </select>
+          
+          </td>
+        </tr>
+        <tr>
+          <td>区域名称：</td>
+          <td width="214"><input type='text' name='title' id='title' value='{$data.title}' ></td>
+          <td width="720" rowspan="7">
+          <div id="map_canvas" style="width:600px; height:300px;"></div>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak={const.BDMAPKEY}"></script>
+    <script language="javascript">
+   var map = new BMap.Map("map_canvas");
+   map.enableScrollWheelZoom();
+   var point = new BMap.Point({if $data.lat>0}{$data.lng},{$data.lat}{else}118.165810,24.485228{/if});
+   map.centerAndZoom(point, 12);
+   var marker = new BMap.Marker(point);  // 创建标注
+	map.addOverlay(marker);              // 将标注添加到地图中
+	marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+   map.addEventListener("click", function(e){
+	   map.removeOverlay(marker);
+	   point = new BMap.Point(e.point.lng,e.point.lat);
+	   marker = new BMap.Marker(point);  // 创建标注
+	   
+		map.addOverlay(marker);  
+	   $("#lat").val(e.point.lat);
+	   $("#lng").val(e.point.lng);
+   });
+   
+   function localsearch(word){
+	   var local = new BMap.LocalSearch(map, {
+		  renderOptions:{map: map}
+		});
+		local.search(word);
+   }
+    </script>
+          </td>
+        </tr>
+        <tr>
+          <td>区域关联id：</td>
+          <td><input type='text' name='cityid' id='cityid' value='{$data.cityid}' ></td>
+        </tr>
+        <tr>
+          <td>纬度：</td>
+          <td><input type='text' name='lat' id='lat' value='{$data.lat}' ></td>
+        </tr>
+        <tr>
+          <td>精度：</td>
+          <td><input type='text' name='lng' id='lng' value='{$data.lng}' ></td>
+        </tr>
+        <tr>
+          <td>排序：</td>
+          <td><input type='text' name='orderindex' id='orderindex' value='{$data.orderindex}' ></td>
+        </tr>
+        <tr>
+          <td>状态：</td>
+          <td> <input type="radio" name="status" value="1" {if $data.status eq 1} checked="checked"{/if} />显示 
+          <input type="radio" name="status" value="0"  {if $data.status eq 0} checked="checked"{/if}/>隐藏
+           </td>
+        </tr>
+        
+        <tr>
+          <td></td>
+          <td><input type='submit' value='保存' class='btn btn-success'></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+ 
+{include file="footer.html"}
+</body>
+</html>
+<script language="javascript">
+$(document).ready(function(){
+	$("#title").bind("keyup",function(){
+			localsearch($(this).val());
+		});
+	$("#pid_top").bind("change",function(){
+		$.get("{$appadmin}?m=site_city&a=child&sc_id="+$(this).val(),function(data){
+			$("#pid_2nd").empty().append(data);
+		});
+	});
+});
+</script>
+{include file="footer.html"}
