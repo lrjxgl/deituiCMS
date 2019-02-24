@@ -3,6 +3,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
 define("ROOT_PATH",  str_replace("\\", "/", dirname(__FILE__))."/");
 require(ROOT_PATH."config/config.php");
+require "config/setconfig.php";
 require(ROOT_PATH."config/const.php");
 $module=isset($_GET['module'])?$_GET['module']:"";
 $m=isset($_GET['m'])?$_GET['m']:"";

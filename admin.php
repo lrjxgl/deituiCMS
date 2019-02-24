@@ -3,6 +3,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
  
 require("config/config.php");
+require "config/setconfig.php";
 require("config/const.php");
 define("ROOT_PATH",  str_replace("\\", "/", dirname(__FILE__))."/");
 define("CONTROL_DIR","source/admin");
@@ -37,7 +38,7 @@ function userinit(&$base){
 	}	 
  
 	C()->smarty->assign(array(
-		"skins"=>"/".$skins."/",
+		"skins"=>$skins."/",
 		"appindex"=>APPINDEX,
 		"appadmin"=>APPADMIN
 	));
