@@ -508,3 +508,9 @@
 ---2019-02-22 08:54:31--/admin.php--
 <div class='item'>错误类型：WARNING<br> 内容：mysqli::__construct(): (HY000/2002): ����Ŀ����������ܾ����޷����ӡ�
   错误位置：D:\www\deituiCMSBase\skymvc\class\cls_mysqli.php 行：62 </div>
+
+---2019-02-24 21:00:49--/moduleadmin.php?m=gread&a=menu--
+<div class='item'>错误类型：WARNING<br> 内容：include(D:/www/deituiCMSBase/module/gread/source/admin/index.ctrl.php): failed to open stream: No such file or directory  错误位置：D:\www\deituiCMSBase\skymvc\skymvc.php 行：330 </div>
+
+---2019-02-24 21:04:12--/module.php?m=forum&a=my--
+<div class='item'>错误类型：WARNING<br> 内容：include(D:/www/deituiCMSBase/module/forum/source/index/index.ctrl.php): failed to open stream: No such file or directory  错误位置：D:\www\deituiCMSBase\skymvc\skymvc.php 行：330 </div>
