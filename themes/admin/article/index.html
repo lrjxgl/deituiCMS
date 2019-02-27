@@ -89,7 +89,7 @@ ID:<input class="w100" type="text" name="id" value="{$smarty.get.id|intval}" cla
 <td><a href="admin.php?m=article&a=add&id={$c.id}">编辑</a>
  
 	<a href="/index.php?m=article&a=show&id={$c.id}" target="_blank">查看</a> 
-	<a href="javascript:;" class="delete" url="admin.php?m=article&a=delete&ajax=1&id={$c.id}">删除</a></td>
+	<a href="javascript:;" class="js-delete" url="admin.php?m=article&a=delete&ajax=1&id={$c.id}">删除</a></td>
   </tr>
    {/foreach}
  </table>

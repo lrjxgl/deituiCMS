@@ -80,10 +80,16 @@
 			}
 		}
 		public function alipay($apply){
-			require_once 'api/alipay/pc/config.php';
+			/**支付宝配置***/
+			$ali=M("open_alipay")->selectRow("status=1"); 
+			 
+			$config['app_id']=$ali['appid'];
+			$config['merchant_private_key']=$ali['merchant_private_key'];
+			$config['alipay_public_key']=$ali['alipay_public_key'];
+			/***end配置***/
 			require_once 'api/alipay/pc/pagepay/service/AlipayTradeService.php';
 			require_once 'api/alipay/pc/pagepay/buildermodel/AlipayTradeRefundContentBuilder.php';
-			
+			require_once ROOT_PATH.'api/alipay/pc/config.php';
 		    //商户订单号，商户网站订单系统中唯一订单号
 		    $out_trade_no = $apply['recharge_orderno'];// trim($_POST['WIDTRout_trade_no']);
 		
@@ -136,9 +142,23 @@
 				$this->goAll("退款失败",1);
 			}
 		}
+		public function getWeixin(){
+					$wid=get_post('wid','i');
+					if($wid){
+					$where=" id=".$wid;
+					}else{
+					$where="";
+					}
+					$wx=M("weixin")->selectRow(array("where"=>$where,"order"=>"id DESC"));
+					return $wx;
+			}
 		public function wxpay($apply){
-			require_once "api/wxpay3/lib/WxPay.Config.php";
-			require_once "api/wxpay3/lib/WxPay.Api.php";
+			 
+			require_once ROOT_PATH."api/wxpay/lib/WxPay.Config.php";
+			$wx=$this->getWeixin();	
+			WxPayConfig::init($wx);
+			require_once  (ROOT_PATH.'/api/wxpay/lib/WxPay.Api.php');
+			 
 			$out_trade_no = $apply["recharge_orderno"];
 			$total_fee = $apply["money"]*100;
 			$refund_fee = $apply["money"]*100;
@@ -146,8 +166,8 @@
 			$input->SetOut_trade_no($out_trade_no);
 			$input->SetTotal_fee($total_fee);
 			$input->SetRefund_fee($refund_fee);
-		    $input->SetOut_refund_no(WxPayConfig::MCHID.date("YmdHis"));
-		    $input->SetOp_user_id(WxPayConfig::MCHID);
+		    $input->SetOut_refund_no(WxPayConfig::$MCHID.date("YmdHis"));
+		    $input->SetOp_user_id(WxPayConfig::$MCHID);
 		    $res=WxPayApi::refund($input);
 		    
 		    $success=0;
