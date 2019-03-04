@@ -95,6 +95,11 @@ function sql($value){
 	return newaddslashes($value);
 }
 
+function html($str){
+	$str=htmlspecialchars($str);
+	return $str;
+}
+
 function ustrip_tags($str){	
 	$arr=array("&amp;","&nbsp;","&ldquo;","&rdquo;","&hellip;");
 	$str=str_replace($arr,"",$str);

@@ -41,7 +41,7 @@ $(function(){
 	})
 	
 	//删除
-	$(".js-delete").click(function(){
+	$(document).on("click",".js-delete",function(){
 		var obj=$(this);
 		if(confirm("删除后不可恢复，确认删除吗?")){
 			$.get($(this).attr("url"),function(data){
@@ -75,4 +75,42 @@ $(function(){
 		$(this).attr("rurl",url);
 		$(this).removeClass("ajax_no").addClass("ajax_yes");
 	});
+	
+	$(document).on("click",".js-tabs a",function(e){ 
+		e.preventDefault();
+		var p=$(this).parents(".tabs-box");
+		p.find("a").removeClass("active");
+		p.find(".tabs-hd").hide();
+		$(this).addClass("active");
+		
+		var href=$(this).attr("href");
+		if(href.match(/#/)){
+			 var id=href.substr(1);
+			 $(".tabs-item").hide();
+			 $("#"+id).show();
+		}else{
+			var id=$(this).attr("data-id");
+			if(id==null){
+				window.location=href;
+			}else{
+				$.get(href,function(data){			
+					$(".tabs-item").hide();				
+					$("#"+id).html(data).show();
+				});
+			}
+		}
+	});
+	
+	$(document).on("click",".js-toggle-status",function(){
+		var id=$(this).attr("v");
+		var obj=$(this);
+		var url=$(this).attr("url")
+		$.get(url,function(res){
+			if(res.data==1){
+				obj.addClass("yes").removeClass("no");
+			}else{
+				obj.addClass("no").removeClass("yes");
+			}
+		},"json")
+	})
 })

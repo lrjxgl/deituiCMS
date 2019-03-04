@@ -12,6 +12,18 @@
 		width: 100%;
 		flex-direction: row;
 	}
+	.m-navPic-item{
+		padding: 5px;
+		width: 20%;
+		margin-bottom: 10px;
+	}
+	.m-navPic-img{
+		width: 40px;
+		height: 40px;
+	}
+	.m-navPic-title {
+		font-size: 0.7rem;
+	}
 </style>
 <body>
 <div class="header">
@@ -28,9 +40,19 @@
 			{/foreach}
 		</div>
 		 
-		<div class="swiper-pagination"></div>
+		<div class="swiper-pagination flex flex-jc-center"></div>
 	 
 	</div>
+	<div class="m-navPic">
+	    {foreach item=c from=$navList}
+	    <a href="{$c.link_url}" class="m-navPic-item">
+			  <img class="m-navPic-img" src="{$c.logo|images_site}" />
+			  <div class="m-navPic-title">{$c.title}</div>
+			   
+	    </a>
+		
+	    {/foreach}
+	</div>	
 	<div class="row-box-hd pdl-10">
 		<div class="flex-1 f20">文章推荐</div>
 		<div gourl="/index.php?m=article" class="row-box-more">更多</div>
@@ -61,7 +83,11 @@
 <script src="/plugin/swiper/js/swiper.min.js"></script>
 <script>
 	$(function(){
-		var flash=new Swiper("#indexFlash");
+		var flash = new Swiper("#indexFlash", {
+			pagination: {
+				el: '.swiper-pagination',
+			}
+		});
 	})
 	
 </script>

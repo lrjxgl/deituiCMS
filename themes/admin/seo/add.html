@@ -1,0 +1,53 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+	<div class="tabs-border">
+		<a class="item" href="{$appadmin}?m=seo">seo优化</a>
+		<a class="item active" href="{$appadmin}?m=seo&a=add">添加seo</a>
+	</div>
+ 
+ 
+ <div class="main-body">
+<form method="post" action="{$appadmin}?m=seo&a=save">
+<input type="hidden" name="id" value="{$seo.id}">
+<table width="100%" class="table table-bordered">
+<tr>
+<td align="right">页面名称:</td>
+<td><input type="text" name="cname" value="{$seo.cname}"></td>
+</tr>
+<tr>
+  <td align="right">m：</td>
+  <td><input name="m" type="text" id="m" value="{$seo.m}"></td>
+</tr>
+<tr>
+  <td align="right">a：</td>
+  <td><input name="a" type="text" id="a" value="{$seo.a}"></td>
+</tr>
+<tr>
+  <td align="right">ID：</td>
+  <td><label for="object_id"></label>
+    <input name="object_id" type="text" id="object_id" value="{$seo.object_id}" /></td>
+</tr>
+<tr>
+  <td align="right">标题：</td>
+  <td><input name="title" type="text" id="title" value="{$seo.title}" size="80"></td>
+</tr>
+<tr>
+  <td align="right">关键字：</td>
+  <td><input name="keywords" type="text" id="keywords" value="{$seo.keywords}" size="80"></td>
+</tr>
+<tr>
+  <td align="right">描述：</td>
+  <td><textarea name="description" id="description" cols="45" rows="5">{$seo.description}</textarea></td>
+</tr>
+<tr>
+  <td align="right">&nbsp;</td>
+  <td><input type="submit" name="button" id="button" class="btn" value="提交"></td>
+</tr>
+</table>
+</form>
+</div>
+{include file='footer.html'}
+</body>
+</html>

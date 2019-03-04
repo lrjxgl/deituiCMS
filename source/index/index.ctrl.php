@@ -19,9 +19,11 @@ class indexControl extends skymvc
 		switch($fromapp){
 			case "uniapp":
 				$flashList=M("ad")->listByNo("uniapp-index");
+				$navList=M("navbar")->navlist(14);
 				break;
 			default:
 				$flashList=M("ad")->listByNo("wap-index");
+				$navList=M("navbar")->navlist(4);
 				break;
 		}
 		

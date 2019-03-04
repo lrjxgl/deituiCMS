@@ -12,7 +12,13 @@ function skyToast(msg){
 }
 
 function goBack(){
-	window.history.back()
+	var backurl=document.referrer;
+	if(backurl==''){
+		window.location="/";
+	}else{
+		window.history.back()
+	}
+	
 }
 
 /**短信验证码****/
@@ -79,6 +85,7 @@ $(function(){
 	})
 	$(document).on("click",".goBack",function(){
 		var backurl=document.referrer;
+		
 		if(backurl==''){
 			var obj=$(this);
 			if(obj.attr("url")!=undefined){
@@ -93,9 +100,12 @@ $(function(){
 	})
 	$(document).on("click",".header-back",function(){
 		var backurl=document.referrer;
+		
 		if(backurl==''){
+			
 			var obj=$(this);
 			if(obj.attr("url")!=undefined){
+				
 				window.location=obj.attr("url");
 			}else{
 				window.location="/";

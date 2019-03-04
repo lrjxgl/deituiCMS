@@ -27,6 +27,7 @@ class userModel extends model{
 	}
 	
 	public function getUserByIds($uids,$fields=""){
+		$uids=array_unique($uids);
 		if(!empty($uids)){
 			$option['where']=" userid in(".implode(",",$uids).")";
 			$fields && $option['fields']=$fields;

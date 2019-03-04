@@ -248,7 +248,7 @@ $config=array(
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/install.sql.php","");
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/uninstall.sql.php","");
 		file_put_contents(ROOT_PATH."module/{$mod_dir}/install.lock","success");
-		$this->gomsg($this->lang['module_ctreate_success'],APPADMIN."?m=module");
+		$this->goAll("插件创建成功");
 	}
 	
 	/*获取所有的模块*/
