@@ -27,7 +27,9 @@
    <td>{$c.min_grade}</td>
    <td>{$c.max_grade}</td>
    <td>{$c.discount}%</td>
-<td><a href="admin.php?m=user_rank&a=add&id={$c.id}">编辑</a> <a href="admin.php?m=user_rank&a=show&id={$c.id}">查看</a> <a href="javascript:;" class="delete" url="admin.php?m=user_rank&a=delete&id={$c.id}">删除</a></td>
+<td><a href="admin.php?m=user_rank&a=add&id={$c.id}">编辑</a> 
+ 
+<a href="javascript:;" class="js-delete" url="admin.php?m=user_rank&a=delete&id={$c.id}">删除</a></td>
   </tr>
    {/foreach}
  </table>

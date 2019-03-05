@@ -31,7 +31,7 @@
    <td>{if $c.status}已关注{else}未关注{/if}</td>
  
    <td>{$c.reply_num}</td>
-<td><a href="javascript:;" class="delete" url="admin.php?m=weixin_user&a=delete&id={$c.id}">删除</a></td>
+<td><a href="javascript:;" class="js-delete" url="admin.php?m=weixin_user&a=delete&id={$c.id}">删除</a></td>
   </tr>
    {/foreach}
  </table>

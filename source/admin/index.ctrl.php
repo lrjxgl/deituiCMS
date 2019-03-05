@@ -41,7 +41,10 @@ class indexControl extends skymvc
 	}
 	
 	public function onMain(){
-		
+		$version=cmsVersion::get();
+		$this->smarty->goAssign(array(
+			"version"=>$version
+		));
 		$this->smarty->display("index/main.html");
 	}
 	
@@ -107,7 +110,75 @@ class indexControl extends skymvc
 		));
 		
 	}
+	/*****检测新版本*****/
+	public function onCheckNewVersion(){
+		$key="admin_CheckNewVersion";
+		$version=cmsVersion::get();
+		
+		$data=file_get_contents($version["checkversion"]."&domain=".$_SERVER['HTTP_HOST']);
+		if($data>$version["version_num"]){
+			$this->goAll("success",0,array(
+				"isnew"=>1,
+				"version_num"=>$data
+			));
+		}else{
+			$this->goAll("success",0,array(
+				"isnew"=>0,
+				"version_num"=>$data
+			));
+		}
+	}
+	/***检测授权****/
+	public function onshouquan(){
+		$key="admin_iframe_shouquan";
+		$version=cmsVersion::get();
+		$data=file_get_contents($version["checkshouquan"]."&domain=".$_SERVER['HTTP_HOST']);
+		echo $data;
+	}
+	public function onUpdate(){
+		set_time_limit(10000);
+		$key="admin_iframe_update";
+		$version=cmsVersion::get(); 
+		$c=file_get_contents($version["onlineupdate"]."&domain=".$_SERVER['HTTP_HOST']);
+		
+		$v=json_decode($c,true);
+		if(isset($v['error'])){
+			exit(json_encode(array("error"=>1,"message"=>$v['message'])));
+		} 
+		$now=$version["version_num"];
+		 
+		if($v){
+			foreach($v as $d){
+				if($d['v']>$now){
+					 
+					$this->updateNow($d['f']);
+					$now=$d['v'];
+				}
+			}
+		}
+		exit(json_encode(array("error"=>0,"message"=>"success")));
+		 
+	}
+	 
 	
+	function updateNow($file){
+		umkdir("update");
+		$version=cmsVersion::get(); 
+		file_put_contents(ROOT_PATH."update/update.zip",file_get_contents($file));
+		 
+		$this->loadClass("pclzip",false,false);
+		$zip = new pclzip(ROOT_PATH."update/update.zip");
+		$zip->extract(ROOT_PATH."update");
+	 
+		chmod(ROOT_PATH."update/index.php",0777);
+		if(file_exists(ROOT_PATH."update/updatesql.php")){
+			chmod(ROOT_PATH."update/updatesql.php",0777);
+		}
+		
+		file_get_contents("http://".$_SERVER['HTTP_HOST']."/update/index.php?a=update");
+		delfile(ROOT_PATH."update",1);
+		return true;
+	}
 	
 }
 

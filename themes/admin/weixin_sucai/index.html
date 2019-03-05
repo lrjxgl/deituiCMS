@@ -28,7 +28,7 @@
    <td>{if $c.status eq 0}未审核{else}运营{/if}</td>
    <td>{$c.dateline|date:Y-m-d}</td>
 <td><a href="admin.php?m=weixin_sucai&a=add&id={$c.id}&wid={$c.wid}">编辑</a>  
-<a href="javascript:;" class="delete" url="admin.php?m=weixin_sucai&a=delete&id={$c.id}&wid={$c.wid}">删除</a></td>
+<a href="javascript:;" class="js-delete" url="admin.php?m=weixin_sucai&a=delete&id={$c.id}&wid={$c.wid}">删除</a></td>
   </tr>
    {/foreach}
  </table>

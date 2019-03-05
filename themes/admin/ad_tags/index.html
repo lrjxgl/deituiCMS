@@ -39,7 +39,7 @@
    <td>{$c.width}</td>
    <td>{$c.height}</td>
 <td><a href="admin.php?m=ad_tags&a=add&tag_id={$c.tag_id}">编辑</a> 
-	 <a href="javascript:;" class="delete" url="admin.php?m=ad_tags&a=delete&tag_id={$c.tag_id}">删除</a></td>
+	 <a href="javascript:;" class="js-delete" url="admin.php?m=ad_tags&a=delete&tag_id={$c.tag_id}">删除</a></td>
   </tr>
   
   {if $c.child}
@@ -61,7 +61,7 @@
    <td>{$cc.height}</td>
 <td><a href="admin.php?m=ad_tags&a=add&tag_id={$cc.tag_id}">编辑</a> 
 	 
-	<a href="javascript:;" class="delete" url="admin.php?m=ad_tags&a=delete&tag_id={$cc.tag_id}">删除</a></td>
+	<a href="javascript:;" class="js-delete" url="admin.php?m=ad_tags&a=delete&tag_id={$cc.tag_id}">删除</a></td>
   </tr>
    {/foreach}
   {/if}

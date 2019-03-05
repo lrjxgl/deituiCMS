@@ -52,6 +52,17 @@
    
 $(document).on("click",".js-imgdel",function(){
 	var id=$(this).parents(".uploader-imgsdata-img").remove();
+	//同步到表单
+	var $imgs=$(".uploader-imgsdata-img");
+	var $imgsdata="";
+	for(var i=0;i<$imgs.length;i++){
+		if(i>0){
+			$imgsdata+=","
+		}
+		$imgsdata+=$imgs.eq(i).attr("v");
+		
+	}
+	$("#imgsdata").val($imgsdata);
 })
 $(document).on("click",".upimg-btn",function(){
 	$(this).parents(".upimg-box").find(".uploader-imgsdata-file").click();//

@@ -29,7 +29,9 @@
    <td>
    {if $parent.pid}{$id_title[$parent.pid]}{/if}
    {if $c.pid}{$id_title[$c.pid]}{else}顶级{/if}</td>
-<td><a href="admin.php?m=site_city&a=add&sc_id={$c.sc_id}">编辑</a> <a href="admin.php?m=site_city&pid={$c.sc_id}">下级区域</a> <a href="javascript:;" class="delete" url="admin.php?m=site_city&a=delete&sc_id={$c.sc_id}">删除</a></td>
+<td><a href="admin.php?m=site_city&a=add&sc_id={$c.sc_id}">编辑</a> 
+<a href="admin.php?m=site_city&pid={$c.sc_id}">下级区域</a> 
+<a href="javascript:;" class="js-delete" url="admin.php?m=site_city&a=delete&sc_id={$c.sc_id}">删除</a></td>
   </tr>
    {/foreach}
  </table>

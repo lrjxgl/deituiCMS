@@ -44,7 +44,7 @@
    <td>{$c.title}</td>
    <td>{$c.description}</td>
    <td>{if $c.url}<a href="{$c.url}" target="_blank">查看</a>{/if}</td>
-<td><a href="javascript:;" class="delete" url="admin.php?m=weixin_reply&a=delete&id={$c.id}">删除</a></td>
+<td><a href="javascript:;" class="js-delete" url="admin.php?m=weixin_reply&a=delete&id={$c.id}">删除</a></td>
   </tr>
    {/foreach}
  </table>

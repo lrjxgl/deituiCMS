@@ -514,3 +514,7 @@
 
 ---2019-02-24 21:04:12--/module.php?m=forum&a=my--
 <div class='item'>错误类型：WARNING<br> 内容：include(D:/www/deituiCMSBase/module/forum/source/index/index.ctrl.php): failed to open stream: No such file or directory  错误位置：D:\www\deituiCMSBase\skymvc\skymvc.php 行：330 </div>
+
+---2019-03-05 13:42:57--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(http://www.deituicms.com/index.php?m=newversion&amp;a=checkshouquan&amp;a=api&amp;product=deituiCMS&amp;domain=deituicmsbase.skymvc.com): failed to open stream: ������ӷ���һ��ʱ���û���ȷ�𸴻�ӵ����û�з�Ӧ�����ӳ���ʧ�ܡ�
+  错误位置：D:\www\deituiCMSBase\source\admin\index.ctrl.php 行：135 </div>

@@ -1,0 +1,36 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+<div class="tabs-border">
+	<a class="item active" href="?m=express_fee">费用列表</a>
+	<a class="item" href="?m=express_fee&a=add">添加</a>
+</div>	
+<div class="main-body">
+ <table class="tbs">
+  <tr>
+   <td>id</td>
+   <td>标题</td>
+   <td>首重</td>
+   <td>加重</td>
+  
+<td>操作</td>
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.title}</td>
+   <td>{$c.fmoney}</td>
+   <td>{$c.amoney}</td>
+ 
+<td><a href="/admin.php?m=express_fee&a=add&id={$c.id}">编辑</a>
+ 
+ <a href="javascript:;" class="js-delete" url="admin.php?m=express_fee&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

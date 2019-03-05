@@ -29,7 +29,8 @@
    <td><a href="/index.php?m=weixin_openapi&wid={$c.id}">http://{$smarty.server.HTTP_HOST}/index.php?m=weixin_openapi&wid={$c.id}</a></td>
 <td><a href="admin.php?m=weixin&a=add&id={$c.id}">编辑</a>
  
- <a href="admin.php?m=weixin&a=setWeixin&id={$c.id}">进入管理</a> <a href="javascript:;" class="delete" url="admin.php?m=weixin&a=delete&id={$c.id}">删除</a></td>
+ <a href="admin.php?m=weixin&a=setWeixin&id={$c.id}">进入管理</a> 
+ <a href="javascript:;" class="js-delete" url="admin.php?m=weixin&a=delete&id={$c.id}">删除</a></td>
   </tr>
    {/foreach}
  </table>

@@ -56,11 +56,11 @@ define("REWRITE_TYPE","pathinfo");
 define("TESTMODEL",1);//开发测试模式
 define("SQL_SLOW_LOG",1);//记录慢查询
 //UPLOAD_OSS--- aliyun/qiniu/upyun/0 不分离上传设为0
-define("UPLOAD_OSS","aliyun");
+define("UPLOAD_OSS",0);
 define("UPLOAD_DEL",0);
-define("OSS_BUCKET","shuxianglai");
-define("IMAGES_SITE","https://shuxianglai.oss-cn-hangzhou.aliyuncs.com/");
-//define("IMAGES_SITE","http://".$_SERVER['HTTP_HOST']."/");
+define("OSS_BUCKET","deituiskycms");
+//define("IMAGES_SITE","https://shuxianglai.oss-cn-hangzhou.aliyuncs.com/");
+define("IMAGES_SITE","http://".$_SERVER['HTTP_HOST']."/");
 //静态文件
 define("STATIC_SITE","https://".$_SERVER['HTTP_HOST']."/");
 define("HTTP_HOST",$_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/");
