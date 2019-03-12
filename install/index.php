@@ -152,7 +152,7 @@ function insert_data($table,$das){
 		}
 		$isval=true;
 		$i++;
-		if($i>200){
+		if($i>30){
 			
 			sqlQuery($sql);
 			$sql=$sq;
@@ -161,7 +161,9 @@ function insert_data($table,$das){
 		}
 		
 	}
-
+	if($table=='sky_district'){
+		echo  count($das) ;
+	}
 	if($isval){
 		sqlQuery($sql);
 	}
@@ -214,7 +216,54 @@ if(empty($_REQUEST['step']) || $_REQUEST['step']==1)
 	$mysql_db=trim($_POST['mysql_db']);
 	$tblpre=trim($_POST['tblpre']);
 	 
-$str=file_get_contents("../config/config.php");
+	$str='<?php
+ 
+define("MYSQL_CHARSET","utf8");
+define("TABLE_PRE","'.$tblpre.'");
+$dbclass="mysqli";
+ 
+$dbconfig["master"]=array(
+	"host"=>"'.$mysql_host.'","user"=>"'.$mysql_user.'","pwd"=>"'.$mysql_pwd.'","database"=>"'.$mysql_db.'"
+);
+  
+ 
+ 
+/*缓存配置*/
+$cacheconfig=array(
+	"redis"=>false,
+	"memcache"=>false,
+	"mysql"=>false,
+	"file"=>true,
+	"php"=>true
+	
+);
+/*用户自定义函数文件*/
+$user_extends=array(
+	"ex_fun.php",
+	"ex_weixin.php",
+	//"cache/ex_cache_redis.php",
+	
+	//"cache/ex_cache_memcache.php",
+	//"cache/ex_cache_mysql.php",
+	//"session/ex_sess_redis.php",
+	//"session/ex_sess_mysql.php",
+	//"session/ex_sess_memcache.php"
+ 
+);
+/*Session配置 1为自定义 0为系统默认*/
+define("SESSION_USER",0);
+define("REWRITE_ON",0); 
+define("REWRITE_TYPE","pathinfo");
+define("TESTMODEL",1);//开发测试模式
+define("SQL_SLOW_LOG",1);//记录慢查询
+//UPLOAD_OSS--- aliyun/qiniu/upyun/0 不分离上传设为0
+define("UPLOAD_OSS",0);
+define("IMAGES_SITE","http://".$_SERVER[\'HTTP_HOST\']."/");
+//静态文件
+define("STATIC_SITE","https://".$_SERVER[\'HTTP_HOST\']."/");
+define("HTTP_HOST",$_SERVER[\'REQUEST_SCHEME\']."://".$_SERVER[\'HTTP_HOST\']."/");
+define("_REDIS_PRE_","deituiCMS_");  
+?>';
 	file_put_contents("../config/config.php",$str);
 	$smarty->assign("step",2);
 	 
@@ -296,6 +345,7 @@ $str=file_get_contents("../config/config.php");
 		if(($pwd1!=$pwd2) or empty($pwd1))
 		{
 			echo "<script>alert('两次输入的密码不一致');history.go(-1);</script>";
+			exit;
 		}
 		$res=mysqli_query($link,"SELECT * FROM ".TABLE_PRE."admin WHERE username='".$adminname."' ");
 		if(mysqli_num_rows($res)){
@@ -309,11 +359,11 @@ $str=file_get_contents("../config/config.php");
 		if(!$r2){
 			mysqli_query($link,"insert into ".TABLE_PRE."user set userid=1,nickname='admin',username='admin',dateline=".time()." ");
 		}
-		 
+		file_put_contents("../config/install.lock",""); 
 		
 	}
 
-	file_put_contents("../config/install.lock","");
+	
 	$smarty->assign("step",5);
 	$smarty->display("index.html");
 }

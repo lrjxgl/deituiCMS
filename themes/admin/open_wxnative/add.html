@@ -2,36 +2,66 @@
 <html>
 	{include file="head.html"}
 	<body>
-{include file='open_wxnative/nav.html'}
-<form method="post" action="admin.php?m=open_wxnative&a=save">
-<input type="hidden" name="id" style="display:none;" value="{$data.id}" >
- <table class="table-add">  <tr>
-				<td>名称：</td>		
-				<td><input type="text" name="title" id="title" value="{$data.title}" ></td>
+		{include file='open_wxnative/nav.html'}
+		<form method="post" action="admin.php?m=open_wxnative&a=save">
+			<input type="hidden" name="id" style="display:none;" value="{$data.id}">
+			<table class="table-add">
+				<tr>
+					<td>名称：</td>
+					<td><input type="text" name="title" id="title" value="{$data.title}"></td>
 				</tr>
-  <tr>
-				<td>创建时间：</td>		
-				<td><input type="text" name="createtime" id="createtime" value="{$data.createtime}" ></td>
+				 
+				<tr>
+					<td>appid：</td>
+					<td><input type="text" name="appid" id="appid" value="{$data.appid}"></td>
 				</tr>
-  <tr>
-				<td>appid：</td>		
-				<td><input type="text" name="appid" id="appid" value="{$data.appid}" ></td>
+				<tr>
+					<td>appkey：</td>
+					<td><input type="text" name="appkey" id="appkey" value="{$data.appkey}"></td>
 				</tr>
-  <tr>
-				<td>appkey：</td>		
-				<td><input type="text" name="appkey" id="appkey" value="{$data.appkey}" ></td>
+				<tr>
+					<td>mchid</td>
+					<td><input type="text" name="mchid" value="{$data.mchid}" /></td>
 				</tr>
-  <tr>
-  			<td>状态：</td>		
-  			<td>
-  					<input type="radio" name="status"  value="1" {if $data.status eq 1} checked {/if} >上线
-  					<input type="radio" name="status"  value="0"  {if $data.status eq 0} checked {/if} >下线
-  			
-  			</td>
-  			</tr>
-</table> <div class="btn-row-submit js-submit">保存</div> 
-</form>
- 
-{include file="footer.html"}
-</body>
+				<tr>
+					<td>mchkey</td>
+					<td><input type="text" name="mchkey" value="{$data.mchkey}" /></td>
+				</tr>
+				<tr>
+					<td>sslcert_path</td>
+					<td>
+						<div class="btn-upload-item" url="/index.php?m=upload&a=uploadCert&ajax=1">
+							<div class="btn-upload js-upload-file-btn">+</div>
+							<input type="file" id="upfile-a" class="btn-upload-file" name="upfile" />
+							<div class="btn-upload-text">{$data.sslcert_path}</div>
+							<input type="hidden" class="btn-upload-input" name="sslcert_path" value="{$data.sslcert_path}" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>sslkey_path</td>
+					<td>
+						<div class="btn-upload-item" url="/index.php?m=upload&a=uploadCert&ajax=1">
+							<div class="btn-upload js-upload-file-btn">+</div>
+							<input type="file" id="upfile-b" class="btn-upload-file" name="upfile" />
+							<div class="btn-upload-text">{$data.sslkey_path}</div>
+							<input type="hidden" class="btn-upload-input" name="sslkey_path" value="{$data.sslkey_path}" />
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>状态：</td>
+					<td>
+						<input type="radio" name="status" value="1" {if $data.status eq 1} checked {/if}>上线
+						<input type="radio" name="status" value="0" {if $data.status eq 0} checked {/if}>下线
+
+					</td>
+				</tr>
+			</table>
+			<div class="btn-row-submit js-submit">保存</div>
+		</form>
+
+		{include file="footer.html"}
+		<script src="/static/admin/js/upload.js"> </script>
+	</body>
 </html>

@@ -38,8 +38,18 @@
 		public function onDefault(){
 			echo "alipay";
 		}
+		/**
+		*调用支付
+		**/
 		public function onPayUrl(){
 			require_once 'api/alipay/app/config.php';
+			/**支付宝配置***/
+			$ali=M("open_alipay")->selectRow("status=1"); 
+			$config['app_id']=$ali['appid'];
+			$config['merchant_private_key']=$ali['merchant_private_key'];
+			$config['alipay_public_key']=$ali['alipay_public_key'];
+			/***end配置***/
+			
 			require_once 'api/alipay/app/aop/AopClient.php';
 			require_once('api/alipay/app/aop/request/AlipayTradeAppPayRequest.php');
 			$aop = new AopClient;
@@ -53,11 +63,15 @@
 			//实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
 			$request = new AlipayTradeAppPayRequest();
 			//SDK已经封装掉了公共参数，这里只需要传入业务参数
-			$out_trade_no=$_GET['out_trade_no'];
-			$money=$_GET['money'];
+			$userid=M("login")->userid;
+			$orderno=get('orderno','h');
+			$order=M("recharge")->selectRow(array("where"=>" orderno='".$orderno."' "));
+			$out_trade_no=$orderno;
+			$money=$order["money"];
+			$subject=$body=$order["orderinfo"];
 			$reqdata=array(
-				"body"=>get('body')?get('body','h'):get('subject'),
-				"subject"=>get('subject'),
+				"body"=>$body.time(),
+				"subject"=>$subject,
 				"out_trade_no"=>$out_trade_no,
 				"timeout_express"=>"30m",
 				"total_amount"=>$money,
@@ -69,7 +83,7 @@
 			$request->setBizContent($bizcontent);
 			//这里和普通的接口调用不同，使用的是sdkExecute
 			$response = $aop->sdkExecute($request);
-			echo json_encode(array("order"=> $response));
+			echo json_encode(array("data"=> $response));
 			exit;
 			//htmlspecialchars是为了输出到页面时防止被浏览器将关键参数html转义，实际打印到日志以及http传输不会有这个问题
 			echo htmlspecialchars($response);//就是orderString 可以直接给客户端请求，无需再做处理。
@@ -79,6 +93,12 @@
 		
 		public function onNotify(){
 			require_once 'api/alipay/app/config.php';
+			/**支付宝配置***/
+			$ali=M("open_alipay")->selectRow("status=1"); 
+			$config['app_id']=$ali['appid'];
+			$config['merchant_private_key']=$ali['merchant_private_key'];
+			$config['alipay_public_key']=$ali['alipay_public_key'];
+			/***end配置***/
 			require_once 'api/alipay/app/aop/AopClient.php';
 			$aop = new AopClient;
 			$aop->alipayrsaPublicKey = $config['alipay_public_key'];
@@ -131,16 +151,7 @@
 		 
 		switch($orderdata['table']){
 			 
-			case "shop":
-					M("shop_order")->update(array("ispay"=>2),"order_id=".$orderdata['order_id']);
-				break;
-			case "order":
-					M("order")->update(array("ispay"=>2,"paytype"=>$row['pay_type']),"order_id=".$orderdata['order_id']);
-				break;
-			case "jubao":
-					M("jubao_order")->update(array("ispay"=>2,"status"=>1),"order_id=".$orderdata['order_id']);
-				break;
-				//统一插件支付
+			
 			case "plugin":
 						eval($orderdata['callback']);
 					break;

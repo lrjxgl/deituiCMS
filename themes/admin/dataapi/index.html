@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="tabs-border">
+	<a class="item active" href="/admin.php?m=dataapi">单页管理</a>
+	<a class="item" href="/admin.php?m=dataapi&a=add">单页添加</a>
+</div> 
+<div class="main-body">
+	<table class="tbs">
+ <thead>
+  <tr>
+   <td>id</td>
+   <td>标题</td>
+   <td>唯一代号</td>
+   <td>添加时间</td>
+   <td>数据类型</td>
+   <td>调用方法</td>
+    
+   <td>状态</td>
+<td>操作</td>
+  </tr>
+  </thead>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.title}</td>
+   <td>{$c.word}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+   <td>{$type_list[$c.type_id]}</td>
+   <td>{$c.equation}</td>
+    
+   <td>{if $c.status eq 2}
+           <img src="/static/images/yes.gif" class="ajax_no"  rurl="{$appadmin}?m=dataapi&a=status&id={$c.id}&status=2" url="{$appadmin}?m=dataapi&a=status&id={$c.id}&status=1" />
+           {else}
+           <img src="/static/images/no.gif"  class="ajax_yes" url="{$appadmin}?m=dataapi&a=status&id={$c.id}&status=2" rurl="{$appadmin}?m=dataapi&a=status&id={$c.id}&status=1" />  
+          {/if}</td>
+<td><a href="admin.php?m=dataapi&a=add&id={$c.id}">编辑</a> <a href="admin.php?m=dataapi&a=show&id={$c.id}">查看</a> <a href="javascript:;" class="delete" url="admin.php?m=dataapi&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+
+{include file="footer.html"}
+</body>
+</html>

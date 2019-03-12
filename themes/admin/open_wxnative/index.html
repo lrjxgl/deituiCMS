@@ -7,9 +7,9 @@
 <thead>  <tr>
    <td>id</td>
    <td>名称</td>
-   <td>创建时间</td>
+    
    <td>appid</td>
-   <td>appkey</td>
+  
    <td>状态</td>
 <td>操作</td></tr>
   </tr>
@@ -17,11 +17,13 @@
 <tr>
    <td>{$c.id}</td>
    <td>{$c.title}</td>
-   <td>{$c.createtime}</td>
+    
    <td>{$c.appid}</td>
-   <td>{$c.appkey}</td>
+    
    <td>{$c.status}</td>
 <td><a href="admin.php?m=open_wxnative&a=add&id={$c.id}">编辑</a> 
+
+
 <a href="javascript:;" class="js-delete" url="admin.php?m=open_wxnative&a=delete&ajax=1&id={$c.id}">删除</a></td>
   </tr>
    {/foreach}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="tabs-border">
+	<a class="item active" href="/admin.php?m=dataapi">单页管理</a>
+	<a class="item" href="/admin.php?m=dataapi&a=add">单页添加</a>
+</div> 
+<div class="main-body">
+    <form method='post' action='admin.php?m=dataapi&a=save'>
+      <input type='hidden' name='id' style='display:none;' value='{$data.id}' >
+      <table class='table table-bordered' width='100%'>
+        <tr>
+          <td width="100">标题：</td>
+          <td><input type='text' name='title' id='title' value='{$data.title}' ></td>
+        </tr>
+        <tr>
+          <td>唯一代号：</td>
+          <td><input type='text' name='word' id='word' value='{$data.word}' ></td>
+        </tr>
+        <tr>
+          <td>数据类型：</td>
+          <td>
+          <select name="type_id">
+          {foreach item=c key=k from=$type_list}
+          <option value="{$k}" {if $data.type_id eq $k} selected="selected"{/if}>{$c}</option>
+          {/foreach}
+          </select>
+           </td>
+        </tr>
+        <tr>
+          <td>调用方法：</td>
+          <td><input type='text' name='equation' id='equation' value='{$data.equation}' >(*可以留空)</td>
+        </tr>
+        <tr>
+          <td>简介：</td>
+          <td> <script type="text/plain" id="info" name="info" >{$data.info}</script></td>
+        </tr>
+        {if $data}
+        <tr>
+          <td>添加时间：</td>
+          <td>{$data.dateline|date:Y-m-d H:m}</td>
+        </tr>
+        {/if}
+        <tr>
+          <td>内容：</td>
+          <td> <script type="text/plain" id="content" name="content" >{$data.content}</script></td>
+        </tr>
+        <tr>
+          <td>状态：</td>
+          <td><input type="radio" name="status" value="1" {if $data.status eq 1} checked="checked"{/if} />隐藏 &nbsp; 
+          <input type="radio" name="status" value="2" {if $data.status eq 2} checked="checked"{/if} />显示</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type='submit' value='保存' class='btn btn-success'></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+ 
+{include file="footer.html"}
+{php loadEditor();}
+<script>
+	var editor=UE.getEditor('content',options);
+</script>
+</body>
+</html>

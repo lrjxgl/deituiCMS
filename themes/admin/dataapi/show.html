@@ -1,0 +1,19 @@
+{include file="header.html"}
+<div class="row">
+<div class="span12">
+{include file='dataapi/nav.html'}
+ <table class='table table-bordered' width='100%'>
+  <tr><td>id：</td><td>{$data.id}</td></tr>
+  <tr><td>标题：</td><td>{$data.title}</td></tr>
+  <tr><td>唯一代号：</td><td>{$data.word}</td></tr>
+  <tr><td>添加时间：</td><td>{$data.dateline}</td></tr>
+  <tr><td>数据类型：</td><td>{$data.type_id}</td></tr>
+  <tr><td>调用方法：</td><td>{$data.equation}</td></tr>
+  <tr><td>简介：</td><td>{$data.info}</td></tr>
+  <tr><td>内容：</td><td>{$data.content}</td></tr>
+  <tr><td>状态：</td><td>{$data.status}</td></tr>
+ </table>
+
+</div>
+</div>
+{include file="footer.html"}
