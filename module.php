@@ -3,8 +3,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
 define("ROOT_PATH",  str_replace("\\", "/", dirname(__FILE__))."/");
 require(ROOT_PATH."config/config.php");
-require "config/setconfig.php";
 require(ROOT_PATH."config/const.php");
+require(ROOT_PATH."config/setconfig.php");
 /***解析pathinfo*/
 $url=$_SERVER['REQUEST_URI'];
 if(preg_match("/module.php\//i",$url)){	 
@@ -23,6 +23,7 @@ $mm=explode("_",$m);
 $module=!empty($module)?$module:$mm[0];
 $module=str_replace(array("/","\\","."),"",htmlspecialchars($module));
 if(empty($m) && empty($module)) exit('模块未安装');
+require(ROOT_PATH."module/{$module}/module.php");
 define("CONTROL_DIR",ROOT_PATH."module/{$module}/source/index");
 define("MODEL_DIR",ROOT_PATH."source/model");
 define("HOOK_DIR","module/{$module}/source/hook");
@@ -53,6 +54,10 @@ if(isset($_GET['ajax'])){
 require("./skymvc/skymvc.php");
 //用户自定义初始化函数
 function userinit(&$base){
+	if(function_exists("moduleInit")){
+		moduleInit($base);
+		return false;
+	}
 	global $wap_template_dir,$template_dir;
 	$skinsmodule=ISWAP?$wap_template_dir:$template_dir;
 	if(isset($_SESSION['ssuser']['userid'])){

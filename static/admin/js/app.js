@@ -45,7 +45,10 @@ $(function(){
 			$(this).parents("form").attr("action")+"&ajax=1",
 			$(this).parents("form").serialize(),
 			function(data){
-				skyToast(data.message)
+				skyToast(data.message);
+				if(data.error){
+					retrn false;
+				}
 				if(obj.attr("ungo")=="1"){
 					return true;
 				}else{

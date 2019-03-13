@@ -25,9 +25,10 @@
 						<div class="row-box-hd mgb-5">软件信息</div>
 						<div>
 							<div class="mgb-10">当前版本：<?php echo $this->_var['version']['version']; ?> V<?php echo $this->_var['version']['version_num']; ?> </div>
-							<div class="mgb-10 flex">最新版本：<?php echo $this->_var['version']['version']; ?> 
+							<div class="mgb-5 flex">最新版本：<?php echo $this->_var['version']['version']; ?> 
 								<div id="newVersion"></div> 
 							</div>
+							<div id="newVersion-desc" class="mgb-10 cl2"></div>
 							<div class="mgb-10">
 								<?php echo $this->_var['version']['description']; ?>
 							</div>

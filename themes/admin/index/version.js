@@ -1,9 +1,11 @@
 $.get("/admin.php?m=index&a=CheckNewVersion&ajax=1",function(res){
 	if(res.data.isnew==1){
 		$("#newVersion").html("V"+res.data.version_num);
+		$("#newVersion-desc").html(res.data.desc);
 		$("#update-btn").show();
 	}else{
 		$("#newVersion").html("V"+res.data.version_num);
+		$("#newVersion-desc").html(res.data.desc);
 	}
 },"json");
 $.get("/admin.php?m=index&a=shouquan",function(res){

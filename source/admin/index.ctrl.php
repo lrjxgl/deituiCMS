@@ -116,15 +116,19 @@ class indexControl extends skymvc
 		$version=cmsVersion::get();
 		
 		$data=file_get_contents($version["checkversion"]."&domain=".$_SERVER['HTTP_HOST']);
-		if($data>$version["version_num"]){
+		 
+		$res=json_decode($data,true);
+		if($res["version"]>$version["version_num"]){
 			$this->goAll("success",0,array(
 				"isnew"=>1,
-				"version_num"=>$data
+				"version_num"=>$res["version"],
+				"desc"=>$res["desc"]
 			));
 		}else{
 			$this->goAll("success",0,array(
 				"isnew"=>0,
-				"version_num"=>$data
+				"version_num"=>$res["version"],
+				"desc"=>$res["desc"]
 			));
 		}
 	}
@@ -132,6 +136,7 @@ class indexControl extends skymvc
 	public function onshouquan(){
 		$key="admin_iframe_shouquan";
 		$version=cmsVersion::get();
+	 
 		$data=file_get_contents($version["checkshouquan"]."&domain=".$_SERVER['HTTP_HOST']);
 		echo $data;
 	}
