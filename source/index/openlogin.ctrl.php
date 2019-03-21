@@ -40,8 +40,8 @@ class openloginControl extends skymvc{
 			$this->goall("请过".(60-(time()-$t))."秒再发送",1);
 		}
 		$yzm=rand(111111,999999);
-		$site=M("sites")->selectRow(array("order"=>"siteid ASC","limit"=>1));
-		$content="【".$site['sitename']."】验证码：".$yzm."，请您5分钟内完成验证";
+		 
+		$content="【".SMS_QIANMING."】验证码：".$yzm."，请您5分钟内完成验证";
 		$content=array(
 			"content"=>$content,
 			"code"=>$yzm,

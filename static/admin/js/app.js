@@ -47,7 +47,7 @@ $(function(){
 			function(data){
 				skyToast(data.message);
 				if(data.error){
-					retrn false;
+					return false;
 				}
 				if(obj.attr("ungo")=="1"){
 					return true;

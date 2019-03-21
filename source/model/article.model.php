@@ -25,5 +25,19 @@ class articleModel extends model{
 		
 		return $data;
 	}
+	
+	public function recList($catid,$limit=10){
+		$where=" is_recommend=1 ";
+		if($catid){
+			$cids=M("category")->id_family($catid);
+			$where.=" AND catid in("._implode($cids).") ";
+		}
+		$option=array(
+			"where"=>$where,
+			"limit"=>$limit,
+			"order"=>"id DESC"
+		);
+		return $this->Dselect($option);
+	}
 }
 ?>

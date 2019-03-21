@@ -10,7 +10,18 @@
     <td height="30"><input type="radio" name="phone_reg"  value="1" {if $data.phone_reg eq 1} checked="checked"{/if} />开启 
         <input name="phone_reg" type="radio"  value="0"{if $data.phone_reg neq 1} checked="checked"{/if} />不开启</td>
   </tr>
-  
+	<tr >
+  	<td height="30" align="right">短信方</td>
+    <td>
+    	<input type="radio" name="sms_type" {if $data.sms_type neq 'alisms'}checked{/if}  value="default"> 默认
+    	<input type="radio" name="sms_type" {if $data.sms_type eq 'alisms'}checked{/if} value="alisms"> 阿里云
+        
+    </td>
+  </tr>
+  <tr >
+    <td height="30" align="right">短信签名：</td>
+    <td height="30"><input  class="w100" name="sms_qianming" type="text" value="{$data.sms_qianming}"> （使用公司名称简写）</td>
+  </tr>
   <tr>
     <td width="156" height="30" align="right">手机服务用户：</td>
     <td width="581" height="30"><input name="phone_user" class="w100" type="text" id="phone_user" value="{$data.phone_user}" /> 短信接口申请：<a href="http://www.smsbao.com/reg?r=10190" target="_blank">http://www.smsbao.com/</a></td>

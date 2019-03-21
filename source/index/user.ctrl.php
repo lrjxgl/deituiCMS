@@ -14,8 +14,16 @@ class userControl extends skymvc{
 		$user=M("user")->selectRow(array("where"=>" userid=".$userid));
 		$user['user_head']=images_site($user['user_head']);
 		//导航
-		$navList=M("navbar")->getListByGroup(7);
-		 
+			
+		$fromapp=get("fromapp");
+		switch($fromapp){
+			case "uniapp":
+				$navList=M("navbar")->getListByGroup(17);
+				break;
+			default:
+				$navList=M("navbar")->getListByGroup(7);
+				break;
+		} 
 		$this->smarty->goAssign(array(
 			"data"=>$user,
 			"navList"=>$navList
@@ -200,8 +208,8 @@ class userControl extends skymvc{
 						$this->goall("请过".(60-(time()-$t))."秒再发送",1);
 					}
 					$yzm=rand(111111,999999);
-					$site=M("sites")->selectRow(array("order"=>"siteid ASC","limit"=>1));
-					$content="【".$site['sitename']."】你正在绑定手机账户，验证码：".$yzm."，请您5分钟内完成验证";
+					 
+					$content="【".SMS_QIANMING."】你正在绑定手机账户，验证码：".$yzm."，请您5分钟内完成验证";
 					$content=array(
 						"code"=>$yzm,
 						"tpl"=>"code",
@@ -236,7 +244,13 @@ class userControl extends skymvc{
 					
 				break;
 			default:
-				
+				$user=M("user")->selectRow(array(
+					"where"=>" userid=".$userid,
+					"fields"=>" userid,telephone"
+				));
+				$this->smarty->goAssign(array(
+					"user"=>$user
+				));
 				$this->smarty->display("user/bindmobile.html");
 				break;
 		}

@@ -8,8 +8,8 @@ define("TBKEY","");
 define("TBPID","");
 define("PHONE_ON","1");
 define("PHONE_REG","1");
-define("PHONE_USER","lrjxgl");
-define("PHONE_PWD","Lrj1234567");
+define("PHONE_USER","");
+define("PHONE_PWD","");
 define("PHONE_NUM","15985840591");
 define("SMTPHOST","");
 define("SMTPPORT","0");
@@ -61,4 +61,6 @@ define("PLUGIN_KDYUAN_TYPE","0");
 define("PLUGIN_KDYUAN_MI","3000");
 define("RURL301","");
 define("BDMAPKEY_PHP","99b0c7faf7c6bd62ecd70d4e0f1b315c");
+define("SMS_QIANMING","得推网络");
+define("SMS_TYPE","default");
 ?>

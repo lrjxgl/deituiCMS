@@ -8,7 +8,9 @@ class ex_weixin_config{
 function get_weixin_access_token(){
 	$key="get_weixin_access_token";
 	$wx=M("weixin")->selectRow(array("where"=>" status=1 ","order"=>"id DESC"));
-	 
+	if(empty($wx)){
+		return $false;
+	} 
 	if(1==1 || !$data=cache()->get($key)){
 		$c=file_get_contents("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$wx['appid']."&secret=".$wx['appkey']);
 		 
@@ -49,6 +51,9 @@ function wx_mb_send($token,$json){
 /****网页模板****/
 function wx_jssdk(){
 	$wx=M("weixin")->selectRow(array("where"=>" status=1 ","order"=>"id DESC"));
+	if(empty($wx)){
+		return $false;
+	} 
 	require_once ROOT_PATH."api/wxsdk/jssdk.php";
 	require_once ROOT_PATH."api/wxsdk/wx.php";
 	

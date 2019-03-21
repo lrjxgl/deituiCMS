@@ -4,10 +4,10 @@
 <body>
 <ul class="nav nav-tabs">
 	<li class="active">
-		<a href="{$appadmin}?m=sites">{$lang.sites_admin}</a>
+		<a href="{$appadmin}?m=site">{$lang.site_admin}</a>
 	</li>
 	<li>
-		<a href="{$appadmin}?m=sites&a=add">{$lang.sites_add}</a>
+		<a href="{$appadmin}?m=site&a=add">{$lang.site_add}</a>
 	</li>
 </ul>
 
@@ -29,7 +29,7 @@
 		</td>
 		<td align="center">{$s.title}</td>
 		<td align="center">
-			<a href="{$appadmin}?m=sites&a=add&siteid={$s.siteid}">{$lang.edit}</a>
+			<a href="{$appadmin}?m=site&a=add&siteid={$s.siteid}">{$lang.edit}</a>
 			<a href="http://{$s.domain}" target="_blank">{$lang.look} </a>
 			{if $ssadmin.isfounder}
 			<a href="{$appadmin}?m=iframe&a=top&setsite=1&siteid={$s.siteid}" target="header-frame">切换</a>{/if}</td>
