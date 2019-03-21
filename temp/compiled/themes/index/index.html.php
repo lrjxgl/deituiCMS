@@ -27,7 +27,7 @@
 </style>
 <body>
 <div class="header">
-	<div class="header-title">deituiCMS</div>
+	<div class="header-title"><?php echo $this->_var['site']['sitename']; ?></div>
 </div>
 <div class="header-row"></div>
 <div class="main-body">
