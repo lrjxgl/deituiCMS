@@ -14,7 +14,7 @@ require("config/version.php");
 require(ROOT_PATH."config/config.php");
 @include_once("config/setconfig.php");
 require(ROOT_PATH."config/const.php");
-require(ROOT_PATH."config/version.php");
+ 
  
 $module=isset($_GET['module'])?$_GET['module']:"";
 $m=isset($_GET['m'])?$_GET['m']:"";
@@ -46,61 +46,7 @@ function userinit(&$base){
 		moduleShopInit($base);
 		return false;
 	}
-	if(!in_array($_GET['mm'],array('gread'))){
-		global $module;
-		$shoptable=get_post('shoptable','h');
-		switch($module){
-			case "kdyuan":
-					$shoptable="kdyuan";
-				break;
-		}
-		define("SHOPTABLE",$shoptable);
-		
-		switch(SHOPTABLE){
-			case "ymdian":
-					if(!$_SESSION['ssymdianadmin']){exit('无权限');}
-					define("SITEID",max(1,$_SESSION['ssymdianadmin']['siteid']));
-					define("SHOPID",max(1,$_SESSION['ssymdianadmin']['shopid']));
-					$backshop="/ymdianadmin.php?m=index&a=list";
-				break;
-			case "koudai":
-				if(!$_SESSION['sskoudaiadmin']){exit('无权限');}
-					define("SITEID",max(1,$_SESSION['sskoudaiadmin']['siteid']));
-					define("SHOPID",max(1,$_SESSION['sskoudaiadmin']['shopid']));
-					$backshop="/koudaiadmin.php?m=index&a=list";
-				break;
-			case "shop":
-					if(!$_SESSION['ssshopadmin']){exit('无权限');}
-					define("SITEID",max(1,$_SESSION['ssshopadmin']['siteid']));
-					define("SHOPID",max(1,$_SESSION['ssshopadmin']['shopid']));
-					$backshop="/shopadmin.php?m=index&a=list";
-				break;
-			case "kdyuan":
-					 
-					define("SITEID",max(1,$_SESSION['sskdyuan']['siteid']));
-					define("SHOPID",max(1,$_SESSION['sskdyuan']['id']));
-				 
-				break;
-		}
-		$base->smarty->assign(array(
-			"skins"=>"/module/".$module."/themes/shop/",
-		));
-		$base->smarty->assign(
-			array(
-				"appindex"=>APPINDEX,
-				"appmodule"=>APPMODULE,
-				"appadmin"=>APPADMIN,
-				"shoptable"=>$shoptable,
-				"backshop"=>$backshop
-				
-			));
-		 
-		
-	}
-	if(function_exists("moduleShopInit")){
-	 
-		moduleShopInit();
-	}
+	
 }
 
  
