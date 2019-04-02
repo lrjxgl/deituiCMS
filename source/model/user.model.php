@@ -1,6 +1,7 @@
 <?php
 class userModel extends model{
 	public $base;
+	public $invite_step=0;
 	function __construct(&$base){
 		parent::__construct($base);
 		$this->base=$base;
@@ -112,6 +113,39 @@ class userModel extends model{
 		
 	}
 	
+	
+	/*获取所有的下线*/
+	public function getChildIds($userid){
+		 
+		$t_d=self::select(array("where"=>" invite_userid=".$userid." ","fields"=>"userid,nickname"));
+	 
+		if($t_d){
+			foreach($t_d as $k=>$v){			
+				$t_d[$k]['child']=$this->getChildIds($v['userid']);
+			}
+		}
+		return $t_d;
+	}
+	
+	/*获取所有的上线*/
+	public function getParentsIds($userid,$maxStep=1){
+		$uids[]=$userid;
+		if($this->invite_step>=$maxStep){
+			return false;
+		}
+		$this->invite_step++;
+		$t_d=self::selectRow(array("where"=>" userid=".$userid." ","fields"=>"userid,invite_userid"));
+		if($t_d['invite_userid']){
+			$uids[]=$t_d['invite_userid'];
+			$id=$this->getParentsIds($t_d['invite_userid'],$maxStep);
+			if(is_array($id)){
+				$uids=array_merge($uids,$id);
+			}
+			
+		}
+		$uids=array_unique($uids);
+		return $uids;
+	}
 	
 	
 }

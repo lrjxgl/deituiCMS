@@ -107,6 +107,15 @@ class commentControl extends skymvc{
 		$data=M($tableComment)->postData();
 		$fields=M($tablename)->getFields();
 		$idField=$fields[0]['Field'];
+		$rootPath=get_post("rootPath","h");
+		switch($rootPath){
+			case "module":
+				$rootPath="/module.php";
+				break;
+			default:
+				$rootPath="/";
+				break;
+		}
 		if($id){
 			
 			$row=M($tableComment)->selectRow("id=".$id);
@@ -140,7 +149,7 @@ class commentControl extends skymvc{
 					"userid"=>intval($row['userid']),
 					"template_id"=>"comment",
 					"linkurl"=>array(
-						"path"=>"/",
+						"path"=>$rootPath,
 						"m"=>$tablename,
 						"a"=>"show",
 						"param"=>"&id=".$data['objectid']
@@ -190,7 +199,7 @@ class commentControl extends skymvc{
 			"where"=>$where,
 			"start"=>$start,
 			"limit"=>$limit,
-			"order"=>"id ASC"
+			"order"=>"id DESC"
 		);
 		$data=M($tableComment)->select($option);
 		if($data){

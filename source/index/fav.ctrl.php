@@ -85,6 +85,7 @@ class favControl extends skymvc
 			M("fav")->delete("id=".$row['id']);
 			$action="delete";
 			M($tablename)->changenum("fav_num",-1,$idField."=".$objectid);
+			$this->goAll("取消收藏成功",0,$action);
 		}else{
 			M("fav")->insert(array(
 				"objectid"=>$objectid,
@@ -93,8 +94,9 @@ class favControl extends skymvc
 			));
 			$action="add";
 			M($tablename)->changenum("fav_num",1,$idField."=".$objectid);
+			$this->goAll("收藏成功",0,$action);
 		}
-		$this->goAll("success",0,$action);
+		
 	}
 	
 	 

@@ -10,6 +10,14 @@ class moduleModel extends model{
 		$this->base=$base;
 		$this->table="module";
 	}
+	public function isInstall($module){
+		$file="module/{$module}/install.lock";
+		if(file_exists($file)){
+			
+			return true;
+		}
+		return false;
+	}
 }
 
 ?>

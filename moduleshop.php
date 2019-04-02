@@ -10,7 +10,7 @@ if(ini_get('register_globals'))
 }
 define("ROOT_PATH",  str_replace("\\", "/", dirname(__FILE__))."/");
 
- 
+require("config/version.php"); 
 require(ROOT_PATH."config/config.php");
 @include_once("config/setconfig.php");
 require(ROOT_PATH."config/const.php");

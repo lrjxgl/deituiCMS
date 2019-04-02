@@ -43,6 +43,25 @@ function hex2rgb($hexColor) {
 		}
 		return $rgb;
 	}
+	
+function gps_set($lat,$lng){
+	setcookie("ck_latlng",$lat."-".$lng,time()+3600*24*14,"/",DOMAIN);
+}
+
+function gps_get(){
+	if(isset($_GET['lat'])){
+		return array(
+			"lat"=>get('lat'),
+			"lng"=>get('lng')
+		);
+	}elseif(isset($_COOKIE['ck_latlng'])){
+		$latlng=explode("-",$_COOKIE['ck_latlng']);
+		return array(
+			"lat"=>$latlng[0],
+			"lng"=>$latlng[1]
+		);
+	}
+}	
 
 function loadEditor($all=1){
 	 
