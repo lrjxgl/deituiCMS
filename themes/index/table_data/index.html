@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">{$table.title}</div>
+			<div class="header-right-btn" gourl="?m=table_data&a=add&tableid={$table.tableid}">发布</div>
+		</div>
+		<div class="header-row"></div>
+	 
+		<div class="main-body ">
+			<div class="list ">
+				{foreach item=rs from=$list}
+				<div class="row-box mgb-5 js-item">
+					{foreach item=c from=$rs.data}
+					{if $c.fieldtype=='text'}
+					<div class="flex bd-mp-10 flex-ai-center">
+						<div class="w100">{$c.title}</div>
+						<div class="flex-1">{$c.value}</div>					
+					</div>
+					{elseif $c.fieldtype=='textarea'}
+					<div class="flex bd-mp-10 flex-ai-center">
+						<div class="w100">{$c.title}</div>
+						<div class="flex-1">
+							{$c.value}
+						</div>					
+					</div>
+					{elseif $c.fieldtype=='html'}
+					<div class="flex bd-mp-10 flex-ai-center">
+						<div class="w100">{$c.title}</div>
+						<div class="flex-1">
+							{$c.value}
+						</div>					
+					</div>
+					{elseif $c.fieldtype=='img'}
+					<div class="flex bd-mp-10 flex-ai-center">
+						<div class="w100">{$c.title}</div>
+						<div class="flex-1">
+							<img src="{$c.value}.100x100.jpg" class="w60" />
+						</div>					
+					</div>
+					{/if}
+					{/foreach}
+					<div class="flex">
+						<a href="?m=table_data&a=show&id={$rs.id}&tableid={$rs.tableid}" class="btn-small mgr-20">查看</a>
+						<a href="?m=table_data&a=add&id={$rs.id}&tableid={$rs.tableid}" class="btn-small mgr-20">编辑</a>
+						<div class="btn-small btn-warning js-delete" url="?m=table_data&a=delete&ajax=1&id={$rs.id}">删除</div>
+					</div>
+				</div>	
+				{/foreach}
+			</div>
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

@@ -1,1 +1,76 @@
-die access 
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+ 
+<div class="tabs-border">
+	<a class="item active" href="{$appadmin}?m=recharge">充值记录</a>
+	<a class="item" href="{$appadmin}?m=recharge&a=man">人工充值</a>
+</div>	
+<div class="main-body">
+	<form class="search-form" method="get" action="/admin.php">
+		<input type="hidden" name="m" value="recharge" />
+	 	
+		ID:<input class="w100" type="text" name="id" value="{$smarty.get.id}" />
+		状态：<select class="w100" name="status">
+			<option value="0">请选择</option>
+			<option value="1" {if get('status') eq 1}selected{/if}>支付成功</option>
+			<option value="2" {if get('status') eq 2}selected{/if}>支付失败</option>
+		</select>
+		时间：从
+		<input  class="w100" type="text" id="stime" name="stime" value="{$smarty.get.stime|html}" /> 
+		到
+		<input  class="w100" type="text" id="etime" name="etime" value="{$smarty.get.etime|html}" /> 
+		<button type="submit" class="btn">搜索</button>
+	</form>
+	<div class="pd-10">
+		总计：{$total_money}元
+	</div>
+	<table class="tbs">
+		<thead>
+			<tr align="center">
+				<td>ID</td>
+				<td width="15%">订单号</td>
+				<td>用户</td>
+				<td width="10%">交易金额</td>
+				<td width="10%">充值类型</td>
+
+				<td width="10%">交易状态</td>
+				<td width="18%">交易时间</td>
+				<td>内容</td>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach item=c from=$data}
+			<tr align="center">
+				<td>{$c.id}</td>
+				<td>{$c.orderno}</td>
+				<td>{$c.userid}:{$c.nickname}</td>
+				<td>{$c.money}</td>
+				<td>{$c.pay_type_name}</td>
+
+				<td>{if $c.status eq 1}成功{else}失败{/if}</td>
+				<td>{$c.dateline|date:Y-m-d H:i:s}</td>
+				<td>{$c.orderinfo}</td>
+			</tr>
+			{/foreach}
+
+		</tbody>
+	</table>
+	<div class="pages">{$pagelist}</div>
+
+</div>
+{include file="footer.html"}
+<script src="/plugin/laydate/laydate.js"></script>
+<script>
+	laydate.render({
+		elem:"#stime",
+		type: 'date'
+	})
+	laydate.render({
+		elem:"#etime",
+		type: 'date'
+	})
+</script>
+</body>
+</html>

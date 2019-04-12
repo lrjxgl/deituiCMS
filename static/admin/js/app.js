@@ -1,39 +1,52 @@
-function skyToast(message,type){
-	if(typeof(type)=="undefined"){
-		type="";
-	}
-	if($("#toast").length==0){
-		var html="<div id='toast'><div class='bg "+type+"'>"+message+"</div></div>";
-		$("body").append(html);		
+function skyToast(msg){
+	var html='<div id="toast" class="toast toast-success">'+msg+'</div>';
+	if($("#toast").length>0){
+		$("#toast").html(msg).show();
+		
 	}else{
-		$("#toast").html("<div class='bg "+type+"'>"+message+"</div>");
+		$("body").append(html);
 	}
-	$("#toast").show();
 	setTimeout(function(){
 		$("#toast").hide();
-	},2000);
+	},1000)
 }
-function skyAlert(content,title){
-	if(title==undefined){
-		title="确认提示";
-	}
-	var html='<div class="alert-mask"></div>'
-			+'<div class="alert">'
-			+'	<div class="alert-header">'+title+'</div>'
-			+'	<div class="alert-msg">'+content+'</div>'
-			+'	<div class="alert-ft"><div onclick="skyAlertClose()" class="alert-ft-btn alert-ft-success">确定</div></div>'
-			+'</div>';
+
+/*弹框*/
+function showbox(title,content,width,height){
+	var html='<div class="modal-mask"></div>'
+		+'<div class="modal" id="showbox-container">'
+			+'<div class="modal-header">'
+				+'<div class="modal-title">'+title+'</div>'
+				+'<div class="modal-close" onclick="showboxClose()">关闭</div>'
+			+'</div>'
+			+'<div class="modal-body">'+content+'</div>'
+			+'<div style="height:30px"></div>'
+		+'</div>';
 		
-	if($("#skyAlertBox").length>0){
-		$("#skyAlertBox").html(html).show();
+	if($("#showBox").length==0){
+		html='<div class="modal-group" id="showBox">'+html+'</div>'; 
+		$("body").append(html); 
+		$("#showBox").show();
 	}else{
-		var html='<div class="alert-group" id="skyAlertBox" style="display: flex;">'+html+'</div>'
-		$("body").append(html);
-	}	
+		$("#showBox").html(html).show();
+	}
+	var mt= Math.max(10,parseInt(height)/2);
+	$("#showbox-container").css({left:'50%',marginLeft:-width/2,width:width-10,minHeight:height,marginTop:-mt});
+	setTimeout(function(){
+		width=$("#showbox-container").css("width");
+		height=$("#showbox-container").css("height");
+		height=parseInt(height);
+		width=parseInt(width);
+		var mt= Math.max(10,parseInt(height)/2);
+		$("#showbox-container").css({width:width-10,minHeight:height,marginTop:-mt});
+	},300);
+	 
 }
-function skyAlertClose(){
-	$("#skyAlertBox").hide();
+
+function showboxClose(){
+	$("#showBox").hide();
 }
+
 function goBack(){
 	window.history.back();
 }
@@ -49,6 +62,7 @@ $(function(){
 				if(data.error){
 					return false;
 				}
+				 
 				if(obj.attr("ungo")=="1"){
 					return true;
 				}else{

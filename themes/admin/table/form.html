@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="tabs-border">
+			<div>{$table.title}:{$table.tablename}</div>
+			<a href="?m=table_data&tableid={$table.tableid}" class="item">数据列表</a>
+			
+			<a href="?m=table&a=form&tableid={$table.tableid}" class="item active">查看表单</a>
+			<a href="?m=table_fields&a=table&tableid={$table.tableid}" class="item">表设计</a>
+		</div>
+		<div class="main-body">
+			<form action="?m=table&a=formsave&ajax=1" class="list">
+				<input type="hidden" name="tableid" value="{$table.tableid}" />
+				{foreach item=c from=$fieldsList}
+				{if $c.fieldtype eq 'text'}
+				<div class="input-flex">
+					<div class="input-flex-label">{$c.title}</div>
+					<input type="text" name="tablefield[{$c.fieldname}]" />
+				</div>
+				{elseif $c.fieldtype eq 'textarea'}
+				<div class="textarea-flex">
+					<div class="textarea-flex-label">{$c.title}</div>
+					<textarea name="tablefield[{$c.fieldname}]" class="textarea-flex-text h60"></textarea>
+				</div>
+				{elseif $c.fieldtype eq 'html'}
+				<div class="textarea-flex">
+					<div class="textarea-flex-label">{$c.title}</div>
+					<div>
+						<textarea class="none" name="tablefield[{$c.fieldname}]"></textarea>
+						<div contenteditable="true" class="sky-editor-content textarea-flex-text h60"></div>
+					</div>
+				</div>
+				{elseif $c.fieldtype eq 'img'}
+				<div class="input-flex">
+					<div class="input-flex-label">{$c.title}</div>
+					<div class="flex-1">
+						<div class="js-upload-item">
+							<input type="file" id="tablefield{$c.id}" class="js-upload-file" style="display: none;" />
+							<div class="upimg-btn js-upload-btn">+</div>
+							<input type="hidden" name="tablefield[{$c.fieldname}]" class="js-imgurl" value="" />
+							<div class="js-imgbox">
+			
+							</div>
+						</div>
+					</div>
+				</div>
+				{/if}
+				{/foreach}
+				<div class="btn-row-submit" id="submit">保存</div>
+				
+			</form>
+		</div>
+		{include file="footer.html"}
+		<script language="javascript" src="/static/admin/js/upload.js"></script>
+		<script src="/plugin/lrz/lrz.bundle.js"></script>
+		<script src="/plugin/skyeditor/skyeditor.js"></script>
+		<script>
+			$(document).on("click","#submit",function(){
+				var form=$(this).parents("form");
+				var len=$(".sky-editor-content").length;
+				for(var i=0;i<len;i++){
+					var $e=$(".sky-editor-content:eq("+i+")");
+					$e.parents(".js-html-item").find(".js-html-textarea").val($e.html());
+				}
+				$.ajax({
+					url:"?m=table_data&a=save&ajax=1",
+					data:form.serialize(),
+					method:"POST",
+					success:function(res){
+						goBack();
+					}
+				})
+			})
+		</script>
+	</body>
+</html>

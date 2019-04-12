@@ -32,11 +32,20 @@ function userinit(&$base){
 		moduleAdminInit($base);
 		return false;
 	}
-	global $wap_template_dir,$template_dir;
-	$skinsmodule=ISWAP?$wap_template_dir:$template_dir;
-	c()->smarty->assign(array(
-		"skinsmodule"=>$skinsmodule,
-	));
+	$m=get("m",'h');
+	if(!in_array($m,array('login'))){
+		if(!isset($_SESSION['ssadmin']['id'])){
+			C()->goAll("请先登录",0,0,"/admin.php?m=login");
+		}
+		$access=m("admin_group")->selectOne(array(
+			"where"=>"id=".$_SESSION['ssadmin']['group_id'],
+			"fields"=>"content"
+		));
+		$permission=unserialize($access);
+		if(!C()->checkpermission($permission) && !$_SESSION['ssadmin']['isfounder'] ){
+			//exit("您无权限");	
+		}
+	}	 
 }
 
  

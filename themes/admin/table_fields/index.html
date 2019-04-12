@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+{include file='table_fields/nav.html'}
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>id</td>
+   <td>tableid</td>
+   <td>名称</td>
+   <td>列名称</td>
+   <td>列类型</td>
+   <td>描述</td>
+   <td>status</td>
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.tableid}</td>
+   <td>{$c.title}</td>
+   <td>{$c.fieldname}</td>
+   <td>{$c.filedtype}</td>
+   <td>{$c.description}</td>
+   <td>{$c.status}</td>
+<td><a href="admin.php?m=table_fields&a=add&id={$c.id}">编辑</a> <a href="admin.php?m=table_fields&a=show&id={$c.id}">查看</a> <a href="javascript:;" class="js-delete" url="admin.php?m=table_fields&a=delete&ajax=1&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

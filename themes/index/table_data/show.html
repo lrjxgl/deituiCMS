@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">{$table.title}发布</div>
+			<div class="header-right-btn" gourl="?m=table_data&a=add&tableid={$table.tableid}">发布</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			<div class="row-box">
+			{foreach item=c from=$fieldsList}
+			{if $c.fieldtype=='text'}
+			<div class="flex bd-mp-10 flex-ai-center">
+				<div class="w100">{$c.title}</div>
+				<div class="flex-1">{$c.value}</div>					
+			</div>
+			{elseif $c.fieldtype=='textarea'}
+			<div class="flex bd-mp-10 flex-ai-center">
+				<div class="w100">{$c.title}</div>
+				<div class="flex-1">
+					{$c.value}
+				</div>					
+			</div>
+			{elseif $c.fieldtype=='html'}
+			<div class="flex bd-mp-10 flex-ai-center">
+				<div class="w100">{$c.title}</div>
+				<div class="flex-1">
+					{$c.value}
+				</div>					
+			</div>
+			{elseif $c.fieldtype=='img'}
+			<div class="flex bd-mp-10 flex-ai-center">
+				<div class="w100">{$c.title}</div>
+				<div class="flex-1">
+					<img src="{$c.value}.100x100.jpg" class="w60" />
+				</div>					
+			</div>
+			{/if}
+			{/foreach}
+			</div>
+		</div>
+		{include file="footer.html"}
+		 
+	</body>
+</html>

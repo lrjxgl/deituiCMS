@@ -2,7 +2,12 @@
 <html>
 {include file="head.html"}
 <body>
-{include file='ad/nav.html'}
+<div class="tabs-border">
+	<a class="item" href="{$appadmin}?m=ad&tag_id={php echo get_post('tag_id')}&tag_2nd_id={php echo get_post('tag_2nd_id')}">广告管理</a>
+	<a class="item" href="{$appadmin}?m=ad&a=add&tag_id={php echo get_post('tag_id')}&tag_2nd_id={php echo get_post('tag_2nd_id')}">广告添加</a>
+	<a class="item" href="{$appadmin}?m=ad_tags">广告分类管理</a>
+	<a class="item  active" href="{$appadmin}?m=ad_tags&a=add">广告分类添加</a>
+</div>
 <div class="main-body">
   
     <form method='post' action='admin.php?m=ad_tags&a=save'>

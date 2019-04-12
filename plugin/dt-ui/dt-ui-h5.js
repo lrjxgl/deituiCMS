@@ -10,27 +10,7 @@ function skyToast(msg){
 		$("#toast").hide();
 	},1000)
 }
-function skyAlert(content,title){
-	if(title==undefined){
-		title="确认提示";
-	}
-	var html='<div class="alert-mask"></div>'
-			+'<div class="alert">'
-			+'	<div class="alert-header">'+title+'</div>'
-			+'	<div class="alert-msg">'+content+'</div>'
-			+'	<div class="alert-ft"><div onclick="skyAlertClose()" class="alert-ft-btn alert-ft-success">确定</div></div>'
-			+'</div>';
-		
-	if($("#skyAlertBox").length>0){
-		$("#skyAlertBox").html(html).show();
-	}else{
-		var html='<div class="alert-group" id="skyAlertBox" style="display: flex;">'+html+'</div>'
-		$("body").append(html);
-	}	
-}
-function skyAlertClose(){
-	$("#skyAlertBox").hide();
-}
+
 function goBack(){
 	var backurl=document.referrer;
 	if(backurl==''){
@@ -79,6 +59,16 @@ var smsCountDown={
 };
 
 $(function(){
+	$(document).on("click", ".js-tabs-border-item", function() {
+		var $group = $(this).parents(".tabs-border-group");
+		var index = $(this).index();
+		if ($group.length > 0) {
+			$group.find(".tabs-border-box").removeClass("tabs-border-box-active");
+			$group.find(".tabs-border-box").eq(index).addClass("tabs-border-box-active");
+		}
+		$(this).addClass("tabs-border-active").siblings().removeClass("tabs-border-active");
+	})
+
 	$(document).on("click", ".tabs-toggle-hd", function() {
 		var $p = $(this).parents(".tabs-toggle");
 		var $group = $(this).parents(".tabs-toggle-group");
@@ -145,7 +135,10 @@ $(function(){
 			$(this).parents("form").attr("action")+"&ajax=1",
 			$(this).parents("form").serialize(),
 			function(data){
-				skyToast(data.message)
+				skyToast(data.message);
+				if(data.error){
+					return false;
+				}
 				if(obj.attr("ungo")=="1"){
 					return true;
 				}else{

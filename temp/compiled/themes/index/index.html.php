@@ -56,7 +56,8 @@
 	    </a>
 		
 	    <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
-	</div>	
+	</div>
+		
 	<div class="row-box-hd pdl-10">
 		<div class="flex-1 f20">文章推荐</div>
 		<div gourl="/index.php?m=article" class="row-box-more">更多</div>

@@ -434,7 +434,7 @@ class Smarty
 			//$fun=preg_replace("/\\$([\w_]+)([\[\w_\]]*)/i","{\$this->_var[\\1]\\2}",$fun);
 			//解析数组 {$a}[][][];
 			if(isset($module[1])){
-				return '<?php C()->loadModulemodel("'.$module[1].'","'.$m[1].'");$this->assign("'.$k[1].'",$GLOBALS["'.$m[1].'Model"]->'.$fun.'); ?>';
+				return '<?php $this->assign("'.$k[1].'",MM("'.$module[1].'","'.$m[1].'")->'.$fun.'); ?>';
 			}else{
 				return '<?php $this->assign("'.$k[1].'",M("'.$m[1].'")->'.$fun.'); ?>';
 				/*
