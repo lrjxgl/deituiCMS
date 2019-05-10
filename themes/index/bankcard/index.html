@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="header">
+	<div class="header-back"></div>
+	<div class="header-title">银行账户</div>
+	<div gourl="/index.php?m=bankcard&a=add" class="header-right-btn">添加</div>
+</div>
+<div class="header-row"></div>
+<div class="main-body">
+	<div class="sglist">
+	{foreach item=c from=$list}
+	<div class="sglist-item js-item">
+		<div class="sglist-title flex">
+			<div class="flex-1">{$c.yhk_huming}</div>
+			<div>{$c.yhk_name}</div>
+			<div class="mgl-10 cl-warning pointer js-delete" url="/index.php?m=bankcard&a=delete&ajax=1&id={$c.id}">删除</div>
+		</div>
+		<div class="sglist-desc">卡号：{$c.yhk_haoma}</div>
+		<div class="sglist-desc">{$c.yhk_address}</div>
+	</div>
+	{/foreach}
+	</div>
+</div>
+{include file="footer.html"}
+ 
+</body>
+</html>

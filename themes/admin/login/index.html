@@ -17,7 +17,7 @@
 				<div class="flex">
 					<div class="w80">密码</div>
 					<div class="flex-1">
-						<input type="text" id="password" />
+						<input type="password" id="password" />
 					</div>
 				</div>
 				<div class="flex">

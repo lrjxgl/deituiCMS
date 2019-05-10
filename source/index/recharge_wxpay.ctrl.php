@@ -50,7 +50,7 @@
 				$input->SetTime_start(date("YmdHis"));
 				$input->SetTime_expire(date("YmdHis", time() + 600));
 				$input->SetGoods_tag("test");
-				$input->SetNotify_url($_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/index.php/recharge_wxpay/notify/wid-{$wx['id']}/");
+				$input->SetNotify_url(HTTP_HOST."/index.php/recharge_wxpay/notify/wid-{$wx['id']}/");
 				$input->SetTrade_type("JSAPI");
 				$input->SetOpenid($openId);
 				$url="/index.php";

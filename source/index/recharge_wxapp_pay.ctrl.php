@@ -56,7 +56,7 @@
   		$INWXAPP=true;
   		require_once ROOT_PATH."api/wxpay/lib/WxPay.Config.php";
 			$wx=$this->getWeixin();	
-		 
+			 
 			WxPayConfig::init($wx);
 			require_once  (ROOT_PATH.'/api/wxpay/lib/WxAppPay.Api.php');
 			
@@ -74,7 +74,7 @@
 			$input->SetOut_trade_no($orderno);  
 			//         费用应该是由小程序端传给服务端的，在用户下单时告知服务端应付金额，demo中取值是1，即1分钱  
 			$input->SetTotal_fee($order['money']*100);  
-			$input->SetNotify_url($_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/index.php/recharge_wxapp_pay/notify");//需要自己写的notify.php  
+			$input->SetNotify_url(HTTP_HOST."/index.php/recharge_wxapp_pay/notify");//需要自己写的notify.php  
 			$input->SetTrade_type("JSAPI");  
 			//         由小程序端传给后端或者后端自己获取，写自己获取到的，  
 			$input->SetOpenid($openid);  

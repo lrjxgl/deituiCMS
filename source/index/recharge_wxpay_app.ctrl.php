@@ -36,7 +36,7 @@ class recharge_wxpay_appControl extends skymvc{
 		$unifiedOrder->SetOut_trade_no($orderno);
 		$unifiedOrder->SetTotal_fee($total);
 		$unifiedOrder->SetTrade_type("APP");
-		$unifiedOrder->SetNotify_url($_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/index.php/recharge_wxpay_app/notify/wid-{$wx['id']}/");
+		$unifiedOrder->SetNotify_url(HTTP_HOST."/index.php/recharge_wxpay_app/notify/wid-{$wx['id']}/");
 		$result = WxPayApi::unifiedOrder($unifiedOrder);
 		if (is_array($result)) {
 			header('Access-Control-Allow-Origin: *');

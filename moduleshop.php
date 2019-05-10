@@ -23,8 +23,9 @@ $module=!empty($module)?$module:$mm[0];
 $_GET['mm']=$module;
 $module=str_replace(array("/","\\"),"",htmlspecialchars($module));
 if(empty($m) && empty($module)) exit('模块未安装');
-
-
+if(!file_exists("module/{$module}/module.php")){
+	exit('模块未安装');
+}	
 require(ROOT_PATH."module/{$module}/module.php");
 define("APPINDEX","module.php");//app入口文件
 define("CONTROL_DIR",ROOT_PATH."module/{$module}/source/shop");

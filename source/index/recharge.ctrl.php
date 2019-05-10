@@ -62,7 +62,7 @@ class rechargeControl extends skymvc{
 				"order_ispay"=>$order_ispay,
 				"table"=>$table,
 				"pay_type_list"=>$pay_type_list,
-				"backurl"=>base64_encode($_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/index.php?m=user"),
+				"backurl"=>base64_encode(HTTP_HOST."/index.php?m=user"),
 			));
 		
 		if($order_id){

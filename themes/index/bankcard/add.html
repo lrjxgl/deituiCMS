@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="header">
+	<div class="header-back"></div>
+	<div class="header-title">添加银行卡</div>
+</div>
+<div class="header-row"></div>
+<div class="main-body">
+    
+    	<form method="post" action="index.php?m=bankcard&a=save">
+<input type="hidden" name="id" style="display:none;" value="{$data.id}" >
+	<div class="input-flex">
+		<div class="input-flex-label">所属银行</div>
+		<select name="yhk_name" class="input-flex-select">
+			<option value="0">请选择</option>
+			{foreach item=c from=$bankList}
+			<option value="{$c}">{$c}</option>
+			{/foreach}
+		</select>
+	</div>
+	<div class="input-flex">
+		<div class="input-flex-label">银行卡号</div>
+		<input class="input-flex-text" type="text" name="yhk_haoma" id="yhk_haoma" value="{$data.yhk_haoma}" >
+	</div>
+	<div class="input-flex">
+		<div class="input-flex-label">银行卡户名</div>
+		<input class="input-flex-text" type="text" name="yhk_huming" id="yhk_huming" value="{$data.yhk_huming}" >
+	</div>
+	<div class="input-flex">
+		<div class="input-flex-label">开户地址</div>
+		<input class="input-flex-text" type="text" name="yhk_address" id="yhk_address" value="{$data.yhk_address}" >
+	</div>
+	<div class="input-flex">
+		<div class="input-flex-label">手机</div>
+		<div class="input-flex-txt">{$user.telephone}</div>
+	</div>
+	<div class="input-flex">					
+		<div class="input-flex-label">验证码</div>					 
+		<input type="text" name="yzm" class="input-flex-text">				 
+		<div class="input-flex-btn" id="sendSms">获取验证码</div>
+	</div>
+	<div class="btn-row-submit js-submit">保存</div> 
+</form>
+    
+</div>
+{include file="footer.html"}
+<script>
+	$(document).on("click","#sendSms",function(){
+		$.get("/index.php?m=bankcard&a=sendsms&ajax=1",function(data){
+			skyToast(data.message);
+		},"json")
+	})
+</script>
+</body>
+</html>

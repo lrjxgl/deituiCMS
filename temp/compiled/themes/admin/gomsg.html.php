@@ -20,7 +20,9 @@ setTimeout(movenew,2000);
 	}
 </style>
 <body>
-<?php echo $this->fetch('header.html'); ?>
+<div class="tabs-border">
+	<div class="tabs-border-item tabs-border-active">跳转提示</div>
+</div>
 <div class="main-body">	 
     <div class="gomsg"><?php echo $this->_var['message']; ?>，如果没有自动跳转请点击 <a href="<?php echo $this->_var['url']; ?>">跳转</a></div>    
 </div>
