@@ -38,7 +38,7 @@ body {
 	flex: 1;
 }
 
-[type="text"] {
+[type="text"],[type="password"] {
 	height: 36px;
 	line-height: 36px;
 	width: 100%;

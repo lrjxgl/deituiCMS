@@ -4,7 +4,15 @@ class commentControl extends skymvc{
 	public function __construct(){
 		parent::__construct();
 	}
-	
+	public function onInit(){
+		//检验table是否合法
+		$tablename=get_post("tablename","h");
+		if(!empty($tablename)){
+			if(preg_match("/[^\w]+/",$tablename)){
+				exit("出错了");
+			}
+		}
+	}
 	public function onDefault(){
 		 
 		$tablename=get_post("tablename","h");

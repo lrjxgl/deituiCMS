@@ -2113,6 +2113,7 @@ button{
  .wh-150{width: 150px; height: 150px;}
  .wh-200{width: 200px; height: 200px;}
  .wmax{ max-width: 100%; height:auto;}
+ .w50{width: 50px !important;}
  .w60{width: 60px !important;}
  .w100{width: 100px !important;}
  .w150{width: 150px !important;}

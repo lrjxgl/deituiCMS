@@ -7,7 +7,7 @@ class adModel extends model{
 		$this->table="ad";
 	}
 	
-	public function adlist($tag_id,$limit=4){
+	public function adlist($tag_id,$limit=24){
 		$data=$this->select(array(
 			"where"=>" starttime<".time()." AND endtime>".time()." AND status=2 AND tag_id_2nd=".intval($tag_id)." ",
 			"order"=>" orderindex asc",
@@ -25,7 +25,7 @@ class adModel extends model{
 		return $data;
 	}
 	
-	public function listbyno($no,$limit=4){
+	public function listbyno($no,$limit=24){
 		$tag_id=$this->setTable("ad_tags")->selectOne(array("where"=>"  tagno='".$no."' ","fields"=>"tag_id"));
 		$data=$this->select(array(
 			"where"=>" starttime<".time()." AND endtime>".time()." AND status=2 AND tag_id_2nd=".intval($tag_id)." ",

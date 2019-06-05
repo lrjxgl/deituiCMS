@@ -839,11 +839,14 @@
 }
 .mtlist-item-pd{
 	padding: 0px 5px;
+	box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .mtlist-imgbox{
 	width: 100%;
 	padding: 5px;
+	box-sizing: border-box;
 }
 .mtlist-img{
 	max-width: 100%;
@@ -2426,39 +2429,39 @@ image{
  .cl-money{color: #FF6600!important;}
  .cl-num{color: #f70!important;}
  /***background-color***/
- .bg-ef{ background-color: #efefef !important;}
- .bg-fff{background-color: #fff!important;}
+ .bg-ef{ background-color: #efefef;}
+ .bg-fff{background-color: #fff;}
  .bg-f30{
- 	background-color: #f30 !important;
+ 	background-color: #f30;
  }
- .bg-primary { background-color: #007bff!important;}
+ .bg-primary { background-color: #007bff;}
  .bg-secondary {
-    background-color: #6c757d!important;
+    background-color: #6c757d;
 }
 .bg-success {
-    background-color: #28a745!important;
+    background-color: #28a745;
 }
 .bg-danger {
-    background-color: #dc3545!important;
+    background-color: #dc3545;
 }
 .bg-warning {
-    background-color: #ffc107!important;
+    background-color: #ffc107;
 }
 .bg-info {
-    background-color: #17a2b8!important;
+    background-color: #17a2b8;
 }
 .bg-light {
-    background-color: #f8f9fa!important;
+    background-color: #f8f9fa;
 }
 .bg-dark {
-    background-color: #343a40!important;
+    background-color: #343a40;
 }
 .bg-white {
-    background-color: #fff!important;
+    background-color: #fff;
 }
- .bg-transparent {background-color: transparent !important;}
- .bg-royal{background-color:#8a6de9 !important;}
- .bg-disabled{background-color:#FBFBFB !important;}
+ .bg-transparent {background-color: transparent;}
+ .bg-royal{background-color:#8a6de9;}
+ .bg-disabled{background-color:#FBFBFB;}
  /****固定颜色****/
  
  /***padding****/
@@ -2574,5 +2577,3 @@ image{
  .bd-radius-50{
 	 border-radius: 50%;
  }
-
-

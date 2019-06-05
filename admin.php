@@ -1,6 +1,11 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
+if(!file_exists("config/install.lock"))
+{
+	header("Location: install/");
+	exit;
+} 
 require("config/version.php"); 
 require("config/config.php");
 require "config/setconfig.php";
