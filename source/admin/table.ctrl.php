@@ -81,34 +81,26 @@
 			$this->goall("删除成功",0);
 		}
 		
-		public function onForm(){
-			$tableid=get("tableid","i");
+		public function onCopy(){
+			$tableid=get_post('tableid',"i");
 			$table=M("table")->selectRow("tableid=".$tableid);
-			$fieldsList=M("table_fields")->select(array(
-				"where"=>"tableid=".$tableid
+			unset($table["tableid"]);
+			$table["title"].="_copy";
+			$table["tablename"].="_copy";
+			$newtableid=M("table")->insert($table);
+			$fields=M("table_fields")->select(array(
+				"where"=>" tableid=".$tableid
 			));
-			$this->smarty->goAssign(array(
-				"table"=>$table,
-				"fieldsList"=>$fieldsList
-			));
-			$this->smarty->display("table/form.html");
-		}
-		
-		public function onFormSave(){
-			$tableid=post("tableid","i");
-			$rss=$_POST["tablefield"];
-			if(!empty($rss)){
-				foreach($rss as $k=>$v){
-					$rss[$k]=htmlspecialchars($v);
+			if($fields){
+				foreach($fields as $field){
+					$field["tableid"]=$newtableid;
+					unset($field["id"]);
+					M("table_fields")->insert($field);
 				}
-				$content=arr2str($rss);
 			}
-			M("table_data")->insert(array(
-				"tableid"=>$tableid,
-				"content"=>$content
-			));
-			$this->goAll("保存成功");
-		}
+			$this->goAll("复制成功");
+			
+		} 
 		
 		
 	}

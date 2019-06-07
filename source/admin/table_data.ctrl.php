@@ -26,7 +26,7 @@
 			$rscount=true;
 			$data=M("table_data")->select($option,$rscount);
 			$fields=M("table_fields")->select(array(
-				"where"=>" tableid=".$tableid." AND islist=1 ",
+				"where"=>"status=0 AND tableid=".$tableid." AND islist=1 ",
 				"order"=>" orderindex ASC"
 			));
 			if($data){
@@ -37,7 +37,6 @@
 					$data[$k]=$v;
 				}
 			}
-			 
 			$pagelist=$this->pagelist($rscount,$limit,$url);
 			$per_page=$start+$limit;
 			$per_page=$per_page>$rscount?0:$per_page;
@@ -59,12 +58,14 @@
 			$tableid=get("tableid","i");
 			$table=M("table")->selectRow("tableid=".$tableid);
 			$fieldsList=M("table_fields")->select(array(
-				"where"=>"tableid=".$tableid
+				"where"=>" status=0 AND tableid=".$tableid,
+				"order"=>"orderindex ASC"
 			));
 			$id=get("id","i");
 			$rs=M("table_data")->selectRow("id=".$id);
 			$fdata=str2arr($rs["content"]);
 			$fieldsList=$this->parse($fdata,$fieldsList);
+			 
 			$this->smarty->goAssign(array(
 				"table"=>$table,
 				 "data"=>$rs,
@@ -110,6 +111,14 @@
 				foreach($rss as $k=>$rs){
 					if($rs["fieldtype"]=='img'){
 						$rs["value"]=images_site($data[$rs["fieldname"]]);
+					}elseif($rs["fieldtype"]=="select"){
+						 
+						if(!empty($rs["optionlist"])){
+							$rs["opsList"]=explode("\r\n",$rs["optionlist"]);
+						}else{
+							$rs["opsList"]=array();
+						}
+						$rs["value"]=$data[$rs["fieldname"]];
 					}else{
 						$rs["value"]=$data[$rs["fieldname"]];
 					}

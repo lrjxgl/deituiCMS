@@ -11,7 +11,8 @@
 		}
 		
 		public function onDefault(){
-			$where="status in(0,1,2)";
+			$tableid=get("tableid","i");
+			$where="status in(0,1,2) AND tableid=".$tableid;
 			$url="/admin.php?m=table_fields&a=default";
 			$limit=20;
 			$start=get("per_page","i");
@@ -27,6 +28,7 @@
 			$per_page=$start+$limit;
 			$per_page=$per_page>$rscount?0:$per_page;
 			$fieldtypeList=M("table")->fieldTypeList();
+			$table=M("table")->selectRow("tableid=".$tableid);
 			$this->smarty->goassign(
 				array(
 					"list"=>$data,
@@ -34,7 +36,8 @@
 					"pagelist"=>$pagelist,
 					"rscount"=>$rscount,
 					"url"=>$url,
-					"fieldtypeList"=>$fieldtypeList
+					"fieldtypeList"=>$fieldtypeList,
+					"table"=>$table
 				)
 			);
 			$this->smarty->display("table_fields/index.html");
@@ -79,7 +82,7 @@
 		
 		public function onDelete(){
 			$id=get_post('id',"i");
-			M("table_fields")->update(array("status"=>11),"id=$id");
+			M("table_fields")->delete("id=$id");
 			$this->goall("删除成功",0);
 		}
 		

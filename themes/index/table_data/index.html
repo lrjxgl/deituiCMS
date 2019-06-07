@@ -12,6 +12,11 @@
 		<div class="main-body ">
 			<div class="list ">
 				{foreach item=rs from=$list}
+				{php $this->_var["row"]=$this->_var["rs"]["data"]}
+				<div class="none">
+					{$rs["data"]["title"]["title"]}:{$rs["data"]["title"]["value"]}<br/>
+					{$row["title"]["title"]}:{$row["title"]["value"]}
+				</div>
 				<div class="row-box mgb-5 js-item">
 					{foreach item=c from=$rs.data}
 					{if $c.fieldtype=='text'}
@@ -25,6 +30,11 @@
 						<div class="flex-1">
 							{$c.value}
 						</div>					
+					</div>
+					{elseif $c.fieldtype=='select'}
+					<div class="flex bd-mp-10 flex-ai-center">
+						<div class="w100">{$c.title}</div>
+						<div class="flex-1">{$c.value}</div>					
 					</div>
 					{elseif $c.fieldtype=='html'}
 					<div class="flex bd-mp-10 flex-ai-center">
@@ -44,8 +54,8 @@
 					{/foreach}
 					<div class="flex">
 						<a href="?m=table_data&a=show&id={$rs.id}&tableid={$rs.tableid}" class="btn-small mgr-20">查看</a>
-						<a href="?m=table_data&a=add&id={$rs.id}&tableid={$rs.tableid}" class="btn-small mgr-20">编辑</a>
-						<div class="btn-small btn-warning js-delete" url="?m=table_data&a=delete&ajax=1&id={$rs.id}">删除</div>
+					 
+						 
 					</div>
 				</div>	
 				{/foreach}

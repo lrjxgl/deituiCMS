@@ -12,7 +12,7 @@ class tableModel extends model{
 			"select"=>"列表",
 			"img"=>"图片",
 			"html"=>"富文本"	,
-			"radio"=>"单选框",
+		 
 			"map"=>"地图"
 		);
 	}

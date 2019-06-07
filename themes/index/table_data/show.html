@@ -4,12 +4,19 @@
 	<body>
 		<div class="header">
 			<div class="header-back"></div>
-			<div class="header-title">{$table.title}发布</div>
-			<div class="header-right-btn" gourl="?m=table_data&a=add&tableid={$table.tableid}">发布</div>
+			<div class="header-title">{$table.title}</div>
+	 
 		</div>
 		<div class="header-row"></div>
 		<div class="main-body">
+			
 			<div class="row-box">
+				<div class="flex bd-mp-10 flex-ai-center none">
+					<div class="w100">{$fieldsList["title"]["title"]}</div>
+					<div class="flex-1">{$fieldsList["title"]["value"]}</div>					
+				</div>
+				<div>
+				</div>
 			{foreach item=c from=$fieldsList}
 			{if $c.fieldtype=='text'}
 			<div class="flex bd-mp-10 flex-ai-center">
@@ -23,10 +30,15 @@
 					{$c.value}
 				</div>					
 			</div>
+			{elseif $c.fieldtype=='select'}
+			<div class="flex bd-mp-10 flex-ai-center">
+				<div class="w100">{$c.title}</div>
+				<div class="flex-1">{$c.value}</div>					
+			</div>
 			{elseif $c.fieldtype=='html'}
 			<div class="flex bd-mp-10 flex-ai-center">
 				<div class="w100">{$c.title}</div>
-				<div class="flex-1">
+				<div class="flex-1 d-content">
 					{$c.value}
 				</div>					
 			</div>
@@ -34,7 +46,14 @@
 			<div class="flex bd-mp-10 flex-ai-center">
 				<div class="w100">{$c.title}</div>
 				<div class="flex-1">
-					<img src="{$c.value}.100x100.jpg" class="w60" />
+					<img src="{$c.value}" class="wmax" />
+				</div>					
+			</div>
+			{elseif $c.fieldtype=='map'}
+			<div class="flex bd-mp-10 flex-ai-center">
+				<div class="w100">{$c.title}</div>
+				<div class="flex-1 flex">
+					<img  src="http://api.map.baidu.com/staticimage/v2?ak={const.BDMAPKEY}&mcode=666666&center={$c.value}&markers={$c.value}&width=300&height=200&zoom=11 " class="wmax"  />
 				</div>					
 			</div>
 			{/if}

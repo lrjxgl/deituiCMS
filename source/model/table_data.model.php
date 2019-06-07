@@ -9,7 +9,7 @@ class table_dataModel extends model{
 		$tableid=intval($tableid);
 		$data=$this->select($option,$rscount);
 		$fields=M("table_fields")->select(array(
-			"where"=>" tableid=".$tableid." AND islist=1 ",
+			"where"=>" tableid=".$tableid." AND islist=1 AND status=0 ",
 			"order"=>" orderindex ASC"
 		));
 		if(empty($fields)){
@@ -28,16 +28,25 @@ class table_dataModel extends model{
 	public function parse($data,$fields){
 		
 		if($fields){
+			$newfields=array();
 			foreach($fields as $k=>$rs){
 				if($rs["fieldtype"]=='img'){
 					$rs["value"]=images_site($data[$rs["fieldname"]]);
+				}elseif($rs["fieldtype"]=="select"){
+						 
+						if(!empty($rs["optionlist"])){
+							$rs["opsList"]=explode("\r\n",$rs["optionlist"]);
+						}else{
+							$rs["opsList"]=array();
+						}
+						$rs["value"]=$data[$rs["fieldname"]];
 				}else{
 					$rs["value"]=$data[$rs["fieldname"]];
 				}
 				
-				$fields[$k]=$rs;
+				$newfields[$rs["fieldname"]]=$rs;
 			}
-			return $fields;
+			return $newfields;
 		}
 	}
 	
@@ -64,5 +73,67 @@ class table_dataModel extends model{
 			));
 		}
 	}
-	
+	public function getList($tableid,$limit=1){
+		$tableid=intval($tableid);
+		$limit=intval($limit);
+		$where="status in(0,1,2)  AND tableid=".$tableid;
+		$option=array(
+			"start"=>$start,
+			"limit"=>$limit,
+			"order"=>" id DESC",
+			"where"=>$where
+		);
+		return Dselect($tableid,$option);
+	}
+	public function get($tableid,$id=0){
+		$tableid=intval($tableid);
+		$id=intval($id);
+		
+		if(!$id){
+			$where="status in(0,1,2)  AND tableid=".$tableid;
+			$row=$this->selectRow($where);
+			
+			if($row){
+				$id=$row["id"];
+			}else{
+				return false;
+			}
+			
+		}
+	 
+		$rs=M("table_data")->selectRow("id=".$id);
+	 
+		$fieldsList=M("table_fields")->select(array(
+			"where"=>" status=0 AND tableid=".$tableid,
+			"order"=>"orderindex asc"
+		));
+		$fdata=str2arr($rs["content"]);
+		 
+		$fieldsList=$this->parse($fdata,$fieldsList);
+		return $fieldsList;
+	}
+	public function saveTable($tableid,$id=0){
+		 
+		if(!$tableid) return 0;
+		$rss=$_POST["tablefield"];
+		
+		if(!empty($rss)){
+			foreach($rss as $k=>$v){
+				$rss[$k]=stripslashes($v);
+			}
+			$content=arr2str($rss);
+		}
+		if($id){
+			M("table_data")->update(array(
+				"tableid"=>$tableid,
+				"content"=>$content
+			),"id=".$id);
+		}else{
+			$id=M("table_data")->insert(array(
+				"tableid"=>$tableid,
+				"content"=>$content
+			));
+		}
+		return $id;
+	}
 }

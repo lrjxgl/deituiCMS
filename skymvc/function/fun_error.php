@@ -18,7 +18,7 @@ function showError($sql='')
        $html .="<div class='item'>".$row['file'].':'.$row['line'].'行,调用方法:'.$row['function']." </div>";
     }
 	$html.='<div class="item">请联系管理员</div></div>';
-	$html=str_replace(TABLEPRE,"",$html);
+	$html=str_replace(TABLEP_RE,"",$html);
 	 echo $html;
     /* Don't execute PHP internal error handler */
    return false;

@@ -24,7 +24,8 @@
 	<a href="/admin.php?m=table_data&tableid={$c.tableid}">数据列表</a>
 	<a href="/admin.php?m=table_fields&a=table&tableid={$c.tableid}">字段列表</a>
 	<a href="admin.php?m=table&a=add&tableid={$c.tableid}">编辑</a> 
-<a href="admin.php?m=table&a=show&tableid={$c.tableid}">查看</a> 
+<a target="_blank" href="/index.php?m=table_data&tableid={$c.tableid}">查看</a> 
+<a class="js-copy pointer" tableid="{$c.tableid}">复制表</a>
 <a href="javascript:;" class="js-delete" url="admin.php?m=table&a=delete&ajax=1&tableid={$c.tableid}">删除</a></td>
   </tr>
    {/foreach}
@@ -32,5 +33,13 @@
 <div>{$pagelist}</div>
 </div> 
 {include file="footer.html"}
+<script>
+	$(document).on("click",".js-copy",function(){
+		var tableid=$(this).attr("tableid");
+		$.get("/admin.php?m=table&a=copy&ajax=1&tableid="+tableid,function(res){
+			window.location.reload();
+		},"json")
+	})
+</script>
 </body>
 </html>

@@ -48,12 +48,16 @@
 							<option value="">请选择</option>
 							<option v-for="(tt,ttIndex) in pageData.fieldtypeList" :value="ttIndex" :key="ttIndex">{{tt}}</option>
 						</select>
+						<div v-if="item.fieldtype=='select'">
+							<textarea v-model="item.optionlist" name="optionlist"></textarea>
+						</div>
 					 <div class="pd-5">排序</div>
 					 <input class="w60"  type="text" :value="item.orderindex" name="orderindex" />
 					 <div class="pd-5">列表</div>
 					 <input v-model="item.islist" type="checkbox" name="islist" value="1" true-value="1"
   false-value="0" />
-					<div class="btn" @click="save('#addForm'+item.id)">保存</div>
+					<div class="btn mgr-10" @click="save('#addForm'+item.id)">保存</div>
+					<div class="btn btn-warning" @click="del(item.id)">删除</div>
 					</div>
 				</form>
 			</div>

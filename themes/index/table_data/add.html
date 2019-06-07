@@ -23,6 +23,16 @@
 					<div class="textarea-flex-label">{$c.title}</div>
 					<textarea name="tablefield[{$c.fieldname}]" class="textarea-flex-text h60">{$c.value}</textarea>
 				</div>
+				{elseif $c.fieldtype eq 'select'}
+				<div class="input-flex">
+					<div class="input-flex-label">{$c.title}</div>
+					<select name="tablefield[{$c.fieldname}]">
+						<option value="">请选择</option>
+						{foreach item=ss from=$c.opsList}
+						<option value="{$ss}" {if $ss eq $c.value}selected{/if}>{$ss}</option>
+						{/foreach}
+					</select>	
+				</div>
 				{elseif $c.fieldtype eq 'html'}
 				<div class="textarea-flex">
 					<div class="textarea-flex-label">{$c.title}</div>
@@ -47,8 +57,21 @@
 						</div>
 					</div>
 				</div>
+				{elseif $c.fieldtype eq 'map'}
+				<div class="bg-white">
+					<div class="pd-10">{$c.title}</div>
+					<div class="js-map">
+						<input type="hidden" class="map-value"  name="tablefield[{$c.fieldname}]"  value="{$c.value}" />
+						<div class="flex mgb-5 pdl-10">
+							<input type="text" id="mapWord" />
+							<div id="mapSearch" class="input-flex-btn">搜一下</div>
+						</div>
+						<div class="map" id="map" style="width: 100%; height: 300px;"></div>
+					</div>
+				</div> 
 				{/if}
 				{/foreach}
+				
 				<div class="btn-row-submit" id="submit">保存</div>
 				
 			</form>
@@ -57,6 +80,7 @@
 		<script language="javascript" src="/static/admin/js/upload.js"></script>
 		<script src="/plugin/lrz/lrz.bundle.js"></script>
 		<script src="/plugin/skyeditor/skyeditor.js"></script>
+		
 		<script>
 			$(document).on("click","#submit",function(){
 				var form=$(this).parents("form");
@@ -74,6 +98,59 @@
 					}
 				})
 			})
+		</script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak={const.BDMAPKEY}"></script>
+		<script>
+			var maps=$(".js-map");
+			var $field=maps.find(".map-value");
+			 var map = new BMap.Map("map");
+			 map.enableScrollWheelZoom();
+			  // 添加带有定位的导航控件
+			  var navigationControl = new BMap.NavigationControl({
+				// 靠左上角位置
+				anchor: BMAP_ANCHOR_TOP_LEFT,
+				// LARGE类型
+				type: BMAP_NAVIGATION_CONTROL_LARGE,
+				// 启用显示定位
+				enableGeolocation: true
+			  });
+			  map.addControl(navigationControl);
+			  var geolocationControl = new BMap.GeolocationControl();
+			  map.addControl(geolocationControl);
+			 var point = new BMap.Point(118.165810,24.485228);
+			  map.centerAndZoom(point, 12);
+			  var marker = new BMap.Marker(point);  // 创建标注
+			 map.addOverlay(marker); 
+			 map.addEventListener("click", function(e){
+			   map.removeOverlay(marker);
+			   point = new BMap.Point(e.point.lng,e.point.lat);
+			   marker = new BMap.Marker(point);  // 创建标注
+			   
+			 		map.addOverlay(marker);  
+			   $field.val(e.point.lng+","+e.point.lat);
+			   
+			 });
+			  function localsearch(word){
+			   var local = new BMap.LocalSearch(map, {
+			 		  renderOptions:{map: map}
+			 		});
+			 		local.search(word);
+			 }
+			 var lastword="";
+			 $(document).on("click","#mapSearch",function(){
+				 var word=$("#mapWord").val();
+				 if(word==lastword){
+					 return false;
+				 }
+				 lastword=word;
+				 if(word==""){
+					 map.centerAndZoom(point, 12);
+				 }else{
+					 
+					 localsearch(word) 
+				 }
+				
+			 })
 		</script>
 	</body>
 </html>

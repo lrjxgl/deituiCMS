@@ -26,6 +26,11 @@
 							{$c.value}
 						</div>					
 					</div>
+					{elseif $c.fieldtype=='select'}
+					<div class="flex bd-mp-10 flex-ai-center">
+						<div class="w100">{$c.title}</div>
+						<div class="flex-1">{$c.value}</div>					
+					</div>
 					{elseif $c.fieldtype=='html'}
 					<div class="flex bd-mp-10 flex-ai-center">
 						<div class="w100">{$c.title}</div>
@@ -40,11 +45,19 @@
 							<img src="{$c.value}.100x100.jpg" class="w60" />
 						</div>					
 					</div>
+					{elseif $c.fieldtype=='map'}
+					<div class="flex bd-mp-10 flex-ai-center">
+						<div class="w100">{$c.title}</div>
+						<div class="flex-1 flex">
+							<img class="wmax" src="http://api.map.baidu.com/staticimage/v2?ak={const.BDMAPKEY}&mcode=666666&center={$c.value}&markers={$c.value}&width=300&height=200&zoom=11 " class="w60" />
+						</div>					
+					</div>
 					{/if}
 					{/foreach}
 					<div class="flex">
 						<a href="?m=table_data&a=add&id={$rs.id}&tableid={$rs.tableid}" class="btn-small mgr-20">编辑</a>
-						<div class="btn-small btn-warning js-delete" url="?m=table_data&a=delete&ajax=1&id={$rs.id}">删除</div>
+						<div class="btn-small mgr-20 btn-warning js-delete" url="?m=table_data&a=delete&ajax=1&id={$rs.id}">删除</div>
+						<div >调用 id:{$rs.id}</div>
 					</div>
 				</div>	
 				{/foreach}

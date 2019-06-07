@@ -49,7 +49,7 @@
 			$tableid=get("tableid","i");
 			$table=M("table")->selectRow("tableid=".$tableid);
 			$fieldsList=M("table_fields")->select(array(
-				"where"=>"tableid=".$tableid,
+				"where"=>"status=0 AND tableid=".$tableid,
 				"order"=>"orderindex asc"
 			));
 			$id=get("id","i");
@@ -71,7 +71,8 @@
 			$tableid=get("tableid","i");
 			$table=M("table")->selectRow("tableid=".$tableid);
 			$fieldsList=M("table_fields")->select(array(
-				"where"=>"tableid=".$tableid
+				"where"=>"status=0 AND tableid=".$tableid,
+				"order"=>"orderindex ASC"
 			));
 			$id=get("id","i");
 			if($id){
@@ -122,16 +123,25 @@
 		public function parse($data,$rss){
 			
 			if($rss){
+				$newdata=array();
 				foreach($rss as $k=>$rs){
 					if($rs["fieldtype"]=='img'){
 						$rs["value"]=images_site($data[$rs["fieldname"]]);
+					}elseif($rs["fieldtype"]=="select"){
+						 
+						if(!empty($rs["optionlist"])){
+							$rs["opsList"]=explode("\r\n",$rs["optionlist"]);
+						}else{
+							$rs["opsList"]=array();
+						}
+						$rs["value"]=$data[$rs["fieldname"]];
 					}else{
 						$rs["value"]=$data[$rs["fieldname"]];
 					}
 					
-					$rss[$k]=$rs;
+					$newdata[$rs["fieldname"]]=$rs;
 				}
-				return $rss;
+				return $newdata;
 			}
 		}
 	}	

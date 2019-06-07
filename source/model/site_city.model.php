@@ -8,13 +8,7 @@ class site_cityModel extends model{
 	}
 	
 	public function sc_id(){
-		/*if(get('sc_id')){
-			$sc_id=get('sc_id','i');
-			setcookie("ck_sc_id",$sc_id,time()+36000000,"/",DOMAIN);
-		}else{
-			$sc_id=intval($_COOKIE['ck_sc_id']);
-		}
-		*/
+	 
 		$sc_id=get('sc_id','i');
 		return $sc_id;
 	}
@@ -36,7 +30,7 @@ class site_cityModel extends model{
 	}
 	
 	public function children($pid,$status=0){
-		$where=" siteid=".SITEID." AND pid=".$pid."";
+		$where="  pid=".$pid."";
 		if($status){
 			$where.=" AND status=".$status;
 		}
