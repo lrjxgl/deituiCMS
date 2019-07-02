@@ -1,0 +1,49 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+<div class="tabs-border">
+	<a class="item" href="{$appadmin}?m=coupon">优惠券列表</a>
+	<a class="item" href="{$appadmin}?m=coupon&a=add">添加优惠券</a>
+	<a class="item active" href="{$appadmin}?m=coupon&a=user">优惠券用户</a>
+</div>
+<div class="main-body">
+ <table class='table table-bordered' width='100%'>
+  <tr>
+   <td>id</td>
+   <td>名称</td>
+   <td>用户</td>
+   
+   <td>使用价格</td>
+    
+   <td>截止日期</td>
+   <td>领取时间</td>
+   <td>状态</td>
+   <td>操作</td>
+   </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.title}</td>
+   <td>{$c.userid}::{$c.nickname}</td>
+    
+   <td>{$c.money}</td>
+  
+   <td>{$c.etime|cutstr:10}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+   <td>
+   		 {if $c.status eq 1}
+        已使用
+           {else}
+           未使用
+          {/if}
+   </td>
+ <td><a href="javascript:;" class="delete" url="{$appadmin}?m=coupon&a=userdelete&id={$c.id}">删除</a></td>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+</div>
+{include file="footer.html"}
+</body>
+</html>

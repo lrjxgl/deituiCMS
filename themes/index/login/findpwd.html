@@ -7,7 +7,7 @@
 			<div class="header-title">找回密码</div>
 		</div>
 		<div class="header-row"></div>
-		<form>
+		<form id="fdForm">
 			<div class="input-flex">
 				<div class="input-flex-label">手机</div>
 				<input class="input-flex-text" id="telephone" name="telephone" placeholder="请输入手机号码" />
@@ -29,5 +29,23 @@
 			<div class="btn-row-submit" id="login-submit">登录</div>
 		</form>
 		{include file="footer.html"}
+		<script type="text/javascript">
+			$(document).on("click","#sendSms",function(res){
+				var telephone=$("#telephone").val();
+				$.get("/index.php?m=login&a=SendSms&ajax=1",{
+					telephone:$("#telephone").val(),
+				},function(res){
+					skyToast(res.message);
+				},"json");
+			})
+			$(document).on("click","#reg-submit",function(){
+				$.post("/index.php?m=login&a=FindPwdSave&ajax=1",$("#fdForm").serialize(),function(res){
+					skyToast(res.message);
+					if(res.error){
+						window.location="/";
+					}
+				},"json");
+			})
+		</script>
 	</body>
 </html>

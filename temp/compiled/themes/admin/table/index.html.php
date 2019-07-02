@@ -26,7 +26,8 @@
 	<a href="/admin.php?m=table_data&tableid=<?php echo $this->_var['c']['tableid']; ?>">数据列表</a>
 	<a href="/admin.php?m=table_fields&a=table&tableid=<?php echo $this->_var['c']['tableid']; ?>">字段列表</a>
 	<a href="admin.php?m=table&a=add&tableid=<?php echo $this->_var['c']['tableid']; ?>">编辑</a> 
-<a href="admin.php?m=table&a=show&tableid=<?php echo $this->_var['c']['tableid']; ?>">查看</a> 
+<a target="_blank" href="/index.php?m=table_data&tableid=<?php echo $this->_var['c']['tableid']; ?>">查看</a> 
+<a class="js-copy pointer" tableid="<?php echo $this->_var['c']['tableid']; ?>">复制表</a>
 <a href="javascript:;" class="js-delete" url="admin.php?m=table&a=delete&ajax=1&tableid=<?php echo $this->_var['c']['tableid']; ?>">删除</a></td>
   </tr>
    <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
@@ -34,5 +35,13 @@
 <div><?php echo $this->_var['pagelist']; ?></div>
 </div> 
 <?php echo $this->fetch('footer.html'); ?>
+<script>
+	$(document).on("click",".js-copy",function(){
+		var tableid=$(this).attr("tableid");
+		$.get("/admin.php?m=table&a=copy&ajax=1&tableid="+tableid,function(res){
+			window.location.reload();
+		},"json")
+	})
+</script>
 </body>
 </html>

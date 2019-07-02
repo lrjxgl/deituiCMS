@@ -44,7 +44,10 @@
 		public function onPayUrl(){
 			require_once 'api/alipay/app/config.php';
 			/**支付宝配置***/
-			$ali=M("open_alipay")->selectRow("status=1"); 
+			$ali=M("open_alipay")->selectRow("status=1");
+			if(empty($ali)){
+				exit("支付宝支付未配置");
+			} 
 			$config['app_id']=$ali['appid'];
 			$config['merchant_private_key']=$ali['merchant_private_key'];
 			$config['alipay_public_key']=$ali['alipay_public_key'];

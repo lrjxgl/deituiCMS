@@ -20,13 +20,13 @@
 			$rscount=true;
 			$data=M("weixin")->select($option,$rscount);
 			$pagelist=$this->pagelist($rscount,$limit,$url);
-			$cat_list=M("category")->children(0,MODEL_WEIXIN_ID);;	
+			 
 			$this->smarty->assign(
 				array(
 					"data"=>$data,
 					"pagelist"=>$pagelist,
 					"rscount"=>$rscount,
-					"cat_list"=>$cat_list,
+					 
 					"url"=>$url
 				)
 			);
@@ -35,7 +35,7 @@
 		
 		public function onList(){
 			$where="";
-			$url="/index.php?m=weixin&a=default";
+			$url="/admin.php?m=weixin&a=default";
 			$limit=20;
 			$start=get("per_page","i");
 			$option=array(
@@ -75,10 +75,10 @@
 				$data=M("weixin")->selectRow(array("where"=>"id={$id}"));
 				
 			}
-			$cat_list=M("category")->children(0,MODEL_WEIXIN_ID);
+		 
 			$this->smarty->assign(array(
 				"data"=>$data,
-				"cat_list"=>$cat_list,
+	 
 			));
 			$this->smarty->display("weixin/add.html");
 		}

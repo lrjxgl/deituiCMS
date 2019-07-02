@@ -94,12 +94,10 @@ function numdot($str){
 function sql($value){
 	return newaddslashes($value);
 }
-
 function html($str){
 	$str=htmlspecialchars($str);
 	return $str;
 }
-
 function ustrip_tags($str){	
 	$arr=array("&amp;","&nbsp;","&ldquo;","&rdquo;","&hellip;");
 	$str=str_replace($arr,"",$str);
@@ -175,12 +173,14 @@ function str_format($str,$format='',$len=0){
 							$str=strip_tags($str);
 							break;
 					case "x":
+							
 							$str=removeXSS($str);
 							break;
 					case "r":
 							$str=round($str,$len);
 							break;
 					case "a"://返回全部
+					
 							break;
                 }
         }
@@ -199,14 +199,20 @@ function arrRemoveXss($arr){
 	}
 }
 function removeXSS($str){
+	
 	if(!empty($_POST)){
-		require_once ROOT_PATH."skymvc/HTMLPurifier/HTMLPurifier.auto.php";
-		require_once ROOT_PATH."config/xss.config.php";			
-		$html_purifier = new HTMLPurifier(xssConfig::init());
-		$str=stripslashes($str);
-		$clean_html = $html_purifier->purify($str);
-		$clean_html=addslashes($clean_html);
-		return $clean_html;
+		
+		if(file_exists(ROOT_PATH."extends/HTMLPurifier/HTMLPurifier.auto.php")){
+			require_once ROOT_PATH."extends/HTMLPurifier/HTMLPurifier.auto.php";
+			require_once ROOT_PATH."config/xss.config.php";			
+			$html_purifier = new HTMLPurifier(xssConfig::init());
+			$str=stripslashes($str);
+			$clean_html = $html_purifier->purify($str);
+			$clean_html=addslashes($clean_html);
+			return $clean_html;
+		}else{
+			return nRemoveXSS($str);
+		}
 	}else{
 		return nRemoveXSS($str);
 	}

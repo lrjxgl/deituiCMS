@@ -340,6 +340,19 @@ class AopClient {
 	protected function buildRequestForm($para_temp) {
 		
 		$sHtml = "<form id='alipaysubmit' name='alipaysubmit' action='".$this->gatewayUrl."?charset=".trim($this->postCharset)."' method='POST'>";
+		//重写
+		if($para_temp){
+			foreach($para_temp as $key=>$val){
+				 
+				if (false === $this->checkEmpty($val)) {
+					//$val = $this->characet($val, $this->postCharset);
+					$val = str_replace("'","&apos;",$val);
+					//$val = str_replace("\"","&quot;",$val);
+					$sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
+				}
+			}
+		}
+		/*
 		while (list ($key, $val) = each ($para_temp)) {
 			if (false === $this->checkEmpty($val)) {
 				//$val = $this->characet($val, $this->postCharset);
@@ -347,7 +360,8 @@ class AopClient {
 				//$val = str_replace("\"","&quot;",$val);
 				$sHtml.= "<input type='hidden' name='".$key."' value='".$val."'/>";
 			}
-        }
+		}
+		*/
 
 		//submit按钮控件请不要含有name属性
         $sHtml = $sHtml."<input type='submit' value='ok' style='display:none;''></form>";

@@ -1,0 +1,96 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+<div class="tabs-border">
+	<a class="item active" href="{$appadmin}?m=coupon">优惠券列表</a>
+	<a class="item" href="{$appadmin}?m=coupon&a=add">添加优惠券</a>
+	<a class="item" href="{$appadmin}?m=coupon&a=user">优惠券用户</a>
+</div>
+<div class="main-body">
+ <table class="tbs">
+	 <thead>
+  <tr>
+   <td>id</td>
+   <td>名称</td>
+   
+   <td>价格</td>
+   <td>最低消费</td>
+   <td>数量</td>
+   <td>截止日期</td>
+   <td>创建时间</td>
+   <td>状态</td>
+<td>操作</td>
+  </tr>
+  </thead>
+  <tbody>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.title}</td>
+   
+   <td>{$c.money}</td>
+   <td>{$c.lower_money}</td>
+   <td>{$c.amount}</td>
+   <td>{$c.etime|cutstr:10}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+   <td>
+	   <div class="js-toggle-status yes" url="{$appadmin}?m=coupon&a=status&id={$c.id}&ajax=1"></div>
+   		
+   </td>
+<td>
+	<div vid="{$c.id}" class="js-send">赠送优惠券</div>
+	<a href="{$appadmin}?m=coupon&a=add&id={$c.id}">编辑</a> 
+ 
+<a href="javascript:;" class="js-delete" url="{$appadmin}?m=coupon&a=delete&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+   </tbody>
+ </table>
+<div>{$pagelist}</div>
+</div>
+</div>
+</div>
+<div class="modal-group" id="sendBox">
+	<div class="modal-mask"></div>
+	<div class="modal">
+		<div class="modal-header">
+			<div class="modal-title">赠送用户</div>
+		</div>
+		<div class="modal-body">
+			<div class="input-flex">
+				<div class="input-flex-label">用户</div>
+				<input type="text" placeholder="请输入用户手机号码" id="sendUser" class="input-flex-text" />
+				<div id="sendCheck" class="input-flex-btn">确认一下</div>
+			</div>
+			<div id="sendNick"></div>
+			<div id="sendSubmit" class="btn-row-submit">确认赠送</div>
+		</div>
+	</div>
+</div>
+{include file="footer.html"}
+<script>
+	$(function(){
+		var coupon_id;
+		$(document).on("click",".js-send",function(){
+			coupon_id=$(this).attr("vid");
+			$("#sendBox").show();
+		})
+		$(document).on("click","#sendCheck",function(){
+			var tel=$("#sendUser").val();
+			$.get("/admin.php?m=coupon&a=checkuser&ajax=1&tel="+tel,function(res){
+				$("#sendNick").html(res.message);
+			},"json")
+		})
+		$(document).on("click","#sendSubmit",function(){
+			$.get("/admin.php?m=coupon_user&a=sendSave&ajax=1",{
+				coupon_id:coupon_id,
+				telephone:$("#sendUser").val()
+			},function(res){
+				skyToast(res.message);
+			},"json")
+		})
+	})
+</script>
+</body>
+</html>

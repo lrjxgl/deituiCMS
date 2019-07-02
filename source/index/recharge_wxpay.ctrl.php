@@ -33,7 +33,10 @@
 				$INWXAPP=false;
 				
 				require_once ROOT_PATH."api/wxpay/lib/WxPay.Config.php";
-				$wx=$this->getWeixin();	
+				$wx=$this->getWeixin();
+				if(empty($wx)){
+					exit("微信支付未配置");
+				} 
 				WxPayConfig::init($wx);
 				require_once  (ROOT_PATH.'/api/wxpay/lib/WxPay.Api.php');
 				require_once ROOT_PATH."api/wxpay/lib/WxPay.JsApiPay.php";

@@ -8,38 +8,7 @@
   	public function onDefault(){
   		
   	}
-		public function onTest(){
-			$_GET['ajax']=1;
-			$orderno="Re".M("maxid")->get();
-			$openid=get('openid','h'); 
-			$userid=M("login")->userid;
-			$orderdata=array(
-				"table"=>"plugin",
-				"callback"=>'
-					M("user")->addMoney(array(
-						"userid"=>'.$userid.',
-						"money"=>'.$money.',
-						"content"=>"微信充值'.$money.'"
-					));
-				',
-				"url"=>$backurl
-			);
-			$orderdata=base64_encode(json_encode($orderdata)); 
-			$orderinfo="产品购买";
-			M("recharge")->insert(array(
-				"orderno"=>$orderno,
-				"userid"=>$userid,
-				"money"=>0.02,
-				"pay_type"=>"wxapp_pay",
-				"dateline"=>time(),
-				"openid"=>$openid,
-				"orderinfo"=>$orderinfo, 
-				"orderdata"=>$orderdata,
-				"status"=>2,
-			));
-			
-			$this->goAll("success",0,$orderno);
-		}
+		
   	public function getWeixin(){
   			$wid=get_post('wid','i');
   			if($wid){
@@ -56,7 +25,9 @@
   		$INWXAPP=true;
   		require_once ROOT_PATH."api/wxpay/lib/WxPay.Config.php";
 			$wx=$this->getWeixin();	
-			 
+			if(empty($wx)){
+				exit("微信支付未配置");
+			}  
 			WxPayConfig::init($wx);
 			require_once  (ROOT_PATH.'/api/wxpay/lib/WxAppPay.Api.php');
 			

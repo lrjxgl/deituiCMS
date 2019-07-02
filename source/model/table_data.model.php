@@ -73,6 +73,16 @@ class table_dataModel extends model{
 			));
 		}
 	}
+	public function getListByTable($tablename,$limit=1){
+		 
+		 $tableid=M("table")->selectOne(array(
+			"where"=>" tablename='".sql($tablename)."' ",
+			"fields"=>"tableid"
+		));
+		if($tableid){
+			return $this->getList($tableid,$limit);
+		}
+	}
 	public function getList($tableid,$limit=1){
 		$tableid=intval($tableid);
 		$limit=intval($limit);
@@ -83,7 +93,9 @@ class table_dataModel extends model{
 			"order"=>" id DESC",
 			"where"=>$where
 		);
-		return Dselect($tableid,$option);
+		$res=$this->Dselect($tableid,$option);
+		 
+		return $res;
 	}
 	public function get($tableid,$id=0){
 		$tableid=intval($tableid);
