@@ -327,7 +327,11 @@ if(!file_exists(CONTROL_DIR."/$m.ctrl.php"))
 	$_GET['m']=$m="index";
 }
 
-include(CONTROL_DIR."/$m.ctrl.php");
+if(!file_exists(CONTROL_DIR."/$m.ctrl.php")){
+	exit("url不存在");
+}else{
+	include(CONTROL_DIR."/$m.ctrl.php");
+}
 
 $classname = $m.'Control';
 
