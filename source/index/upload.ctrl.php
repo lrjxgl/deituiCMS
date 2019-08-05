@@ -23,7 +23,7 @@ class uploadControl extends skymvc{
 		$this->upload->uploaddir="attach/".$this->sitedir; 
 	 
 		if(empty($_SESSION['ssuser']) &&   empty($_SESSION['ssupload']) && empty($_SESSION['ssadmin']) && empty($_SESSION['ssshopadmin'])){
-			//$this->goall("die access",1);
+			$this->goall("die access",1);
 		}
 		session_write_close();
 		set_time_limit(300);
@@ -203,17 +203,14 @@ class uploadControl extends skymvc{
 		$file=$dir.$maxid.".jpg";
  		$content=substr(strstr( $_POST['content'] ,','),1);
 		$content=base64_decode( $content);
-		file_put_contents($file,$content);
-		$im=getimagesize($file);
-		if($im[0]){
-			if($im[0]<5 || $im[1]<5){
-				unlink($file);
-				exit(json_encode(array("error"=>1,"imgurl"=>$file,"msg"=>"图片出错了")));
-			}
-		}else{
-			unlink($file);
-			exit(json_encode(array("error"=>1,"imgurl"=>$file,"msg"=>"图片出错了")));
+		$im=@imagecreatefromstring($content);
+		if(!$im){
+			exit("图片不支持");
 		}
+		$w=imagesx($im);
+		$h=imagesy($im);
+		
+		imagejpeg($im,$file);
 		$this->loadClass("image",false,false);
 		$img=new image();
 		$imgurl=$file;
@@ -239,17 +236,14 @@ class uploadControl extends skymvc{
  
  		$content=substr(strstr( $_POST['content'] ,','),1);
 		$content=base64_decode( $content);
-		file_put_contents($file,$content);
-		$im=getimagesize($file);
-		if($im[0]){
-			if($im[0]<5 || $im[1]<5){
-				unlink($file);
-				exit(json_encode(array("error"=>1,"imgurl"=>$file,"msg"=>"图片出错了")));
-			}
-		}else{
-			unlink($file);
-			exit(json_encode(array("error"=>1,"imgurl"=>$file,"msg"=>"图片出错了")));
+		$im=@imagecreatefromstring($content);
+		if(!$im){
+			exit("图片不支持");
 		}
+		$w=imagesx($im);
+		$h=imagesy($im);
+		
+		imagejpeg($im,$file);
 		$this->loadClass("image",false,false);
 		$img=new image();
 		$imgurl=$file;

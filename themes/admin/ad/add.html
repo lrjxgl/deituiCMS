@@ -53,11 +53,11 @@
         </tr>
         <tr>
           <td>开始时间：</td>
-          <td><input readonly="" type="text" name="starttime" id="starttime" value="{if $data}{$data.starttime|date:Y-m-d H:m:s}{/if}" ></td>
+          <td><input readonly="" type="text" name="starttime" id="starttime" value="{if $data}{$data.starttime|date:Y-m-d H:m:s}{else}2019-07-17 09:03:01{/if}" ></td>
         </tr>
         <tr>
           <td>结束时间：</td>
-          <td><input readonly="" type="text" name="endtime" id="endtime" value="{if $data}{$data.endtime|date:Y-m-d H:m:s}{/if}" ></td>
+          <td><input readonly="" type="text" name="endtime" id="endtime" value="{if $data}{$data.endtime|date:Y-m-d H:m:s}{else}2029-07-17 09:03:01{/if}" ></td>
         </tr>
         <tr>
           <td>图片地址：</td>
@@ -99,7 +99,7 @@
         <tr>
           <td>状态：</td>
           <td><input type="radio" name="status" value="1" {if $data.status eq 1} checked="checked"{/if} />隐藏 &nbsp; 
-          <input type="radio" name="status" value="2" {if $data.status eq 2} checked="checked"{/if} />显示</td>
+          <input type="radio" name="status" value="2" {if !$data || $data.status eq 2} checked="checked"{/if} />显示</td>
         </tr>
         {if $data}
         <tr>

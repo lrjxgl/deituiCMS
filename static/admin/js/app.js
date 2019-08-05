@@ -52,6 +52,10 @@ function goBack(){
 }
 
 $(function(){
+	$(document).on("click","[gourl]",function(){
+		var url=$(this).attr("gourl");
+		window.location=url;
+	})
 	$(document).on("click",".js-submit",function(){
 		var obj=$(this);
 		$.post(

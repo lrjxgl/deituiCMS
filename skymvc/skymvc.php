@@ -36,6 +36,7 @@ require("class/cls_cache.php");
 require("class/cls_session.php");
 //加载library
 spl_autoload_register(function ($class) {
+	$class=strtolower($class);
 	$f=ROOT_PATH."extends/".'/library/cls_' . $class . '.php';
 	if(file_exists($f)){
 		require_once $f;

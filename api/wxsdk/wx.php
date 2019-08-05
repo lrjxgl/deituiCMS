@@ -4,10 +4,10 @@ $signPackage = $jssdk->GetSignPackage();
 ?>
 <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
-		var wxshare_title="书香来了，分享知识，共享美好生活";
+		var wxshare_title="厦门得推网络科技有限公司，专注于公众号小程序开发，咨询电话：15985840591";
 		var wxshare_link=document.location.href;
 		var wxshare_imgUrl=location.protocol+"//www.shuxianglai.com/static/images/logo.png";
-		var wxshare_desc="书香来了，分享知识，共享美好生活";
+		var wxshare_desc="厦门得推网络科技有限公司，专注于公众号小程序开发，咨询电话：15985840591";
 			$(function(){
 				 
 				wx.config({
