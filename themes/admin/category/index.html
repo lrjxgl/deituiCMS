@@ -45,7 +45,7 @@
   <br>
   
   <a href="{$appadmin}?m=category&a=add&catid={$c.catid}&tablename={$c.tablename}">编辑</a> 
-  <a href="javascript:;" class="del" url="{$appadmin}?m=category&a=delete&catid={$c.catid}">删除</a></td>
+  <a href="javascript:;" class="js-delete" url="{$appadmin}?m=category&a=delete&catid={$c.catid}">删除</a></td>
 </tr>
 {if $c.child}
 {foreach item=cc from=$c.child}

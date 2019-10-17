@@ -6,7 +6,10 @@ class indexControl extends skymvc
 		parent::__construct();
 	}
 	
-	 
+	public function onTest(){
+		echo M("user_invitecode")->getCode(1);
+		 
+	} 
 
 	public function onDefault()
 	{
@@ -34,7 +37,8 @@ class indexControl extends skymvc
 		));
 		$this->smarty->goAssign(array(
 			"flashList"=>$flashList,
-			"articleList"=>$articleList
+			"articleList"=>$articleList,
+			"navList"=>$navList
 		));
 		$this->smarty->display("index.html");
 	}

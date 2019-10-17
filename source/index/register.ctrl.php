@@ -12,9 +12,12 @@ class registerControl extends skymvc{
 		}
 	}
 	public function onDefault(){
-		
+		$reg_invitecode=0;
+		if(defined("REG_INVITECODE") && REG_INVITECODE==1){
+			$reg_invitecode=1;
+		}	
 		$this->smarty->goAssign(array(
-		
+			"reg_invitecode"=>$reg_invitecode
 		)); 
 		$this->smarty->display("register/index.html");
 	}
@@ -63,7 +66,7 @@ class registerControl extends skymvc{
 		if(!cache()->get($key)){
 			$this->goAll("手机验证码出错",1);
 		}
-		$checkcode=post('checkcode','j');
+		$checkcode=post('checkcode','h');
 		if($ischeckcode && $checkcode!=$_SESSION['checkcode']){
 			$this->goall("验证码出错",2);
 		}
@@ -96,13 +99,27 @@ class registerControl extends skymvc{
 		
 		$data['telephone']=post('telephone','i');
 		 
-		$data['lasttime']=$data["createtime"]=date("Y-m-d H:i:s"); 
-		if(get_post('invite_userid')){
-			$data['invite_userid']=intval(post('invite_userid'));
-			setcookie("invite_uid",$data['invite_userid'],time()+360000,"/",DOMAIN);
-		}elseif(isset($_COOKIE['invite_uid'])){
-			$data['invite_userid']=intval($_COOKIE['invite_uid']);
+		$data['lasttime']=$data["createtime"]=date("Y-m-d H:i:s");
+		//邀请相关
+		if(defined("REG_INVITECODE") && REG_INVITECODE==1){
+			$invitecode=post("invitecode","h");
+			if(empty($invitecode)){
+				$this->goAll("请填写邀请码",1);
+			}
+			$invite_userid=M("user_invitecode")->getUserid($invitecode);
+			if(!$invite_userid){
+				$this->goAll("邀请码错误",1);
+			}
+			$data['invite_userid']=$invite_userid;
+		}else{
+			if(get_post('invite_userid')){
+				$data['invite_userid']=intval(post('invite_userid'));
+				setcookie("invite_uid",$data['invite_userid'],time()+360000,"/",DOMAIN);
+			}elseif(isset($_COOKIE['invite_uid'])){
+				$data['invite_userid']=intval($_COOKIE['invite_uid']);
+			}
 		}
+		
 		$data['userid']=$userid=M("user")->insert($data);
 		//密码
 		$salt=rand(1000,9999);			 

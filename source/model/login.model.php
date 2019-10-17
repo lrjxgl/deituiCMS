@@ -126,9 +126,12 @@ class loginModel extends model{
 		if(!$islogin){
 			$user=M('user')->selectRow(array(
 				"where"=>"userid='".$userid."' ",
-				"fields"=>"userid,nickname,telephone,user_head,gold,money"
+				"fields"=>"userid,nickname,telephone,user_head,gold,money,status"
 			));
 			if(empty($user)){
+				return false;
+			}
+			if($user["status"]==99){
 				return false;
 			}
 			$puser=M("user_password")->selectRow("userid=".$userid);

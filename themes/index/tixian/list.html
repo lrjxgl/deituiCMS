@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">提现记录</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			<div>
+				{if empty($list)}
+				<div class="emptyData">暂无提现记录</div>
+				{else}
+				{foreach item=c from=$list}
+				<div class="row-box mgb-5">
+					<div class="flex flex-ai-center mgb-5">
+						<div class="cl-money flex-1">￥{$c.money}</div>
+						<div class="cl3 f12">
+							{$c.timeago}
+						</div>
+						<div class="mgl-10 cl2">{$c.status_name}</div>
+					</div>
+					<div class="cl2 mgb-5">{$c.yhk_name}{$c.yhk_huming}{$c.yhk_haoma}</div>
+					<div class="cl3">{$c.info}</div>
+				</div>
+				{/foreach}
+				{/if}
+			</div>
+			{$pagelist}
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

@@ -1,1 +1,0 @@
-{"expire":1541754953,"data":{"id":"2","username":"admin","salt":"8366","group_id":"2","isfounder":"0"}}

@@ -49,7 +49,14 @@
 				<image gourl="/index.php?m=user&a=user_head" class="uhead-img" src="{$data.user_head}.100x100.jpg"></image>
 
 				<div class="uhead-box">
-					<div class="uhead-nick">{$data.nickname}</div>
+					<div class="mgb-10 f16 flex">
+						<div>{$user.nickname}</div>
+						<div class="flex-1"></div>
+						{if $invitecode}
+						<div class="cl2 mgr-5">邀请码</div>
+						<div class="cl-num">{$invitecode}</div>
+						{/if}
+					</div>
 					<div class="uhead-rnum flex flex-ai-center">
 						余额 ￥
 						<text class="f14 cl-money mgl-5">{$data.money}</text>

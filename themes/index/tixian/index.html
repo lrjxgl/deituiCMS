@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">提现申请</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			<div class="row-box">
+				<div class="mgb-10 flex">
+					<div>您的账户余额：</div>
+					<div class="cl-money">￥{$user.money}</div>
+					<div class="flex-1"></div>
+					<div gourl="/index.php?m=tixian&a=list" class="btn-small">提现记录</div>
+				</div>
+				<div>提现金额至少100元</div>
+			</div>
+			<div class="bg-white">
+				<form action="/index.php?m=tixian&a=save&ajax=1">
+					<div class="input-flex">
+						<div class="input-flex-label">提现金额</div>
+						<input type="text" name="money" class="input-flex-text" />
+					</div>
+					<div class="pd-10">
+						<div class=" bd-mp-10">提现账户</div>
+						{foreach item=c from=$bankList}
+						<div class="row-item-text">
+						 <input type="radio" name="bankid" value="{$c.id}" />	{$c.yhk_name} {$c.yhk_huming} {$c.yhk_haoma}
+						</div>
+						{/foreach}
+					</div>
+					<div class="btn-row-submit js-submit">确认提现</div>
+				</form>
+			</div>
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

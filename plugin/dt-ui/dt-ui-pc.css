@@ -5,6 +5,7 @@ page{
 	 margin: 0;
 	 padding: 0;
 	 background-color: #efeff4;
+	     font-family: Helvetica Neue,Tahoma,Arial,PingFangSC-Regular,Hiragino Sans GB,Microsoft Yahei,sans-serif;
 }
 p,ol,ul,li{
 	margin: 0;
@@ -1039,6 +1040,7 @@ image{
 }
 .mtlist-item-pd{
 	padding: 0px 5px;
+	overflow: hidden;
 }
 
 .mtlist-imgbox{
@@ -1716,13 +1718,13 @@ button{
  }
 
  .btn-mini {
- 	padding: 4px 4px;
+ 	padding: 2px;
  	font-size: 12px;
  	background-color: #007AFF;
  	color: #fff;
  	display: inline-flex;
  	cursor: pointer;
-	line-height: 1.5;
+	line-height: 1;
 	text-align: center;
 	border-radius: 5px;
  }
@@ -2062,6 +2064,12 @@ button{
 	content: "\e646";
 	color: #ccc;
 }
+.block{
+	display: block;
+}
+.inlineblock{
+	display: inline-block;
+}
 .flex{
  	display: flex!important;
  	flex-direction: row!important;
@@ -2131,6 +2139,21 @@ button{
  .f16{font-size: 16px!important;}
  .f14{font-size:14px!important;}
  .f12{font-size: 12px!important;}
+.f10 {
+	transform: scale(0.5);
+	transform-origin: left top;
+	font-size: 20px !important;
+	margin-right: -50%;
+	margin-bottom: -10px !important;
+}
+
+.f8 {
+	transform: scale(0.5);
+	transform-origin: left top;
+	font-size: 16px !important;
+	margin-right: -50%;
+	margin-bottom: -8px !important;
+}
  .fw-600{font-weight:600;}
  /***col1 2 3 内容字体差异 主标题 副标题 描述****/
  .cl1{color: #323232!important;}

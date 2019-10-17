@@ -33,6 +33,12 @@
 			<div class="input-flex-label">重复密码</div>
 			<input class="input-flex-text" name="password2" placeholder="请再次输入密码" type="password" />
 		</div>
+		{if $reg_invitecode}
+		<div class="input-flex">
+			<div class="input-flex-label">邀请码</div>
+			<input class="input-flex-text" name="invitecode" placeholder="请输入邀请码" />
+		</div>
+		{/if}
 		<div class="row-box">
 			<button type="button" id="reg-submit" class="btn-row-submit">立即注册</button>
 			<div class="flex-center">
@@ -54,7 +60,8 @@
 			$(document).on("click","#reg-submit",function(){
 				$.post("/index.php?m=register&a=regsave&ajax=1",$("#regForm").serialize(),function(res){
 					skyToast(res.message);
-					if(res.error){
+					if(!res.error){
+						
 						window.location="/";
 					}
 				},"json");

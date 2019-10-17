@@ -23,11 +23,17 @@ class userControl extends skymvc{
 			default:
 				$navList=M("navbar")->getListByGroup(7);
 				break;
+		}
+		$invitecode=M("user_invitecode")->getCode($userid);
+		$reg_invitecode=0;
+		if(defined("REG_INVITECODE") && REG_INVITECODE==1){
+			$reg_invitecode=1;
 		} 
 		$this->smarty->goAssign(array(
 			"data"=>$user,
-			"navList"=>$navList
-			 
+			"navList"=>$navList,
+			"invitecode"=>$invitecode,
+			"reg_invitecode"=>$reg_invitecode 
 		));
 		$this->smarty->display("user/index.html");
 		

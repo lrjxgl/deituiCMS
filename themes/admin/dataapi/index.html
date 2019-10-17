@@ -36,7 +36,7 @@
            {else}
            <img src="/static/images/no.gif"  class="ajax_yes" url="{$appadmin}?m=dataapi&a=status&id={$c.id}&status=2" rurl="{$appadmin}?m=dataapi&a=status&id={$c.id}&status=1" />  
           {/if}</td>
-<td><a href="admin.php?m=dataapi&a=add&id={$c.id}">编辑</a> <a href="admin.php?m=dataapi&a=show&id={$c.id}">查看</a> <a href="javascript:;" class="delete" url="admin.php?m=dataapi&a=delete&id={$c.id}">删除</a></td>
+<td><a href="admin.php?m=dataapi&a=add&id={$c.id}">编辑</a> <a href="admin.php?m=dataapi&a=show&id={$c.id}">查看</a> <a href="javascript:;" class="js-delete" url="admin.php?m=dataapi&a=delete&id={$c.id}">删除</a></td>
   </tr>
    {/foreach}
  </table>

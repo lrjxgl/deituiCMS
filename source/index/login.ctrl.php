@@ -65,6 +65,9 @@ class loginControl extends skymvc{
 		if($puser['password']!=umd5($password.$puser['salt'])){
 			$this->goall("密码出错了",1,"",$_SERVER['HTTP_REFERER']);
 		}
+		if($user["status"]==99){
+			$this->goAll("账号异常，禁止登陆",1);
+		}
 		$_SESSION['ssuser']=$user;
 		$backurl=get_post('backurl','x');
 		if(!$backurl){
