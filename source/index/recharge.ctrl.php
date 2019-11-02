@@ -112,10 +112,87 @@ class rechargeControl extends skymvc{
 		$this->smarty->display("recharge/my.html");
 	}
 	
-	
-	 
-	
-	
+	public function onPay($return=false){
+		$_GET["ajax"]=1;
+		M("login")->checkLogin(); 
+		$userid=M("login")->userid;
+		 
+		if(ALIPAY!=1 && WXPAY!=1){
+			$this->goAll("支付未配置无法进行支付操作",1);
+		}
+		if(INWEIXIN==true && WXPAY==1){
+			$pay_type="wxpay";
+		}else{
+			$pay_type="alipay";
+		}
+		if(post("pay_type")){
+			$pay_type=post("pay_type","h");
+		} 
+		$order_product="在线充值";
+		$orderno="re".M("maxid")->get();
+		$backurl=get("backurl","x");
+		if(!$backurl){
+			$backurl="/index.php";
+		}
+		$money=post("money","i");
+		if($money<=0){
+			$this->goAll("金额必须大于0",1);
+		}
+		$orderdata=array(
+			"table"=>"plugin",
+			"callback"=>'
+				M("user")->addMoney(array(
+					"userid"=>'.$userid.',
+					"money"=>'.$money.',
+					"content"=>"充值'.$money.'元，"
+				));					
+			',
+			"url"=>$backurl
+		);
+		$orderdata=base64_encode(json_encode($orderdata));
+		$order_price=$money;
+		/*****插入充值表******/
+		M("recharge")->insert(array(
+			"userid"=>$userid,
+			"money"=>$order_price,
+			"pay_type"=>$pay_type,
+			"orderno"=>$orderno,
+			"orderinfo"=>$order_product, 
+			"type_id"=>1,
+			"tablename"=>"",
+			"dateline"=>time(),
+			"status"=>2,	
+			"orderdata"=>$orderdata,
+		));
+		
+		/*插入充值表结束*/
+		
+		$bank_type="";
+		
+		$url=$_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/index.php?m=recharge_{$pay_type}&a=go";
+		$url.="&orderno=$orderno";
+		$url.="&bank_type=".$bank_type;
+		$url.="&order_product=".urlencode($order_product);
+		$url.="&order_price=".$money;
+		$url.="&order_info=".urlencode($order_info);
+		$url.="&backurl=".urlencode($backurl);
+		$redata=array(
+			"payurl"=>$url,
+			"action"=>"pay",
+			"orderno"=>$orderno
+		);
+		if($return){
+			return $redata;
+		}
+		//end 固定支付
+		if(!get("ajax")){
+			header("Location: ".$url);
+			exit;
+		}
+		$this->goALl("正在前往支付",0,$redata,$url);
+		exit;
+	}
+
 	public function onRecharge(){
 		$order_id=get_post('order_id','i');
 		$order_des="网站充值";

@@ -1,4 +1,5 @@
 <?php
+
 if(!defined("ROOT_PATH")){
 	define("ROOT_PATH",  str_replace("\\", "/", dirname(dirname(__FILE__)))."/");
 }
@@ -328,11 +329,7 @@ if(!file_exists(CONTROL_DIR."/$m.ctrl.php"))
 	$_GET['m']=$m="index";
 }
 
-if(!file_exists(CONTROL_DIR."/$m.ctrl.php")){
-	exit("url不存在");
-}else{
-	include(CONTROL_DIR."/$m.ctrl.php");
-}
+include(CONTROL_DIR."/$m.ctrl.php");
 
 $classname = $m.'Control';
 
@@ -769,9 +766,9 @@ class skymvc
 		closeDb();
 		if(get_post('ajax',1)){
 			if(get_post('jsonp')){
-				exit(get_post('callback','h')."(".json_encode(array("error"=>$err,"message"=>$message,"data"=>$data,"url"=>$url)).")");
+				exit(get_post('callback','h')."(".json_encode(array("error"=>$err,"message"=>$message,"data"=>$data,"url"=>$url),JSON_NUMERIC_CHECK).")");
 			}else{
-				exit(json_encode(array("error"=>$err,"message"=>$message,"data"=>$data,"url"=>$url)));
+				exit(json_encode(array("error"=>$err,"message"=>$message,"data"=>$data,"url"=>$url),JSON_NUMERIC_CHECK));
 			}
 		}else{
 			$this->gomsg($message,$url);

@@ -42,7 +42,7 @@ class upload{
 			return array('err'=>'文件格式'.$f_type.'禁止上传','filename'=>'');
 		}
 		//判断文件是否合法
-		$fileType=$this->getTrueType($FILE['tmp_name']);
+		$fileType=$this->getTrueType($FILE['tmp_name'],$FILE['name']);
 		if(!in_array($fileType,$this->sysallowtype) || !in_array($fileType,$this->allowtype)){
 				@unlink($FILE['tmp_name']);
 				return array('err'=>'文件格式'.$fileType.'禁止上传','filename'=>$FILE['name']);
@@ -79,9 +79,13 @@ class upload{
 		}
 	}
 	
-	public function getTrueType($file){
+	public function getTrueType($file,$filename){
 			$mime=$this->getMime($file);
-			return $this->getfiletype($mime);
+			if($mime){							
+				return $this->getfiletype($mime);			
+			}else{						
+				return strtolower(trim(substr(strrchr($filename, '.'), 1)));			
+			}	
 	}
 	
 	public function getMime($file,$mime=""){
