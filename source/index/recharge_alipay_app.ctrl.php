@@ -18,7 +18,7 @@
 					return $sign;
 			}
 			
-			function setUrl($para){
+		function setUrl($para){
 				$arg  = "";
 				while (list ($key, $val) = each ($para)) {
 					$arg.=$key."=\"".$val."\"&";
@@ -44,7 +44,7 @@
 		public function onPayUrl(){
 			require_once 'api/alipay/app/config.php';
 			/**支付宝配置***/
-			$ali=M("open_alipay")->selectRow("status=1");
+			$ali=M("open_alipay")->selectRow("status=1"); 		
 			if(empty($ali)){
 				exit("支付宝支付未配置");
 			} 
@@ -82,7 +82,7 @@
 			);
 			 
 			$bizcontent = json_encode($reqdata);
-			$request->setNotifyUrl("http://".$_SERVER['HTTP_HOST']."/index.php/recharge_alipay_app/notify");
+			$request->setNotifyUrl(HTTP_HOST."/index.php/recharge_alipay_app/notify");
 			$request->setBizContent($bizcontent);
 			//这里和普通的接口调用不同，使用的是sdkExecute
 			$response = $aop->sdkExecute($request);
@@ -174,5 +174,5 @@
 			
 		
 	}
-	}
+}
 ?>

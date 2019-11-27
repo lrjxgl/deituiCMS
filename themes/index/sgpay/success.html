@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">充值提示</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			<div class="row-box mg-10 bd-radius-10 ">
+				<div class=" flex-center mgb-20 mgt-10">
+					<div class="iconfont icon-squarecheck cl-red f36 mgr-5"></div>
+					<div class="">
+						<div class="flex flex-ai-center mgb-10">
+							<div  >充值金额：</div>
+							<div class="cl-money f18">￥{$data.money}</div>
+						</div>
+						<div class="f14">状态：审核中</div>
+					</div>
+				</div>
+				<div class="flex flex-jc-center  mgb-20">
+					 
+					<div class="btn btn-primary" gourl="/">返回首页</div>
+				</div>
+			</div>
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

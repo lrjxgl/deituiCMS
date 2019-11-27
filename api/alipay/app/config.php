@@ -4,14 +4,13 @@ $config = array (
 		'app_id' => "2 ",
 
 		//商户私钥，您的原始格式RSA私钥
-		'merchant_private_key' => "",
-		//支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
+		'merchant_private_key' => "",//支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
 		'alipay_public_key' => "",
 		//异步通知地址
-		'notify_url' => HTTP_HOST."/index.php/recharge_alipay/notifyapp",
+		'notify_url' => "https://".$_SERVER['HTTP_HOST']."/index.php/recharge_alipay/notifyapp",
 		
 		//同步跳转
-		'return_url' => HTTP_HOST."/index.php/recharge_alipay/returnapp",
+		'return_url' => "https://".$_SERVER['HTTP_HOST']."/index.php/recharge_alipay/returnapp",
 
 		//编码格式
 		'charset' => "UTF-8",

@@ -1,11 +1,11 @@
 
 var skyeditor = {};
 skyeditor.isfirst=true;
-skyeditor.root = document.domain?"http://" + document.domain + "/plugin/skyeditor/":"";
+skyeditor.root = document.domain? location.protocol+"//" + document.domain + "/plugin/skyeditor/":"";
 skyeditor.uploadUrl = "/index.php?m=upload&a=base64";
 skyeditor.uploadVideo = "/index.php?m=upload&a=UploadMp4";
 skyeditor.colors=['#1ebdc0','#f8375b','#fd8f43','#a4ce3b','#35dab6','#199de1','#9581f3','#333','#8f8f94'];
-skyeditor.html='<div style="height: 50px;"></div><div class="sky-editor-loading">上传中...</div><div class="sky-editor">	<div class="sky-editor-colors">			</div>	<div class="sky-editor-emojis">			</div>	<div class="sky-editor-tools">		</div>	<input type="file" id="sky-editor-file" name="upimg" multiple="multiple" style="display: none;" />	<input type="file" id="sky-editor-file-video" name="upimg" style="display: none;" /></div>';
+skyeditor.html='<div class="sky-editor-loading">上传中...</div><div class="sky-editor">	<div class="sky-editor-colors">			</div>	<div class="sky-editor-emojis">			</div>	<div class="sky-editor-tools">		</div>	<input type="file" id="sky-editor-file" name="upimg" multiple="multiple" style="display: none;" />	<input type="file" id="sky-editor-file-video" name="upimg" style="display: none;" /></div>';
 skyeditor.skyUpload = function (upid, url, success, error, uploadProgress) {
     var vFD = new FormData();
     var f = document.getElementById(upid).files;
@@ -32,7 +32,13 @@ skyeditor.init = function () {
             type: "text/css",
             href: skyeditor.root + "skyeditor.css"
         }).appendTo("head");
-		$("body").append(skyeditor.html);
+		$(".sky-editor-content").after(skyeditor.html);
+		$(".sky-editor-content").after('<textarea id="sky-editor-textarea" style="display:none;" name="'+$(".sky-editor-content").attr("name")+'"></textarea>');
+		//同步定时器
+		setInterval(function(){
+			$("#sky-editor-textarea").val($(".sky-editor-content").html());
+		},600);
+		
 		skyeditor.isfirst=false;
 	} 
     skyeditor.skyEmojis();   
@@ -187,7 +193,7 @@ $(function () {
         
         
     })
-
+	
     $(document).on("click", '.sky-editor-excute', function (e) {
         $(this).toggleClass("active");
 
