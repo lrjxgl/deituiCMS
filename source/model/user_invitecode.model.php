@@ -2,7 +2,7 @@
 class user_invitecodeModel extends model{
 	public $table="user_invitecode";
 	public function set($userid){
-		require "extends/hashids/hashids.php";
+		require "extends/hashids/Hashids.php";
 		$hashids = new Hashids\Hashids('',6);
 		$icode=$hashids->encode($userid);
 		if(!$this->selectRow("userid=".$userid)){
