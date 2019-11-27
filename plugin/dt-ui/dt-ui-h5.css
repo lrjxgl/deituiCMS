@@ -18,7 +18,6 @@ li {
 
 a {
 	text-decoration: none;
-	color: #323232;
 }
 
 [gourl] {
@@ -1159,19 +1158,10 @@ image {
 	overflow: hidden;
 }
 
-.mtlist-imgbox{
-	position: relative;
-	height: 0;
-	padding-bottom: 100%;
-	overflow: hidden;
-}
-.mtlist-bgimg{
-	position: absolute;
+.mtlist-imgbox {
 	width: 100%;
-	height: 100%;
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
+	padding: 5px;
+	box-sizing: border-box;
 }
 
 .mtlist-img {
@@ -1210,10 +1200,6 @@ image {
 	font-size: 14px;
 	color: #323232;
 	margin-bottom: 5px;
-	height: 24px;
-	line-height: 24px;
-	overflow: hidden;
-	text-align: center;
 }
 
 .mtlist-desc {
@@ -1551,7 +1537,6 @@ image {
 	top: 0;
 	bottom: 0;
 	z-index: 998;
-	cursor: pointer;
 }
 
 .modal {
@@ -1779,10 +1764,7 @@ image {
 }
 
 /****main-body*****/
-.main-body {
-	max-width: 640px;
-	margin: 0 auto;
-}
+.main-body {}
 
 /******footer*******/
 .footer-row {
@@ -1890,33 +1872,7 @@ image {
 	right: 0px;
 	z-index: 100;
 }
-.back-top{
-	position: fixed;
-	right: 10px;
-	bottom:100px;
-	background-color: #009688;
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.back-top-icon{
-	font-family: iconfont;
-	line-height: 1;
-}
-.back-top-icon:after{
-	content:"\e603";
-	font-size: 12px;
-	color: #fff;
-}
-.back-top-text{
-	font-size: 12px;
-	line-height: 1;
-	font-weight: 300;
-	color: #fff;
-}
+
 /***分页***/
 .pages {
 	border-left: 1px solid #d8d8d8;
@@ -2264,7 +2220,7 @@ button {
 }
 
 .btn-mini {
-	padding: 5px;
+	padding: 2px;
 	font-size: 12px;
 	background-color: #007AFF;
 	color: #fff;
@@ -2273,7 +2229,6 @@ button {
 	line-height: 1;
 	text-align: center;
 	border-radius: 5px;
-	box-sizing: border-box;
 }
 
 .btn-icon {

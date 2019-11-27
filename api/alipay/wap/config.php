@@ -9,10 +9,10 @@ $config = array (
 		'alipay_public_key' => "",
 		
 		//异步通知地址
-		'notify_url' => "https://".$_SERVER['HTTP_HOST']."/index.php/recharge_alipay/notifywap",
+		'notify_url' => HTTP_HOST."/index.php/recharge_alipay/notifywap",
 		
 		//同步跳转
-		'return_url' => "https://".$_SERVER['HTTP_HOST']."/index.php/recharge_alipay/returnwap",
+		'return_url' => HTTP_HOST."/index.php/recharge_alipay/returnwap",
 
 		//编码格式
 		'charset' => "UTF-8",

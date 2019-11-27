@@ -14,7 +14,7 @@
 			$start=get("per_page","i");
 			$tag_id=get_post('tag_id','i');
 			$tag_2nd_id=get_post('tag_2nd_id','i');
-			if($tag_id && !$tag_2nd_id){
+			if($tag_id){
 				$where.=" AND tag_id=".$tag_id;
 				$url.="&tag_id=".$tag_id;
 			}
@@ -25,7 +25,7 @@
 			$option=array(
 				"start"=>intval(get_post('per_page')),
 				"limit"=>$limit,
-				"order"=>" orderindex ASC",
+				"order"=>" id DESC",
 				"where"=>$where
 			);
 			$rscount=true;

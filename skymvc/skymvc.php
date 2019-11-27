@@ -766,9 +766,9 @@ class skymvc
 		closeDb();
 		if(get_post('ajax',1)){
 			if(get_post('jsonp')){
-				exit(get_post('callback','h')."(".json_encode(array("error"=>$err,"message"=>$message,"data"=>$data,"url"=>$url)).")");
+				exit(get_post('callback','h')."(".json_encode(array("error"=>$err,"message"=>$message,"data"=>$data,"url"=>$url),JSON_NUMERIC_CHECK).")");
 			}else{
-				exit(json_encode(array("error"=>$err,"message"=>$message,"data"=>$data,"url"=>$url)));
+				exit(json_encode(array("error"=>$err,"message"=>$message,"data"=>$data,"url"=>$url),JSON_NUMERIC_CHECK));
 			}
 		}else{
 			$this->gomsg($message,$url);

@@ -28,7 +28,7 @@
 
 /****editor****/
 .sky-editor{
-		position: relative;
+		position: fixed;
 		bottom: 0px;
 		left: 0;
 		right: 0;
@@ -48,7 +48,6 @@
 		display: none;
 	}
 	.sky-editor-content {
-		display: block;
 		resize:vertical;
 		overflow:auto;
 		border:1px solid #eee;
@@ -71,7 +70,6 @@
 	  max-width: 100%;
 }
 .sky-editor-content>div{
-	display: block;
 	margin-bottom: 3px;
 	border-bottom:1px solid #eae4da;
 	-webkit-user-select:text;
@@ -81,13 +79,12 @@
 }
 	.sky-editor-tools{
 		display: flex;
-		flex-direction: row;
 		height: 36px;
 		line-height: 36px;
 		text-align: center;
 	}
 	.sky-editor-tools-item{
-		display: block;
+	
 		cursor: pointer;
 		flex: 1;
 		color: #555;
@@ -99,11 +96,6 @@
 		padding: 10px;
 		display: none;
 		text-align: center;
-		flex-direction: row;
-		position: absolute;
-		bottom:30px;
-		left: 0;
-		right: 0;
 	}
 	.sky-editor-colors div{
 		width: 20px;
@@ -155,7 +147,6 @@
 		max-height: 300px;
 		overflow: auto;
 		display: none;
-		flex-direction: row;
 	}
 	.sky-editor-emoji{
     background: transparent url(images/jxface2.gif?v=1.1) no-repeat scroll left top;

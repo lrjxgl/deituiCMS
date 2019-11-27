@@ -28,7 +28,7 @@ class recharge_alipayControl extends skymvc{
 		$ali=M("open_alipay")->selectRow("status=1"); 
 		if(empty($ali)){
 			exit("支付宝支付未配置");
-		} 
+		}  
 		$config['app_id']=$ali['appid'];
 		$config['merchant_private_key']=$ali['merchant_private_key'];
 		$config['alipay_public_key']=$ali['alipay_public_key'];
@@ -74,10 +74,10 @@ class recharge_alipayControl extends skymvc{
 		require_once ROOT_PATH.'api/alipay/wap/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php';
 		require_once ROOT_PATH.'api/alipay/wap/config.php';
 		/**支付宝配置***/
-		$ali=M("open_alipay")->selectRow("status=1"); 
-		if(empty($ali)){
-			exit("支付宝支付未配置");
-		} 
+		$ali=M("open_alipay")->selectRow("status=1");
+		 if(empty($ali)){
+		 	exit("支付宝支付未配置");
+		 }  
 		$config['app_id']=$ali['appid'];
 		$config['merchant_private_key']=$ali['merchant_private_key'];
 		$config['alipay_public_key']=$ali['alipay_public_key'];
@@ -138,7 +138,7 @@ class recharge_alipayControl extends skymvc{
 		$alipaySevice = new AlipayTradeService($config); 
 		$alipaySevice->writeLog(var_export($_POST,true));
 		$result = $alipaySevice->check($arr);
-		$this->_log("result:".$result); 
+		
 		
 		if($result) {//验证成功
 			$this->_log("wap验证成功");
@@ -172,12 +172,12 @@ class recharge_alipayControl extends skymvc{
 						M("recharge")->commit(); 
 						echo "success"; 
 					}
-			}
+				}
 
 		}
 		else {
 			//验证失败
-			echo "failx";
+			echo "fail";
 			$this->_log("wap验证失败");
 			//调试用，写文本函数记录程序运行情况是否正常
 			//$this->_log("这里写入想要调试的代码变量值，或其他运行的结果记录");
@@ -390,7 +390,7 @@ class recharge_alipayControl extends skymvc{
 		unset($_GET['m']);
 		require_once ROOT_PATH.'api/alipay/wap/config.php';
 		/**支付宝配置***/
-		$ali=M("open_alipay")->selectRow("status=1");
+		$ali=M("open_alipay")->selectRow("status=1"); 
 		$config['app_id']=$ali['appid'];
 		$config['merchant_private_key']=$ali['merchant_private_key'];
 		$config['alipay_public_key']=$ali['alipay_public_key'];
