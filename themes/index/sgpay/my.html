@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">我的充值</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body" id="App">
+			<div class="list">
+				<div class="row-box mgb-5" v-for="(item,index) in list" :key="index">
+					<div class="flex">
+						<div class="cl-money">￥{{item.money}}</div>
+						<div class="flex-1"></div>
+						<div class="cl-num">{{item.status_name}}</div>
+					</div>
+					 
+					<div class="flex mgb-5">
+						
+						<div class="cl2 mgr-10">{{item.yhk_user}}</div>
+						<div class="cl2">{{item.yhk_num}}</div>
+						<div class="flex-1"></div>
+						<div>{{item.yhk_name}}</div>
+					</div> 
+					
+					<div class="cl3 f12">{{item.createtime}}</div>
+				</div>
+			</div>
+			<div class="loadMore" v-if="per_page>0" @click="getList()">加载更多</div>
+		</div>
+		
+		{include file="footer.html"}
+		<script src="/plugin/vue/vue.min.js"></script>
+		<script src="{$skins}sgpay/my.js"></script>
+	</body>
+</html>

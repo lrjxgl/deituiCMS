@@ -14,7 +14,13 @@ class configControl extends skymvc{
 		));
 		$this->smarty->display("config/index.html");
 	}
-	
+	public function onsBank(){
+		$data=M("config")->selectRow();
+		$this->smarty->assign(array(
+			"data"=>$data,
+		));
+		$this->smarty->display("config/sbank.html");
+	}
 	public function onsave(){
 		$data=M("config")->postData();
 		
