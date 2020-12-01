@@ -62,7 +62,7 @@ define("RURL301","");
 define("BDMAPKEY_PHP","99b0c7faf7c6bd62ecd70d4e0f1b315c");
 define("SMS_QIANMING","得推网络");
 define("SMS_TYPE","default");
-define("REG_INVITECODE","1");
+define("REG_INVITECODE","0");
 define("S_BANK_NAME","支付宝");
 define("S_BANK_USER","雷日锦");
 define("S_BANK_NUM","362606856@qq.com");

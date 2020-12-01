@@ -34,17 +34,20 @@ class followControl extends skymvc{
 			foreach($data as $k=>$v){
 				$uids[]=$v['t_userid'];
 			}
-			$us=M("user")->getUserByIds($uids);
-			 
+			$us=M("user")->getUserByIds($uids,"userid,nickname,user_head,follow_num,followed_num");
+			$fuids=M("follow")->selectCols(array(
+				"fields"=>"t_userid",
+				"where"=>" userid=".$userid." AND t_userid in("._implode($uids).")"
+			));
+			if(!$fuids) $fuids=array($userid);  
 			foreach($data as $k=>$v){
-				$v['user_head']=$us[$v['t_userid']]['user_head'];
-				$v['nickname']=$us[$v['t_userid']]['nickname'];
-				$v['userid']=$v['t_userid'];
 				if($fuids && in_array($v['t_userid'],$fuids)){
-					$v['isfollow']=1;
+					$isfollow=1;
 				}else{
-					$v['isfollow']=0;
-				} 
+					$isfollow=0;
+				}
+				$v= $us[$v['t_userid']];
+				$v["isfollow"]=$isfollow;
 				$data[$k]=$v;
 			}
 		}
@@ -52,7 +55,7 @@ class followControl extends skymvc{
 		$per_page=$start+$limit;
 		$per_page=$per_page>=$rscount?0:$per_page;
 		$this->smarty->goassign(array(
-			"data"=>$data,
+			"list"=>$data,
 			"pagelist"=>$pagelist,
 			"per_page"=>$per_page,
 			"user"=>$user,
@@ -88,26 +91,21 @@ class followControl extends skymvc{
 			foreach($data as $k=>$v){
 				$uids[]=$v['t_userid'];
 			}
-			$us=M("user")->getUserByIds($uids);
-			//获取关注的人
-			if($type==3){
-				if($userid){
-					$fuids=M("follow")->selectCols(array(
-						"fields"=>"t_userid",
-						"where"=>" userid=".$userid." AND t_userid in("._implode($uids).")"
-					));
-					if(!$fuids) $fuids=array($userid); 
-				}
-			}
+			
+			$us=M("user")->getUserByIds($uids,"userid,nickname,user_head,follow_num,followed_num");
+			$fuids=M("follow")->selectCols(array(
+				"fields"=>"t_userid",
+				"where"=>" userid=".$userid." AND t_userid in("._implode($uids).")"
+			));
+			if(!$fuids) $fuids=array($userid); 
 			foreach($data as $k=>$v){
-				$v['user_head']=$us[$v['t_userid']]['user_head'];
-				$v['nickname']=$us[$v['t_userid']]['nickname'];
-				$v['userid']=$v['t_userid'];
 				if($fuids && in_array($v['t_userid'],$fuids)){
-					$v['isfollow']=1;
+					$isfollow=1;
 				}else{
-					$v['isfollow']=0;
-				} 
+					$isfollow=0;
+				}
+				$v= $us[$v['t_userid']];
+				$v["isfollow"]=$isfollow;
 				$data[$k]=$v;
 			}
 		}
@@ -115,7 +113,7 @@ class followControl extends skymvc{
 		$per_page=$start+$limit;
 		$per_page=$per_page>=$rscount?0:$per_page;
 		$this->smarty->goassign(array(
-			"data"=>$data,
+			"list"=>$data,
 			"pagelist"=>$pagelist,
 			"per_page"=>$per_page,
 			"user"=>$user,
@@ -222,22 +220,24 @@ class followControl extends skymvc{
 			M("user")->changenum("follow_num",1,"userid=".$this->userid);
 			M("user")->changenum("followed_num",1,"userid=".$t_userid);
 			//拉取新鲜事
-			$news=M("news")->select(array(
-				"where"=>" userid=".$t_userid." AND status<11 ",
-				"limit"=>50,
-				"order"=>"newsid DESC",
-				"fields"=>"newsid,userid,dateline"
-			));
-			if($news){
-				foreach($news as $v){
-					M("news_feeds")->insert(array(
-						"userid"=>$this->userid,
-						"fuserid"=>$v['userid'],
-						"dateline"=>$v['dateline'],
-						"newsid"=>$v['newsid']
-					));
+			if(M("module")->isInstall("sblog")){
+				$news=M("mod_sblog_blog")->select(array(
+					"where"=>" userid=".$t_userid." AND status in(0,1) ",
+					"limit"=>50,
+					"order"=>"id DESC",
+					"fields"=>"id,userid,createtime"
+				));
+				if($news){
+					foreach($news as $v){
+						M("mod_sblog_feeds")->insert(array(
+							"userid"=>$this->userid,
+							"fuserid"=>$v['userid'],
+							"dateline"=>strtotime($v['dateline']),
+							"blogid"=>$v['id']
+						));
+					}
 				}
-			}					
+			}
 			exit(json_encode(array("error"=>0,"message"=>"关注成功","status"=>$status,"follow"=>1)));
 		}
 	}
@@ -264,7 +264,9 @@ class followControl extends skymvc{
 			M("user")->changenum("follow_num",-1,"userid=".$this->userid);
 			M("user")->changenum("followed_num",-1,"userid=".$t_userid);
 			//删除新鲜事
-			M("news_feeds")->delete("userid=".$this->userid." AND fuserid=".$t_userid);				
+			if(M("module")->isInstall("sblog")){
+				M("mod_sblog_feeds")->delete("userid=".$this->userid." AND fuserid=".$t_userid);				
+			}
 			exit(json_encode(array("error"=>0,"message"=>"取消关注成功","status"=>0,"follow"=>0)));
 		}
 	}

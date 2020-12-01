@@ -21,7 +21,11 @@ class loginControl extends skymvc{
 		}else{
 			$backurl=$_SERVER['HTTP_REFERER'];
 		}
-	 
+		if($backurl){
+			$_SESSION["backurl"]=$backurl;
+		}
+		
+		 
 		$this->smarty->goAssign(array(
 			"backurl"=>$backurl,
 			"openid"=>$openid,
@@ -61,12 +65,11 @@ class loginControl extends skymvc{
 		if(empty($user)){
 			$this->goall('账号不存在',1,"",$_SERVER['HTTP_REFERER']);
 		}
+		//检测黑名单
+		M("blacklist")->check($user['userid']);
 		$puser=M("user_password")->selectRow("userid=".$user['userid']);
 		if($puser['password']!=umd5($password.$puser['salt'])){
 			$this->goall("密码出错了",1,"",$_SERVER['HTTP_REFERER']);
-		}
-		if($user["status"]==99){
-			$this->goAll("账号异常，禁止登陆",1);
 		}
 		$_SESSION['ssuser']=$user;
 		$backurl=get_post('backurl','x');
@@ -96,7 +99,7 @@ class loginControl extends skymvc{
  
 	
 	public function onLogout(){
-		$_SESSION['ssuser']="";
+		unset($_SESSION['ssuser']);
 		setcookie("authcode","",time()-3999,"/",DOMAIN);
 			
 		$this->goall("注销成功",0,0,"/index.php");

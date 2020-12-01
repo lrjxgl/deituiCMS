@@ -15,8 +15,15 @@ class indexControl extends skymvc
 			"order"=>" orderindex ASC"
 		));
 		$a=$b=array();
+		$permission=unserialize(M("admin_group")->selectOne(array("where"=>array("id"=>$_SESSION['ssadmin']['group_id']),"fields"=>"content")));
 		if($res){
-			foreach($res as $v){
+			foreach($res as $k=>$v){
+				if(!$this->checkpermission($permission,$v['m'],$v['a'])){
+					if( !$_SESSION['ssadmin']['isfounder']){
+						unset($res[$k]);
+						continue;
+					} 
+				}
 				if($v['pid']==0){
 					$a[]=$v;
 				}else{

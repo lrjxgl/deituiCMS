@@ -8,7 +8,11 @@ class badipModel extends model{
 	public function check($ip){
 		$row=$this->selectRow("ip='".$ip."'");
 		if($row){
-			C()->goAll("您暂时无法访问",1);
+			echo json_encode(array(
+				"error"=>1,
+				"message"=>"page error"
+			));
+			exit;
 		}
 	}
 	

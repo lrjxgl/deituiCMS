@@ -334,7 +334,7 @@ include(CONTROL_DIR."/$m.ctrl.php");
 $classname = $m.'Control';
 
 $control = new $classname();
-$a=get_post('a');
+$a=get_post('a',"h");
 if(empty($a)){
 	$_GET['a']='default';
 }

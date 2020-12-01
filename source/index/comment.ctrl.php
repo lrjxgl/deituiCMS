@@ -31,7 +31,7 @@ class commentControl extends skymvc{
 		$start=get("per_page","i");
 		$limit=24;
 		$row=M($table)->selectRow("id=".$objectid);
-		$where=" objectid=".$objectid." AND pid=0";
+		$where=" status in(0,1) AND objectid=".$objectid." AND pid=0";
 		$option=array(
 			"where"=>$where,
 			"start"=>$start,
@@ -102,6 +102,8 @@ class commentControl extends skymvc{
 	public function onSave(){
 		M("login")->checkLogin();
 		$userid=M("login")->userid;
+		M("blacklist")->check($userid);
+		M("blacklist_post")->check($userid);
 		$id=get_post("id","i");
 		$tablename=get_post("tablename","h");
 		if(empty($tablename)){
@@ -113,6 +115,11 @@ class commentControl extends skymvc{
 		$table=$tablename;
 		$tableComment=$tablename."_comment";
 		$data=M($tableComment)->postData();
+		if(empty($data["content"])){
+			$this->goAll("内容不能为空",1);
+		}
+		
+		
 		$fields=M($tablename)->getFields();
 		$idField=$fields[0]['Field'];
 		$rootPath=get_post("rootPath","h");

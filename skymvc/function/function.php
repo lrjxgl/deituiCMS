@@ -104,7 +104,7 @@ function ustrip_tags($str){
 	$str=strip_tags($str);
 	return $str;
 }
-function get($k,$format="",$len=0){
+function get($k,$format="x",$len=0){
         if(isset($_GET[$k])){
 				$_GET[$k]=get_format($_GET[$k],$format,$len);
 				         
@@ -114,7 +114,7 @@ function get($k,$format="",$len=0){
 			return 0;
 		}
 }
-function post($k,$format="",$len=0){
+function post($k,$format="x",$len=0){
         if(isset($_POST[$k])){         
                 $_POST[$k]=get_format($_POST[$k],$format,$len);
 				return $_POST[$k];                
@@ -124,7 +124,7 @@ function post($k,$format="",$len=0){
 		}
 }
 
-function get_post($k,$format="",$len=0){
+function get_post($k,$format="x",$len=0){
         if(isset($_GET[$k])){         
                 return get_format($_GET[$k],$format,$len);                
         }
@@ -598,7 +598,7 @@ function is_email($user_email)
 
 /*判断是否手机号码*/
 function is_tel($tel){
-	if(preg_match("/1[34587]{1}\d{9}$/",$tel)){
+	if(preg_match("/1[345879]{1}\d{9}$/",$tel)){
 		return true;
 	}
 	return false;

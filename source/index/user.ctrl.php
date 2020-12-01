@@ -69,6 +69,7 @@ class userControl extends skymvc{
 	
 	public function onsave(){
 		$userid=$this->userid;
+		$user=M("user")->selectRow("userid=".$userid);
 		if(post('nickname')){		 
 			$data["nickname"]=post("nickname","h");
 			$u=M("user")->selectRow(array("where"=>"nickname='".$data['nickname']."' "));
@@ -82,14 +83,31 @@ class userControl extends skymvc{
 		if(isset($_POST['info'])){
 			$data['info']=post('info','h');
 		}
- 
+		if(isset($_POST['description'])){
+			$data['description']=post('description','h');
+		}
+		if(isset($_POST["birthday"])){
+			$data["birthday"]=post("birthday","h");
+		}
+		 
 		if($userid){
 			M("user")->update($data,array('userid'=>$userid));
 		} 
 		$this->goall("保存成功",0);
 	}
 	
-	
+	public function onGenderSave(){
+		$userid=$this->userid;
+		$user=M("user")->selectRow("userid=".$userid);
+		if($user["gender"]){
+			$this->goAll("性别无法更改",1);
+		}
+		$gender=post("gender","i");
+		M("user")->update(array(
+			"gender"=>$gender
+		),array('userid'=>$userid));
+		$this->goall("保存成功",0);
+	}
 	
 	 
 	public function onUser_Head(){

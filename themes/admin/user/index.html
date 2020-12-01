@@ -16,7 +16,13 @@
     userid:<input type="text" name="userid" value="{$smarty.get.userid|intval}" class="w60" />
     昵称：<input type="text" name="nickname" value="{$smarty.get.nickname|html}" class="w100"  />
     电话：<input type="text" name="telephone" value="{$smarty.get.telephone|html}" class="w100" />
-    排序：<select name="orderby" class="w100">
+    状态：<select name="bstatus"  class="w100">
+		 <option value="">请选择</option>
+		 <option {if get('bstatus') eq 'new'}selected{/if} value="new">未审核</option>
+		 <option {if get('bstatus') eq 'pass'}selected{/if}  value="pass">已通过</option>
+		 <option {if get('bstatus') eq 'forbid'}selected{/if}  value="forbid">已禁止</option>
+	</select>
+	排序：<select name="orderby" class="w100">
     	<option value="userid DESC">注册</option>
     	<option value="money DESC">余额</option>
         <option value="gold DESC">金币</option>
@@ -31,6 +37,7 @@
         <td width="50">ID</td>
         
         <td width="60">昵称</td>
+		<td width="60">头像</td>
         <td width="70">电话</td>
         <td width="50">账户余额</td>
         <td width="50">金币</td>
@@ -46,11 +53,16 @@
         <td>{$c.userid}</td>
          
         <td>{$c.nickname}</td>
+		<td>
+			<img src="{$c.user_head}.100x100.jpg" width="60" />
+		</td>
         <td>{$c.telephone}</td>
         <td>{$c.money}</td>
         <td width="8%">{$c.gold}</td>
         <td width="8%">{$c.grade}</td>
-        <td>{if $c.status eq 1}已通过{elseif $c.status eq 10}未审核{else}已禁止{/if}</td>
+        <td>
+			<div url="/admin.php?m=user&a=status&ajax=1&userid={$c.userid}" class="{if $c.status eq 1}yes{else}no{/if} js-toggle-status"></div>
+		</td>
         <td>{$c.createtime|cutstr:11}</td>
          
         <td> 

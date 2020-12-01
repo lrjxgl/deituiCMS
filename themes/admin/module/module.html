@@ -28,7 +28,7 @@
 	
 	<a href="/module.php?m={$c.module}" target="_blank">查看</a>
 	<a href="javascript:;" onclick="window.parent.goPluginMenu('{$c.adminurl}')" >管理</a>
-	 
+	<a href="javascript:;" class="js-nav-add" title="{$c.title}" url='{$c.adminurl}' >添加到导航</a>   
 	{else}<a href='{$appadmin}?m=module&a=install&inmodule={$c.module}'>安装</a>{/if}
 	 
 	 
@@ -50,6 +50,24 @@ $(function(){
 			}
 		},"json");
 	});
+	
+	$(document).on("click",".js-nav-add",function(e){
+		var url=$(this).attr("url");
+		var title=$(this).attr("title");
+		$.ajax({
+			url:"/admin.php?m=module&a=navadd&ajax=1",
+			dataType:"json",
+			type:"POST",
+			data:{
+				url:url,
+				title:title
+			},
+			success:function(res){
+				skyToast(res.message)
+			}
+		})
+	}) 
+	
 });
 </script>
 </body>

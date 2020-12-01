@@ -127,7 +127,7 @@
 		public function onSave(){
 			$id=get_post("id","i");
 			$data=M("article")->postData();
-			$content=post("content");
+			$content=post("content","x");
 			if($id){
 				M("article")->update($data,"id='$id'");
 				M("article_data")->update(array(

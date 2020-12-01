@@ -7,7 +7,18 @@ class userModel extends model{
 		$this->base=$base;
 		$this->table="user";
 	}
-	
+	public function Dselect($option,&$rscount=false){
+		$list=$this->select($option,$rscount);
+		if($list){
+			foreach($list as $k=>$v){
+				if(isset($v["user_head"])){
+					$v["user_head"]=images_site($v["user_head"]);
+				}
+				$list[$k]=$v;
+			}
+		}
+		return $list;
+	}
 	public function is_auth_list(){
 		return array(
 			1=>"已认证",

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+{include file='city/nav.html'}
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>id</td>
+   <td>名称</td>
+   <td>纬度</td>
+   <td>经度</td>
+   <td>状态</td>
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.name}</td>
+   <td>{$c.lat}</td>
+   <td>{$c.lng}</td>
+   <td>{$c.status}</td>
+<td><a href="admin.php?m=city&a=add&id={$c.id}">编辑</a> <a href="admin.php?m=city&a=show&id={$c.id}">查看</a> <a href="javascript:;" class="js-delete" url="admin.php?m=city&a=delete&ajax=1&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

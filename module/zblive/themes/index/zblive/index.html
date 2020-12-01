@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<style>
+		.zblist{
+			padding: 10px;
+			background-color: #fff;
+		}
+		.zblist .item{
+			margin-bottom: 10px;
+			border-bottom: 1px solid #eee;
+			display: block;
+			cursor: pointer;
+			text-decoration: none;
+		}
+		.zblist .item .img{
+			text-align: center;
+			height: 200px;
+			overflow: hidden;
+			margin-bottom: 5px;
+		}
+		.zblist .item .img img{
+		 
+			height: 200px;
+		}
+		.zblist .item .title{
+			line-height: 25px;
+			font-size: 16px; 
+			margin-bottom: 5px;
+			color: #666;
+		}
+		.zblist .item .time{
+			font-size: 14px;
+			line-height: 20px;
+			color: #999;
+		}
+		.zblist .item .desc{
+			color: #999;
+			line-height: 25px;
+			font-size: 14px;
+			 
+		}
+		.zblist .item .zbstatus{
+			line-height: 25px;
+			color: #666;
+			font-size: 14px;
+		}
+	</style>
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">微直播</div>
+		</div>
+		<div class="header-row"></div>
+ 
+		<div class="main-body none" :class="'flex-col'" id="App">
+			<div class="tabs-border">
+				<div @click="setType('all')" :class="type=='all'?'tabs-border-active':''" class="tabs-border-item">全部</div>
+				<div @click="setType('doing')"  :class="type=='doing'?'tabs-border-active':''"  class="tabs-border-item">直播中</div>
+				<div @click="setType('unbegin')"  :class="type=='unbegin'?'tabs-border-active':''"  class="tabs-border-item">即将开播</div>
+				<div @click="setType('finish')"  :class="type=='finish'?'tabs-border-active':''"  class="tabs-border-item">直播回顾</div>
+			</div>
+			<div class="zblist">
+				 
+				 
+				<a v-for="(item,index) in list" :key="index" :href="'/module.php?m=zblive&a=show&id='+item.id" class="item">
+					<div class="img">
+						<img  :src="item.imgurl+'.small.jpg'">
+					</div>
+					<div class="title">{{item.title}}</div>
+					<div class="time">直播时间：{{item.stime}}</div>
+					<div class="zbstatus">直播状态：{{item.zbstatus_name}}</div>
+					<div class="desc">{{item.description}}</div>
+				</a>
+				
+			</div>
+			<div v-if="per_page>0" class="loadMore" @click="getList()">加载更多</div>
+		</div>
+		{include file="footer.html"}
+		<script src="{$skins}zblive/index.js"></script>
+	</body>
+</html>

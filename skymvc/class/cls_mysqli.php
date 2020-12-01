@@ -66,6 +66,7 @@ class mysql
 		}
 		$this->db->query("SET sql_mode=''"); 
 		$this->db->query("SET NAMES ".$this->charset);
+		$this->db->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE,1);
 		
 	 }
 	 /**
@@ -101,6 +102,14 @@ class mysql
 		 
 		if($this->errno() >0 ){
 			$e=$this->error();
+			$debug=debug_backtrace();
+			unset($debug[0]);
+			$html="";
+			foreach($debug as $row)
+			{
+			   $html .=$row['file'].':'.$row['line'].'行,调用方法:'.$row['function']." \n\r";
+			}
+			skyLog("sqlerror.txt","sql错误：".$sql." ".$e."\n\r".$html);
 			if(TESTMODEL){
 				showError("sql错误：".$sql." ".$e);
 				exit;

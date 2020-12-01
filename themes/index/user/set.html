@@ -34,7 +34,7 @@
 			$(function(){
 				$(document).on("click",".js-logout",function(){
 					$.get("/index.php?m=login&a=logout&ajax=1",function(res){
-						window.location="/"
+						window.location="/index.php?m=login"
 					},"json")
 				})
 			})

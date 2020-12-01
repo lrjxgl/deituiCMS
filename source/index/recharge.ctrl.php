@@ -60,7 +60,16 @@ class rechargeControl extends skymvc{
 		}else{
 			$pay_type_list= pay_type_list(0,array("unpay"=>1,"fenqi"=>1));
 		}
+		$backurl=get_post("backurl","x");
+		if(empty($backurl)){
+			$backurl=$_SERVER['HTTP_REFERER'];
+		}
 		
+		
+		if(empty($backurl)){
+			$backurl=HTTP_HOST."/index.php?m=user";
+		}
+		 
 		$this->smarty->goassign(array(
 				"data"=>$data,
 				//"addr"=>$addr,
@@ -69,7 +78,7 @@ class rechargeControl extends skymvc{
 				"order_ispay"=>$order_ispay,
 				"table"=>$table,
 				"pay_type_list"=>$pay_type_list,
-				"backurl"=>base64_encode(HTTP_HOST."/index.php?m=user"),
+				"backurl"=>$backurl,
 			));
 		
 		if($order_id){
@@ -130,7 +139,7 @@ class rechargeControl extends skymvc{
 		} 
 		$order_product="在线充值";
 		$orderno="re".M("maxid")->get();
-		$backurl=get("backurl","x");
+		$backurl=get_post("backurl","x");
 		if(!$backurl){
 			$backurl="/index.php";
 		}
@@ -241,7 +250,7 @@ class rechargeControl extends skymvc{
 		/*插入充值表结束*/
 		
 		//$url="http://".$_SERVER['HTTP_HOST']."/api/".$pay_type."/".$pay_type.".php";
-		$url=$_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/index.php?m=recharge_{$pay_type}&a=go";
+		$url=HTTP_HOST."/index.php?m=recharge_{$pay_type}&a=go";
 		$url.="&orderno=$orderno";
 		$url.="&bank_type=".$bank_type;
 		$url.="&order_product=".urlencode($order_product);

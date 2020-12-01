@@ -100,6 +100,8 @@
 			 })
 		 }
 		 function goHome(obj){
+			 window.location.reload();
+			 return false;
 			 $("#baseMenu").show();
 			 $("#pluginMenu").hide();
 			 $("#mainFrame").attr("src","/admin.php?m=index&a=main");

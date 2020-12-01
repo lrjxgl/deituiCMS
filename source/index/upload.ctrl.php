@@ -53,50 +53,14 @@ class uploadControl extends skymvc{
 			}
 		}
 	}
-	public function onGetVideo(){
-		
-		$url=get_post('url','h');
-		$this->loadClass("videourlparser");
-		
-		$data = VideoUrlParser::parse($url);
-		
-		if(!empty($data)){
-			if($data['img']){
-				$dir=isset($_GET['dir'])?get('dir','h')."/":"";
-				if(get('id','i')){
-					$dir="attach/".$dir.$this->dirId(get('id','i'));
-				}else{
-					$dir="attach/".$dir.date("Y/m/d/").$this->dirId(get('id','i'));
-				}			
-				umkdir($dir);	
-				$file=$dir.M("login")->userid.microtime(true).".jpg";
-				file_put_contents($file,file_get_contents($data['img']));
-				
-				$this->loadClass("image",false,false);
-				
-				$img=new image();
-				$imgurl=$file;
-				$img->makethumb($imgurl.".100x100.jpg",$imgurl,"100","100",1);
-				$img->makethumb($imgurl.".small.jpg",$imgurl,"240");
-				$img->makethumb($imgurl.".middle.jpg",$imgurl,"440");
-				$data['img']=$imgurl;
-				$this->upload_oss($imgurl);
-			}
-			echo json_encode(array("error"=>0,"data"=>$data));
-			
-		}else{
-			echo json_encode(array("error"=>1,"message"=>$data));
-		}
-		exit;
-	}
-	
+	 
 	public function onUpload(){
 		$dir=isset($_GET['dir'])?get('dir','h')."/":"";
 		$this->upload->iddir=get('id','i');
 		$this->upload->uploaddir="attach/".$dir; 
 		$data=$this->upload->uploadfile("upimg");
 		$this->upload_oss($data['filename']);
-		$data=array("error"=>$data['err'],"imgurl"=>$data['filename'],"trueimgurl"=>IMAGES_SITE($data['filename']),"msg"=>$data['err']);
+		$data=array("error"=>$data['err'],"name"=>basename($data["filename"]),"imgurl"=>$data['filename'],"trueimgurl"=>IMAGES_SITE($data['filename']),"msg"=>$data['err']);
 		$this->upload_oss($data['imgurl']);
 		echo json_encode($data);
 	}
@@ -119,7 +83,7 @@ class uploadControl extends skymvc{
 		$this->upload->iddir=get('id','i');
 		$this->upload->upimg=false;
 		$this->upload->allowtype=$this->upload->sysallowtype=array(
-			"pem","p12","txt"
+			"pem","p12","txt","crt"
 		);
 		$this->upload->uploaddir="attach/".$dir; 
 		$data=$this->upload->uploadfile("upimg");
@@ -147,7 +111,7 @@ class uploadControl extends skymvc{
 		$dir=isset($_GET['dir'])?get('dir','h')."/":"";
 		$this->upload->iddir=get('id','i');
 		$this->upload->upimg=false;
-		$this->upload->allowtype=array("mp4","mp3","mov");
+		$this->upload->allowtype=array("mp4","mp3","mov","aac","webm");
 		$this->upload->uploaddir="attach/".$dir; 
 		$data=$this->upload->uploadfile("upimg");
 		$data=array("error"=>$data['err'],"imgurl"=>$data['filename'],"trueimgurl"=>IMAGES_SITE($data['filename']),"msg"=>$data['err']);

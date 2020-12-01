@@ -1,5 +1,5 @@
 <?php
-	include "WxAppPay.Config.php";
+	
 	/*
 	$hb=new WxPayHongbao();
 	$res=$hb->send(array(

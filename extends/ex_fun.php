@@ -2,6 +2,16 @@
 function myDiy($str){
 	echo myDiy();
 }
+ 
+if(!function_exists("checkSafeContent")){
+	function checkSafeContent(){
+		
+	}
+	function checkSafeFile($file){
+		
+	}
+}
+ 
 function pay_type_list($moneypay=1,$un=array()){
 	$data=array();
 	 

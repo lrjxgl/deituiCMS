@@ -1,6 +1,6 @@
 Vue.component('sky-raty', {
 	props: {
-		len: 0,
+		len: 10,
 		grade: 0,
 		label: "",
 		fields: "",

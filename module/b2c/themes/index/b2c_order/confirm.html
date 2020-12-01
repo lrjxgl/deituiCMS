@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">确认订单</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body" id="app" v-if="pageLoad" style="display:none">
+			<form id="orderForm">
+				<input type="hidden" name="ispin" value="{$ispin}" />
+				<input type="hidden" name="pin_orderid" value="{$pin_orderid}" />
+			<div class="row-box mgb-5">
+				<div class="row-box-hd">
+					<div class="flex-1 f16">收货地址</div>
+					<a class="row-box-more" href="/index.php?m=user_address&a=add">新增地址</a>
+				</div>
+			 
+				<div @click="changeAddr(item.id)" v-for="(item,index) in pageData.addrList" class="row-item-text">
+					<input :checked="item.id==pageData.user_address_id?'checked':''" name="user_address_id" class="user_address_id" :value="item.id" type="radio" />
+					{{item.truename}} {{item.telephone}} <br /> {{item.pct_address}}
+				</div>
+				 
+			</div>
+			<div class="row-box mgb-5">
+				<div class="row-box-hd">
+					产品列表
+				</div>
+				 
+				<div v-for="(item,index) in pageData.cartList" :key="index" class="flexlist-item">
+					<input type="hidden" name="cartid[]" :value="item.id" />
+					<img :src="item.imgurl+'.100x100.jpg'" class="flexlist-img" />
+					<div class="flex-1">
+						<div class="flexlist-title">{{item.title}}</div>
+						<div class="mgb-5 cl2">{{item.ks_title}}</div>
+						<div class="flex">
+							<div class="flex-1 cl-money" v-if="pageData.ispin">￥{{item.pt_price}}</div>
+							<div class="flex-1 cl-money" v-else="pageData.ispin">￥{{item.price}}</div>
+							<div class="">* {{item.amount}}</div>
+						</div>
+					</div>
+				</div>
+				 
+			</div>
+			<div class="row-box mgb-5">
+				<div class="flex flex-wrap flex-ai-center">
+					<div>共{{pageData.total_num}}件商品，货价：￥ {{pageData.goods_money}}元 
+					邮费：￥ {{pageData.express_money}} 元 </div>
+					<div>总价：￥{{pageData.total_money}}</div>
+				</div>
+			</div>
+			{if $vipcard}
+			<div class="row-box mgb-5">
+				VIP会员卡：余额 ￥{$vipcard.money}元
+			</div>
+			{/if}
+			<div v-if="pageData.couponList!=null" class="row-box mgb-5">
+				<div class="row-box-hd mgb-5">优惠券</div>
+				<div class="radioList-group">
+					<input type="hidden" class="radioList-value" name="coupon_id" :value="coupon_id" />
+					<block v-for="(item,index) in pageData.couponList" :key="index">
+					<div :class="{'radioList-item-active':coupon_id==item.id}" class="radioList-item" @click="setCoupon(item.id)" >{{item.title}}</div>
+					</block>	
+					 
+				</div>
+				
+			</div>
+			<div class="row-box mgb-5">
+				<div class="row-box-hd mgb-10">支付方式</div>
+
+				<div class="paylist">
+					<input type="hidden" name="paytype" id="paytype" :value="pageData.paytype">
+					 
+					<div @click="changePaytype(index)" v-for="(item,index) in pageData.paytypeList" :key="index" class="paylist-item" :v="index" v-bind:class="{'paylist-item-active':index==pageData.paytype}">{{item}}</div>
+					 
+
+				</div>
+			</div>
+			<div class="row-box">
+				<textarea name="comment" class="textarea-flex-text h60" placeholder="请输入订单备注"></textarea>
+				<div class="btn-row-submit" id="order-confirm-submit">确认购买</div>
+			</div>
+			</form>
+		</div>
+		{include file="footer.html"}
+		<script>
+			var ispin="{$ispin}"
+		</script>
+		<script src="{$skins}b2c_order/confirm.js"></script>
+		<script>
+			$(function(){
+				 
+				$(document).on("click","#order-confirm-submit",function(){
+					$.post("/module.php?m=b2c_order&a=order&ajax=1",$("#orderForm").serialize(),function(res){
+						skyToast(res.message);
+						if(!res.error){
+							if(res.data.action=='pay'){
+								window.location=res.data.payurl;
+							}else if(res.data.action=='success'){
+								window.location="/module.php?m=b2c_order&a=success&orderid="+res.data.orderid;
+							}
+						}
+					},"json");
+				})
+			})
+		</script>
+	</body>
+</html>

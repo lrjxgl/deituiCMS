@@ -42,6 +42,7 @@ class loginModel extends model{
 		}else{
 			if(empty($_SESSION['ssuser']['userid'])){
 				closeDb();
+				$_SESSION["backurl"]=HTTP_HOST."/".$_SERVER["REQUEST_URI"];
 				header("Location: /index.php?m=login");
 				exit;
 			}
@@ -126,12 +127,9 @@ class loginModel extends model{
 		if(!$islogin){
 			$user=M('user')->selectRow(array(
 				"where"=>"userid='".$userid."' ",
-				"fields"=>"userid,nickname,telephone,user_head,gold,money,status"
+				"fields"=>"userid,nickname,telephone,user_head,gold,money"
 			));
 			if(empty($user)){
-				return false;
-			}
-			if($user["status"]==99){
 				return false;
 			}
 			$puser=M("user_password")->selectRow("userid=".$userid);

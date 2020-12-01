@@ -81,10 +81,7 @@ class weixin_menuControl extends skymvc{
 	}
 	//生成菜单
 	public function onCreateMenu(){
-		/*$c=file_get_contents("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->wx['appid']."&secret=".$this->wx['appkey']."");
-		 
-		//$data=json_decode($c,true);
-		*/
+	
 		$data=get_weixin_access_token();
 		$token=$data['access_token'];
 		$op=array(

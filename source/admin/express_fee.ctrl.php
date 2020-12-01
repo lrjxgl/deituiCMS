@@ -23,16 +23,7 @@
 			);
 			$rscount=true;
 			$data=M("express_fee")->select($option,$rscount);
-			if($data){
-				foreach($data as $v){
-					$shopids[]=$v['shopid'];
-				}
-				$shops=M("shop")->getShopByIds($shopids);
-				foreach($data as $k=>$v){
-					$v['shop_name']=$shops[$v['shopid']]['shopname'];
-					$data[$k]=$v;
-				}
-			}
+			 
 			$pagelist=$this->pagelist($rscount,$limit,$url);
 			$this->smarty->goassign(
 				array(

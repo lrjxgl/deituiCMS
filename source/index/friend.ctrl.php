@@ -9,7 +9,7 @@ class friendControl extends skymvc{
 	}
 	public function onDefault(){
 		$userid=M("login")->userid;
-		$sql=" select u.userid,u.nickname,u.user_head,u.info,u.gender 
+		$sql=" select u.userid,u.nickname,u.user_head,u.description,u.gender 
 				from ".table("friend")." as f 
 				left join  ".table("user")." as u
 				on f.touserid=u.userid
@@ -32,7 +32,7 @@ class friendControl extends skymvc{
 	
 	public function onZm(){
 		$userid=M("login")->userid;
-		$sql=" select u.userid,u.nickname,u.user_head,u.info,u.gender 
+		$sql=" select u.userid,u.nickname,u.user_head,u.description,u.gender 
 				from ".table("friend")." as f 
 				left join  ".table("user")." as u
 				on f.touserid=u.userid
@@ -40,6 +40,7 @@ class friendControl extends skymvc{
 		";
 		$rscount=M("friend")->getOne("select count(*) from ".table("friend")." where userid=".$userid);
 		$list=M("friend")->getAll($sql);
+		 
 		if($list){
 			foreach($list as $k=>$v){
 				$v["user_head"]=images_site($v["user_head"]);
@@ -104,6 +105,18 @@ class friendControl extends skymvc{
 			M("friend")->delete("id=".$row["id"]);
 		}
 		$this->goAll("删除成功");
+	}
+	
+	public function onIsFriend(){
+		M("login")->checkLogin();
+		$touserid=get("touserid","i");
+		$userid=M("login")->userid;
+		$row=M("friend")->selectRow("userid=".$touserid);
+		if($row){
+			$this->goAll("success",0,1);
+		}else{
+			$this->goAll("success",0,0);
+		}
 	}
 	
 }

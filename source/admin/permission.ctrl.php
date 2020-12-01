@@ -75,7 +75,7 @@ class permissionControl extends skymvc{
 		$dir=ROOT_PATH."source/admin";
 		$dh=opendir($dir);
 		while($file=readdir($dh)){
-			if($file!="." && $file!=".."){
+			if($file!="." && $file!=".." && $file!="index.html"){
 				$temp=$dir."/".$file;
 				$data=file_get_contents($temp);
 				preg_match_all("/function on(\w+)\(/i",$data,$arr);

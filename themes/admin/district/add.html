@@ -1,6 +1,12 @@
-{include file="header.html"}
-
-	{include file='district/nav.html'}
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+<div class="tabs-border">
+	<a class="item" href="?m=district">省市列表</a>
+	<a class="item active" href="?m=district&a=add">省市添加</a>
+</div>	
+ 
 <div class="main-body">	
 	<form method='post' action='admin.php?m=district&a=save'>
 		<input type='hidden' name='id' style='display:none;' value='{$data.id}'>
@@ -20,3 +26,5 @@
 	</form>
 </div>
 {include file="footer.html"}
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!--扩展属性-->
+{if $fieldsList}
+<div class="row-box mgb-5">
+	{foreach item=c from=$fieldsList}
+	{if $c.fieldtype=='text'}
+	<div class="flex bd-mp-10 flex-ai-center">
+		<div class="w100">{$c.title}</div>
+		<div class="flex-1">{$c.value}</div>
+	</div>
+	{elseif $c.fieldtype=='textarea'}
+	<div class="flex bd-mp-10 flex-ai-center">
+		<div class="w100">{$c.title}</div>
+		<div class="flex-1">
+			{$c.value}
+		</div>
+	</div>
+	{elseif $c.fieldtype=='html'}
+	<div class="flex bd-mp-10 flex-ai-center">
+		<div class="w100">{$c.title}</div>
+		<div class="flex-1 d-content">
+			{$c.value}
+		</div>
+	</div>
+	{elseif $c.fieldtype=='img'}
+	<div class="flex bd-mp-10 flex-ai-center">
+		<div class="w100">{$c.title}</div>
+		<div class="flex-1">
+			<img src="{$c.value}" class="wmax" />
+		</div>
+	</div>
+	{elseif $c.fieldtype=='map'}
+	<div class="flex bd-mp-10 flex-ai-center">
+		<div class="w100">{$c.title}</div>
+		<div class="flex-1 flex">
+			<img src="http://api.map.baidu.com/staticimage/v2?ak={const.BDMAPKEY}&mcode=666666&center={$c.value}&markers={$c.value}&width=300&height=200&zoom=11 "
+			 class="wmax" />
+		</div>
+	</div>
+	{/if}
+	{/foreach}
+</div>
+{/if}

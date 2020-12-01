@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<style>
+		.fixNotice{
+			position: fixed;
+			opacity: 0.8;
+			top: 44px;
+			left: 0;
+			right: 0;
+			background-color: #fff;
+			padding: 6px;
+			color: #f00;
+			text-align: center;
+		}
+		.pm-head{
+			width:40px;
+			height: 40px;
+			margin-right: 5px;
+		}
+		.pm-l-msg,.pm-r-msg{
+			
+			color: #646464;
+			font-size: 14px;
+			padding: 10px 5px;
+			box-sizing: border-box;
+			background-color: #eee;
+			border-radius: 5px;
+		}
+		.pm-l-msg{
+			margin-right:50px;
+		}
+		.pm-r-msg{
+			margin-left:50px;
+			text-align: right;
+		}
+		.ftBox{
+			display: flex;
+			flex-direction: row;
+			position: fixed;
+			bottom:0;
+			left:0;
+			right: 0;
+			background-color: #fff;
+			padding: 5px;
+		}
+		.ftBox-text{
+			box-sizing: border-box;
+			height: 36px;
+			line-height: 36px;
+			border: 1px solid #eee;
+			flex:1;
+			padding: 5px;
+			color: #323232;
+			font-size: 14px;
+		}
+		.ftBox-btn{
+			box-sizing: border-box;
+			height: 36px;
+			line-height: 36px;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+			background-color: #15ABA5;
+			color: #fff;
+			padding: 0px 10px;
+		}
+		.ftBox-row{
+			height: 44px;
+		}
+	</style>
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">私信</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body none" :class="'flex-col'"  id="App">
+			<div @click="getPage" class="fixNotice" v-if="hasNew>0">你有{{hasNew}}条新消息</div>
+			<div v-if="Object.keys(list).length==0" class="emptyData">暂无私信</div>
+			<div class="pmList">
+				<div class="row-box mgb-5" v-for="(item,index) in list" :key="index">
+					<div class="flex flex-ai-center" v-if="item.isme">
+						<div class="flex-1">
+							<div class="flex">
+								<div class="f12 cl3">{{item.timeago}}</div>
+								<div class="flex-1"></div>
+								<div class="mgl-5 f12 cl3">我</div>
+							</div>
+							<div class="pm-r-msg">
+								{{item.content}}
+							</div>
+							
+						</div>
+						<img class="pm-head mgl-5" :src="item.user_head+'.100x100.jpg'" />
+					</div>
+					<div class="flex flex-ai-center" v-else>
+						<img class="pm-head mgr-5" :src="item.t_user_head+'.100x100.jpg'" />
+						<div class="flex-1">
+							<div class="flex mgb-5">
+								<div class="mgb-5 f12 cl3">{{item.t_nickname}}</div>
+								<div class="flex-1"></div>
+								<div class="f12 cl3">{{item.timeago}}</div>
+							</div>
+							<div class="pm-l-msg">
+								{{item.content}}
+							</div>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+			<div class="ftBox-row"></div>
+			<div class="ftBox">
+				<input v-model="content" type="text" class="ftBox-text" />
+				<div @click="sendPm" class="ftBox-btn">发布</div>
+			</div>
+		</div>
+		
+		{include file="footer.html"}
+		<script>
+			var userid="{$smarty.get.userid|intval}";
+		</script>
+		<script src="/plugin/vue/vue.min.js"></script>
+		<script src="{$skins}pm/detail.js"></script>
+	</body>
+</html>

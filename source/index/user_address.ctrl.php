@@ -15,7 +15,7 @@
 			$this->onMy();
 		}
 		public function onMy(){
-			$where=" status=2 AND  userid=".$this->userid;
+			$where=" status=1 AND  userid=".$this->userid;
 			$url="/index.php?m=user_address&a=default";
 			$limit=20;
 			$start=get("per_page","i");
@@ -80,21 +80,20 @@
 		public function onSave(){
 			
 			$id=get_post("id","i");
+			$data=M("user_address")->postData();
 			$data["userid"]=$this->userid;
-			$data["address"]=get_post("address","h");
-			$data["telephone"]=get_post("telephone","h");
-			$data["truename"]=get_post("truename","h");
+			 
 		 	checkEmpty($data['address'],"地址不能为空");
 		 	checkEmpty($data['telephone'],"联系电话不能为空");
 		 	checkEmpty($data['truename'],"联系人不能为空");
 			$data["province_id"]=get_post("province_id","i");
+			 
 			/*
 			if(empty($data['province_id'])){
 				$this->goall("省份不能为空",1);
 			}
 			*/
-			$data["city_id"]=get_post("city_id","i");
-			$data["town_id"]=get_post("town_id","i");
+			 
 			$data["dateline"]=time();
 			$province=$city=$town="";
 			$data['province_id'] && $province=M("district")->selectOne(array("where"=>"id=".$data['province_id'],"fields"=>"name")); 
@@ -102,18 +101,20 @@
 			$data['town_id'] && $town=M("district")->selectOne(array("where"=>"id=".$data['town_id'],"fields"=>"name")); 
 			$data['pct_address']=$province.$city.$town.$data['address'];
 			//获取位置信息
-			$address=get("address","h");
-			$c=file_get_contents("https://api.map.baidu.com/geocoder/v2/?address={$data['pct_address']}&output=json&ak=524fAYtg9vGGhZjIIMEHGsgpk9HQPhBQ");
-			$arr=json_decode($c,true);
-			if(isset($arr['result']['location']['lat'])){
-				$lat=$arr['result']['location']['lat'];
-				$lng=$arr['result']['location']['lng'];
-				$data['lat']=$lat;
-				$data['lng']=$lng;
+			$address=get_post("address","h");
+			if($data["lat"]==0){
+				$c=file_get_contents("https://api.map.baidu.com/geocoder/v2/?address={$data['pct_address']}&output=json&ak=524fAYtg9vGGhZjIIMEHGsgpk9HQPhBQ");
+				$arr=json_decode($c,true);
+				
+				if(isset($arr['result']['location']['lat'])){
+					$lat=$arr['result']['location']['lat'];
+					$lng=$arr['result']['location']['lng'];
+					$data['lat']=$lat;
+					$data['lng']=$lng;
+				}
 			}
-			
 			$data['isdefault']=post("isdefault","i");
-			$data['status']=2;
+			$data['status']=1;
 			if($data['isdefault']){
 				M("user_address")->update(array(
 					"isdefault"=>0

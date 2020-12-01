@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+{include file="head.html"}
+ 
+<body>
+<div class="header">
+ 
+    <div class="title">页面跳转中</div>
+</div>
+<script language="javascript">
+function movenew()
+{
+	document.location='{$url}';
+}
+setTimeout(movenew,2000);
+
+</script>
+<div class="main-body">
+<div class="well">
+{$message}，如果没有自动跳转请点击 <a href="{$url}">跳转</a>
+
+</div> 
+</div>
+
+{include file='footer.html' }
+</body>
+</html>

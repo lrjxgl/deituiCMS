@@ -1,0 +1,15 @@
+/***footer***/
+.footer {
+	background-color: #fff;
+}
+
+.footer-item,
+.footer-item:before {
+	color: #333;
+	background-color: #fff;
+}
+
+.footer-active,
+.footer-active:before {
+	color: #f55977;
+}

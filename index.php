@@ -38,9 +38,14 @@ if(isset($_GET['fromapp']) && $_GET['fromapp']=="wxapp" ){
 if(isset($_GET['ajax'])){
 	header("Access-Control-Allow-Origin: *");
 }
+
 require("./skymvc/skymvc.php");
 //用户自定义初始化函数
 function userinit(&$base){
+	if(count($_POST)>0){
+		checkSafeContent($_POST);
+	}
+	
 	global $wap_template_dir,$template_dir;
 	$skins=ISWAP?$wap_template_dir:$template_dir;
 	$ip=ip();
@@ -56,7 +61,7 @@ function userinit(&$base){
 		}		 
 	}
 	C()->smarty->assign(array(
-		"skins"=>"/".$skins."/",
+		"skins"=>$skins."/",
 		"appindex"=>APPINDEX,
 		"appadmin"=>APPADMIN
 	));

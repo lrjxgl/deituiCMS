@@ -1,0 +1,40 @@
+<div class="roomchat" >
+    <div class="giftShow" id="giftShow">
+    	<div class="bg"></div>
+    </div>
+    
+    <div class="chat-input-tool" style="display: none;"> <span class="to-user">全部</span> <span class="js-face"><img src="/static/images/ico-emo.png"></span> 
+    <span class="js-gift" id="js-gift-btn">
+    <img src="/static/images/ico-gift.png">
+    </span>
+    <div class="giftBox" id="giftBox">
+        <div class="tk-gifts">
+        	{foreach item=c from=$gifts}
+             <div class="item gift-st" gift-id="{$c.id}"  src="{$c.imgurl}"   title="{$c.title}">
+             
+             <div> <img src="{$c.imgurl}"  /></div>
+             <div>{$c.title} ￥{$c.price}</div>
+              
+             </div>
+            {/foreach}
+        </div>
+        
+    </div>
+    <div class="faceBox" id="faceBox">
+    	  <div class="tk-faces">	
+           {foreach item=c from=$faces}
+           	<div class="item face-btn"><img src="{$c}" alt="" /></div>
+           {/foreach}                  
+          </div>                     
+                               
+    </div>
+    </div>
+    <div class="chat-input-row">
+      <input id="txt" class="chat-input" type="text">
+      <a href="javascript:;" class="chat-btn" id="saySubmit">发送</a> </div>
+  </div>
+  
+  <div style="display:none ">
+<input type="file" id="up-img-f" >
+
+</div>

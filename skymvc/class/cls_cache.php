@@ -103,6 +103,24 @@ class cache
 		 }
 	}
 	
+	public function del($key){
+		switch($this->cache_type){
+			case "memcache":
+					return $this->mem_get($key);
+				break;
+			case "redis":
+					return $this->redis_get($key);
+				break;
+			 case "file":					
+			 case "php":
+					$this->file_del($key);
+				break;
+			case "mysql":
+					
+					return $this->mysql_get($key);	
+				break;
+		}
+	}
 
 	
 	/*
@@ -112,8 +130,7 @@ class cache
 	public function file_get($key)
 	{
 		$key=preg_replace("/[^\w]/","",$key);
-		$dir=$this->cache_dir.$this->keydir($key);
-		
+		$dir=$this->cache_dir.$this->keydir($key);	
 		$file=$dir.$key.".txt";
 		if(file_exists($file)){
 			$data=json_decode(file_get_contents($file),true);
@@ -140,6 +157,12 @@ class cache
 		file_put_contents($file,json_encode($data)); 
 	}
 	
+	public function file_del($key){
+		$key=preg_replace("/[^\w]/","",$key);
+		$dir=$this->cache_dir.$this->keydir($key);
+		$file=$dir.$key.".txt";
+		@unlink($file);
+	}
 	/**
 	*@获取php缓存 可以直接include文件
 	*/
@@ -193,7 +216,13 @@ class cache
 			return $this->file_get($k);
 		}
 	}
-	
+	public function mem_del($k){
+		if(function_exists("cache_mem_del")){
+			return cache_mem_del($k);
+		}else{
+			return $this->file_del($k);
+		}
+	}
 	/**redis 缓存**/
 	public function redis_set($k,$v,$expire=0){
 		if(function_exists("cache_redis_set")){
@@ -210,7 +239,13 @@ class cache
 			return $this->file_get($k);
 		}
 	}
-	
+	public function redis_del($k){
+		if(function_exists("cache_redis_del")){
+			return cache_redis_del($k);
+		}else{
+			return $this->file_del($k);
+		}
+	}
 	/**
 	*mysql 缓存
 	*/
@@ -236,7 +271,13 @@ class cache
 		 
 	}
 	
-	
+	public function mysql_del($k){
+		if(function_exists("cache_mysql_del")){
+			return cache_mysql_del($k);
+		}else{
+			return $this->file_del($k);
+		}
+	}
 	/**
 	@删除目录缓存
 	*/

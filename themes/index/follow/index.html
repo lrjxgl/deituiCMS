@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">我的好友</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body" id="App">
+			<div class="tabs-border">
+				<div @click="setTab('follow')" :class="tab=='follow'?'tabs-border-active':''" class="tabs-border-item ">
+					关注
+				</div>
+				<div @click="setTab('followed')"  :class="tab=='followed'?'tabs-border-active':''" class="tabs-border-item">
+					粉丝
+				</div>
+			</div>
+			<div class="list">
+				<div v-if="Object.keys(list).length==0" class="emptyData">暂无</div>
+				<div v-for="(item,index) in list" :key="index" class="row-box flex mgb-5">
+					<img @click="goUser(item.userid)"  class="wh-60 mgr-5" :src="item.user_head+'.100x100.jpg'" />
+					<div class="flex-1">
+						<div @click="goUser(item.userid)"  class="mgb-5">{{item.nickname}}</div>
+						<div class="flex">
+							<div class="mgr-5">关注</div>
+							<div class="mgr-5 cl-num">{{item.follow_num}}</div>
+							<div class="mgr-5">粉丝</div>
+							<div class="cl-num">{{item.followed_num}}</div>
+						</div>
+					</div>
+					<div>
+						<div v-if="item.isfollow" @click="followToggle(item)" class="btn-mini">取消关注</div>
+						<div v-else @click="followToggle(item)" class="btn-mini">关注</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{include file="footer.html"}
+		<script src="/plugin/vue/vue.min.js"></script>
+		<script src="{$skins}follow/index.js"></script>
+	</body>
+</html>

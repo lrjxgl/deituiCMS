@@ -92,8 +92,37 @@ var smsCountDown={
 		},1000)
 	}
 };
-
+var postCheck={
+	inSubmit:false,
+	timer:0,
+	canPost:function(){
+		var that=this;
+		if(this.inSubmit){
+			return false;
+		}
+		if(this.timer>0){
+			clearTimeout(this.timer);
+		}
+		this.inSubmit=true;
+		this.timer=setTimeout(function(){
+			that.inSubmit=false;
+		},1000)
+		return true;
+	}
+}
+var isPageHide = false;
+window.addEventListener('pageshow', function () {		
+ if (isPageHide) {
+	 
+	isPageHide=false;
+	 skyToast("页面刷新中...");
+	window.location.reload(); 	
+ } 
+});
 $(function(){
+	$(document).on("click",".js-pageHide",function(){
+		isPageHide=true;
+	})
 	$(document).on("click", ".js-tabs-border-item", function() {
 		var $group = $(this).parents(".tabs-border-group");
 		var index = $(this).index();
@@ -165,13 +194,9 @@ $(function(){
 	})
 	var jsSubmitIng=false;
 	$(document).on("click",".js-submit",function(){
-		if(jsSubmitIng){
+		if(!postCheck.canPost()){
 			return false;
 		}
-		jsSubmitIng=true;
-		setTimeout(function(){
-			jsSubmitIng=false;
-		},1000)
 		var obj=$(this);
 		$.post(
 			$(this).parents("form").attr("action")+"&ajax=1",

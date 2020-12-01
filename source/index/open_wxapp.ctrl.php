@@ -62,9 +62,32 @@ class open_wxappControl extends skymvc{
 		$wx=$this->getWeiXin();
 		$res=curl_get_contents("https://api.weixin.qq.com/sns/jscode2session?appid=".$wx['appid']."&secret=".$wx['appkey']."&js_code=".$code."&grant_type=authorization_code");
 		$json=json_decode($res,true);
+		
 		if($json['openid']){
-			$ouser=M("openlogin")->getRow("SELECT *  FROM ".table('openlogin')." WHERE openid='".$json['openid']."' AND xfrom='wxapp' ");
-						
+			$unionid="";
+			if(isset($json["unionid"])){
+				$unionid=$json["unionid"];
+				$res=M("openlogin")->getAll("SELECT *  FROM ".table('openlogin')." WHERE unionid='".$unionid."' AND xfrom in('weixin','wxapp','wxnavite') ");
+				if(empty($res)){
+					$ouser=M("openlogin")->getRow("SELECT *  FROM ".table('openlogin')." WHERE openid='".$json['openid']."' AND xfrom='wxapp' ");
+				}else{
+					$ouser=M("openlogin")->getRow("SELECT *  FROM ".table('openlogin')." WHERE unionid='".$unionid."' AND xfrom='wxapp' "); 
+					if(empty($ouser)){
+						$ouser=$res[0];
+						unset($ouser["id"]);
+						$ouser["xfrom"]="wxapp";
+						$ouser["openid"]=$json["openid"];
+						$ouser["createtime"]=date("Y-m-d H:i:s");
+						$ouser["id"]=M("openlogin")->insert($ouser);
+					}
+				}
+				
+			}else{
+				$ouser=M("openlogin")->getRow("SELECT *  FROM ".table('openlogin')." WHERE openid='".$json['openid']."' AND xfrom='wxapp' ");
+			}
+			checkSafeContent(array(
+				"nickname"=>$nickname
+			));			
 			if($ouser){
 				if(!$ouser['userid']){
 					$this->openlogin($ouser);
@@ -94,11 +117,12 @@ class open_wxappControl extends skymvc{
 				
 				$dir="attach/user_head/".date("Y/m/d");
 				umkdir($dir);
-				$user_head=$dir."/".base64_encode($nickname).time().".jpg";				
+				$user_head=$dir."/".md5($user_wxhead).".jpg";				
 				file_put_contents($user_head,curl_get_contents($user_wxhead));				
 				$this->loadClass("image",false,false);
 				$img=new image();
 				$img->makethumb($user_head.".100x100.jpg",$user_head,"100","100",1);
+				checkSafeFile($user_head.".100x100.jpg");
 				$img->makethumb($user_head.".small.jpg",$user_head,"240");
 				$img->makethumb($user_head.".middle.jpg",$user_head,"440");
 				//关联插件
@@ -106,7 +130,8 @@ class open_wxappControl extends skymvc{
 					"nickname"=>$nickname,					
 					"xfrom"=>'wxapp',
 					"openid"=>$json['openid'],
-					"createtime"=>date("Y-m-d H:i:s")		
+					"createtime"=>date("Y-m-d H:i:s"),
+					"unionid"=>$unionid
 				);
 				if($user_head){
 					$data['user_head']=$user_head;
@@ -123,6 +148,7 @@ class open_wxappControl extends skymvc{
 		}else{
 			echo json_encode(array(
 				"openid"=>"",
+				"error"=>1,
 				"message"=>"登录出错"
 			));
 		}

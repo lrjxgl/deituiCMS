@@ -49,10 +49,16 @@ class open_weixinControl extends skymvc{
 	
 public function onGeturl()
 {
-	$backurl=get('backurl','x');
-	 if($backurl==""){
-		 $backurl="/";
-	 }
+	if(get('backurl')){
+		$backurl=get('backurl','x');
+	}elseif(!empty($_SESSION["backurl"])){
+		$backurl=$_SESSION["backurl"];
+	}else{
+		$backurl=$_SERVER['HTTP_REFERER'];
+	}
+	if(empty($backurl)){
+		$backurl="/";
+	} 
 	$_SESSION["backurl"]=$backurl; 
 	$url=" https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$this->wx['appid']."&redirect_uri=".urlencode($this->REDIRECT_URI)."&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 	header("Location: $url");
@@ -80,7 +86,33 @@ public function oncallback()
 			{
 				$this->goall('微信接口错误',1,0,'/index.php?m=index');
 			}
-			$ouser=M("openlogin")->getRow("SELECT *  FROM ".table('openlogin')." WHERE openid='".$data['openid']."' AND xfrom='weixin' ");
+			$unionid="";
+			
+			if(isset($arr["unionid"])){
+				$unionid=$arr["unionid"];
+				$res=M("openlogin")->select(array(
+					"where"=>" unionid='".$unionid."' AND xfrom in('weixin','wxapp','wxnavite') "
+				));
+				 
+				if(empty($res)){
+					$ouser=M("openlogin")->getRow("SELECT *  FROM ".table('openlogin')." WHERE openid='".$data['openid']."' AND xfrom='weixin' ");
+				}else{
+					$ouser=M("openlogin")->selectRow(" unionid='".$unionid."' AND xfrom='weixin' "); 
+					if(empty($ouser)){
+						$ouser=$res[0];
+						unset($ouser["id"]);
+						$ouser["xfrom"]="weixin";
+						$ouser["openid"]=$data["openid"];
+						$ouser["createtime"]=date("Y-m-d H:i:s");
+						$ouser["id"]=M("openlogin")->insert($ouser);
+					}
+				}
+				
+			}else{
+				$ouser=M("openlogin")->getRow("SELECT *  FROM ".table('openlogin')." WHERE openid='".$data['openid']."' AND xfrom='weixin' ");
+			}
+			
+			
 			if($ouser)
 			{
 				if($ouser['userid']){
@@ -103,12 +135,14 @@ public function oncallback()
 				//$this->goall('登陆成功',1,0,'/index.php');
 			}else
 			{
+				 
+				
 				//生成账户
 				 
 				$dir="attach/user_head/".date("Y/m/d");
 				umkdir($dir);
 				if($arr['headimgurl']){
-					$user_head=$dir."/".md5($u).time().".jpg";
+					$user_head=$dir."/".md5($arr['headimgurl']).".jpg";
 					
 					file_put_contents($user_head,curl_get_contents($arr['headimgurl']));
 					
@@ -123,7 +157,8 @@ public function oncallback()
 					"nickname"=>$nickname,					
 					"xfrom"=>'weixin',
 					"openid"=>$data['openid'],
-					"createtime"=>date("Y-m-d H:i:s")		
+					"createtime"=>date("Y-m-d H:i:s"),
+					"unionid"=>$unionid
 				);
 				if($user_head){
 					$data['user_head']=$user_head;
@@ -155,7 +190,7 @@ public function openlogin($ouser){
 		//生成账户
 		$i=0;
 		$nickname=$u=$ouser['nickname'];
-		while(M("user")->getOne("SELECT userid FROM ".table('user')." WHERE  nickname='$u' or username='$u' "))
+		while(M("user")->getOne("SELECT userid FROM ".table('user')." WHERE  nickname='".$u."' or username='".$u."' "))
 		{
 			$i++;
 			$u=$nickname.$i;
@@ -201,7 +236,8 @@ public function openlogin($ouser){
 			"openid"=>$ouser["openid"],
 			"dateline"=>time(),
 		));
-		$this->goall('注册登陆成功',0,0,$_SESSION["backurl"]);
+		header("Location: ".$_SESSION["backurl"]);
+		//$this->goall('注册登陆成功',0,0,$_SESSION["backurl"]);
 	} 
 }
 	

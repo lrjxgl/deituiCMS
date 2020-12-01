@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+<div class="tabs-border">
+	<div class="item active">用户黑名单</div>
+</div>
+<form class="search-form" method="get" action="/admin.php">
+	<input type="hidden" name="m" value="blacklist" />
+ 
+	昵称：<input type="text" name="nickname" class="w150" />
+	 
+	<button type="submit" class="btn btn-success">搜一下</button>
+</form>
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>id</td>
+   <td>昵称</td>
+   <td>
+	   头像
+   </td>
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$list}
+<tr>
+   <td>{$c.userid}</td>
+   <td>{$c.nickname}</td>
+   <td>
+	   <img class="w60" src="{$c.user_head}.100x100.jpg" />
+   </td>
+<td>
+	<a href="javascript:;" class="js-delete" url="admin.php?m=blacklist&a=delete&ajax=1&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+ 
+</body>
+</html>

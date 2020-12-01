@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>视频直播管理后台</title>
+<link type="text/css" rel="stylesheet" href="/static/module/admin.css" />
+
+</head>
+
+<body class="menu-body">
+
+<div class="mtitle">视频直播管理</div>
+
+<div class="menu" style="display:block">
+<ul>
+<li><a href="/moduleadmin.php?m=zblive"  target="main-frame">直播间</a></li>
+<li><a href="/moduleadmin.php?m=zblive_config"  target="main-frame">直播设置</a></li> 
+ 
+ 
+</ul>
+</div>
+ 
+<div class="mtitle"><a href="{$appadmin}?m=ifram&a=main"></a></div>
+<div style="display:none;">
+<div class="ztitle">版权声明</div>
+<div class="zbox" style="">
+
+版权归<a href="http://www.deitui.com" target="_blank">得推网络</a>所有<br>
+</div>
+</div>
+
+<script language="javascript" src="/plugin/jquery/jquery.js"></script>
+<script language="javascript">
+$(document).ready(function()
+{
+	$(".mtitle").click(function()
+	{
+		if($(this).next(".menu").css("display")=="block")
+		{
+			$(".menu").css("display","none")
+		 
+		}else
+		{
+			$(".menu").css("display","none")
+			$(this).next(".menu").css({display:"block"});
+		}
+	});
+	if($("a:eq(0)").attr("href")!='{$appadmin}?m=iframe&a=main'){
+		parent['main-frame'].location.href=$("a:eq(0)").attr("href");
+	}
+	$("ul li a:eq(0)").addClass('on'); 
+	$('ul li a').click(function(){
+		$('ul li a').removeClass('on');
+		$(this).addClass('on');
+	});
+});
+</script>
+</body>
+</html>

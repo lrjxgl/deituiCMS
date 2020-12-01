@@ -26,16 +26,40 @@ class userControl extends skymvc{
 			$where.=" AND telephone='".$telephone."' ";
 			$url.="&telephone=".$telephone;
 		}
+		$bstatus=get("bstatus","h");
+		switch($bstatus){
+			case "new":
+				$where.=" AND status=0 ";
+				break;
+			case "pass":
+				$where.=" AND status=1 ";
+				break;
+			case "forbid":
+				$where.=" AND status=99 ";
+				break;
+			 
+		}
+		$istel=get("istel","i");
+		if($istel){
+			$where.=" AND telephone!='' ";
+			$url.="&istel=".$istel;
+		}
 		$orderby=get('orderby','h');
 		$orderby=$orderby?$orderby:"userid DESC";
 		$option=array(
 			"where"=>$where,
 			"start"=>get('per_page','i'),
 			"limit"=>20,
-			"order"=>$orderby
+			"order"=>sql($orderby)
 		);
 		$rscount=true;
 		$data=M("user")->select($option,$rscount);
+		if($data){
+			foreach($data as $k =>$v){
+				$v["user_head"]=images_site($v["user_head"]);
+				$data[$k]=$v;
+			}
+		}
 		$pagelist=$this->pagelist($rscount,20,$url);
 		
 		$this->loadConfig("user");
@@ -109,9 +133,23 @@ class userControl extends skymvc{
 		$this->goall("保存成功");
 		
 	}
+	public function onStatus(){
+		$userid=get('userid','i');
+		$data=M("user")->selectRow(array("where"=>" userid=".$userid));
+		if($data["status"]==1){
+			$status=99;
+		}else{
+			$status=1;
+		}
+		M("user")->update(array(
+			"status"=>$status
+		)," userid=".$userid);
+		$this->goAll("success",0,$status);
+		
+	}
 	public function onPassword(){
 		$userid=get('userid','i');
-		$data=M("user")->selectRow(array("where"=>" userid=$userid"));
+		$data=M("user")->selectRow(array("where"=>" userid=".$userid));
 		$this->smarty->assign(array(
 			"data"=>$data,
 		));

@@ -1,11 +1,6 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
-if(!file_exists("config/install.lock"))
-{
-	header("Location: install/");
-	exit;
-} 
 define("ROOT_PATH",  str_replace("\\", "/", dirname(__FILE__))."/");
 require("config/version.php");
 require(ROOT_PATH."config/config.php");
@@ -63,25 +58,20 @@ if(isset($_GET['ajax'])){
 require("./skymvc/skymvc.php");
 //用户自定义初始化函数
 function userinit(&$base){
+	if(!empty($_POST)){
+		checkSafeContent($_POST);
+	}
+	
 	if(function_exists("moduleInit")){
 		moduleInit($base);
 		return false;
 	}
-	global $wap_template_dir,$template_dir;
-	$skinsmodule=ISWAP?$wap_template_dir:$template_dir;
-	if(isset($_SESSION['ssuser']['userid'])){
-		$base->ssuser=$_SESSION['ssuser'];//当前登录用户的信息
-		$base->smarty->assign("ssuser",$base->ssuser);
-	}else{
-		//存在登录码
+	if(!isset($_SESSION["ssuser"])){
 		if((isset($_COOKIE['authcode']) or get_post('authcode') ) && get('m')!="login"){
-			
 			M('login')->CodeLogin();
-		}		 
+		}
 	}
-	c()->smarty->assign(array(
-		"skinsmodule"=>$skinsmodule,
-	));
+		
 }
 
 ?>

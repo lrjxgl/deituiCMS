@@ -124,10 +124,10 @@ class pvControl extends skymvc{
 		));
 	}
 	public function onNew(){
-		$where=" status in (0,1,2,3,4) ";
-		$url="/moduleadmin.php?m=pv";
+		$where="1 ";
+		$url="/admin.php?m=pv";
 		 
-		$limit=20;
+		$limit=200;
 		$start=get("per_page","i");
 		$option=array(
 			"start"=>$start,
@@ -151,6 +151,7 @@ class pvControl extends skymvc{
 				 
 			)
 		);
+		$this->smarty->display("pv/new.html");
 	}
 }
 ?>

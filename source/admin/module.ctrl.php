@@ -54,202 +54,9 @@ class moduleControl extends skymvc{
 		
 	}
 
-	public function onAdd(){
-		
-		$this->smarty->display("module/add.html");
-	}
-	
-	public function onEdit(){
-		$module=get('module','h');
-		$data=M("module")->selectRow("module='".$module."'");
-		$this->smarty->assign(array(
-			"data"=>$data
-		));
-		$this->smarty->display("module/edit.html");
-	}
-	
-	public function onSave(){
-		$id=get_post('id','i');
-		$data=M("module")->postData();
-		M("module")->update($data,"id=".$id);
-		$this->gomsg("保存成功");
-	}
-	
-	
-	public function onCreate(){
-		
-		$mod_name=post('mod_name','h');
-		$mod_dir=post('mod_dir','h');
-		$mod_table=post('mod_table','h');
-		$mod_info=post('mod_info','h');
-		if(substr($mod_table,0,4)!='mod_'){
-			$this->goAll("请确保主表是以mod_开头",1);
-		}
-		//检测表名
-		if(M("module")->selectRow(array("where"=>" tablename='".$mod_table."'"))){
-			$this->goAll("主表已经存在了",1);
-		}
-		if(file_exists("module/{$mod_dir}")){
-			$this->goAll("插件已经存在",1);
-		}
-		umkdir("module/{$mod_dir}/source/admin");
-		 
-		umkdir("module/{$mod_dir}/source/shop");
-		umkdir("module/{$mod_dir}/source/index");
-		umkdir("module/{$mod_dir}/source/model");
-		umkdir("module/{$mod_dir}/themes/admin");
-		umkdir("module/{$mod_dir}/themes/index");
-		umkdir("module/{$mod_dir}/themes/shop");
-		file_put_contents("module/{$mod_dir}/module.php",''); 
-		//新建住控制文件
-		$str='<?php
-class '.$mod_dir.'Control extends skymvc{
-	
-	public function __construct(){
-		parent::__construct();
-	}
-
-	public function onDefault(){
-		$this->smarty->display("index.html");
-	}
-}
-
-?>';
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/source/index/{$mod_dir}.ctrl.php",$str);
-		
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/source/shop/{$mod_dir}.ctrl.php",$str);
-		$str='<?php
-		class '.$mod_dir.'Control extends skymvc{
-			
-			public function __construct(){
-				parent::__construct();
-			}
-			public function onMenu(){
-				$this->smarty->display("menu.html");
-			}
-			public function onDefault(){
-				$this->smarty->display("index.html");
-			}
-		}
-		
-		?>';
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/source/admin/{$mod_dir}.ctrl.php",$str);
-		//建立主表model
-		$str='<?php
-class '.$mod_table.'Model extends model{
-	public $table="'.$mod_table.'";
-	public function __construct(&$base){
-		parent::__construct($base);
-	}
-}
-
-?>';
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/source/model/".$mod_table.".model.php",$str);
-		//建立模板文件
-		$str='<!DOCTYPE html>
-<html>
-{include file="head.html"}
-<body>
-		<h1>开始开发插件吧</h1>
-		{include file="footer.html" } 
-</body>
-		</html>
-		';
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/index/index.html",$str);
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/admin/index.html",$str);
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/shop/index.html",$str);
-		$str='<!DOCTYPE html>
-<html>
-{include file="head.html"}
-<script language="javascript">
-function movenew()
-{
-	document.location="{$url}";
-}
-setTimeout(movenew,2000);
-
-</script>
-<style>
-	.gomsg{
-		width: 300px;
-		margin: 50px auto;
-		border: 3px solid #ddd;
-		border-radius: 5px;
-		padding: 20px; 
-		
-	}
-</style>
-<body>
-{include file="header.html"}
-<div class="main-body">	 
-    <div class="gomsg">{$message}，如果没有自动跳转请点击 <a href="{$url}">跳转</a></div>    
-</div>
-{include file="footer.html"}
-</body>
-</html>';
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/index/gomsg.html",$str);	
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/admin/gomsg.html",$str);	
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/shop/gomsg.html",$str);	
 	 
-		
-		
-		 
-		//head
-		$str='<head> 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<title>'.$mod_name.'</title>
-</head>
-';
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/admin/head.html",$str);
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/index/head.html",$str);
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/shop/head.html",$str);
 	
-		//footer
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/admin/footer.html",'');
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/index/footer.html",'');
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/shop/footer.html",'');
-		//End footer
-		//menu.html
-		$str='<div class="menu menu-active">
-	<div class="menu-title">'.$mod_name.'</div>
-	<div class="menu-box">
-		<div gourl="/moduleadmin.php?m='.$mod_dir.'&t=1" class="menu-item">功能一</div>
-		<div gourl="/moduleadmin.php?m='.$mod_dir.'&t=2"  class="menu-item">功能二</div>
-		<div gourl="/moduleadmin.php?m='.$mod_dir.'&t=3"  class="menu-item">功能三</div>
-	</div>
-</div>';
-file_put_contents(ROOT_PATH."module/{$mod_dir}/themes/admin/menu.html",$str);
-		//创建配置文件
-		$str='<?php
-$config=array(
-	"title"=>"'.$mod_name.'",//模块名称
-	"module"=>"'.$mod_dir.'",//模块目录
- 	"version"=>1.0,//当前版本
-	"info"=>"'.$mod_info.'",//模块信息
-	"table_pre"=>"'.TABLE_PRE.'",//表前缀
-	"adminurl"=>"moduleadmin.php?m='.$mod_dir.'&a=menu",
-	"check_update"=>"http://www.deitui.com",
-);
-?>';
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/config.php",$str);
-		$model_id=M("module")->insert(array(
-			"title"=>$mod_name,
-			"tablename"=>$mod_dir,
-			"data"=>$mod_info,
-			"module"=>$mod_dir	
-		));
-		//创建model_id
- 		
-		
-		$str='<?php define("MODULE_'.strtoupper($mod_dir).'_ID",'.$model_id.'); ?>';
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/module.php",$str);
-		
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/install.sql.php","");
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/uninstall.sql.php","");
-		file_put_contents(ROOT_PATH."module/{$mod_dir}/install.lock","success");
-		$this->goAll("插件创建成功");
-	}
+	 
 	
 	/*获取所有的模块*/
 	public function getmods($dir){
@@ -423,7 +230,16 @@ $config=array(
 		closedir($dh);
 	}
 	
-	
+	public function onNavAdd(){
+		$url=post("url","x");
+		$title=post("title","h");
+		M("navbar")->insert(array(
+			"link_url"=>sql($url),
+			"title"=>$title,
+			"group_id"=>1
+		));
+		$this->goAll("success");
+	}
 	
 }
 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<script language="javascript">
+function movenew()
+{
+	document.location="{$url}";
+}
+setTimeout(movenew,2000);
+
+</script>
+<style>
+	.gomsg{
+		width: 300px;
+		margin: 50px auto;
+		border: 3px solid #ddd;
+		border-radius: 5px;
+		padding: 20px; 
+		
+	}
+</style>
+<body>
+<div class="tabs-border">
+	<div class="item active">跳转中</div>
+</div>
+<div class="main-body">	 
+    <div class="gomsg">{$message}，如果没有自动跳转请点击 <a href="{$url}">跳转</a></div>    
+</div>
+{include file="footer.html"}
+</body>
+</html>

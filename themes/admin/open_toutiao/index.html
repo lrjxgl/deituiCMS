@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+{include file='open_toutiao/nav.html'}
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>id</td>
+   <td>名称</td>
+   <td>创建时间</td>
+   <td>appid</td>
+    
+   <td>状态</td>
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.title}</td>
+   <td>{$c.createtime}</td>
+   <td>{$c.appid}</td>
+    
+   <td>{if $c.status eq 1}上线{else}下线{/if}</td>
+<td><a href="admin.php?m=open_toutiao&a=add&id={$c.id}">编辑</a> 
+
+
+<a href="javascript:;" class="js-delete" url="admin.php?m=open_toutiao&a=delete&ajax=1&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

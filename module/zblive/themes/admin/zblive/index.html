@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+<body>
+{include file='zblive/nav.html'}
+<div class="main-body">
+<div class="search-form">
+<form method="get" action="/moduleadmin.php">
+<input type="hidden" name="m" value="zblive" />
+<div class="mgb-5">
+ID:<input type="text" name="id" value="{$smarty.get.id|intval}" class="w50" />
+状态：<select name="bstatus" class="w100">
+	<option value="0">选择</option>
+	<option value="1" {if get('bstatus') eq 1 }selected="selected"{/if}>未审核</option>
+    <option value="2" {if get('bstatus') eq 2 }selected="selected"{/if}>已审核</option>
+    <option value="10" {if get('bstatus') eq 10 }selected="selected"{/if}>已禁止</option>
+</select>
+直播状态：<select name="zbtype" class="w100">
+	<option value="">选择</option>
+	<option value="unbegin" {if get('zbtype') eq "unbegin" }selected="selected"{/if}>未开始</option>
+    <option value="doing" {if get('zbtype') eq "doing" }selected="selected"{/if}>直播中</option>
+    <option value="finish" {if get('zbtype') eq "finish" }selected="selected"{/if}>已结束</option>
+</select>
+主题：<input type="text" name="title" value="{$smarty.get.title}" class="w150" />
+ 
+ 
+
+ 
+
+<input type="submit" value="搜索" class="btn" />
+</div>
+</form>
+</div>
+ <table class="tbs">
+	 <thead>
+  <tr>
+   <td>id</td>
+   <td>名称</td>
+    
+  
+   
+ 
+   <td>状态</td>
+   <td>直播状态</td> 
+   <td>封面</t>
+    
+   <td>开始时间</td>
+   <td>结束时间</td>
+  
+   <td>访问数</td>
+<td>操作</td>
+  </tr>
+  </thead>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.title}</td>
+ 
+    
+   
+   
+ 
+   <td>{if $c.bstatus eq 2}上线{else}下线{/if}</td>
+  <td>{if $c.zbstatus eq 1}直播中{elseif $c.zbstatus eq 0}未直播{else}可回放{/if}</td>
+   <td><img src="{$c.imgurl|images_site}.100x100.jpg" width="50"></td>
+    
+   <td>{$c.starttime|date:m-d H:i}</td>
+   <td>{$c.endtime|date:m-d H:i}</td>
+   
+   <td>{$c.view_num}</td>
+<td> 
+	<a class="js-setToken" v="{$c.id}" >刷新直播流</a>
+	 <a class="js-getRecord" v="{$c.id}" >刷新回放</a> 
+	 <br/>
+	 <a href="/moduleadmin.php?m=zblive&a=add&id={$c.id}">编辑</a>
+	<a href="/module.php?m=zblive&a=show&id={$c.id}" target="_blank">查看</a> 
+	<a href="javascript:;" class="js-delete" url="/moduleadmin.php?m=zblive&a=delete&ajax=1&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+</div>
+{include file="footer.html"}
+<script>
+	$(document).on("click",".js-getRecord",function(){
+		var id=$(this).attr("v");
+		$.ajax({
+			url:"/moduleadmin.php?m=zblive&a=GetRecordUrl&ajax=1&id="+id,
+			dataType:"json",
+			success:function(res){
+				skyToast(res.message)
+			}
+		})
+	})
+	$(document).on("click",".js-setToken",function(){
+		var id=$(this).attr("v");
+		$.ajax({
+			url:"/moduleadmin.php?m=zblive&a=settoken&ajax=1&id="+id,
+			dataType:"json",
+			success:function(res){
+				skyToast(res.message)
+			}
+		})
+	})
+</script>
+</body>	
+</html>

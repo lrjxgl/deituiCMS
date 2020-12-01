@@ -24,6 +24,7 @@ class inviteModel extends model{
 			"in_userid"=>$in_userid,
 			"dateline"=>time()
 		));
+		/*
 		$money=1;
 		
 		M("user")->addMoney(array(
@@ -31,6 +32,7 @@ class inviteModel extends model{
 			"userid"=>$invite_uid,
 			"content"=>"您邀请了{$nickname}获得了{$money}元,"
 		));
+		*/
 	}
 }
 

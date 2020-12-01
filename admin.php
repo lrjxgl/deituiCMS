@@ -1,14 +1,9 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
-if(!file_exists("config/install.lock"))
-{
-	header("Location: install/");
-	exit;
-} 
 require("config/version.php"); 
 require("config/config.php");
-require "config/setconfig.php";
+require("config/setconfig.php");
 require("config/const.php");
 define("ROOT_PATH",  str_replace("\\", "/", dirname(__FILE__))."/");
 define("CONTROL_DIR","source/admin");
@@ -38,7 +33,7 @@ function userinit(&$base){
 		));
 		$permission=unserialize($access);
 		if(!C()->checkpermission($permission) && !$_SESSION['ssadmin']['isfounder'] ){
-			//exit("您无权限");	
+			exit("您无权限".$m.get("a"));	
 		}
 	}	 
  

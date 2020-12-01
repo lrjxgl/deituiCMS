@@ -1,0 +1,125 @@
+/****å·¦è¾¹ç»“æŸ******/
+
+.roomchat {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
+
+.msglist .msgitem {
+	position: absolute;
+	z-index: 999;
+	color: #666;
+	padding: 10px;
+}
+
+.msglist .msgitem .nickname {
+	color: #f60;
+}
+
+.roomchat .chat-input-tool {
+	height: 30px;
+	font-size: 14px;
+	vertical-align: middle;
+	position: relative;
+}
+
+.roomchat .chat-input-tool span {
+	float: left;
+	margin-right: 10px;
+}
+
+.roomchat .chat-input-tool img {
+	height: 20px;
+}
+
+.roomchat .chat-input-row {
+	position: relative;
+	height: 40px;
+	display: flex;
+}
+
+.roomchat .chat-input {
+	height: 40px;
+	display: block;
+	float: left;
+	border: 0px;
+ 
+	margin-bottom: 0;
+	flex: 1;
+}
+
+.roomchat .chat-btn {
+	height: 40px;
+	line-height: 40px;
+	border-left: 1px solid #ddd; 
+	display: inline-block;
+	background-color: #fff; 
+	width: 60px;
+	text-align: center;
+}
+
+
+/****ç¤¼ç‰©*****/
+
+.giftBox {
+	display: none;
+	position: absolute;
+	left: 5px;
+	bottom: 50px;
+	border: 1px solid #ccc;
+	z-index: 999;
+	background-color: #fff;
+	padding: 5px;
+}
+
+.tk-gifts {}
+
+.tk-gifts .item {
+	float: left;
+	width: 60px;
+	margin-bottom: 5px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.giftShow {
+	display: block;
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	z-index: 999;
+}
+
+.giftShow .bg {
+	opacity: 0.6;
+	background-color: #fff;
+}
+
+
+/*****è¡¨æƒ…******/
+
+.faceBox {
+	display: none;
+	position: absolute;
+	left: 5px;
+	bottom: 50px;
+	border: 1px solid #ccc;
+	z-index: 999;
+	background-color: #fff;
+	padding: 5px;
+}
+
+.tk-faces {}
+
+.tk-faces .item {
+	float: left;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.tk-faces .item img {
+	width: 20px;
+}

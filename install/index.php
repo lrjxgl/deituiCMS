@@ -45,7 +45,7 @@ switch($step){
 			); 
 			$str='<?php
  
-			define("MYSQL_CHARSET","utf8");
+			define("MYSQL_CHARSET","utf8mb4");
 			define("TABLE_PRE","'.$tblpre.'");
 			$dbclass="mysqli";
 			 
@@ -105,16 +105,17 @@ switch($step){
 		//处理逻辑
 		require("../config/config.php");
 		$link=sqlconn();
-		if(!mysqli_select_db($link,$dbconfig['master']['database']))
+		if(mysqli_select_db($link,$dbconfig['master']['database']))
 		{
+			mysqli_query($link,"drop database ".$dbconfig['master']['database']);
 			
-			mysqli_query($link,"create database ".$dbconfig['master']['database']);
+		}
+		mysqli_query($link,"create database ".$dbconfig['master']['database']);
 			if(!mysqli_select_db($link,$dbconfig['master']['database']))
 			{
 				echo "<script>alert('创建数据库失败".$dbconfig['master']['database']."');history.go(-1);</script>";
 				exit();
 			}
-		}
 		//创建表结构
 		$dbfile="install.json";
 		if(file_exists($dbfile)){

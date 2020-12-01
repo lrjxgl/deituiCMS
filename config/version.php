@@ -3,7 +3,7 @@ class cmsVersion{
 	public static function get(){
 		return array(
 			"version"=>"deituiCMS",
-			"version_num"=>1.2,
+			"version_num"=>2.0,
 			"onlineupdate"=>"https://www.deituicms.com/index.php?m=newversion&a=update&product=deituiCMS",
 			"checkversion"=>"https://www.deituicms.com/index.php?m=newversion&product=deituiCMS",
 			"checkshouquan"=>"https://www.deituicms.com/index.php?m=newversion&a=checkshouquan&product=deituiCMS",

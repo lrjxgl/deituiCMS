@@ -1,16 +1,32 @@
-{include file="header.html"}
-<div> 
-{include file='district/nav.html'}
-<form method='post' action='admin.php?m=district&a=savechild'>
-<input type='hidden' name='upid' style='display:none;' value='{$parent.id}' >
- <table class='table table-bordered' width='100%'>
- <tr>
- 	<td>上级</td>
-    <td>&lt;&lt;<a href="{$appadmin}?m=district&upid={$parent.upid}">{$parent.name}</a></td>
- </tr>
-  <tr><td> </td><td><textarea name="content" class="w400 h200"></textarea></td></tr>
-   
-<tr><td></td><td><input type='submit' value='保存' class='btn btn-success'></td></tr> </table>
-</form>
-</div> 
+<!DOCTYPE  html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="tabs-border">
+			<a class="item" href="?m=district">省市列表</a>
+			<a class="item active" href="?m=district&a=add">省市添加</a>
+		</div>
+
+		<div class="main-body">
+			<form method='post' action='admin.php?m=district&a=savechild'>
+				<input type='hidden' name='upid' style='display:none;' value='{$parent.id}'>
+				<table class='table table-bordered' width='100%'>
+					<tr>
+						<td>上级</td>
+						<td>&lt;&lt;<a href="{$appadmin}?m=district&upid={$parent.upid}">{$parent.name}</a></td>
+					</tr>
+					<tr>
+						<td> </td>
+						<td><textarea name="content" class="w400 h200"></textarea></td>
+					</tr>
+
+					<tr>
+						<td></td>
+						<td><input type='submit' value='保存' class='btn btn-success'></td>
+					</tr>
+				</table>
+			</form>
+		</div>
 {include file="footer.html"}
+</body>
+</html>

@@ -16,13 +16,13 @@ class weixin_openapiControl extends skymvc{
 		}
 		 
 		$this->wx=M("weixin")->selectRow(array("where"=>$where,"order"=>"id DESC"));
-		define("WID",1);
+		define("WID",2);
 		define("WXTOKEN",$this->wx['token']);
 	}
 	
 	
 	public function onDefault(){
-		file_put_contents("wxttt.txt","aa");
+		 
 		if($this->wx['status']){
 			 
  			$this->responseMsg();
@@ -457,16 +457,7 @@ class weixin_openapiControl extends skymvc{
 		if($row['sc_id']) $this->wx_sucai($row['sc_id']);
 		$this->wx_tuwen($row['content']);
 	}
-	/*喜帖*/
-	public function xitie($keyword){
-		$arr=explode(":",$keyword);
-		$content="http://".$_SERVER['HTTP_HOST']."/index.php?m=xitie&a=show&id=".$arr[0]."&sname=".urlencode($arr[1]);
-		return array(
-			"error"=>0,
-			"content"=>"<MsgType><![CDATA[text]]></MsgType>
-						<Content><![CDATA[".$content."]]></Content>"
-		);
-	}
+	 
 	
 	 
 	public function article($keyword=""){
@@ -517,7 +508,7 @@ class weixin_openapiControl extends skymvc{
 	}
 	
 	function slog($cc){
-		file_put_contents("log.txt",$cc);
+		file_put_contents("log.txt",$cc,FILE_APPEND);
 	}
 	
 }

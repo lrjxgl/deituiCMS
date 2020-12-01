@@ -14,7 +14,7 @@
 
 			 
 				{foreach item=c from=$list}
-				<div class="row-box">
+				<div class="row-box mgb-5">
 					<div class="flex-table">
 	
 						<div class="flex-table-label">姓名</div>
@@ -35,7 +35,7 @@
 						 
 							<a href="/index.php?m=user_address&a=add&id={$c.id}" class="btn-small btn-outline-primary mgr-10">编辑</a> &nbsp;
 							<a href="javascript::" class="js-delete btn-small btn-outline-primary" url="/index.php?m=user_address&a=delete&id={$c.id}">删除</a>
-						</div>
+					 
 					</div>
 				</div>
 				{/foreach}
