@@ -4,35 +4,32 @@
 *model 自动生成
 */				
 class inviteModel extends model{
-	public $base;
-	public function __construct(&$base){
-		parent::__construct($base);
-		$this->base=$base;
-		$this->table="invite";
+	public $table="invite";
+	public function __construct(){
+		parent::__construct();
+		
 	}
-	public function invite_reg($in_userid,$nickname=""){
-		$invite_uid=get_post('invite_userid','i');
-		if(!$invite_uid){
-			$invite_uid=intval($_COOKIE['invite_uid']);
-		}
-		if(!$invite_uid){
+	public function invite_reg($userid,$nickname=""){
+		$user=M("user")->selectRow("userid=".$userid);
+		if(!$user["invite_userid"]){
 			return false;
 		}
-		 
+		$invite_uid=$user["invite_userid"];
 		M("invite")->insert(array(
 			"userid"=>$invite_uid,
-			"in_userid"=>$in_userid,
+			"in_userid"=>$userid,
 			"dateline"=>time()
 		));
-		/*
-		$money=1;
+		$config=M("config")->selectRow(" 1 ");
+		$money=max(0.1,$config["spread_money"]);
 		
-		M("user")->addMoney(array(
+		M("invite_account")->add(array(
 			"money"=>$money,
-			"userid"=>$invite_uid,
+			"per"=>1,
+			"cuserid"=>$userid,
+			"invite_userid"=>$invite_uid,
 			"content"=>"您邀请了{$nickname}获得了{$money}元,"
 		));
-		*/
 	}
 }
 

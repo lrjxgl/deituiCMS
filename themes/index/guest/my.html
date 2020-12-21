@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body>
+<div class="fullscreen">
+  <div class="scroll_content">
+    <div class="topfixed">
+      <div class="t_left"><a href="/index.php?m=user"><i class="back"></i></a></div>
+      <div class="t_main">我的反馈</div>
+      <div class="t_right"><a class="link" href="/index.php?m=guest&a=add">我要反馈</a></div>
+    </div>
+    
+<div class="paddingheight"></div>
+
+ 
+ 
+ 
+  
+	<div class="uclist" style="background-color:#fff; padding:5px;">
+ {foreach item=c from=$data}
+ <div class="item">
+ 
+ 	 <div class="hd">{$c.dateline|date:Y-m-d H:i:s}</div>
+     
+    <div class="content">{$c.content}</div>
+    <div class="h1">管理回复</div>
+    <div class="skyline"></div>
+    <div class="content">{if $c.reply}{$c.reply}{else}暂无回复{/if}</div>
+ 
+ </div>
+ {foreachelse}
+ 	<div class="item">暂无反馈</div>
+ {/foreach}
+ </div>
+ 
+ 
+</div>
+ 
+{include file="footer.html"}
+</body>
+</html>

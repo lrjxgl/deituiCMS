@@ -9,7 +9,7 @@
 		</div>
 		<div class="header-row"></div>
 		<div class="main-body mgb-10">
-			<div class="swiper-container" id="indexFlash">
+			<div class="swiper-container" style="width: 100%;" id="indexFlash">
 				<div class="swiper-wrapper" >
 					<?php $_from = $this->_var['imgsdata']; if (!is_array($_from) && !is_object($_from)) { $_from=array();}; $this->push_vars('', 'c');if (count($_from)):
     foreach ($_from AS $this->_var['c']):

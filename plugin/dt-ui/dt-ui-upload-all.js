@@ -29,7 +29,7 @@ $(document).on("change", ".js-upimg-file", function(e) {
 						p.find(".upimg-item").removeClass("none");
 						p.find(".upimg-img").attr("src", data.trueimgurl);
 						p.find(".imgurl").val(data.imgurl);
-						p.find(".upimg-btn").hide();
+				 
 					}, "json")
 			})
 			.catch(function(err) {

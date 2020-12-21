@@ -41,7 +41,7 @@
 			$(document).on("click","#reg-submit",function(){
 				$.post("/index.php?m=login&a=FindPwdSave&ajax=1",$("#fdForm").serialize(),function(res){
 					skyToast(res.message);
-					if(res.error){
+					if(!res.error){
 						window.location="/";
 					}
 				},"json");

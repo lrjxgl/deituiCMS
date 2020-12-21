@@ -122,7 +122,7 @@ class indexControl extends skymvc
 		$key="admin_CheckNewVersion";
 		$version=cmsVersion::get();
 		
-		$data=file_get_contents($version["checkversion"]."&domain=".$_SERVER['HTTP_HOST']);
+		$data=curl_get_contents($version["checkversion"]."&domain=".$_SERVER['HTTP_HOST']);
 		 
 		$res=json_decode($data,true);
 		if($res["version"]>$version["version_num"]){
@@ -176,7 +176,7 @@ class indexControl extends skymvc
 	function updateNow($file){
 		umkdir("update");
 		$version=cmsVersion::get(); 
-		file_put_contents(ROOT_PATH."update/update.zip",file_get_contents($file));
+		file_put_contents(ROOT_PATH."update/update.zip",curl_get_contents($file));
 		 
 		$this->loadClass("pclzip",false,false);
 		$zip = new pclzip(ROOT_PATH."update/update.zip");

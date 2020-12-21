@@ -1,3 +1,23 @@
+var APPADMIN="/admin.php";
+var postCheck={
+	inSubmit:false,
+	timer:0,
+	canPost:function(){
+		var that=this;
+		if(this.inSubmit){
+			return false;
+		}
+		if(this.timer>0){
+			clearTimeout(this.timer);
+		}
+		this.inSubmit=true;
+		this.timer=setTimeout(function(){
+			that.inSubmit=false;
+		},1000)
+		return true;
+	}
+}
+
 function skyToast(msg){
 	var html='<div id="toast" class="toast toast-success">'+msg+'</div>';
 	if($("#toast").length>0){
@@ -48,10 +68,31 @@ function showboxClose(){
 }
 
 function goBack(){
-	window.history.back();
+	var backurl=document.referrer;
+	if(backurl==''){
+		window.location="/";
+	}else{
+		window.history.back()
+	}
+	
 }
 
 $(function(){
+	$(document).on("click",".goBack",function(){
+		var backurl=document.referrer;
+		
+		if(backurl==''){
+			var obj=$(this);
+			if(obj.attr("url")!=undefined){
+				window.location=obj.attr("url");
+			}else{
+				window.location="/";
+			}
+		}else{
+			window.history.back();
+		}	
+		
+	})
 	$(document).on("click","[gourl]",function(){
 		var url=$(this).attr("gourl");
 		window.location=url;
@@ -154,4 +195,21 @@ $(function(){
 			}
 		},"json")
 	})
+	//加入黑名单
+	$(document).on("click",".js-join-blacklist",function(){
+		var userid=$(this).attr("userid");
+		$.post(APPADMIN+"?m=blacklist&a=add&ajax=1",{userid:userid},function(res){
+			skyToast(res.message);
+			 
+		},"json");
+	})
+	//禁止言论
+	$(document).on("click",".js-forbid-post",function(){
+		var userid=$(this).attr("userid");
+		$.post(APPADMIN+"?m=blacklist_post&a=add&ajax=1",{userid:userid},function(res){
+			skyToast(res.message);
+			 
+		},"json");
+	})
+	
 })

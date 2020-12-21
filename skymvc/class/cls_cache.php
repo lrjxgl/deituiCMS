@@ -29,7 +29,7 @@ class cache
  
 	public function keydir($key){
 		$d=md5($key);
-		return "/".$d{0}."/".$d[1]."/".$d[2]."/";
+		return "/".$d[0]."/".$d[1]."/".$d[2]."/";
 	}
 	public function setType($cache_type){
 	 

@@ -1,0 +1,40 @@
+
+---2020-12-21 11:26:08--/admin.php?m=kefu&a=save&ajax=1--
+sql错误：UPDATE sky_kefu_msgindex SET  isread='1' , content='复习资料' , createtime='2020-12-21 11:26:08'   WHERE id=1  Unknown column 'isread' in 'field list'
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:209行,调用方法:update 
+D:\www\product\deituiCMSBase\source\admin\kefu.ctrl.php:76行,调用方法:update 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onSave 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2020-12-21 11:26:15--/admin.php?m=kefu&a=save&ajax=1--
+sql错误：UPDATE sky_kefu_msgindex SET  isread='1' , content='复习资料' , createtime='2020-12-21 11:26:15'   WHERE id=1  Unknown column 'isread' in 'field list'
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:209行,调用方法:update 
+D:\www\product\deituiCMSBase\source\admin\kefu.ctrl.php:76行,调用方法:update 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onSave 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2020-12-21 11:26:17--/admin.php?m=kefu&a=save&ajax=1--
+sql错误：UPDATE sky_kefu_msgindex SET  isread='1' , content='复习资料' , createtime='2020-12-21 11:26:17'   WHERE id=1  Unknown column 'isread' in 'field list'
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:209行,调用方法:update 
+D:\www\product\deituiCMSBase\source\admin\kefu.ctrl.php:76行,调用方法:update 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onSave 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2020-12-21 11:26:22--/admin.php?m=kefu&a=save&ajax=1--
+sql错误：UPDATE sky_kefu_msgindex SET  isread='1' , content='复习资料' , createtime='2020-12-21 11:26:22'   WHERE id=1  Unknown column 'isread' in 'field list'
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:209行,调用方法:update 
+D:\www\product\deituiCMSBase\source\admin\kefu.ctrl.php:76行,调用方法:update 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onSave 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2020-12-21 11:38:00--/index.php?m=guest&a=save&ajax=1&ajax=1--
+sql错误：INSERT INTO sky_guest SET  shopid='0' , type_id='0' , userid='4' , nickname='' , is_temp='0' , email='' , telephone='' , dateline='1608521880' , qq='' , num='0' , linkurl='' , content='奥术大师多' , money='' , attach='' , phone2='' , company='' , address='' , zipcode='' , siteid='1'   Unknown column 'siteid' in 'field list'
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:165行,调用方法:insert 
+D:\www\product\deituiCMSBase\source\index\guest.ctrl.php:212行,调用方法:insert 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onSave 
+D:\www\product\deituiCMSBase\index.php:42行,调用方法:require 
+

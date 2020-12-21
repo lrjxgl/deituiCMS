@@ -192,7 +192,6 @@ $(function(){
 	$(document).on("click",".modal-close,.modal-mask,.modal-cancel",function(){
 		$(this).parents(".modal-group").hide();
 	})
-	var jsSubmitIng=false;
 	$(document).on("click",".js-submit",function(){
 		if(!postCheck.canPost()){
 			return false;

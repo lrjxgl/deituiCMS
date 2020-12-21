@@ -1,0 +1,60 @@
+/**头部风格***/
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #fff;
+  font-size: 14px;
+}
+/**头部***/
+.header{
+ background-color: #ed6d53;	
+}
+.header-back:after,.header-title{color: #fff;}
+
+.header-search{
+	background-color: rgba(0,0,0,.1);
+	border: 0 !important;
+	color: #fff;
+}
+.header-search-icon{
+	color: #fff;
+}
+.header-right{
+	color: #fff;
+}
+.header-right-btn{
+	color: #fff;
+	border-color: #fff;
+}
+.header-search-btn{
+	background-color: #ff815a;
+	color: #fff;
+}
+/*****底部****/
+.footer{
+	background-color: #e45538;
+}
+.footer-item,.footer-item:before{
+	color: #e0e0e0;
+}
+.footer-add:after{
+	background-color: #e45538;
+	color: #fff;
+}
+.footer-active, .footer-active:before {
+    background-color: #ed6d53;
+}
+/*********/
+.btn-primary,.btn-row-submit,.input-flex-btn{
+	background-color: #ed6d53;
+	border-color:#ed6d53;
+}
+.cart-list-btn{
+	background-color:#ed6d53 !important;
+}
+.btn-buy{
+	background-color: #ED6D53;
+}
+.btn-buy-small{
+	background-color: transparent;
+	border-color: #ED6D53;
+	color: #ED6D53;
+}

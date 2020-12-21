@@ -1,7 +1,8 @@
 $(document).on("click", ".js-upimg-btn", function() {
-	$("#upimg").click();
+	var p = $(this).parents(".upimg-box");
+	p.find(".js-upimg-file").click();
 })
-$(document).on("change", "#upimg", function(e) {
+$(document).on("change", ".js-upimg-file", function(e) {
 	var p = $(this).parents(".upimg-box");
 	var src, url = window.URL || window.webkitURL || window.mozURL,
 		files = e.target.files;
@@ -26,9 +27,14 @@ $(document).on("change", "#upimg", function(e) {
 					function(data) {
 						console.log(data);
 						p.find(".upimg-item").removeClass("none");
-						p.find(".upimg-img").attr("src", data.trueimgurl);
+						if(p.find(".upimg-img").length>0){
+							p.find(".upimg-img").attr("src", data.trueimgurl);
+						}else{
+							p.find(".upimg-img-box").html('<img class="upimg-img" src="'+data.trueimgurl+'.100x100.jpg">');
+						}
+						
 						p.find(".imgurl").val(data.imgurl);
-						p.find(".upimg-btn").hide();
+				 
 					}, "json")
 			})
 			.catch(function(err) {

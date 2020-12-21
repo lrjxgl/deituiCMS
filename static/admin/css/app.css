@@ -9,11 +9,21 @@ a {
 	color: #323232;
 	text-decoration: none;
 }
-
+.shd{
+	padding: 6px 20px;
+	font-weight: 600;
+	margin-bottom: 5px;
+	background-color: #FF4400;
+	display: inline-block;
+	color: #fff;
+	margin-left: 10px;
+}
 .none {
 	display: none;
 }
-
+.w300{
+	width: 300px !important;
+}
 .main-body {
 	padding: 0px 20px;
 }

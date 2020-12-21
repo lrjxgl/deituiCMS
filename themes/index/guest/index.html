@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">留言板</div>
+			<div gourl="/index.php?m=guest&a=add" class="header-right-btn">发布留言</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			<div class="list">
+			{foreach item=c from=$data}
+			<div class="row-box mgb-5">
+				
+				
+			   <div class="flex bd-mp-5">
+			   	<div class="cl1 f14">{$c.nickname}</div>
+			   	<div class="flex-1"></div>
+			   	<div class="f12 cl2">{$c.dateline|date:Y-m-d H:i:s}</div> 
+			   </div> 
+			   <div class="f14 cl2">{$c.content}</div>
+			    
+			   <div class="bd-mp-5"></div>
+			   {if $c.reply}
+			   <div class="f14 mgb-5 cl2">{$c.reply}</div>
+			   {/if}
+				
+			</div>
+			{foreachelse}
+				<div class="emptyData">暂无留言</div>
+			{/foreach}
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

@@ -16,19 +16,16 @@ a{
 [gourl]{
 	cursor: pointer;
 }	
-.iconfont:before{
-	line-height: 1.5;
-}
+ 
  
 view,div{
+	 
 	color: #323232;
 	box-sizing: border-box;
 	flex-shrink:0;
 	font-size: 14px;
 }
-view{
-	display: block;
-}
+
  
 text{
 	display: inline-block;

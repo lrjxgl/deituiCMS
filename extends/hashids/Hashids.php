@@ -16,6 +16,7 @@ use Hashids\Math\Gmp;
 use RuntimeException;
 require "Math/MathInterface.php";
 require "Math/Bc.php";
+require "Math/Gmp.php";
 require "HashidsException.php";
 require "HashidsInterface.php";
 /**

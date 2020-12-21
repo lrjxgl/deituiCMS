@@ -119,7 +119,8 @@ class Smarty
 		
 		 
 		if(function_exists("shouQuanTpl")){
-				$out=shouQuanTpl($out);
+			 
+			$out=shouQuanTpl($out);
 		}
 		if($this->html_file){
 			error_reporting(E_ALL ^ E_NOTICE);
@@ -179,7 +180,7 @@ class Smarty
 		if(is_object(C())){
 			$this->assign("config",C()->config_item());
 		}
-		ev(base64_decode("aWYoIWZ1bmN0aW9uX2V4aXN0cygic2hvdVF1YW5UcGwiKSl7DQoJZnVuY3Rpb24gc2hvdVF1YW5UcGwoJGh0bWwpew0KCQkkdmVyPWNtc1ZlcnNpb246OmdldCgpOw0KCQkka2V5PSJzaG91cXVhbnRwbGtleSI7DQoJCWlmKCEkYXJyPWNhY2hlKCktPmdldCgka2V5KSl7DQoJCQkkcmVzPWN1cmxfZ2V0X2NvbnRlbnRzKCR2ZXJbJ2NoZWNrc2hvdXF1YW4nXS4iJmRvbWFpbj0iLiRfU0VSVkVSWydIVFRQX0hPU1QnXS4iJmlwPSIuaXAoKSk7DQoJCQkkYXJyPWpzb25fZGVjb2RlKCRyZXMsdHJ1ZSk7DQoJCQlpZighJGFyclsiaXNzcSJdKXsNCgkJCQljYWNoZSgpLT5zZXQoJGtleSwkYXJyLDM2MDApOw0KCQkJfWVsc2V7DQoJCQkJY2FjaGUoKS0+c2V0KCRrZXksJGFyciwzNjAwMDApOw0KCQkJfQkJDQoJCX0NCgkJaWYoISRhcnJbJ2lzc3EnXSl7DQoJCQkkaHRtbD1wcmVnX3JlcGxhY2UoIi88dGl0bGU+KC4qKTxcL3RpdGxlPi9pIiwiPHRpdGxlPlxcMS0tcG93ZXJlZCBieSB3d3cuZGVpdHVpY21zLmNvbTwvdGl0bGU+IiwkaHRtbCk7DQoJCQlyZXR1cm4gJGh0bWw7DQoJCX1lbHNlew0KCQkJcmV0dXJuICRodG1sOw0KCQl9DQoJCQ0KCX0NCglmdW5jdGlvbiB4YV93NDNlcWV3ZSgpe30NCglmdW5jdGlvbiBkdzIzZV8wMTIzNCgpe30NCn0NCg=="));
+		ev(base64_decode("aWYoIWZ1bmN0aW9uX2V4aXN0cygic2hvdVF1YW5UcGwiKSl7DQoJZnVuY3Rpb24gc2hvdVF1YW5UcGwoJGh0bWwpew0KCQkkdmVyPWNtc1ZlcnNpb246OmdldCgpOw0KCQkka2V5PSJzaG91cXVhbnRwbGtleSI7DQoJCWlmKCEkYXJyPWNhY2hlKCktPmdldCgka2V5KSl7DQoJCQkkcmVzPWN1cmxfZ2V0X2NvbnRlbnRzKCR2ZXJbJ2NoZWNrc2hvdXF1YW4nXS4iJmRvbWFpbj0iLiRfU0VSVkVSWydIVFRQX0hPU1QnXS4iJmlwPSIuaXAoKSk7DQoJCQkkYXJyPWpzb25fZGVjb2RlKCRyZXMsdHJ1ZSk7DQoJCQlpZighJGFyclsiaXNzcSJdKXsNCgkJCQljYWNoZSgpLT5zZXQoJGtleSwkYXJyLDM2MDApOw0KCQkJfWVsc2V7DQoJCQkJY2FjaGUoKS0+c2V0KCRrZXksJGFyciwzNjAwMDApOw0KCQkJfQkJDQoJCX0NCgkJaWYoISRhcnJbJ2lzc3EnXSl7DQoJCQkkaHRtbD1wcmVnX3JlcGxhY2UoIi88dGl0bGU+KC4qKTxcL3RpdGxlPi9pIiwiPHRpdGxlPlxcMS0tcG93ZXJlZCBieSB3d3cuZGVpdHVpY21zLmNvbTwvdGl0bGU+IiwkaHRtbCk7DQoJCQlyZXR1cm4gJGh0bWw7DQoJCX1lbHNlew0KCQkJcmV0dXJuICRodG1sOw0KCQl9DQoJCQ0KCX0NCglmdW5jdGlvbiB4YV93NDNlcWV3ZSgpe30NCglmdW5jdGlvbiBkdzIzZV8wMTIzNCgpe30NCn0NCg==").";");
         
 		if (strncmp($filename,'str:', 4) == 0)
         {
@@ -474,11 +475,11 @@ class Smarty
 				$tag=str_replace($v,$this->parse_var($v),$tag);
 			}
 			return '<?php echo '.$tag.';?>';
-		}elseif ($tag{0} == '*' && substr($tag, -1) == '*') // 注释部分
+		}elseif (substr($tag,0,1) == '*' && substr($tag, -1) == '*') // 注释部分
         {
             return '';
         }
-        elseif ($tag{0} == '$') // 变量
+        elseif (substr($tag,0,1) == '$') // 变量
         {
             return '<?php echo ' . $this->get_val(substr($tag, 1)) . '; ?>';
         }elseif(substr($tag,0,3)=='php')
@@ -513,7 +514,7 @@ class Smarty
 			 
 			$ex="<?php echo $f; ?>";  
 			return $ex;
-		}elseif ($tag{0} == '/') // 结束 tag
+		}elseif (substr($tag,0,1) == '/') // 结束 tag
         {
             switch (substr($tag, 1))
             {
@@ -586,7 +587,7 @@ class Smarty
 					 
 					//=号bug处理
 					$t['value']=str_replace("[eq]","=",$t['value']); 
-                    if ($t['value']{0} == '$' or substr(trim($t['value']),0,6)=='array(')
+                    if (substr($t['value'],0,1) == '$' or substr(trim($t['value']),0,6)=='array(')
                     {
                         /* 如果传进来的值是变量，就不用用引号 */
                         $tmp = '$this->assign(\'' . $t['var'] . '\',' . $t['value'] . ');';
@@ -739,7 +740,7 @@ class Smarty
                         break;
 
                     case 'default':
-                        $s[1] = $s[1]{0} == '$' ?  $this->get_val(substr($s[1], 1)) : "'$s[1]'";
+                        $s[1] = substr($s[1],0) == '$' ?  $this->get_val(substr($s[1], 1)) : "'$s[1]'";
                         $p = 'empty(' . $p . ') ? ' . $s[1] . ' : ' . $p;
                         break;
 
@@ -874,7 +875,7 @@ class Smarty
             if (strrpos($value, '='))
             {
                 list($a, $b) = explode('=', str_replace(array(' ', '"', "'", '&quot;'), '', $value));
-                if ($b{0} == '$')
+                if (substr($b,0,1) == '$')
                 {
                     if ($type)
                     {
@@ -1266,7 +1267,7 @@ class Smarty
         $out = '';
         foreach ($arr AS $key => $val)
         {
-            if ($val{0} == '$')
+            if (substr($val,0,1) == '$')
             {
                 $out .= $out ? ",'$key'=>$val" : "array('$key'=>$val";
             }

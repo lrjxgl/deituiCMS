@@ -54,7 +54,7 @@
 						<div class="flex-1"></div>
 						{if $invitecode}
 						<div class="cl2 mgr-5">邀请码</div>
-						<div class="cl-num">{$invitecode}</div>
+						<div gourl="/index.php?m=invite&a=my" class="cl-num">{$invitecode}</div>
 						{/if}
 					</div>
 					<div class="uhead-rnum flex flex-ai-center">
@@ -73,7 +73,7 @@
 				<div gourl="/index.php?m=user&a=set" class="flex-center btn-small btn-link iconfont icon-settings"></div>
 			</div>
 			 
-		</div>
+		
 		<div class="row-box mgb-5">
 			 
 			 
@@ -102,7 +102,7 @@
 				<div class="row-item-title">关于我们</div>
 			</div>
 		</div>
-			
+		</div>	
 		</div>
 		{include file="footer-nav.html"}
 		{include file="footer.html"}	

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+<div class="tabs-border">
+	<div gourl="?m=attach&type=new" class="item {if get('type') eq 'new'}active{/if}">待审核</div>
+	<div gourl="?m=attach&type=pass"  class="item {if get('type') eq 'pass'}active{/if}">已通过</div>
+	<div gourl="?m=attach&type=all"  class="item {if get('type') eq 'all'}active{/if}">全部</div>
+</div>
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>id</td>
+   <td>文件</td>
+   <td>时间</td>
+   <td>状态</td>
+   <td>上传用户</td>
+   
+   
+   <td>文件大小</td>
+   <td>后缀</td>
+   <td>类型</td>
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{if $c.file_group eq 'img'}
+   	<img class="w100" src="{$c.file_url|images_site}.small.jpg" />
+   {else}{$c.file_name}{/if}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+   <td><div url="?m=attach&a=status&ajax=1&id={$c.id}" class="{if $c.status eq 1}yes{else}no{/if} js-toggle-status"></div></td>
+   <td>{$c.nickname}</td>
+    
+   
+   <td>{$c.file_size}KB</td>
+   <td>{$c.file_type}</td>
+   <td>{$c.file_group}</td>
+<td><a target="_blank" href="{$c.file_url|images_site}">下载</a> <a href="javascript:;" class="js-delete" url="admin.php?m=attach&a=delete&ajax=1&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

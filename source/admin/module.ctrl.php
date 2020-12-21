@@ -76,7 +76,11 @@ class moduleControl extends skymvc{
 					}else{
 						$config['isinstall']=false;
 					}
-					$mods[]=$config;
+					$cms=cmsVersion::get();
+					if(isset($cms["mds"]) && !in_array($config["module"],$cms["mds"])){
+						$mods[]=$config;
+					}
+					 
 				}
 			}
 		}

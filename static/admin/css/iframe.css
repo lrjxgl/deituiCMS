@@ -46,6 +46,8 @@ body{
 .topa{
 	line-height: 50px;
 	border-bottom: 1px solid #eee;
+	overflow: auto;
+	height: 50px;
 }
 .top-item{
 	height: 50px;
@@ -64,8 +66,8 @@ body{
 .top-item-btn{
 	position: relative;
 	 
-	height: 36px;
-	line-height: 36px;
+	height: 30px;
+	line-height: 30px;
 	padding: 0px 10px;
 	border-radius: 10px;
 	cursor: pointer;
@@ -76,6 +78,7 @@ body{
 	color: #646464;
 	border: 1px solid #ddd;
 	margin-right: 10px;
+	font-size: 14px;
 	
 }
 .top-item-btn.active{
@@ -83,7 +86,7 @@ body{
 }
 .top-item .iconfont{
 	caption-side: #323232;
-	font-size: 18px;
+	font-size: 16px;
 }
 .abs-menu{
 	position:absolute;
@@ -166,6 +169,8 @@ body{
 	line-height: 40px;
 	padding-left: 42px;
 	cursor: pointer;
+	color: #fff;
+	text-decoration: none;
 }
 .menu-item-active{
 	color: #007aff;

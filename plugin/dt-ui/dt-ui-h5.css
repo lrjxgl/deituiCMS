@@ -12,26 +12,25 @@ p,ol,ul,li{
 }
 a{
 	text-decoration: none;
+	color: #323232;
 }
 [gourl]{
 	cursor: pointer;
 }	
-.iconfont:before{
-	line-height: 1.5;
-}
 .main-body{
-	max-width:640px;
+	max-width: 640px;
 	margin: 0 auto;
+	width: 100%;
 } 
 view,div{
+	    display: flex;
+	    flex-direction: column; 
 	color: #323232;
 	box-sizing: border-box;
 	flex-shrink:0;
 	font-size: 14px;
 }
-view{
-	display: block;
-}
+
  
 text{
 	display: inline-block;

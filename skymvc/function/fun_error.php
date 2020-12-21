@@ -1,4 +1,16 @@
 <?php
+function error404(){
+	if(isset($_GET["ajax"])){
+		echo json_encode(array(
+			"error"=>1,
+			"message"=>"404错误"
+		));
+		exit;
+	}else{
+		echo '<div>404错误：资源不存在</div>';
+		exit;
+	}
+}
 function showError($sql='')
 {
      

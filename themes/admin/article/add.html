@@ -25,7 +25,7 @@
 		<tr>
 			<td>分类：</td>
 			<td>
-			<select name="catid" id="catid" class="input-flex-select w200">
+			<select name="catid" id="catid" class="input-flex-select w150">
 			    <option value="0">请选择</option>
 			    {foreach item=c from=$catlist}
 			                <option value="{$c.catid}" {if $data.catid eq $c.catid} selected="selected"{/if}>{$c.cname}</option>
@@ -140,6 +140,7 @@
       
             </table>
         </div>
+		
 		<div class="btn-row-submit js-submit">保存</div>
 	</form>
 </td>

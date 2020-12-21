@@ -37,7 +37,7 @@
 	</div>
 		
 	<div class="row-box-hd pdl-10">
-		<div class="flex-1 f20">文章推荐</div>
+		<div class="flex-1 f16">文章推荐</div>
 		<div gourl="/index.php?m=article" class="row-box-more">更多</div>
 	</div>
 	<div class="row-box">

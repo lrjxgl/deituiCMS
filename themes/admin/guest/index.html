@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="tabs-border">
+			<div gourl="?m=guest&type=new" class="item {if get('type') eq 'new'}active{/if}">待审核</div>
+			<div gourl="?m=guest&type=pass"  class="item {if get('type') eq 'pass'}active{/if}">已通过</div>
+			<div gourl="?m=guest&type=forbid"  class="item {if get('type') eq 'forbid'}active{/if}">已禁止</div>
+			<div gourl="?m=guest&type=all"  class="item {if get('type') eq 'all'}active{/if}">全部</div>
+		</div>
+		 
+		<div class="main-body">
+			<table class="tbs">
+				<thead>
+					<tr>
+						<td>id</td>
+ 
+						<td>内容</td>
+						<td>联系人</td>
+						<td>电话</td>
+						<td>状态</td>
+						<td>发布时间</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+
+				{foreach item=c from=$data}
+				<tr>
+					<td>{$c.id}</td>
+					<td>
+						<div style="width:200px; overflow:auto;">{$c.content|strip_tags}</div>
+					</td>
+					<td>{$c.nickname}</td>
+					<td>{$c.telephone}</td>
+					<td>
+						<div url="?m=guest&a=status&ajax=1&id={$c.id}" class="{if $c.status eq 1}yes{else}no{/if} js-toggle-status"></div>
+					</td>
+					<td>{$c.dateline|date:Y-m-d}</td>
+					<td>
+						<a href="{$appadmin}?m=guest&a=add&id={$c.id}">回复</a>
+						<a href="javascript:;" class="js-delete" url="{$appadmin}?m=guest&a=delete&id={$c.id}">删除</a></td>
+				</tr>
+				{/foreach}
+			</table>
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

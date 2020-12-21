@@ -637,9 +637,9 @@ function jiami($str,$miyao=''){
 	$slen=strlen($str);
 	$nstr="";	
 	for($i=0;$i<$slen;$i++){
-		$nstr.=$str{$i};
+		$nstr.= substr($str,$i,1);
 		if(in_array($i,$step)){		
-			$nstr.=$code{$i};
+			$nstr.=substr($code,$i,1);
 		} 
 	}
 	$nstr=$mlen.$nstr;
@@ -675,13 +675,13 @@ function jiemi($str,$miyao=''){
 	for($i=0;$i<$slen;$i++){
 		if(in_array($i,$bstep)){
 			 
-			if($str{$i} != $code{$i-$ii}){
+			if(substr($str,$i,1) != substr($code,$i-$ii,1) ){
 				return false;
 			}
 			 $ii++;
 			continue;
 		}else{
-			$nstr.=$str{$i};
+			$nstr.=substr($str,$i,1);
 		}
 	}
 	$nstr=urldecode(base64_decode($nstr));

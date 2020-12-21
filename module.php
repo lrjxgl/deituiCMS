@@ -2,6 +2,11 @@
 error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
 define("ROOT_PATH",  str_replace("\\", "/", dirname(__FILE__))."/");
+if(!file_exists("config/install.lock"))
+{
+	header("Location: install/");
+	exit;
+} 
 require("config/version.php");
 require(ROOT_PATH."config/config.php");
 require(ROOT_PATH."config/const.php");
@@ -57,7 +62,7 @@ if(isset($_GET['ajax'])){
 }
 require("./skymvc/skymvc.php");
 //用户自定义初始化函数
-function userinit(&$base){
+function userinit(){
 	if(!empty($_POST)){
 		checkSafeContent($_POST);
 	}

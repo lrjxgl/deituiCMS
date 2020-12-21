@@ -135,5 +135,14 @@ var skyJs={
 		$(document).one("click","#skyJs-showBox-close",function(){
 			$("#skyJs-showBox").hide();
 		}) 
+	},
+	showPic:function(url){
+		var html='<img style="width:100%;height:auto;" src="'+url+'">';
+		this.showBox({
+			title:"查看大图",
+			content:html,
+			width:480,
+			height:320
+		});
 	}
 }

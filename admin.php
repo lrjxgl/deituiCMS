@@ -1,6 +1,11 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
+if(!file_exists("config/install.lock"))
+{
+	header("Location: install/");
+	exit;
+} 
 require("config/version.php"); 
 require("config/config.php");
 require("config/setconfig.php");
@@ -19,10 +24,13 @@ $smarty_caching=true;//是否开启缓存
 $smarty_cache_lifetime=3600;//缓存时间
 require("./skymvc/skymvc.php");
 //用户自定义初始化函数
-function userinit(&$base){
+function userinit(){
 	global $wap_template_dir,$template_dir;
 	$skins=ISWAP?$wap_template_dir:$template_dir;
 	$m=get("m",'h');
+	if(!in_array($m,array('login'))){
+		session_write_close();
+	}
 	if(!in_array($m,array('login'))){
 		if(!isset($_SESSION['ssadmin']['id'])){
 			C()->goAll("请先登录",0,0,APPADMIN."?m=login");

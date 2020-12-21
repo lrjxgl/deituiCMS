@@ -4,7 +4,7 @@ function skyRaty(el) {
 	for(var eli=0;eli<elen;eli++){
 		var obj=$(el).eq(eli);
 		console.log(obj.attr("grade"))
-		var html = '<div class="raty-group mgb-10">';
+		var html = '<div class="raty-group">';
 		var label = obj.attr("label");
 		if (label != undefined) {
 			html += '<div class="raty-label">'+label+'</div>';
