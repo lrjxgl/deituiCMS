@@ -12,7 +12,12 @@ class attachModel extends model{
 		$data=array();
 		$data["file_url"]=$ops["url"];
 		$data["file_name"]=basename($ops["url"]);
-		$data["file_size"]=filesize($data["file_url"])/1024;
+		if(!isset($ops["file_size"])){
+			$data["file_size"]=filesize($data["file_url"])/1024;
+		}else{
+			$data["file_size"]=$ops["file_size"]/1024;
+		}
+		
 		$data["file_type"]=strtolower(trim(substr(strrchr($ops["url"], '.'), 1)));
 		$data["file_group"]=$this->group($data["file_type"]);
 		if(isset($ops["userid"])){

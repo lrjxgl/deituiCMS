@@ -75,6 +75,9 @@ class uploadControl extends skymvc{
 		$this->upload->allowtype=$this->upload->sysallowtype;
 		$this->upload->uploaddir="attach/".$dir; 
 		$data=$this->upload->uploadfile("upimg");
+		M("attach")->add(array(
+			"url"=>$data["filename"]
+		));
 		$data=array("error"=>$data['err'],"imgurl"=>$data['filename'],"trueimgurl"=>IMAGES_SITE($data['filename']),"msg"=>$data['err']);
 		
 		$this->upload_oss($data['imgurl']);
@@ -99,22 +102,7 @@ class uploadControl extends skymvc{
 		
 		echo json_encode($data);
 	}
-	
-	
-	public function onswfUpload(){
-		$dir=isset($_GET['dir'])?get('dir','h')."/":"";
-		$this->upload->iddir=get('id','i');
-		$this->upload->upimg=false;
-		$this->upload->allowtype=$this->upload->sysallowtype;
-		$this->upload->uploaddir="attach/".$dir; 
-		$data=$this->upload->uploadfile("Filedata");
-		M("attach")->add(array(
-			"url"=>$data["filename"]
-		));
-		$data=array("error"=>$data['err'],"imgurl"=>$data['filename'],"trueimgurl"=>IMAGES_SITE($data['filename']),"msg"=>$data['err']);
-		$this->upload_oss($data['imgurl']);
-		echo json_encode($data);
-	}
+	 
 	
 	public function onUploadMp4(){
 		$dir=isset($_GET['dir'])?get('dir','h')."/":"";
@@ -146,31 +134,7 @@ class uploadControl extends skymvc{
 			echo json_encode($data);
 	}
 	
-	public function onuploadtao(){
-			$dir=isset($_GET['dir'])?get('dir','h')."/":"";
-			$this->upload->iddir=get('id','i');
-			$this->upload->uploaddir="attach/".$dir; 
-			$data=$this->upload->uploadfile("upimg");
-			M("attach")->add(array(
-				"url"=>$data["filename"]
-			));
-			if(empty($data['err'])){
-				$this->loadClass("image",false,false);
-				$img=new image();
-				$imgurl=$data['filename'];
-				if(WATER_ON){
-					$this->loadControl("imageapi","source/index");
-					 
-					$this->imageapiControl->addwater($imgurl);
-				}
-				$img->makethumb($imgurl.".100x100.jpg",$imgurl,$this->w1,$this->w1,1);
-				$img->makethumb($imgurl.".small.jpg",$imgurl,$this->w2);
-				$img->makethumb($imgurl.".middle.jpg",$imgurl,$this->w3);
-				$this->upload_oss($data['filename']);
-			}
-			$data=array("error"=>$data['err'],"imgurl"=>$data['filename'],"trueimgurl"=>IMAGES_SITE($data['filename']),"msg"=>$data['err']);
-			echo json_encode($data);
-	}
+
 	
 	public function onBase64_user_head(){
 		$dir=isset($_GET['dir'])?get('dir','h')."/":"";

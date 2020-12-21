@@ -39,13 +39,13 @@ class ossuploadControl extends skymvc{
 		/**end config**/
 		$dir=isset($_GET['dir'])?str_replace("/","",$_GET['dir'])."/":"video/";
 		$options = array();
-		$options['expiration'] = gmt_iso8601(time()+30); /// 授权过期时间
+		$options['expiration'] = gmt_iso8601(time()+300); /// 授权过期时间
 		$conditions = array();
 		array_push($conditions, array('bucket'=>$bucket));
 		$content_length_range = array();
 		array_push($content_length_range, 'content-length-range');
 		array_push($content_length_range, 0);
-		array_push($content_length_range, 104857500009);
+		array_push($content_length_range, 1048575000);
 		array_push($conditions, $content_length_range);
 		$options['conditions'] = $conditions;
 		$policy = base64_encode(stripslashes(json_encode($options)));
@@ -140,8 +140,13 @@ class ossuploadControl extends skymvc{
 		{
 		    header("Content-Type: application/json");
 		    parse_str($body,$p);
+			
 		    $data = array("Status"=>"Ok","filename"=>$p['filename'],"truename"=>$url."/".$p['filename'],"size"=>$p['size']);
-		    echo json_encode($data);
+		    M("attach")->add(array(
+				"file_url"=>$p['filename'],
+				"file_size"=>$p['size']
+			));
+			echo json_encode($data);
 		}
 		else
 		{

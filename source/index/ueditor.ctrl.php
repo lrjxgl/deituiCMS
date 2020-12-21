@@ -134,6 +134,9 @@ class ueditorControl extends skymvc{
 			);	
 		}else{
 			$this->upload_oss($data["filename"]);
+			M("attach")->add(array(
+				"url"=>$data["filename"]
+			));
 			$re=array(
 			"state" => "SUCCESS", 
 			"url" => UPLOAD_OSS?IMAGES_SITE.$data["filename"]:$data["filename"] ,
@@ -165,7 +168,11 @@ class ueditorControl extends skymvc{
 				"size" => 0
 			);	
 		}else{
+			M("attach")->add(array(
+				"url"=>$data["filename"]
+			));
 			$this->upload_oss($data["filename"]);
+			
 			$re=array(
 			"state" => "SUCCESS", 
 			"url" => UPLOAD_OSS?IMAGES_SITE.$data["filename"]:$data["filename"] ,
@@ -195,48 +202,31 @@ class ueditorControl extends skymvc{
 		if($source){
 			foreach ($source as $imgUrl) {
 				$content=curl_get_contents($imgUrl);
-				$img=$dir."/".basename($imgUrl);
+				$ftype=strtolower(trim(substr(strrchr($imgUrl, '.'), 1)));
+				if(!in_array($ftype,array("jpg","png","gif","bmp","webp"))){
+					continue;	
+				}
+				$im=@imagecreatefromstring($content);
+				if(!$im){
+					continue;
+				}
+				$img=$dir."/".basename($imgUrl).".jpg";
 				$img=str_replace("//","/",$img);
 				file_put_contents(ROOT_PATH.$img,$content);
 				$file=ROOT_PATH.$img;
 				$im=getimagesize($file);
-				$issuccess=true;
-				if($im[0]){
-					if($im[0]<5 || $im[1]<5){
-						unlink($file);
-						$issuccess=false;
-						array_push($list, array(
-							"state" => 'FALSE',
-							"url" => "",
-							"size" => 1,
-							"title" => " ",
-							"original" => "",
-							"source" => ""
-						));
-					}
-				}else{
-					unlink($file);
-					$issuccess=false;
-					array_push($list, array(
-							"state" => 'FALSE',
-							"url" => "",
-							"size" => 1,
-							"title" => " ",
-							"original" => "",
-							"source" => ""
-						));
-				}
-				if($issuccess){
-					$this->upload_oss($img);
-					array_push($list, array(
-						"state" => 'SUCCESS',
-						"url" => images_site($img),
-						"size" => 1,
-						"title" => " ",
-						"original" => $img,
-						"source" => htmlspecialchars($imgUrl)
-					));
-				}
+				M("attach")->add(array(
+					"url"=>$img
+				));
+				$this->upload_oss($img);
+				array_push($list, array(
+					"state" => 'SUCCESS',
+					"url" => images_site($img),
+					"size" => 1,
+					"title" => " ",
+					"original" => $img,
+					"source" => htmlspecialchars($imgUrl)
+				));
 			}
 			
 		}

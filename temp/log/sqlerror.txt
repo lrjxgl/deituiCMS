@@ -46,3 +46,53 @@ sql错误：drop table sky_mod_b2c_cart ; Unknown table 'deituicmsbase.sky_mod_b
 D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onUninstall 
 D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
 
+
+---2020-12-21 13:15:05--/admin.php?m=open_toutiao--
+sql错误：SELECT COUNT(1) FROM sky_open_toutiao  where  status <3  Table 'deituicmsbase.sky_open_toutiao' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:259行,调用方法:getOne 
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:204行,调用方法:getCount 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:115行,调用方法:SELECT 
+D:\www\product\deituiCMSBase\source\admin\open_toutiao.ctrl.php:25行,调用方法:select 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onDefault 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2020-12-21 13:15:07--/admin.php?m=open_toutiao--
+sql错误：SELECT COUNT(1) FROM sky_open_toutiao  where  status <3  Table 'deituicmsbase.sky_open_toutiao' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:259行,调用方法:getOne 
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:204行,调用方法:getCount 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:115行,调用方法:SELECT 
+D:\www\product\deituiCMSBase\source\admin\open_toutiao.ctrl.php:25行,调用方法:select 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onDefault 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2020-12-21 13:15:13--/admin.php?m=open_baidu--
+sql错误：SELECT COUNT(1) FROM sky_open_baidu  where  status <3  Table 'deituicmsbase.sky_open_baidu' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:259行,调用方法:getOne 
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:204行,调用方法:getCount 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:115行,调用方法:SELECT 
+D:\www\product\deituiCMSBase\source\admin\open_baidu.ctrl.php:25行,调用方法:select 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onDefault 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2020-12-21 13:15:47--/admin.php?m=open_baidu--
+sql错误：SELECT COUNT(1) FROM sky_open_baidu  where  status <3  Table 'deituicmsbase.sky_open_baidu' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:259行,调用方法:getOne 
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:204行,调用方法:getCount 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:115行,调用方法:SELECT 
+D:\www\product\deituiCMSBase\source\admin\open_baidu.ctrl.php:25行,调用方法:select 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onDefault 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2020-12-21 13:15:50--/admin.php?m=open_baidu--
+sql错误：SELECT COUNT(1) FROM sky_open_baidu  where  status <3  Table 'deituicmsbase.sky_open_baidu' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:259行,调用方法:getOne 
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:204行,调用方法:getCount 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:115行,调用方法:SELECT 
+D:\www\product\deituiCMSBase\source\admin\open_baidu.ctrl.php:25行,调用方法:select 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onDefault 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
