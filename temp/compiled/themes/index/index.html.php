@@ -35,7 +35,19 @@
 		
 	    <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
 	</div>
-		
+		<?php
+		$title="哈哈哈";
+		$this->_var["mlist"]=M("article")->select(array(
+			"where"=>" status=1 "
+		));
+		?>
+		<div>
+		<?php $_from = $this->_var['mlist']; if (!is_array($_from) && !is_object($_from)) { $_from=array();}; $this->push_vars('', 'c');if (count($_from)):
+    foreach ($_from AS $this->_var['c']):
+?>
+			<div><?php echo $this->_var['c']['title']; ?></div>
+		<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+		</div>
 	<div class="row-box-hd pdl-10">
 		<div class="flex-1 f16">文章推荐</div>
 		<div gourl="/index.php?m=article" class="row-box-more">更多</div>
