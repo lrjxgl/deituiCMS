@@ -68,6 +68,7 @@
 		}
 		
 		public function onAdd(){
+			M("login")->checkLogin();
 			$tableid=get("tableid","i");
 			$table=M("table")->selectRow("tableid=".$tableid);
 			$fieldsList=M("table_fields")->select(array(
@@ -90,13 +91,18 @@
 		}
 		
 		public function onSave(){
+			M("login")->checkLogin();
+			$userid=M("login")->userid;
 			$tableid=post("tableid","i");
 			$id=get_post("id","i");
 			$rss=$_POST["tablefield"];
 			if(!empty($rss)){
 				foreach($rss as $k=>$v){
+					
 					$rss[$k]=stripslashes($v);
 				}
+				$rss["userid"]=$userid;
+				$rss["createtime"]=datetime("Y-m-d H:i:s");
 				$content=arr2str($rss);
 			}
 			if($id){

@@ -103,7 +103,7 @@
 				"userid"=>$userid,
 				"dateline"=>time()
 			));
-			$this->gomsg("赠送成功！");
+			$this->goall("赠送成功！");
 		}
 		
 		public function onUser(){

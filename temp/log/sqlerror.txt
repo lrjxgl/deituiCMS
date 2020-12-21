@@ -38,3 +38,11 @@ sql错误：INSERT INTO sky_guest SET  shopid='0' , type_id='0' , userid='4' , n
 D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onSave 
 D:\www\product\deituiCMSBase\index.php:42行,调用方法:require 
 
+
+---2020-12-21 12:29:49--/admin.php?m=module&a=uninstall&inmodule=b2c--
+sql错误：drop table sky_mod_b2c_cart ; Unknown table 'deituicmsbase.sky_mod_b2c_cart'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+

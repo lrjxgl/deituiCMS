@@ -5,15 +5,11 @@
         <input name="phone_on" type="radio"  value="0"<?php if ($this->_var['data']['phone_on'] != 1): ?> checked="checked"<?php endif; ?> />不开启</td>
   </tr>
   
-   <tr>
-    <td height="30" align="right">开启短信注册：</td>
-    <td height="30"><input type="radio" name="phone_reg"  value="1" <?php if ($this->_var['data']['phone_reg'] == 1): ?> checked="checked"<?php endif; ?> />开启 
-        <input name="phone_reg" type="radio"  value="0"<?php if ($this->_var['data']['phone_reg'] != 1): ?> checked="checked"<?php endif; ?> />不开启</td>
-  </tr>
+    
 	<tr >
   	<td height="30" align="right">短信方</td>
     <td>
-    	<input type="radio" name="sms_type" <?php if ($this->_var['data']['sms_type'] != 'alisms'): ?>checked<?php endif; ?>  value="default"> 默认
+    	<input type="radio" name="sms_type" <?php if ($this->_var['data']['sms_type'] != 'alisms'): ?>checked<?php endif; ?>  value="default"> 短信宝
     	<input type="radio" name="sms_type" <?php if ($this->_var['data']['sms_type'] == 'alisms'): ?>checked<?php endif; ?> value="alisms"> 阿里云
         
     </td>

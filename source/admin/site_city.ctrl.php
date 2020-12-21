@@ -81,7 +81,7 @@
 			
 			$sc_id=get_post("sc_id","i");
 			$data["title"]=post("title","h");
-			if(empty($data['title'])) $this->gomsg("名称不能为空");
+			if(empty($data['title'])) $this->goall("名称不能为空");
 			$data["cityid"]=post("cityid","i");
 			$data["lat"]=post("lat","r",2);
 			$data["lng"]=post("lng","r",2);
@@ -95,7 +95,7 @@
 				$data['siteid']=SITEID;
 				M("site_city")->insert($data);
 			}
-			$this->gomsg("保存成功");
+			$this->goall("保存成功");
 		}
 		
 		public function onStatus(){

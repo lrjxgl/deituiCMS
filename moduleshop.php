@@ -45,10 +45,10 @@ if(isset($_GET['ajax'])){
 } 
 require("./skymvc/skymvc.php");
 //用户自定义初始化函数
-function userinit(&$base){
+function userinit(){
 	checkSafeContent($_POST);
 	if(function_exists("moduleShopInit")){
-		moduleShopInit($base);
+		moduleShopInit();
 		return false;
 	}
 	

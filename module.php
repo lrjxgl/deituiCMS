@@ -68,7 +68,7 @@ function userinit(){
 	}
 	
 	if(function_exists("moduleInit")){
-		moduleInit($base);
+		moduleInit();
 		return false;
 	}
 	if(!isset($_SESSION["ssuser"])){

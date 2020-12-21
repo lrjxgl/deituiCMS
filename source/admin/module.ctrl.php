@@ -127,7 +127,7 @@ class moduleControl extends skymvc{
 		$this->dosql($d."/"."uninstall.sql.php",$config['table_pre']);
 		@unlink($d."/install.lock");
 		M("module")->delete("module='".$module."'");
-		$this->gomsg("卸载成功",APPADMIN."?m=module&a=default");
+		$this->goall("卸载成功",APPADMIN."?m=module&a=default");
 	}
 	
 	
@@ -142,7 +142,7 @@ class moduleControl extends skymvc{
 		@unlink($d."/install.lock");
 		M("module")->delete("module='".$module."'");
 		$this->removedir(ROOT_PATH."module/$module");
-		$this->gomsg("删除成功",APPADMIN."?m=module&a=default");
+		$this->goall("删除成功",APPADMIN."?m=module&a=default");
 	}
 	
 	public function dosql($dbfile,$table_pre=""){

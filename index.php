@@ -41,7 +41,7 @@ if(isset($_GET['ajax'])){
 
 require("./skymvc/skymvc.php");
 //用户自定义初始化函数
-function userinit(&$base){
+function userinit(){
 	if(count($_POST)>0){
 		checkSafeContent($_POST);
 	}
@@ -51,8 +51,8 @@ function userinit(&$base){
 	$ip=ip();
 	M("badip")->check($ip);
 	if(isset($_SESSION['ssuser']['userid'])){
-		$base->ssuser=$_SESSION['ssuser'];//当前登录用户的信息
-		$base->smarty->assign("ssuser",$base->ssuser);
+		C()->ssuser=$_SESSION['ssuser'];//当前登录用户的信息
+		C()->smarty->assign("ssuser",C()->ssuser);
 	}else{
 		//存在登录码
 		if((isset($_COOKIE['authcode']) or get_post('authcode') ) && get('m')!="login"){
