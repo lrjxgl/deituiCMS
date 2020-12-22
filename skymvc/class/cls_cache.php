@@ -72,9 +72,7 @@ class cache
 					$this->file_set($key,$val,$expire);
 					
 				break;
-			case "php":
-					$this->php_set($key,$val,$expire);
-				break;
+		
 			case "mysql":
 					$this->mysql_set($key,$val,$expire);
 				break;
@@ -93,9 +91,7 @@ class cache
 			 case "file":
 						return $this->file_get($key);
 					break;
-			 case "php":
-			 			return $this->php_get($key);
-			 		break;
+
 			case "mysql":
 					
 						return $this->mysql_get($key);	
@@ -106,18 +102,17 @@ class cache
 	public function del($key){
 		switch($this->cache_type){
 			case "memcache":
-					return $this->mem_get($key);
+					return $this->mem_del($key);
 				break;
 			case "redis":
-					return $this->redis_get($key);
+					return $this->redis_del($key);
 				break;
 			 case "file":					
-			 case "php":
 					$this->file_del($key);
 				break;
 			case "mysql":
 					
-					return $this->mysql_get($key);	
+					return $this->mysql_del($key);	
 				break;
 		}
 	}
@@ -217,8 +212,8 @@ class cache
 		}
 	}
 	public function mem_del($k){
-		if(function_exists("cache_mem_del")){
-			return cache_mem_del($k);
+		if(function_exists("cache_mem_delete")){
+			return cache_mem_delete($k);
 		}else{
 			return $this->file_del($k);
 		}
@@ -240,8 +235,8 @@ class cache
 		}
 	}
 	public function redis_del($k){
-		if(function_exists("cache_redis_del")){
-			return cache_redis_del($k);
+		if(function_exists("cache_redis_delete")){
+			return cache_redis_delete($k);
 		}else{
 			return $this->file_del($k);
 		}
@@ -272,8 +267,8 @@ class cache
 	}
 	
 	public function mysql_del($k){
-		if(function_exists("cache_mysql_del")){
-			return cache_mysql_del($k);
+		if(function_exists("cache_mysql_delete")){
+			return cache_mysql_delete($k);
 		}else{
 			return $this->file_del($k);
 		}

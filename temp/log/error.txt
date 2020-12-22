@@ -494,3 +494,9 @@ error:1416F086:SSL routines:tls_process_server_certificate:certificate verify fa
 ---2020-12-21 13:14:58--/admin.php?m=index&a=shouquan--
 <div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
 error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：147 </div>
+
+---2020-12-22 11:10:22--/module.php?m=test--
+<div class='item'>错误类型：WARNING<br> 内容：Function Redis::delete() is deprecated  错误位置：D:\www\product\deituiCMSBase\extends\cache\ex_cache_redis.php 行：21 </div>
+
+---2020-12-22 11:10:23--/module.php?m=test--
+<div class='item'>错误类型：WARNING<br> 内容：Function Redis::delete() is deprecated  错误位置：D:\www\product\deituiCMSBase\extends\cache\ex_cache_redis.php 行：21 </div>

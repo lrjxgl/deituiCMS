@@ -1,6 +1,6 @@
 <?php
 class model{
-	public $base;
+	 
 	public $db;
 	public $table;
 	public $table_all=NULL;
@@ -12,9 +12,7 @@ class model{
 	
 	public function setDb($table=NULL){
 		$this->db=setDb($table?$table:$this->table);
-		if($this->db){
-			$this->db->base=$this->base;
-		}
+		 
 	}
 	
 	public function setTable($table,$object_id=0,$table_num=10){
@@ -309,7 +307,7 @@ class model{
 	}
 	/*关闭数据库*/
 	public function close(){
-		//$this->db->close();
+		$this->db->close();
 	}
 	
 	

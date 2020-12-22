@@ -327,7 +327,7 @@ class skymvc
 					echo "<script>location.href='".$url."';</script>";
 				}
 			}else{
-				$this->smarty->assign("message",$str);
+				$this->smarty->assign("message",$message);
 				$this->smarty->assign("url",$url?$url:$_SERVER['HTTP_REFERER']);
 				if($tpl){
 					$this->smarty->template_dir=$tpl;

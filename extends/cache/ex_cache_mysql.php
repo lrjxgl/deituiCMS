@@ -22,4 +22,9 @@ function cache_mysql_get($k){
 	
 	return false;
 }
+
+function cache_mysql_delete($k){
+	$row=M('dbcache')->delete("k='".$k."'");
+
+}
 ?>

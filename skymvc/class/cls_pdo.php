@@ -13,12 +13,12 @@ class mysql
 	/**
 	*mysql初始化 
 	*/
-	 public function __construct($data=array("charset"=>"utf8")){
+	 public function __construct(){
 		 
 		 if(!defined("TABLE_PRE")){
 			 define("TABLE_PRE","");
 		 }
-		 $this->charset=$data['charset'];
+		 
 		 if(defined("TESTMODEL") && TESTMODEL==true){
 			 $this->testmodel=true;
 		 }
@@ -47,6 +47,9 @@ class mysql
 			$master=$this->dbconfig;
 			
 		}
+		if(!isset($master['charset'])){
+			$master['charset']="utf8mb4";
+		}
 		$arr=explode(":",$master['host']);
 		$host=$arr[0];
 		if(isset($arr[1])){
@@ -61,7 +64,7 @@ class mysql
 			 $this->db = new PDO($dsn, $master['user'], $master['pwd']);
 			 $rs=$this->db->prepare("SET sql_mode=''");
 			 $rs->execute();
-			  $rs=$this->db->prepare("SET NAMES ".$this->charset);
+			  $rs=$this->db->prepare("SET NAMES ".$master['charset']);
 			 $rs->execute();
 		} catch ( PDOException $e ) {
 			echo  'Connection failed: '  .  $e -> getMessage ();

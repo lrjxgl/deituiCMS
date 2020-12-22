@@ -1,7 +1,7 @@
 <?php
-define("_REDIS_PRE_","bzmall_"); 
-$GLOBALS['globalRedis']=$globalRedis=new redis();
-$globalRedis->connect("172.19.24.71","6379");
+define("_REDIS_PRE_","skymvc_"); 
+$globalRedis=new redis();
+$globalRedis->connect("127.0.0.1","6379");
 function cache_redis_set($key,$val,$expire=259200){
 	global $globalRedis;
 	$val=base64_encode(json_encode($val));
@@ -18,7 +18,7 @@ function cache_redis_get($key){
 
 function cache_redis_delete($key){
 	global $globalRedis;
-	return $globalRedis->delete(_REDIS_PRE_.$key);
+	return $globalRedis->del(_REDIS_PRE_.$key);
 }
 
 ?>

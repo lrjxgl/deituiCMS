@@ -34,63 +34,84 @@ if(!file_exists('install.lock'))
 	//生成配置文件
  
 	$str=' 
-define("MYSQL_CHARSET","utf8");
-define("TABLE_PRE","sky_");
-$dbclass="mysqli";
-/*
-$dbconfig["master"]=array(
-	"host"=>"127.0.0.1","user"=>"root","pwd"=>"123","database"=>"xyo2o"
-);
- */
-/**其他分表库**/
-/*
-$dbconfig["user"]=array(
-	"host"=>"localhost","user"=>"root","pwd"=>"123","database"=>"skyshop"
-);
-
-$dbconfig["article"]=array(
-	"host"=>"localhost","user"=>"root","pwd"=>"123","database"=>"skycms"
-);
-*/ 
-
-/*分库配置*/
-/* 
-$VMDBS=array(
-	"article"=>"article",
-	"forum"=>"article"
-);
-*/ 
- 
-/*缓存配置*/
-$cacheconfig=array(
-	"redis"=>false,
-	"memcache"=>false,
-	"mysql"=>false,
-	"file"=>true,
-	"php"=>true
-	
-);
-/*用户自定义函数文件*/
-$user_extends=array(
-	"ex_fun.php",
-	//"cache/ex_cache_redis.php",
-	
-	//"cache/ex_cache_memcache.php",
-	//"cache/ex_cache_mysql.php",
-	//"session/ex_sess_redis.php",
-	//"session/ex_sess_mysql.php",
-	//"session/ex_sess_memcache.php"
- 
-);
+require "database.php";
+require "cache.php";
+require "extends.php";
 /*Session配置 1为自定义 0为系统默认*/
+define("SMS_TEST",true);
 define("SESSION_USER",0);
 define("REWRITE_ON",0); 
 define("REWRITE_TYPE","pathinfo");
 define("TESTMODEL",1);//开发测试模式
 define("SQL_SLOW_LOG",1);//记录慢查询
+//UPLOAD_OSS--- aliyun/qiniu/upyun/0 不分离上传设为0
+define("UPLOAD_OSS",0);
+//http协议
+$http = ((isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") || (isset($_SERVER["HTTP_X_FORWARDED_PROTO"]) && $_SERVER["HTTP_X_FORWARDED_PROTO"] == "https")) ? "https://" : "http://";
+define("IMAGES_SITE",$http.$_SERVER["HTTP_HOST"]."/");
+//静态文件
+define("STATIC_SITE",$http.$_SERVER["HTTP_HOST"]."/");
+
+define("HTTP_HOST",$http.$_SERVER["HTTP_HOST"]."/");
+define("_REDIS_PRE_","deituiCMS_");  
  ';
  file_put_contents("../config/config.php","<?php\r\n{$str}\r\n?>");
-
+ $str='
+ define("MYSQL_CHARSET", "utf8mb4");
+ define("TABLE_PRE", "sky_");
+ $dbclass="mysqli";
+ $dbconfig["master"]=array(
+ 	"host"=>"localhost","user"=>"root","pwd"=>"root","database"=>"deituicmsbase","charset"=>"utf8mb4"
+ );
+ /**其他分表库**/
+ /*
+ $dbconfig["user"]=array(
+ 	"host"=>"localhost","user"=>"root","pwd"=>"123","database"=>"skyshop"
+ );
+ 
+ $dbconfig["article"]=array(
+ 	"host"=>"localhost","user"=>"root","pwd"=>"123","database"=>"skycms"
+ );
+ */ 
+ 
+ /*分库配置*/
+ /* 
+ $VMDBS=array(
+ 	"article"=>"article",
+ 	"forum"=>"article"
+ );
+ */ 
+ 
+ ';
+ file_put_contents("../config/database.php","<?php\r\n{$str}\r\n?>");
+ $str='
+ /*缓存配置*/
+ $cacheconfig=array(
+ 	"redis"=>false,
+ 	"memcache"=>false,
+ 	"mysql"=>false,
+ 	"file"=>false
+ 	
+ );
+ /*
+ require_once "extends/cache/ex_cache_redis.php";
+ require_once "extends/cache/ex_cache_memcache.php";
+ require_once "extends/cache/ex_cache_mysql.php";
+ */
+ 
+ ';
+file_put_contents("../config/cache.php","<?php\r\n{$str}\r\n?>");
+$str='
+/*用户自定义函数文件*/
+$user_extends=array(
+ 	 
+ 	//"session/ex_sess_redis.php",
+ 	//"session/ex_sess_mysql.php",
+ 	//"session/ex_sess_memcache.php"
+  
+);
+';
+file_put_contents("../config/extends.php","<?php\r\n{$str}\r\n?>");
 //生成常数文件
 $str='<?php
 define("STATIC_SITE","http://".$_SERVER[\'HTTP_HOST\']."/");
@@ -111,13 +132,6 @@ define("COOKIE_DOMAIN",$_SERVER[\'HTTP_HOST\']);
 ?>';
 file_put_contents("../config/const.php",$str);
 
-//生成数据表配置文件
-$str='<?php 
-	/*
-	*表相关的配置 不能修改
-	*/
-?>';
-file_put_contents("../config/table.php",$str);
 //生成应用版本
 $str='<?php
 class cmsVersion{

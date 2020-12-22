@@ -13,12 +13,12 @@ class mysql
 	/**
 	*mysql初始化 
 	*/
-	 public function __construct($data=array("charset"=>"utf8")){
+	 public function __construct(){
 		 
 		 if(!defined("TABLE_PRE")){
 			 define("TABLE_PRE","");
 		 }
-		 $this->charset=$data['charset'];
+		
 		 if(defined("TESTMODEL") && TESTMODEL==true){
 			 $this->testmodel=true;
 		 }
@@ -30,10 +30,10 @@ class mysql
 	 /**
 	  * 设置参数
 	  * $config=array(
-	  * 	"master"=>array("localhost:","root","password","database"),//主数据库 必须的 以下从数据库非必须
+	  * 	"master"=>array("localhost:","root","password","database","utf8mb4"),//主数据库 必须的 以下从数据库非必须
 	  * 	"slave"=>array(
-	  * 				array("slave1","root","password","database"),
-	  * 				array("slave2","root","password","database"),
+	  * 				array("slave1","root","password","database","utf8mb4"),
+	  * 				array("slave2","root","password","database","utf8mb4"),
 	  * 			),
 	  * )
 	  */
@@ -51,6 +51,9 @@ class mysql
 			$master=$this->dbconfig;
 			
 		}
+		if(!isset($master['charset'])){
+			$master['charset']="utf8mb4";
+		}
 		$arr=explode(":",$master['host']);
 		$host=$arr[0];
 		if(isset($arr[1])){
@@ -65,7 +68,7 @@ class mysql
 		            . $this->db->connect_error);
 		}
 		$this->db->query("SET sql_mode=''"); 
-		$this->db->query("SET NAMES ".$this->charset);
+		$this->db->query("SET NAMES ".$master['charset']);
 		$this->db->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE,1);
 		
 	 }
@@ -256,7 +259,7 @@ class mysql
 	public function getCount($table,$w=array()){
 		
 		$where=empty($w)?"":" where ".$this->compile_array($w," AND ");
-		return $this->getOne("SELECT COUNT(1) FROM ".TABLE_PRE.$table." $where ");
+		return $this->getOne("SELECT COUNT(*) FROM ".TABLE_PRE.$table." $where ");
 	}
 	/**
 	 * 获取全部数据
