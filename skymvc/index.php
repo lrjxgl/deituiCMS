@@ -5,7 +5,7 @@ if(!file_exists('install.lock'))
 	umkdir("../api");//生成api目录
 	umkdir("../config");//生成配置文件夹
 	umkdir("../source/admin");//建立后台控制文件
-	umkdir("../source/hook");
+	 
 	umkdir("../source/model");//建立后台模型文件
 	umkdir("../source/index");//建立前台控制文件
 	umkdir("../attach");//建立附件目录
@@ -27,7 +27,7 @@ if(!file_exists('install.lock'))
 	umkdir("../module/test/source/admin");
 	umkdir("../module/test/source/index");
 	umkdir("../module/test/source/model");
-	umkdir("../module/test/source/hook");
+	 
 	umkdir("../module/test/themes/admin");
 	umkdir("../module/test/themes/index");
 	umkdir("../module/test/themes/wap");
@@ -120,9 +120,19 @@ $str='<?php
 file_put_contents("../config/table.php",$str);
 //生成应用版本
 $str='<?php
-define("VERSION","SKYMVC1");
-define("VERSION_NUM",1); 
-define("ONLINEUPDATE","http://'.$_SERVER['HTTP_HOST'].'/onlineupdate/");
+class cmsVersion{
+	public static function get(){
+		return array(
+			"version"=>"deituiCMS",
+			"version_num"=>3.0,
+			"onlineupdate"=>"http://www.deituicms.com/index.php?m=newversion&a=update&product=deituiCMS",
+			"checkversion"=>"http://www.deituicms.com/index.php?m=newversion&product=deituiCMS",
+			"checkshouquan"=>"http://www.deituicms.com/index.php?m=newversion&a=checkshouquan&product=deituiCMS",
+			"description"=>"deituiCMS包含绝大多数网站所需要的基础功能，采用基础功能+插件模式架构，通过插件可以轻松扩展无限的功能。"
+		);
+	}
+}
+define("POWEREDBY","----powered by www.deituicms.com");
 ?>';
 file_put_contents("../config/version.php",$str);
 //生成xss配置文件
@@ -142,13 +152,13 @@ file_put_contents("../config/xss.config.php",$str);
 error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
  
- 
+require("config/version.php");  
 require("config/config.php");
 require("config/const.php");
 define("ROOT_PATH",  str_replace("\\\\", "/", dirname(__FILE__))."/");
 define("CONTROL_DIR","source/index");
 define("MODEL_DIR","source/model");
-define("HOOK_DIR","source/hook");
+ 
 /*视图模版配置*/
 $cache_dir="";//模版缓存文件夹
 $template_dir="themes/".SKINS;//模版风格文件夹
@@ -181,13 +191,13 @@ function userinit(&$base){
 		$str='<?php
 error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
- 
+require("config/version.php");  
 require("config/config.php");
 require("config/const.php");
 define("ROOT_PATH",  str_replace("\\\\", "/", dirname(__FILE__))."/");
 define("CONTROL_DIR","source/admin");
 define("MODEL_DIR","source/model");
-define("HOOK_DIR","source/hook");
+ 
 /*视图模版配置*/
 $cache_dir="";//模版缓存文件夹
 $wap_template_dir=$template_dir="themes/admin";//模版风格文件夹
@@ -218,6 +228,7 @@ $str='<?php
 error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
 define("ROOT_PATH",  str_replace("\\\\", "/", dirname(__FILE__))."/");
+require("config/version.php"); 
 require(ROOT_PATH."config/config.php");
 require(ROOT_PATH."config/const.php");
 /***解析pathinfo*/
@@ -240,7 +251,7 @@ $module=str_replace(array("/","\\\\","."),"",htmlspecialchars($module));
 if(empty($m) && empty($module)) exit(\'模块未安装\');
 define("CONTROL_DIR",ROOT_PATH."module/{$module}/source/index");
 define("MODEL_DIR",ROOT_PATH."source/model");
-define("HOOK_DIR","module/{$module}/source/hook");
+ 
 /*视图模版配置*/
 $cache_dir="";//模版缓存文件夹
 $template_dir="module/".$module."/themes/index";//模版风格文件夹
@@ -258,11 +269,7 @@ $smarty_cache_lifetime=3600;//缓存时间
 require("./skymvc/skymvc.php");
 //用户自定义初始化函数
 function userinit(&$base){
-	global $wap_template_dir,$template_dir;
-	$skinsmodule=ISWAP?$wap_template_dir:$template_dir;
-	c()->smarty->assign(array(
-		"skinsmodule"=>$skinsmodule,
-	));
+	 
 }
 
 ?>';
@@ -273,6 +280,7 @@ $str='<?php
 error_reporting(E_ALL ^ E_NOTICE);
 header("Content-type:text/html; charset=utf-8");
 define("ROOT_PATH",  str_replace("\\\\", "/", dirname(__FILE__))."/");
+require("config/version.php"); 
 require(ROOT_PATH."config/config.php");
 require(ROOT_PATH."config/const.php");
 $module=isset($_GET[\'module\'])?$_GET[\'module\']:"";
@@ -283,7 +291,7 @@ $module=str_replace(array("/","\\\\","."),"",htmlspecialchars($module));
 if(empty($m) && empty($module)) exit(\'模块未安装\');
 define("CONTROL_DIR",ROOT_PATH."module/{$module}/source/admin");
 define("MODEL_DIR",ROOT_PATH."source/model");
-define("HOOK_DIR","source/{$module}/source/hook");
+ 
 /*视图模版配置*/
 $cache_dir="";//模版缓存文件夹
 $wap_template_dir=$template_dir="module/".$module."/themes/admin/";//模版风格文件夹
@@ -296,12 +304,8 @@ $smarty_cache_lifetime=3600;//缓存时间
  
 require("./skymvc/skymvc.php");
 //用户自定义初始化函数
-function userinit(&$base){
-	global $wap_template_dir,$template_dir;
-	$skinsmodule=ISWAP?$wap_template_dir:$template_dir;
-	c()->smarty->assign(array(
-		"skinsmodule"=>$skinsmodule,
-	));
+function userinit(){
+	 
 }
 
  
@@ -326,9 +330,9 @@ class indexControl extends skymvc
 		if(ISWAP){
 			$this->smarty->assign("welcome","这是手机版哦，欢迎使用skymvc，让我们共同努力！");
 		}else{
-			$this->smarty->assign("welcome","欢迎使用<a href=\"http://www.skymvc.com\" target=\"_blank\">skymvc</a>，让我们共同努力！");
+			$this->smarty->assign("welcome","欢迎使用<a href=\"http://www.deituicms.com\" target=\"_blank\">skymvc</a>，让我们共同努力！");
 		}
-		$this->hook("run","这是传入hook的数据");
+	 
 		$this->smarty->assign("who",M("index")->test());
 		$this->smarty->display("index.html");
 	}
@@ -339,34 +343,16 @@ file_put_contents("../source/index/index.ctrl.php",$str);
 file_put_contents("../source/admin/index.ctrl.php",$str);
 file_put_contents("../module/test/source/index/index.ctrl.php",$str);
 file_put_contents("../module/test/source/admin/index.ctrl.php",$str);
-//hook文件
-$str='<?php
-class indexHook extends skymvc {
-	
-	public function __construct(){
-		parent::__construct();
-	}
-	
-	public function run($indata=array()){
-		$data="这是hook返回的数据";		
-		c()->smarty->assign(array(
-			"hook_redata"=>$data,
-			"hook_indata"=>$indata
-		));
-	}
-}
-?>';
-file_put_contents("../source/hook/index.hook.php",$str);
-file_put_contents("../module/test/source/hook/index.hook.php",$str);
+ 
 //模型文件  index.model.php
 $str='<?php
 class indexModel extends model
 {
-	public $base;
-	function __construct(&$base)
+	public $table="";
+	function __construct()
 	{
-		parent::__construct($base);
-		$this->base=$base;
+		parent::__construct();
+		
 	}
 
 	function test()
@@ -399,8 +385,7 @@ $str='<!DOCTYPE >
     {$w}<br>
     {/foreach}
     
-    {$hook_indata}<br>
-    {$hook_redata}<br>
+     
     {$skins}
     </div>
 
@@ -425,8 +410,7 @@ $str='<!DOCTYPE >
     {$w}<br>
     {/foreach}
     
-    {$hook_indata}<br>
-    {$hook_redata}<br>
+     
     {$skins}
     </div>
 </div>

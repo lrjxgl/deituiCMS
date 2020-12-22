@@ -94,6 +94,7 @@ define("S_COMPILE_DIR",isset($compile_dir)?$compile_dir:ROOT_PATH."temp/compiled
 define("S_REWRITE_ON",$rewrite_on);
 $_GET['m']=$m=isset($_GET['m'])?htmlspecialchars($_GET['m']):"index";
 $m=str_replace(array("/","\\",".."),"",$m);
+ 
 if(!file_exists(CONTROL_DIR."/$m.ctrl.php"))
 {
 	error404();

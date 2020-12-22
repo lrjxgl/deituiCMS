@@ -6,7 +6,7 @@ class mysql
 	public	$dbconfig=array();//配置
 	public	$charset="utf8";//编码
 	public	$testmodel=false;//测试模式 开启后将会输出错误的sql语句 
-	public $base;
+	 
 	public $query=NULL;//最近操作的
 	public $sql;
 	public $stime;

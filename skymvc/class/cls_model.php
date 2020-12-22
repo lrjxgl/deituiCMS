@@ -29,17 +29,7 @@ class model{
 	public function clearTable(){
 		$this->tmpTable=false;
 	}
-	/*加载模型*/
-	public function loadModel($model,$base=NULL){
-		$this->base->loadModel($model,$base);		
-		if(is_array($model)){
-			foreach($model as $m){
-				$this->$m=$this->base->$m;
-			}
-		}else{
-			$this->$model=$this->base->$model;
-		}
-	}
+	 
 	/**
 	*执行sql语句
 	*/
