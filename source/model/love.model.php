@@ -1,9 +1,9 @@
 <?php
 class loveModel extends model{
-	public $base;
-	function __construct(&$base){
-		parent::__construct($base);
-		$this->base=$base;
+	 
+	function __construct (){
+		parent::__construct ();
+		 
 		$this->table="love";
 	}
 

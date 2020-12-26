@@ -2,7 +2,7 @@
 class maxidModel extends model{
 	public $table="maxid";
 	public function __construct($base=null){
-		parent::__construct($base);
+		parent::__construct ();
 	}
 	
 	public function get(){

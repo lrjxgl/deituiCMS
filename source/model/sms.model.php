@@ -2,7 +2,7 @@
 class smsModel extends model{
 	
 	public function __construct(&$base=null){
-		parent::__construct($base);
+		parent::__construct ();
 	}
 	
 	public function setSms($data){

@@ -115,7 +115,7 @@ $method=method_exists($control,'on'.$_GET['a'])? 'on'.$_GET['a']:"onDefault";
 if(function_exists("userinit"))
 {
 	if(!defined("SKYINIT")){
-		userinit($control);	
+		userinit();	
 	}
 }
 if(method_exists($control,'onInit')){

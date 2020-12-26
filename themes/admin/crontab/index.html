@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+{include file='crontab/nav.html'}
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>id</td>
+   <td>名称</td>
+   <td>任务地址</td>
+   <td>执行时间</td>
+   <td>状态</td>
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.title}</td>
+   <td>{$c.url}</td>
+   <td>{$c.crontime}</td>
+   <td>{$c.status}</td>
+<td><a href="admin.php?m=crontab&a=add&id={$c.id}">编辑</a> <a href="admin.php?m=crontab&a=show&id={$c.id}">查看</a> <a href="javascript:;" class="js-delete" url="admin.php?m=crontab&a=delete&ajax=1&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

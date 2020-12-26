@@ -96,3 +96,12 @@ sql错误：SELECT COUNT(1) FROM sky_open_baidu  where  status <3  Table 'deitui
 D:\www\product\deituiCMSBase\skymvc\skymvc.php:129行,调用方法:onDefault 
 D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
 
+
+---2020-12-25 13:18:07--/module.php?m=test_queue--
+sql错误：UPDATE sky_mod_queue SET orderindex=orderindex+1 WHERE k=''   Table 'deituicmsbase.sky_mod_queue' doesn't exist
+D:\www\product\deituiCMSBase\extends\queue\mysql.php:10行,调用方法:changenum 
+D:\www\product\deituiCMSBase\skymvc\library\cls_queue.php:26行,调用方法:mysql_queue_lpush 
+D:\www\product\deituiCMSBase\module\test\source\index\test_queue.ctrl.php:12行,调用方法:lpush 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:130行,调用方法:onDefault 
+D:\www\product\deituiCMSBase\module.php:63行,调用方法:require 
+

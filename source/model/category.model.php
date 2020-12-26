@@ -1,9 +1,9 @@
 <?php
 class categoryModel extends model{
-	public $base;
+	 
 	
-	function __construct(&$base){
-		parent::__construct($base);
+	function __construct (){
+		parent::__construct ();
 		$this->table="category";
 	}
 	/**

@@ -1,9 +1,9 @@
 <?php
 class admin_groupModel extends model{
-	public $base;
-	function __construct(&$base){
-		parent::__construct($base);
-		$this->base=$base;
+	 
+	function __construct (){
+		parent::__construct ();
+		 
 		$this->table="admin_group";	
 	}
 	

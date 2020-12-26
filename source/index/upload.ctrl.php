@@ -53,6 +53,37 @@ class uploadControl extends skymvc{
 			}
 		}
 	}
+	
+	public function saveRemoteImg($url){
+		$dir=isset($_GET['dir'])?get('dir','h')."/":"";
+		$dir=str_replace(".","_",$dir);
+		if(get('id','i')){
+			$dir="attach/".$dir.$this->dirId(get('id','i'));
+		}else{
+			$dir="attach/".$dir.date("Y/m/d/").$this->dirId(get('id','i'));
+		}
+		umkdir($dir);
+		$maxid=M("maxid")->insert(array("t"=>0));
+		$file=$dir.$maxid.".jpg";
+		$content=file_get_contents( $url);
+		$im=@imagecreatefromstring($content);
+		if(!$im){
+			return array("error"=>1);
+		}
+		$w=imagesx($im);
+		$h=imagesy($im);
+		
+		imagejpeg($im,$file);
+		$this->loadClass("image",false,false);
+		$img=new image();
+		$imgurl=$file;
+		$img->makethumb($imgurl.".100x100.jpg",$imgurl,$this->w1,$this->w1,1);
+		$img->makethumb($imgurl.".small.jpg",$imgurl,$this->w2);
+		$img->makethumb($imgurl.".middle.jpg",$imgurl,$this->w3);
+		$this->upload_oss($imgurl);
+		$data=array("error"=>0,"imgurl"=>$file,"trueimgurl"=>images_site($file),"file"=>$file,"msg"=>"");
+		return $data;
+	}
 	 
 	public function onUpload(){
 		$dir=isset($_GET['dir'])?get('dir','h')."/":"";

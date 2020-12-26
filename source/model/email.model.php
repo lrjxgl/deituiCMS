@@ -1,10 +1,10 @@
 <?php
 class emailModel extends model{
-	public $base;
+	 
 	public $emailServer=NULL;
-	function __construct(&$base){
-		parent::__construct($base);
-		$this->base=$base;
+	function __construct (){
+		parent::__construct ();
+		 
 		$this->table="email";
 	}
 	

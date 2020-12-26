@@ -2,7 +2,7 @@
 class articleModel extends model{
 	public $table="article";
 	public function __construct(&$base=null){
-		parent::__construct($base);
+		parent::__construct ();
 	}
 	
 	public function Dselect($option,&$rscount=false){

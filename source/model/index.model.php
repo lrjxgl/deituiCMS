@@ -1,11 +1,11 @@
 <?php
 class indexModel extends model
 {
-	public $base;
-	function __construct(&$base)
+	 
+	function __construct ()
 	{
-		parent::__construct($base);
-		$this->base=$base;
+		parent::__construct ();
+		 
 	}
 
 	function test()

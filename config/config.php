@@ -3,9 +3,11 @@
 require "database.php";
 require "cache.php";
 require "extends.php";
+require "session.php";
+require "queue.php";
 /*Session配置 1为自定义 0为系统默认*/
 define("SMS_TEST",true);
-define("SESSION_USER",0);
+
 define("REWRITE_ON",0); 
 define("REWRITE_TYPE","pathinfo");
 define("TESTMODEL",1);//开发测试模式
@@ -19,5 +21,5 @@ define("IMAGES_SITE",$http.$_SERVER['HTTP_HOST']."/");
 define("STATIC_SITE",$http.$_SERVER['HTTP_HOST']."/");
 
 define("HTTP_HOST",$http.$_SERVER['HTTP_HOST']."/");
-define("_REDIS_PRE_","deituiCMS_");  
+
 ?>

@@ -77,7 +77,7 @@ function closeDb(){
 	}
 }
 /*加载模型*/
-function M($model,&$base=NULL){
+function M($model){
 	global $_MDS;
 	$model=strtolower($model);
 	 
@@ -91,7 +91,7 @@ function M($model,&$base=NULL){
 			//controler  model调用
 			$_model="{$model}Model";
 					
-			$m=new $_model($base);
+			$m=new $_model();
 			$m->setDb($model);
 			 
 			$_MDS[$model.'Model']=$m;	
@@ -102,7 +102,7 @@ function M($model,&$base=NULL){
 			//controler  model调用
 			$_model="{$model}Model";
 			 		
-			$m=new model($base);
+			$m=new model();
 			
 			$m->setDb($model);
 		 
@@ -114,7 +114,7 @@ function M($model,&$base=NULL){
 	}
 }
 /*加载模块的模型*/
-function MM($module,$model,&$base=NULL){
+function MM($module,$model){
 	global $_MDS;
 	if(isset($_MDS[$model.'MModel'])){
 	 
@@ -123,7 +123,7 @@ function MM($module,$model,&$base=NULL){
 		if(file_exists(ROOT_PATH."module/".$module."/source/model/$model.model.php")){		
 			require_once    ROOT_PATH."module/".$module."/source/model/$model.model.php";
 			$_model="{$model}Model";
-			$m=new $_model($base);
+			$m=new $_model();
 			$m->setDb($model);
 			 
 			$_MDS[$model.'MModel']=$m;		 
@@ -132,7 +132,7 @@ function MM($module,$model,&$base=NULL){
 			//controler  model调用
 			$_model="{$model}Model";
 			 			
-			$m=new model($base);
+			$m=new model();
 			$m->setDb($model);
 			$m->table=$model;			
 			$_MDS[$model.'MModel']=$m;
@@ -210,23 +210,7 @@ function initsession(){
 		session_start();
 	}
 }
-if(!function_exists("sess_read")){
-	function sess_read($id){		
-		$row=setDB('dbsession')->getRow("select * from ".TABLE_PRE."dbsession WHERE id='".$id."'");
-		return base64_decode($row['data']);
-	}
-	
-	function sess_write($id,$data){
-		setDB('dbsession')->query("replace into ".TABLE_PRE."dbsession set data='".base64_encode($data)."',dateline=".time()." ,id='".$id."' ");
-	}
-	
-	function sess_destroy($id){
-		setDB('dbsession')->query("DELETE FROM ".TABLE_PRE."dbsession WHERE id='".$id."' ");
-	}
-	function sess_gc($t){
-		setDB('dbsession')->query("DELETE FROM ".TABLE_PRE."dbsession WHERE dateline<".(time()-$t)." "); 
-	}
-}
+ 
 /*End Session*/
 setDb();
 initsession();

@@ -1,11 +1,11 @@
 <?php
 class weixin_commandModel extends model{
-	public $base;
+	 
 	public $type_list;
 	public $fun_list;
-	public function __construct(&$base){
-		parent::__construct($base);
-		$this->base=$base;
+	public function __construct (){
+		parent::__construct ();
+		 
 		$this->table="weixin_command";
 		$this->type_list=array(
 			1=>"普通",

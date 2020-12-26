@@ -1,10 +1,10 @@
 <?php
 class userModel extends model{
-	public $base;
+	 
 	public $invite_step=0;
-	function __construct(&$base){
-		parent::__construct($base);
-		$this->base=$base;
+	function __construct (){
+		parent::__construct ();
+		 
 		$this->table="user";
 	}
 	public function Dselect($option,&$rscount=false){

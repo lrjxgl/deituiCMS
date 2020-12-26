@@ -110,10 +110,9 @@ class skymvc
 		loadFun($fun);
 	}
 	/*引入配置文件*/
-	public function loadconfig($file,$base=NULL){
+	public function loadconfig($file){
 		if(file_exists(ROOT_PATH."config/{$file}.php")){
 			@include(ROOT_PATH."config/{$file}.php");
-			$base=$base?$base:$this;
 			
 			if(isset($config)){
 				$GLOBALS['config_data']+=$config;
@@ -121,9 +120,9 @@ class skymvc
 		}
 	}
 	/*获取配置信息*/
-	public function config_item($k="",$base=NULL){
-		$base=$base?$base:$this;
-		if(empty($k)){
+	public function config_item($k=""){
+		 
+		if(empty($k)){ 
 			return $GLOBALS['config_data'];
 		}else{
 			if(is_array($k)){

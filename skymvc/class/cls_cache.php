@@ -25,6 +25,13 @@ class cache
 	
 	public function init(){
 		$this->cache_dir=ROOT_PATH."temp/filecache";
+		if(class_exists("redisCache")){
+			redisCache::init();
+		}
+		if(class_exists("cacheMem")){
+			cacheMem::init();
+		}
+		
 	}
  
 	public function keydir($key){
@@ -46,8 +53,11 @@ class cache
 		 
 		if($this->cacheconfig['redis']){
 			$this->cache_type="redis";
+			
+			
 		}elseif($this->cacheconfig['memcache']){
 			$this->cache_type="memcache";
+			
 		}elseif($this->cacheconfig['mysql']){
 			$this->cache_type='mysql';
 		}else{
@@ -62,10 +72,10 @@ class cache
 		 
 		 switch($this->cache_type){
 			case "memcache":
-					$this->mem_set($key,$val,$expire);
+					cacheMem::set($key,$val,$expire);
 				break;
 			case "redis":
-					$this->redis_set($key,$val,$expire);
+					redisCache::set($key,$val,$expire);
 				break; 
 			case "file":
 			
@@ -74,7 +84,7 @@ class cache
 				break;
 		
 			case "mysql":
-					$this->mysql_set($key,$val,$expire);
+					mysqlCache::set($key,$val,$expire);
 				break;
 		 }
 	}
@@ -83,10 +93,10 @@ class cache
 		 
 		 switch($this->cache_type){
 			 case "memcache":
-			 			return $this->mem_get($key);
+			 		return 	cacheMem::get($key);
 					break;
 			case "redis":
-						return $this->redis_get($key);
+						return redisCache::get($key);
 					break;
 			 case "file":
 						return $this->file_get($key);
@@ -94,7 +104,7 @@ class cache
 
 			case "mysql":
 					
-						return $this->mysql_get($key);	
+						return mysqlCache::get($key);	
 					break;
 		 }
 	}
@@ -102,17 +112,17 @@ class cache
 	public function del($key){
 		switch($this->cache_type){
 			case "memcache":
-					return $this->mem_del($key);
+					return cacheMem::del($key);
 				break;
 			case "redis":
-					return $this->redis_del($key);
+					return redisCache::del($key);
 				break;
 			 case "file":					
 					$this->file_del($key);
 				break;
 			case "mysql":
 					
-					return $this->mysql_del($key);	
+					return mysqlCache::del($key);	
 				break;
 		}
 	}
@@ -158,121 +168,7 @@ class cache
 		$file=$dir.$key.".txt";
 		@unlink($file);
 	}
-	/**
-	*@获取php缓存 可以直接include文件
-	*/
-	public function php_get($key)
-	{
-		$key=preg_replace("/[^\w]/","",$key);
-		$dir=$this->cache_dir.$this->keydir($key);
-		$file=$dir.$key.".php";
-		if(file_exists($file)){
-			@include($file);
-			return $$key;
-		}else{
-			return false;
-		}
-
-	}
 	 
-	
-	 
-	/**
-	*@写入php缓存 一般用作配置缓存 永久有效
-	*/
-	public function php_set($key,$val,$expire=3600)
-	{
-		$key=preg_replace("/[^\w]/","",$key);
-		$dir=$this->cache_dir.$this->keydir($key);
-		$file=$dir.$key.".php";
-		$content='<?php'." \r\n".'$'.$key.'='.var_export($val,true).";\r\n?>";
-		file_put_contents($file,$content);
-	}
-	
-	
-	/*
-	*mem缓存
-	*/
-	
-	 
-	
-	public function mem_set($k,$v,$expire=0){
-		if(function_exists("cache_mem_set")){
-			cache_mem_set($k,$v,$expire);
-		}else{
-			$this->file_set($k,$v,$expire);
-		}
-	}
-	
-	public function mem_get($k){
-		if(function_exists("cache_mem_get")){
-			return cache_mem_get($k);
-		}else{
-			return $this->file_get($k);
-		}
-	}
-	public function mem_del($k){
-		if(function_exists("cache_mem_delete")){
-			return cache_mem_delete($k);
-		}else{
-			return $this->file_del($k);
-		}
-	}
-	/**redis 缓存**/
-	public function redis_set($k,$v,$expire=0){
-		if(function_exists("cache_redis_set")){
-			cache_redis_set($k,$v,$expire);
-		}else{
-			$this->file_set($k,$v,$expire);
-		}
-	}
-	
-	public function redis_get($k){
-		if(function_exists("cache_redis_get")){
-			return cache_redis_get($k);
-		}else{
-			return $this->file_get($k);
-		}
-	}
-	public function redis_del($k){
-		if(function_exists("cache_redis_delete")){
-			return cache_redis_delete($k);
-		}else{
-			return $this->file_del($k);
-		}
-	}
-	/**
-	*mysql 缓存
-	*/
-	
- 
-		
-	public function mysql_set($k,$v,$expire=3600){
-		
-		if(function_exists("cache_mysql_set")){
-			cache_mysql_set($k,$v,$expire);
-		}else{
-			$this->file_set($k,$v,$expire);
-		}
-		
-	}
-	
-	public function mysql_get($k){
-		if(function_exists("cache_mysql_get")){
-			return cache_mysql_get($k);
-		}else{
-			return $this->file_get($k);
-		}
-		 
-	}
-	
-	public function mysql_del($k){
-		if(function_exists("cache_mysql_delete")){
-			return cache_mysql_delete($k);
-		}else{
-			return $this->file_del($k);
-		}
-	}
 	/**
 	@删除目录缓存
 	*/

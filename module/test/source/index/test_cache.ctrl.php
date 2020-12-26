@@ -1,23 +1,20 @@
 <?php
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-class testControl extends skymvc{
+ 
+class test_cacheControl extends skymvc{
 	
 	public function __construct(){
 		parent::__construct();
 	}
 	
 	public function onDefault(){
-		require 'vendor/autoload.php';
-		
-		
-		
-		$spreadsheet = new Spreadsheet();
-		$sheet = $spreadsheet->getActiveSheet();
-		$sheet->setCellValue('A1', 'Hello World !');
-		
-		$writer = new Xlsx($spreadsheet);
-		$writer->save('test/hello world.xlsx');
+		//$_SESSION["hh"]="abc";
+		//$_SESSION["a"]="abc";
+		echo $_SESSION["hh"];
+		/*
+		cache()->setType("mysql")->set("ax","axaa");
+		 
+		echo cache()->setType("mysql")->get("ax");
+		*/
 	}
 	
 }

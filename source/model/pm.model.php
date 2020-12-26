@@ -4,10 +4,10 @@
 *model 自动生成
 */				
 class pmModel extends model{
-	public $base;
-	public function __construct(&$base){
-		parent::__construct($base);
-		$this->base=$base;
+	 
+	public function __construct (){
+		parent::__construct ();
+		 
 		$this->table="pm";
 	}
 }

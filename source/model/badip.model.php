@@ -1,8 +1,8 @@
 <?php
 class badipModel extends model{
 	public $table="badip";
-	public function __construct(&$base){
-		parent::__construct($base);
+	public function __construct (){
+		parent::__construct ();
 	}
 	
 	public function check($ip){

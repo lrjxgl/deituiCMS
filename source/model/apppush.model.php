@@ -1,10 +1,10 @@
 <?php
 class apppushModel extends model{
-	public $base;
+	 
 	public $oc_where;
-	public function __construct(&$base){
-		parent::__construct($base);
-		$this->base=$base;
+	public function __construct (){
+		parent::__construct ();
+		 
 		$this->table="apppush";
 	}
 	

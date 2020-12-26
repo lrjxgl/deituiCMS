@@ -1,9 +1,9 @@
 <?php
 class districtModel extends model{
-	public $base;
-	public function __construct(&$base){
-		parent::__construct($base);
-		$this->base=$base;
+	 
+	public function __construct (){
+		parent::__construct ();
+		 
 		$this->table="district";
 	}
 	/*获取区域 k=>v 形式*/

@@ -68,6 +68,11 @@ class ComposerStaticInitf3e60c585e75095e834a6101cd603f0c
     );
 
     public static $prefixLengthsPsr4 = array (
+        'W' => 
+        array (
+            'Workerman\\Crontab\\' => 18,
+            'Workerman\\' => 10,
+        ),
         'P' => 
         array (
             'Psr\\SimpleCache\\' => 16,
@@ -84,6 +89,14 @@ class ComposerStaticInitf3e60c585e75095e834a6101cd603f0c
     );
 
     public static $prefixDirsPsr4 = array (
+        'Workerman\\Crontab\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/crontab/src',
+        ),
+        'Workerman\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/workerman',
+        ),
         'Psr\\SimpleCache\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/simple-cache/src',

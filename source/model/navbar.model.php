@@ -1,9 +1,9 @@
 <?php
 class navbarModel extends model{
 	public $base=NULL;
-	public function __construct(&$base){
-		parent::__construct($base);
-		$this->base=$base;
+	public function __construct (){
+		parent::__construct ();
+		 
 		$this->table="navbar";	
 	}
 	public function navlist($gid,$pid=0){

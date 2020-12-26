@@ -2,8 +2,8 @@
 class pvModel extends model{
 	public $table="pv";
 	public function __construct(&$base=null){
-		parent::__construct($base);
-		$this->base=$base;
+		parent::__construct ();
+		 
 	}
 	public function Stat(){
 		$ssid=session_id();

@@ -2,12 +2,12 @@
 /*缓存配置*/
 $cacheconfig=array(
 	"redis"=>true,
-	"memcache"=>true,
+	"memcache"=>false,
 	"mysql"=>true,
 	"file"=>true
 	
 );
-require_once "extends/cache/ex_cache_redis.php";
-require_once "extends/cache/ex_cache_memcache.php";
-require_once "extends/cache/ex_cache_mysql.php";
-
+require_once "extends/cache/redis.php";
+//require_once "extends/cache/memcache.php";
+require_once "extends/cache/mysql.php";
+ 

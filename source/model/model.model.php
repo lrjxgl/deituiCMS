@@ -1,8 +1,8 @@
 <?php
 class modelModel extends model{
-	public $base;
-	public function __construct(&$base){ 
-		parent::__construct($base); 
+	 
+	public function __construct (){ 
+		parent::__construct (); 
 		$this->table="model"; 
 	}
 	

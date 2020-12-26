@@ -500,3 +500,25 @@ error:1416F086:SSL routines:tls_process_server_certificate:certificate verify fa
 
 ---2020-12-22 11:10:23--/module.php?m=test--
 <div class='item'>错误类型：WARNING<br> 内容：Function Redis::delete() is deprecated  错误位置：D:\www\product\deituiCMSBase\extends\cache\ex_cache_redis.php 行：21 </div>
+
+---2020-12-25 13:17:57--/module.php?m=test_queue--
+<div class='item'>错误类型：WARNING<br> 内容：require(extends/queue/mysql): failed to open stream: No such file or directory  错误位置：D:\www\product\deituiCMSBase\module\test\source\index\test_queue.ctrl.php 行：8 </div>
+
+---2020-12-25 16:16:31--/test/task.php--
+<div class='item'>错误类型：WARNING<br> 内容：Use of undefined constant CONTROL_DIR - assumed 'CONTROL_DIR' (this will throw an Error in a future version of PHP)  错误位置：D:\www\product\deituiCMSBase\skymvc\skymvc.php 行：98 </div>
+
+---2020-12-25 17:18:43--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：147 </div>
+
+---2020-12-25 17:18:47--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：147 </div>
+
+---2020-12-25 17:18:48--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：147 </div>
+
+---2020-12-25 17:18:51--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：147 </div>

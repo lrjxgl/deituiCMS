@@ -1,0 +1,28 @@
+2020-12-25 17:24:19 pid:1 ParseError: syntax error, unexpected '=' in D:\www\product\deituiCMSBase\vendor\workerman\crontab\src\Parser.php:117
+Stack trace:
+#0 D:\www\product\deituiCMSBase\vendor\composer\ClassLoader.php(322): Composer\Autoload\includeFile('D:\\www\\product\\...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Workerman\\Cront...')
+#2 D:\www\product\deituiCMSBase\vendor\workerman\crontab\src\Crontab.php(147): spl_autoload_call('Workerman\\Cront...')
+#3 D:\www\product\deituiCMSBase\vendor\workerman\crontab\src\Crontab.php(61): Workerman\Crontab\Crontab::tryInit()
+#4 D:\www\product\deituiCMSBase\test\crontab.php(14): Workerman\Crontab\Crontab->__construct('1 * * * * *', Object(Closure))
+#5 D:\www\product\deituiCMSBase\vendor\workerman\workerman\Worker.php(2415): {closure}(Object(Workerman\Worker))
+#6 D:\www\product\deituiCMSBase\vendor\workerman\workerman\Worker.php(1418): Workerman\Worker->run()
+#7 D:\www\product\deituiCMSBase\vendor\workerman\workerman\Worker.php(1361): Workerman\Worker::forkWorkersForWindows()
+#8 D:\www\product\deituiCMSBase\vendor\workerman\workerman\Worker.php(542): Workerman\Worker::forkWorkers()
+#9 D:\www\product\deituiCMSBase\test\crontab.php(17): Workerman\Worker::runAll()
+#10 {main}
+2020-12-25 17:24:20 pid:1 Worker process terminated
+2020-12-25 17:26:16 pid:1 ParseError: syntax error, unexpected '=' in D:\www\product\deituiCMSBase\vendor\workerman\crontab\src\Parser.php:117
+Stack trace:
+#0 D:\www\product\deituiCMSBase\vendor\composer\ClassLoader.php(322): Composer\Autoload\includeFile('D:\\www\\product\\...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Workerman\\Cront...')
+#2 D:\www\product\deituiCMSBase\vendor\workerman\crontab\src\Crontab.php(147): spl_autoload_call('Workerman\\Cront...')
+#3 D:\www\product\deituiCMSBase\vendor\workerman\crontab\src\Crontab.php(61): Workerman\Crontab\Crontab::tryInit()
+#4 D:\www\product\deituiCMSBase\test\crontab.php(14): Workerman\Crontab\Crontab->__construct('1 * * * * *', Object(Closure))
+#5 D:\www\product\deituiCMSBase\vendor\workerman\workerman\Worker.php(2415): {closure}(Object(Workerman\Worker))
+#6 D:\www\product\deituiCMSBase\vendor\workerman\workerman\Worker.php(1418): Workerman\Worker->run()
+#7 D:\www\product\deituiCMSBase\vendor\workerman\workerman\Worker.php(1361): Workerman\Worker::forkWorkersForWindows()
+#8 D:\www\product\deituiCMSBase\vendor\workerman\workerman\Worker.php(542): Workerman\Worker::forkWorkers()
+#9 D:\www\product\deituiCMSBase\test\crontab.php(17): Workerman\Worker::runAll()
+#10 {main}
+2020-12-25 17:26:17 pid:1 Worker process terminated
