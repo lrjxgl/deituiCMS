@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div id="app">
+		<div class="header">
+			<div class="header-back pos-relative"></div>
+			<div class="header-search-box">
+				 
+				<input id="search-word" class="header-search pdl-5" v-model="keyword" placeholder="搜你想要的" type="text">
+				<div @click="search" class="header-search-btn bg-primary cl-white iconfont icon-search"></div>
+			</div>
+			 
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body none" :class="'flex-col'" >
+			 
+			<div class="sglist" id="list" v-if="pageData.rscount>0">
+			 
+				<a v-for="(item,index) in pageData.list" :href="'/module.php?m=forum&a=show&id='+item.id" class="sglist-item">
+					<div class="sglist-title">{{item.title}}</div>
+					<div class="sglist-desc">{{item.description}}</div>
+					
+					<div class="sglist-imglist" v-if="item.imgslist">
+						<image v-for="(img,imgIndex) in item.imgslist" :key="imgIndex" :src="img+'.100x100.jpg'" class="sglist-imglist-img"
+						 mode="widthFix"></image>
+					</div>
+					<div class="sglist-ft">
+						<div class="sglist-ft-love">{{item.love_num}}</div>
+						<div class="sglist-ft-cm">{{item.comment_num}}</div>
+						<div class="sglist-ft-div">{{item.view_num}}</div>
+					</div> 
+				</a>
+				 
+			</div>
+			<div v-else class="emptyData">暂无帖子</div>
+			<div @click="getList" v-if="per_page>0" class="loadMore">点我加载更多...</div>
+		</div>
+		</div>
+		{include file="ftnav.html"}
+		{include file="footer.html"}
+		<script>
+			var skeyword="{$keyword}";
+		</script>
+		<script src="{$skins}forum/search.js"></script>
+		
+	</body>
+</html>

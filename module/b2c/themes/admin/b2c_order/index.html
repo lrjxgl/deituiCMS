@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body >
+		<div class="shd">{$typename}</div>
+		<div class="main-body">
+			<form autocomplete="off" class="search-form" action="/moduleadmin.php"> 
+				<input type="hidden" name="m" value="b2c_order">
+				<input type="hidden" name="type" value="{$smarty.get.type|html}" />
+				ID <input type="text"  class="w50" name="orderid" value="{$smarty.get.orderid|intval}" />
+				订单号 <input type="text" class="w150" name="orderno" value="{$smarty.get.orderno|html}" />
+				用户 <input type="text" name="nickname" class="w100" value="{$smarty.get.nickname|html}" />	 
+				 
+				下单时间 <input name="stime" type="text" id="stime" value="{$smarty.get.stime}" class="w100" /> 到 <input  class="w100" type="text"  name="etime" id="etime"  value="{$smarty.get.etime}" /> 
+				<button type="submit" class="btn" >搜索</button>
+			</form>
+			<div class="bg-ef">
+			{foreach item=item from=$list}
+			<div class="row-box mgb-10" v-for="(item,index) in list" :key="index">
+					<div class="flex bd-mp-5">
+						{if $item.ispin==1}
+						<div class="mgr-5">
+							<div class="btn-mini btn-outline-primary ">拼</div>
+						</div>
+						{/if}
+						<div class="flex-1 cl2">订单号：{$item.orderno}</div>
+						
+						<div class="cl-primary">{$item.status_name}</div>
+					</div>
+					<div class="flex flex-wrap">
+					{foreach item=pro from=$item.prolist}
+					<div class="flexlist-item" style="width: 20%; margin-right: 5px;">
+						<img class="flexlist-img" src="{$pro.imgurl}.100x100.jpg">
+						<div class="flex-1">
+							<div class="flexlist-title">{$pro.title}</div>
+							<div class="flexlist-ks">{$pro.ks_title}</div>
+							<div class="flex ">
+								<div class="flex-1 cl-money">￥{$pro.price}</div>
+								<div class="cl3">x {$pro.amount}</div>
+							</div>
+							
+						</div>
+					</div>
+					{/foreach} 
+					</div>
+					<div class="flex mgb-5">
+						 共<div class="cl-num">{$item.total_num}</div>件商品  
+						 订单金额：<div class="cl-money">￥{$item.money}</div>元
+						 
+						 <div class="flex-1"></div> 
+						 
+					</div>
+					 
+					<div  class="flex flex-jc-end">
+						<div class="cl3 f12">{$item.timeago}</div>
+						<div class="flex-1"></div>
+						
+						 
+						<div class="btn-small  btn-outline-danger" gourl="/moduleadmin.php?m=b2c_order&a=show&orderid={$item.orderid}">查看</div>
+					</div>
+					 
+			</div>
+		 
+		  
+			{/foreach}
+			 
+			<div>{$pagelist}</div>
+			</div>
+		</div>
+		{include file="footer.html"}
+		<script src="/plugin/laydate/laydate.js"></script>
+		<script>
+			laydate.render({
+				elem:"#stime"
+			})
+			laydate.render({
+				elem:"#etime"
+			});
+		</script>
+	</body>
+</html>

@@ -8,7 +8,7 @@
 		
 		public function onDefault(){
 			$where=" isdelete=0 ";
-			$url=APPADMIn."?m=gold_log&a=default";
+			$url=APPADMIN."?m=gold_log&a=default";
 			$limit=20;
 			$start=get("per_page","i");
 			$userid=get('userid','i');

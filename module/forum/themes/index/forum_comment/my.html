@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">我的评论</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			<div id="app">
+				<div v-if="pageLoad">
+					<div class="sglist">
+						<div class="sglist-item" v-for="(item,index) in pageData.list" :key="index">
+							<div class="f16">
+							{{item.content}}
+							
+							</div>
+							 
+							<div class="flex flex-ai-center  mgt-5">
+								<div class="f12 flex-1 cl2">{{item.timeago}}</div>
+								<div :gourl="'/module.php?m=forum&a=show&id='+item.objectid" class="btn-small mgr-10">查看</div>
+								
+								<div class="btn-small btn-danger" @click="del(item.id)">删除</div>
+							</div>
+						</div>
+					</div>
+					<div @click="loadMore" v-if="per_page>0" class="loadMore">点我加载更多...</div>
+				</div>
+			</div>
+			 
+		</div>
+		{include file="footer.html"}
+		<script src="{$skins}forum_comment/my.js"></script>
+	</body>
+</html>

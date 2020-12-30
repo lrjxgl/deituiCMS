@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<link href="/plugin/swiper/css/swiper.min.css" rel="stylesheet" />
+		<link href="{$skins}b2c/index.red/css/index.css" rel="stylesheet" />
+		<!--头部-->
+		<div class="header-bgBox">
+			<img class="banner-bg"  src="{$skins}b2c/index.red/banner-bg.png" />
+			<!--swiper-->
+			<div class="swiper">
+				<div class="swiper-container" id="indexFlash">
+					<div class="swiper-wrapper" >
+						{foreach item=c from=$flashList}
+						<div class="swiper-slide">
+							<img class="wmax" src="{$c.imgurl}" />
+						</div>
+						{/foreach}
+					</div>
+					 
+					<div class="swiper-pagination"></div>
+				 
+				</div>
+			</div>
+		</div>
+		<div class="header-fixtop flex-ai-center">
+			<img class="header-logo  mgl-10 " src="{$site.logo}.100x100.jpg" />
+			<form id="searchForm" class="header-search-box">
+				<div class="header-search-icon iconfont icon-search"></div>
+				<input placeholder="搜你想要的" type="search" id="search-word" class="header-search" />
+			</form>
+			<div gourl="/index.php?m=kefu" class="mgl-5 mgr-5 header-fixtop-icon icon-message"></div>
+		</div>
+		
+		<!--导航-->
+		<div class="navBox">
+			{if $navList}
+			<div class="m-navPic">
+			    {foreach item=c from=$navList}
+			    <a href="{$c.link1}" class="m-navPic-item">
+					  <img class="m-navPic-img" src="{$c.imgurl|images_site}" />
+					  <div class="m-navPic-title">{$c.title}</div>
+					   
+			    </a>
+				
+			    {/foreach}
+			</div>
+			{/if}
+			<div class="m-navPic-hr"></div>
+			<div class="navBottom">
+				<div class="navBottom-left">
+					<div class="navBootom-c1">最新</div>
+					<div class="navBootom-c1">资讯</div>
+				</div>
+				<div class="navBootom-middle">
+					<div class="navBootom-line"></div>
+				</div>
+				<div class="navBootom-right">
+					{get data=artList model=article fun=recList(0,2)}
+					{foreach item=c from=$artList}
+					<a href="/index.php?m=article&a=show&id={$c.id}" class="navBootom-item">
+						<div class="navBottom-btn">资讯</div>
+						<div class="navBootom-right-title">{$c.title}</div>
+					</a>
+					{/foreach}
+					 
+				</div>
+			</div>
+		</div>
+		{get data=abc model=table_data fun=get(7)}
+		<div class="md-abc">
+			<div class="md-abc-a">
+				<img class="md-abc-img" src="{$abc["a1"]["value"]}" />
+			</div>
+			<div class="md-abc-bc md-abc-r">
+				<div class="md-abc-b">
+					<img class="md-abc-img" src="{$abc["b1"]["value"]}" />
+				</div>
+				<div class="md-abc-c">
+					<img class="md-abc-img" src="{$abc["b2"]["value"]}"> 
+				</div>
+			</div>
+		</div>
+		<div class="main-body">
+			
+			<!--推广模块-->
+			<div class="hd-a">
+				<div class="hd-a-h3">大家一起拼</div>
+				<div class="hd-a-h6">拼团更实惠</div>
+			</div>
+			<div class="aBox">
+				{get data=pt module=b2c model=b2c_group fun=getProductByKey('pintuan')}
+				{if isset($pt[0])}
+				<div class="aBox-item">
+					<div class="aBox-main">
+						<div class="aBox-title">{$pt[0].title}</div>
+						<div class="aBox-desc">{$pt[0].description}</div>
+						<div gourl="/module.php?m=b2c_product&a=show&id={$pt[0].id}" class="aBox-btn">立即拼团</div>
+					</div>
+
+					<img class="aBox-img" src="{$pt[0].imgurl}.100x100.jpg" />
+
+				</div>
+				{/if}
+				<div class="aBox-line"></div>
+				{if isset($pt[1])}
+				<div class="aBox-item">
+					<div class="aBox-main">
+						<div class="aBox-title">{$pt[1].title}</div>
+						<div class="aBox-desc">{$pt[0].description}</div>
+						<div gourl="/module.php?m=b2c_product&a=show&id={$pt[0].id}"  class="aBox-text">37分钟后开团</div>
+					</div>
+
+					<img class="aBox-img" src="{$pt[1].imgurl}.100x100.jpg" />
+
+				</div>
+				{/if}
+			</div>
+			<!--热门推荐-->
+			<div class="hd-b">
+				<div class="hd-b-line"></div>
+				<div class="hd-b-title">热门推荐</div>
+				<div class="hd-b-more iconfont icon-right"></div>
+			</div>
+			<div class="bBox">
+				{get data=hList model=table_data fun=getListByTable("b2c-index-reclist",4)}
+				 
+				{foreach item=res from=$hList}
+				 
+				<div gourl="{$res["data"]["b"]["value"]}" class="bBox-item">
+					<img  class="bBox-item-img" src="{$res["data"]["a"]["value"]}.small.jpg" />
+				</div>
+			 
+				{/foreach}
+				 
+			</div>
+			<!--猜你喜欢-->
+			<div class="hd-b">
+				<div class="hd-b-line"></div>
+				<div class="hd-b-title">猜你喜欢</div>
+				<div class="hd-b-more iconfont icon-right"></div>
+			</div>
+		</div>
+		<div>
+			<div class="mtlist">
+				{foreach item=c from=$recList}
+				<a href="/module.php?m=b2c_product&a=show&id={$c.id}" class="mtlist-item">
+					<div class="mtlist-item-bd">
+						<div class="mtlist-imgbox">
+							<img class="mtlist-img " src="{$c.imgurl}.small.jpg" />
+						</div>
+						<div class="mtlist-item-pd">
+							<div class="mtlist-item-money">
+								<div class="mtlist-item-money-flex">￥
+									<text class="mtlist-item-money_money">{$c.price}</text>
+								</div>
+								<div class="mtlist-item-money_num">月销{$c.buy_num}件</div>
+							</div>
+							<div class="mtlist-title">{$c.title}</div>
+							 
+						</div>
+					</div>
+				</a>
+				{/foreach}
+
+
+			</div>
+		</div>
+		 
+		<!--底部-->
+		 {assign var="ftnav" value="b2c_home"}
+		{include file="ftnav.html"}
+		{include file="footer.html"}
+		<script src="/plugin/swiper/js/swiper.min.js"></script>
+		<script>
+			$(function(){
+				var flash=new Swiper("#indexFlash",{
+					loop: true,
+					pagination: {
+					  el: '.swiper-pagination'
+					},
+				});
+				$(document).on("click","#searchBtn",function(){
+					var keyword=$("#keyword").val();
+					window.location="/module.php?m=b2c_search&keyword="+encodeURIComponent(keyword);
+				})
+				$(document).on("submit","#searchForm",function(){
+					var keyword=$("#search-word").val();
+				 
+					if(keyword==""){
+						return false;
+					}
+					window.location="/module.php?m=b2c_search&keyword="+encodeURIComponent(keyword);
+					return false;
+				})
+			})
+			
+		</script>
+	</body>
+</html>

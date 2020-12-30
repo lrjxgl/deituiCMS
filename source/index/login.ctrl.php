@@ -127,7 +127,9 @@ class loginControl extends skymvc{
 			
 		);
 		$res=M("sms")->sendSms($telephone,$content);
-		
+		if(SMS_TEST==true){
+			$this->goAll("短信已发送，请在5分钟内找回密码".$yzm);
+		}
 		$key="login_findpwd_sms".$telephone.$yzm;
 		
 		if($res){

@@ -71,18 +71,11 @@ ID:<input class="w100" type="text" name="id" value="{$smarty.get.id|intval}" cla
    <td>{$c.fav_num}</td>
     
    <td>
-   	 {if $c.status eq 2}
-   <img src='/static/admin/img/yes.gif' class="ajax_no" url='{$appadmin}?m=article&a=status&id={$c.id}&status=4' rurl='{$appadmin}?m=article&a=status&id={$c.id}&status=2'>
-    {else}
-    <img src='/static/admin/img/no.gif' class="ajax_yes" url='{$appadmin}?m=article&a=status&id={$c.id}&status=2' rurl='{$appadmin}?m=article&a=status&id={$c.id}&status=4'>
-    {/if}
+	   <div url='{$appadmin}?m=article&a=status&id={$c.id}&ajax=1' class="{if $c.status eq 1}yes{else}no{/if} js-toggle-status"></div>
+   	  
    </td>
    <td>
-   	{if $c.is_recommend eq 1}
-   <img src='/static/admin/img/yes.gif' class="ajax_no" url='{$appadmin}?m=article&a=recommend&id={$c.id}&is_recommend=0' rurl='{$appadmin}?m=article&a=recommend&id={$c.id}&is_recommend=2'>
-    {else}
-    <img src='/static/admin/img/no.gif' class="ajax_yes" url='{$appadmin}?m=article&a=recommend&id={$c.id}&is_recommend=1' rurl='{$appadmin}?m=article&a=recommend&id={$c.id}&is_recommend=0'>
-    {/if}
+   	<div url='{$appadmin}?m=article&a=recommend&id={$c.id}&ajax=1' class="{if $c.is_recommend eq 1}yes{else}no{/if} js-toggle-status"></div>
    </td>
    
    <td>{$c.createtime}</td>

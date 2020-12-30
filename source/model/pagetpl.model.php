@@ -1,10 +1,10 @@
 <?php
 	class pageTplModel extends model{
-		 
-		public function __construct (){
-			parent::__construct ();
-			 
-			$this->table="pagetpl";
+		public $table="pagetpl";
+		public function __construct(){
+			parent::__construct();
+	
+			
 		}
 		
 		public function get($m,$a,$tpl=""){
@@ -13,6 +13,7 @@
 			if($row){
 				$tpl=$row['tpl'];
 			}
+			$tpl=str_replace("../","",$tpl);
 			return $tpl;
 		}
 		

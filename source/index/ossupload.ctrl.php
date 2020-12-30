@@ -143,7 +143,7 @@ class ossuploadControl extends skymvc{
 			
 		    $data = array("Status"=>"Ok","filename"=>$p['filename'],"truename"=>$url."/".$p['filename'],"size"=>$p['size']);
 		    M("attach")->add(array(
-				"file_url"=>$p['filename'],
+				"url"=>$p['filename'],
 				"file_size"=>$p['size']
 			));
 			echo json_encode($data);

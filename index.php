@@ -9,7 +9,6 @@ if(!file_exists("config/install.lock"))
 require("config/version.php"); 
 require("config/config.php");
 require "config/setconfig.php";
-require("config/const.php");
 define("ROOT_PATH",  str_replace("\\", "/", dirname(__FILE__))."/");
 define("CONTROL_DIR","source/index");
 define("MODEL_DIR","source/model");

@@ -1,0 +1,42 @@
+老雷PHP全栈开发教程之论坛模块开发项目分析
+论坛功能分析
+	板块
+	分类
+	帖子
+	评论
+需求的模型
+	去编写代码
+	前后端分离，api化
+数据库结构
+	板块 forum_group 
+		gid title orderindex status createtime  imgurl
+	分类 forum_category
+		catid gid title orderindex status createtime  imgurl
+	帖子 forum
+		topicid gid catid userid title orderindex status createtime ip addr  imgurl content imgsdata isrecommend isnew
+	评论 forum_comment
+		id userid topicid status createtime content ip addr
+编写程序
+	forum_group 
+		后台 index add save update delete order
+		前台 index list show
+	forum_category	
+		后台 index add save update delete order
+	forum	
+		后台 index add save update delete 
+		前台 index list show add save update delete 
+	forum_comment
+		后台  index update delete
+		前台 index add save update delete 
+编写web页面
+	根据ui设计好的页面来做
+	后台
+		统一风格，不需要ui设计
+	前台
+		需要ui设计
+	跨端跨平台
+		css 单一元素的css 
+		.list 
+		.list-item  不用 .list .item
+		.list-item_title
+		

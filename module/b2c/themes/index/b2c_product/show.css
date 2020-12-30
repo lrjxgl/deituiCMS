@@ -1,0 +1,162 @@
+.d-fixTop {
+	position: fixed;
+	top: 5px;
+	left: 0;
+	right: 0;
+	display: flex;
+	flex-direction: row;
+	padding-right: 5px;
+	z-index: 999;
+}
+
+.d-fixTop-back,
+.d-fixTop-cart {
+	background-color: #a0a0a0;
+	text-align: center;
+	opacity: 0.9;
+	width: 26px;
+	height: 26px;
+	justify-content: center;
+	color: #fff;
+	border-radius: 50%;
+	cursor: pointer;
+
+}
+
+.d-fixTop-back {
+
+	margin-left: 10px;
+}
+
+.d-fixTop-cart {}
+
+.d-fixTop-cart:before {
+	font-weight: 300;
+	font-size: 14px;
+}
+
+
+.flcart {
+	display: flex;
+	flex-direction: row;
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	font-size: 12px;
+	line-height: 1.2;
+	border-top: 1px solid #eee;
+	background-color: #fff;
+	text-align: center;
+}
+
+.flcart-icon:before {
+	padding-top: 5px;
+	clear: both;
+	display: block;
+	font-size: 14px;
+	line-height: 1.2;
+}
+
+.flcart-f1 {
+	width: 60px;
+	display: inline-block;
+	height: 45px;
+	line-height: 22px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.flcart-f2 {
+	flex: 1;
+	height: 45px;
+	line-height: 45px;
+	background-color: #f90;
+	color: #fff;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.flcart-f3 {
+	background-color: #f30;
+	cursor: pointer;
+}
+ 
+.kslist {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-left: 10px;
+}
+
+.kslist-label {
+	margin-right: 6px;
+	color: #646464;
+}
+
+.kslist-item {
+	border: 1px solid #eee;
+	padding: 4px 8px;
+	margin-right: 10px;
+}
+
+.kslist-active {
+	color: #007AFF;
+}
+
+.ppBox {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 10px;
+	background-color: #fff;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	z-index: 999;
+}
+
+.ppBox-close {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.wh-80 {
+	width: 80px;
+	height: 80px;
+}
+
+.pdl0 {
+	padding-left: 0;
+}
+
+.ani-bottom {
+	animation: aniBottom 500ms;
+}
+
+@-webkit-keyframes aniBottom {
+	from {
+		bottom: -100%;
+	}
+
+	to {
+		bottom: 0;
+	}
+}
+
+.ani-top {
+	animation: aniTop 500ms;
+}
+
+@-webkit-keyframes aniTop {
+	from {
+		bottom: 0;
+	}
+
+	to {
+		bottom: -600px;
+	}
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<style>
+		.btn-mini{
+			padding: 2px;
+		}
+	</style>
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">最新帖子</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body none" :class="'flex-col'" id="App">
+			 
+			<div class="sglist" id="list">
+				 
+				<div v-if="list">
+				<a v-for="(item,index) in list" :key="index" :href="'/module.php?m=forum&a=show&id='+item.id" class="sglist-item">
+					<div class="flex mgb-5">
+						<img :src="item.user_head+'.100x100.jpg'" class="wh-40 bd-radius-50" />
+						<div class="flex-1 mgl-5">
+							<div class="f14 fw-600 mgb-5">{{item.nickname}}</div>
+							<div class="flex">
+								<div class="f12 cl3">{{item.timeago}}</div>
+								
+							</div>
+						</div>
+						<div class="cl2 f12">来自{{item.group_title}}</div>  
+					</div>
+					<div class="sglist-title mgb-10">{$c.title}</div>
+					 
+					<div v-if="item.imgslist" class="sglist-imglist">
+						 
+						<img v-for="(cc,ii) in item.imgslist" :key="ii" :src="cc+'.100x100.jpg'" class="sglist-imglist-img" />
+						 
+					</div>
+					<div class="sglist-ft">
+						<div class="sglist-ft-love">{{item.love_num}}</div>
+						<div class="sglist-ft-cm">{{item.comment_num}}</div>
+						<div class="sglist-ft-view">{{item.view_num}}</div>
+					</div> 
+				</a>
+				</div>  
+			</div>
+			<div v-if="per_page>0" class="loadMore" @click="getList">加载更多...</div>
+		</div>
+		<a href="/module.php?m=forum&a=add" class="fixedAdd">发布</a>
+		{include file="footer.html"}
+		 
+		 <script src="{$skins}forum/new.js"></script>
+	</body>
+</html>

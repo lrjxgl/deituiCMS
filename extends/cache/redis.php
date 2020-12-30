@@ -10,20 +10,20 @@ class redisCache{
 	public static function set($key,$val,$expire=259200){
 		 
 		$val=base64_encode(json_encode($val));
-		self::$redis->setEx(_REDIS_PRE_.$key,$expire,$val);
+		self::$redis->setEx(self::$redisKey.$key,$expire,$val);
 		
 	}
 	
 	public static function get($key){
 	 	 
-		$val= self::$redis->get(_REDIS_PRE_.$key);
+		$val= self::$redis->get(self::$redisKey.$key);
 		$val=json_decode(base64_decode($val),true);
 		return $val;
 	}
 	
 	public static function delete($key){
 		 
-		return self::$redis->del(_REDIS_PRE_.$key);
+		return self::$redis->del(self::$redisKey.$key);
 	}
 	 
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+ 
+<div class="tabs-border">
+	<a class="item active" href="?m=pagetpl">模板列表</a>
+	<a class="item" href="?m=pagetpl&a=add">模板添加</a>
+</div> 
+ 
+<div class="main-body"> 
+ 
+ <table class="tbs">
+ 	<thead>
+  <tr>
+   <td>id</td>
+   <td>m</td>
+   <td>a</td>
+   <td>tpl</td>
+<td>操作</td>
+  </tr>
+  </thead>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.m}</td>
+   <td>{$c.a}</td>
+   <td>{$c.tpl}</td>
+<td><a href="admin.php?m=pagetpl&a=add&id={$c.id}">编辑</a> 
+	
+	<a href="javascript:;" class="js-delete" url="admin.php?m=pagetpl&a=delete&ajax=1&id={$c.id}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

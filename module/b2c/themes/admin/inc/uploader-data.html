@@ -1,0 +1,29 @@
+<div class="upimg-box uploader-imgsdata-imgslist js-zzimg-album">
+	<input  type="file"  multiple="" class="none uploader-imgsdata-file" />
+	<div class="upimg-btn">
+		<div class="upimg-btn-icon"></div>
+		
+	</div>
+	{foreach item=c from=$imgsdata}
+	<div class="upimg-item uploader-imgsdata-img js-zzimg" data-src="{$c.trueimgurl}" v="{$c.imgurl}" trueimg="{$c.trueimgurl}">
+		<img class="upimg-img" src="{$c.trueimgurl}.100x100.jpg"/>
+		<i class="upimg-del   js-imgdel"></i>
+		<div class="flex flex-center">
+			<div class="upimg-goleft">&lt;</div>
+			&nbsp;
+			<div class="upimg-goright">&gt;</div>
+		</div>
+		
+	</div>
+	{/foreach}
+	 
+</div>
+<style>
+	.upimg-goleft,.upimg-goright{
+		display: block;
+		cursor: pointer;
+		width: 30px;
+		height: 20px;
+		color: #f40;
+	}
+</style>

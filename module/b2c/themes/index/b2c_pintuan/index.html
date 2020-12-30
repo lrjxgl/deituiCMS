@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">火热拼团</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			<div class="flexlist">
+				{foreach item=c from=$list}
+				<div gourl="/module.php?m=b2c_product&a=show&id={$c.id}" class="flexlist-item">
+					<img class="flexlist-img" src="{$c.imgurl}.100x100.jpg" />
+					<div class="flex-1">
+						<div class="flexlist-title">{$c.title}</div>
+						<div class="flex">
+							<div class="f14">拼价</div>
+							<div class="cl-money f16">￥{$c.pt_price}</div>
+							<div class="flex-1"></div>
+							<div class="market-price f12">￥{$c.market_price}</div>
+						</div>
+					</div>
+				</div>
+				{/foreach}
+			</div>
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

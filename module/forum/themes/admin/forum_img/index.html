@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<style>
+		.tophd{
+			padding: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px solid #eee;
+		}
+		.imglist{
+			
+		}
+		.imglist-item{
+			float: left;
+			width: 100px;
+			height: 140px;
+			margin-right: 10px;
+			margin-bottom: 10px;
+			text-align: center;
+		}
+		.imglist-item-img{
+			margin-bottom: 5px;
+		}
+		.imglist-del{
+			cursor: pointer;
+			color: #FF3600;
+			font-size: 14px;
+			 
+		}
+		
+		.upimg-btn{
+			display: inline-block;
+			width: 100px;
+			height: 100px;
+			margin-bottom: 5px;
+			line-height: 100px;
+			text-align: center;
+			background-color: #eee;
+			cursor: pointer;
+		}
+		.upimg-progress{
+			display: none;
+			
+			margin-bottom: 5px;
+			line-height: 36px;
+			text-align: center;
+			background-color: #eee;
+		}
+	</style>
+	<body>
+		<div class="tophd">
+			{$forum.title}::图集
+			 
+		</div> 
+		<div class="main-body"> 
+			<div class="listbox">
+				<div id="upimgloading" class="upimg-progress">
+					上传中....
+				</div>
+				<div class="imglist">
+					{foreach item=c from=$data}
+						<div class="imglist-item" data-img="{$c.imgurl}" data-id="{$c.id}">
+							
+							<img class="imglist-item-img" src="{$c.imgurl|images_site}.100x100.jpg" />
+							<div class="imglist-del" data-id="{$c.id}">删除</div>
+						</div>
+					{/foreach}
+				</div>
+				<div class="upimg-btn">+上传</div>
+			</div>
+			
+		<input  style="display: none;" multiple="multiple" type="file" id="upimg" name="upimg" />	
+		</div>
+	<script>
+		var picLen=0;
+		var picDone=0;
+		function skyUpload(upid,url,success,error,uploadProgress){
+			var vFD = new FormData();
+			var f= document.getElementById(upid).files;
+			$("#"+upid+"loading").show();
+			picLen=f.length;
+			picDone=0;
+			for(var i=0;i<picLen;i++){ 
+				vFD.append('upimg', document.getElementById(upid).files[i]);
+				// create XMLHttpRequest object, adding few event listeners, and POSTing our data
+				var oXHR = new XMLHttpRequest();        
+				oXHR.addEventListener('load', success, false);
+				oXHR.addEventListener('error', error, false);
+				if(uploadProgress!=undefined){
+					oXHR.upload.addEventListener("progress", uploadProgress, false);
+				}
+				oXHR.open('POST',url);
+				oXHR.send(vFD);
+			
+			}
+		}
+		$(function(){
+			var objectid="{$forum.id}";
+			$(document).on("click",".upimg-btn",function(){
+				$("#upimg").click();
+			})
+			
+			$(document).on("change","#upimg",function(){
+				skyUpload("upimg","/index.php?m=upload&a=uploadTao",function(e){
+					var data=eval("("+e.target.responseText+")");
+					if(data.error==0){
+						picDone++;
+						$("#upimgloading").append( picDone+'..');
+						if(picDone==picLen){
+							$("#upimgloading").hide();
+							$.get("/moduleadmin.php?m=forum_img&a=imgsdata&ajax=1",{
+								objectid:objectid
+							},function(e){
+								
+							},"json")
+						}
+						$.post("/moduleadmin.php?m=forum_img&a=save&ajax=1",{
+							objectid:objectid,
+							imgurl:data.imgurl
+						},function(e){
+							var html='<div class="imglist-item" data-id="'+e.data.id+'" data-img="'+data.imgurl+'">'
+								+'<img src="'+data.trueimgurl+'.100x100.jpg">'
+								+'<div class="imglist-del"  data-id="'+e.data.id+'" >删除</div>'
+								+'</div>';
+							$(".imglist").append(html);
+						},"json")
+						
+					}
+				})
+			})
+			
+			$(document).on("click",".imglist-del",function(){
+				var obj=$(this);
+				var id=$(this).attr("data-id");
+				$.get("/moduleadmin.php?m=forum_img&a=delete&ajax=1",{
+					id:id
+				},function(e){
+					if(!e.error){
+						obj.parents(".imglist-item").remove();
+					}
+					
+				},"json")
+			})
+		})
+	</script>	
+	</body>
+</html>

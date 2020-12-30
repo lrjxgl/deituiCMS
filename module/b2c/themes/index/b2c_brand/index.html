@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="header">
+	<div class="header-back"></div>
+	<div class="header-title">头部</div>
+</div>
+<div class="header-row"></div>
+<div class="main-body">
+    
+    	 <table class="tbs">
+<thead>  <tr>
+   <td>brandid</td>
+   <td>名称</td>
+   <td>排序</td>
+   <td>状态</td>
+   <td>dateline</td>
+   <td>图片</td>
+   <td>描述</td>
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$list}
+<tr>
+   <td>{$c.brandid}</td>
+   <td>{$c.title}</td>
+   <td>{$c.orderindex}</td>
+   <td>{$c.status}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+   <td>{$c.imgurl}</td>
+   <td>{$c.description}</td>
+<td><a href="module.php?m=b2c_brand&a=add&brandid={$c.brandid}">编辑</a> <a href="/module.php?m=b2c_brand&a=show&brandid={$c.brandid}">查看</a> <a href="javascript:;" class="js-delete" url="module.php?m=b2c_brand&a=delete&ajax=1&brandid={$c.brandid}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+    
+</div>
+{include file="footer.html"}
+</body>
+</html>

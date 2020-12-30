@@ -5,17 +5,20 @@
 	<body>
 
 		{include file="header.html"}
-		<div class="layui-main">
-			<div class="layui-row">
-	         	<div class="layui-col-md3">{include file="[c]/sidebar.html"}</div>
-				<div class="layui-col-md9">
+		<div class="main-flex">
+			<div class="flex">
+	         	
+				<div class="flex-1">
 					[nav] [tpl]
+				</div>
+				<div class="pageside">
+					
 				</div>
 
 			</div>
 		</div>	
 		{include file="footer.html"}
-
+		
 	</body>
 
 </html>

@@ -26,6 +26,15 @@ class articleModel extends model{
 		return $data;
 	}
 	
+	public function getListByCatid($catid,$fields="id,title,imgurl,description"){
+		$cids=M("category")->id_family($catid);
+		$list=$this->Dselect(array(
+			"where"=>" catid in("._implode($cids).") ",
+			"fields"=>$fields
+		));
+		return $list;
+	}
+	
 	public function recList($catid,$limit=10){
 		$where=" is_recommend=1 ";
 		if($catid){
@@ -38,6 +47,19 @@ class articleModel extends model{
 			"order"=>"id DESC"
 		);
 		return $this->Dselect($option);
+	}
+	
+	public function get($id,$fields="id,title,imgurl,description"){
+		$id=intval($id);
+		$row=$this->selectRow(array(
+			"where"=>"id=".$id,
+			"fields"=>$fields
+		));
+		 
+		if($row){
+			$row["imgurl"]=images_site($row["imgurl"]);
+		}
+		return $row;
 	}
 }
 ?>

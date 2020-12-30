@@ -5,10 +5,10 @@ class queue{
 	public $list=array();
 	public $type="";
 	public $file;
-	public $num=1;
+	 
 	public $key=1;
-	public function __construct($type="",$key=1,$num=2){
-		echo$this->type=$type;
+	public function __construct($type="",$key=1){
+		$this->type=$type;
 		if($this->type==""){
 			 
 			if(defined("QUEUE_TYPE") && QUEUE_TYPE!=''){
@@ -21,10 +21,7 @@ class queue{
 		
 		$this->file="temp/queue_".$key.".txt";
 		$this->key=$key;
-		$this->num=$num;
-		if($this->type=="file" && $this->num==1 ){
-			$this->file_get();
-		}
+	 
 		if($this->type=="redis"){
 			redisQueue::init();
 		}
@@ -101,38 +98,22 @@ class queue{
 		}
 	}
 	public function file_lpush($v){
-		if($this->num>1){
-			$this->file_get();
-			
-		}
-		
+		$this->file_get();
 		array_unshift($this->list,$v);
-		if($this->num>1){
-			$this->file_save();
-		}
-		 
+		$this->file_save();
 	}
 	
 	public function file_rpop(){
-		if($this->num>1){
-			$this->file_get();
-		}
+		$this->file_get();
 		$val=array_pop($this->list);
-		if($this->num>1){
-			$this->file_save();
-		}
-		
+		$this->file_save();
 		return $val;
 	}
 	
 	public function file_rpush($v){
-		if($this->num>1){
-			$this->file_get();
-		} 
+		$this->file_get();
 		$this->list[]=$v;
-		if($this->num>1){
-			$this->file_save();
-		}
+		$this->file_save();
 		 
 	}
 	

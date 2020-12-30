@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<link href="{$skins}b2c_category/index.css" rel="stylesheet" />
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">分类</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body bg-white">
+		<div class="list-side">
+			{foreach item=c from=$catList}
+			<div class="list-side-item">{$c.title}</div>
+			{/foreach}
+			 
+		
+		
+		</div>
+		<div class="list-main">
+			{foreach item=c from=$catList}
+			<div class="list-cat-item">
+				 
+				<div gourl="/module.php?m=b2c_product&a=list&catid={$c.catid}" class="list-cat-hd">{$c.title}</div>
+				<div class="list-child">
+					{foreach item=cc from=$c.child}
+					<div gourl="/module.php?m=b2c_product&a=list&catid={$cc.catid}" class="list-child-item">
+						<img class="list-child-img" src="{$cc.imgurl}.100x100.jpg"
+						    onerror="this.src='http://img.deitui.com/?w=50&amp;h=50&amp;text=logo&amp;fontsize=14&amp;textcolor=fff&amp;bgcolor=9FB6CD'">
+						<div class="list-child-title">{$cc.title}</div>
+					</div>
+					{/foreach} 
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			{/foreach}
+			
+		</div>
+		{assign var="ftnav" value="b2c_category"}
+		{include file="ftnav.html"}
+		{include file="footer.html"}
+		<script src="{$skins}b2c_category/index.js"></script>
+	</body>
+</html>

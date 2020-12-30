@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<link href="{$skins}/b2c_product/show.css?2" rel="stylesheet" />
+	<link href="/plugin/swiper/css/swiper.min.css" rel="stylesheet" />
+	<body>
+		 
+		<div class="d-fixTop">
+			<div class="d-fixTop-back iconfont icon-back goBack"></div>
+			<div class="flex-1"></div>
+			<div gourl="/module.php?m=b2c_cart" class="d-fixTop-cart iconfont icon-cart"></div>
+			<div></div>
+		</div>
+		
+		
+		<div class="main-body">
+			{if $data.videourl}
+			<div class="flex flex-ai-center">
+				<video src="{$data.videourl}" autoplay="autoplay"  x5-playsinline="" playsinline="" webkit-playsinline=""  controlsList="nodownload" controls style="width: 100%;"></video>
+			</div>
+			
+			{elseif !empty($imgsdata)}
+			 
+			<div class="scale-swiper-box" style="padding-bottom: 100%;">
+				<div class="swiper-container scale-swiper-container" id="indexFlash">
+					<div class="swiper-wrapper" >
+						{foreach item=c from=$imgsdata}
+						<div class="swiper-slide scale-swiper-slide">
+							<img class="wmax"src="{$c}" /> 
+							
+						</div>
+						{/foreach}
+					</div>
+					 
+					<div class="swiper-pagination flex flex-jc-center"></div>
+				 
+				</div>
+			</div> 
+			{else}
+			<image src="{$data.imgurl}" class="d-img"></image>
+			{/if}
+			<div class="row-box mgb-5">
+				<div class="d-title mgb-10">{$data.title}</div>
+				<div class="flex mgb-5 flex-ai-center">
+					<div class="cl-money mgr-10 f18">￥{$data.price}</div>
+					<div class="market-price f12">￥{$data.market_price}</div>
+				</div>
+				<div class="flex">
+					<div class="flex-1 cl3 f12">销量: {$data.buy_num}</div>
+					<div class="flex-1 cl3 f12">库存: {$data.total_num}</div>
+					<div class="flex-1 cl3 f12">人气: {$data.view_num}</div>
+				</div>
+			</div>	
+			<div class="row-box mgb-5 {if !$data.isksid && !$fieldsList}none{/if}">
+				
+
+
+				{if $data.isksid}
+				<div class="flex mgb-10 ppBox-Show pointer">
+					<div class="mgr-5 cl3">选择</div>
+					<div class="flex-1">
+						<div class="cl2 mgb-5">选择  {$data.ks_label_name},{$data.ks_label_size}</div>
+						<div class=" cl3  f12">
+							{foreach item=c from=$ksList}
+							  {$c.title} &nbsp; 
+							{/foreach}
+						</div>
+					</div>
+					<div class="iconfont icon-right f14 cl3"></div>
+				</div>
+				{/if}
+				{if $fieldsList}
+				<div class="flex flex-ai-center  pointer" id="attBox-show">
+					<div class="mgr-5 cl3">参数</div>
+					<div class="flex-1 f12">
+					{foreach from=$fieldsList name=aa index=k item=f}
+						{if $smarty.foreach.aa.index lt 2}
+						{$f["title"]}					
+						{/if}
+					{/foreach}
+					</div>
+					<div class="iconfont icon-right f14 cl3"></div>
+				</div> 
+				{/if}
+
+			</div>
+			
+			<div class="row-box mgb-5 none" :class="'flex-col'" id="cmApp" v-if="pageData.rscount>0">
+				<div class="flex mgb-10" gourl="/module.php?m=b2c_product&a=raty&id={$data.id}">
+					
+					<div class="cl2">商品评价 ({{pageData.rscount}})</div>
+					<div class="flex-1"></div>
+					<div class="f12 cl-money">查看全部</div>
+					<div class="iconfont cl-money icon-right f14 cl3"></div>
+				</div>
+				<div class="bd-mp-5" v-for="(item,index) in pageData.list" :key="index" >
+					<div class="flex mgb-5 flex-ai-center">
+						<img :src="item.user_head+'.100x100.jpg'" class="wh-30 mgr-5" />
+						<div class="flex-1">
+							<div class="f12 mgb-5 cl3">{{item.nickname}}</div>
+							<sky-raty style="margin-left: -10px;margin-bottom: 5px;" readonly="1" len="10" :grade="item.raty_grade"></sky-raty>
+						
+							<div class="cl1 f12">
+								
+								{{item.raty_content}}
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			<div class="pd-10 bg-fff">
+
+
+
+				<div class="d-content">
+
+					{$data.content}
+
+				</div>
+			</div>
+			<div class="flex pd-10 flex-center f16 fw-600">相关推荐</div>
+			<div class="mtlist">
+			 
+				{foreach item=c from=$recList}
+				<a href="/module.php?m=b2c_product&a=show&id={$c.id}" class="mtlist-item">
+					<div class="mtlist-item-bd">
+						<div class="mtlist-bgimg-box">
+							<div class="mtlist-bgimg" style="background-image:url({$c.imgurl}.small.jpg)" ></div>
+						</div>
+						<div class="mtlist-item-pd">
+							<div class="mtlist-item-money">
+								<div class="mtlist-item-money-flex">￥
+									<text class="mtlist-item-money_money">{$c.price}</text>
+								</div>
+								<div class="mtlist-item-money_num">月销{$c.buy_num}件</div>
+							</div>
+							<div class="mtlist-title">{$c.title}</div>
+							 
+						</div>
+					</div>
+				</a>
+				{/foreach}
+			</div>
+		</div>
+		 
+		<style>
+			.btn-fav-active .iconfont,.btn-fav-active {
+				color: red !important;
+			}
+			.fnone{
+				display: none;
+			}
+		</style>
+		<div class="h60"></div>
+		<div class="flcart">
+			<div gourl="/index.php?m=kefu" class="flcart-f1 cl2">
+				<div class="flcart-icon iconfont icon-service_light cl2"></div>
+				客服
+			</div>
+			<div  tablename="mod_b2c_product" objectid="{$data.id}" class="flcart-f1 {if $isfav}btn-fav-active{/if} cl2 pointer js-fav-toggle">
+				<div class="flcart-icon iconfont icon-likefill cl2"></div>
+				收藏
+			</div>
+			<div class="flcart-f2 ppBox-Show">加入购物车</div>
+			<div class="flcart-f2 flcart-f3 ppBox-Show" goBuy="1">立即购买</div>
+		</div>
+		
+		<div id="ppBox" class="modal-group ">
+			<div class="modal-mask"></div>
+			 
+			<div class="ppBox ani-bottom">
+				<div id="ppBox-close" class="ppBox-close iconfont icon-close"></div>
+				<div class="flex flex-jc-center mgb-10">
+					<img class="wh-80 mgr-10" src="{$data.imgurl}.100x100.jpg" />
+					<div class="flex-1 flex-jc-center">
+						<div class="cl-money mgb-5">￥{$data.price}</div>
+						<div class="f12 cl2 mgb-5">库存{$data.total_num}件</div>
+						{if $data.isksid}
+						<div class="f12">选择 {$data.ks_label_name},{$data.ks_label_size}</div>
+						{/if}
+					</div>
+				</div>
+				{if $data.isksid}
+				<div class="kslist-label mgb-5">{$data.ks_label_name}</div>
+				<div id="ks1" class="kslist bd-mp-10 pdl0">
+					
+					{foreach item=c from=$ksList}
+					<div class="kslist-item" v="{$c.id}">{$c.title}</div>
+					{/foreach}
+				
+				</div>
+				<div class="kslist-label mgb-5">{$data.ks_label_size}</div>
+				<div id="ks2" class="kslist bd-mp-10 pdl0">
+					
+					<div class="flex kslist-list ">
+						{foreach item=c from=$ksList2}
+						<div class="kslist-item" v="{$c.id}">{$c.size}</div>
+						{/foreach}
+					</div>
+				</div>
+				{/if}
+				<div class="flex flex-ai-center bd-mp-10">
+					<div class="f14">购买数量</div>
+					<div class="flex-1"></div>
+					<div class="numbox">
+						<div class="numbox-minus">-</div>
+						<input class="numbox-num" id="cart-amount" readonly="" value="{$cart_amount}" />
+						<div class="numbox-plus">+</div>
+					</div>
+				
+				</div>
+				<div class="btn-row-submit" id="addCart">确定</div>
+			</div>
+		</div>
+		
+		<div id="attBox" class="modal-group">
+			<div class="modal-mask"></div>
+			<div class="ppBox ani-bottom">
+				<div class="text-center mgb-10">产品参数</div>
+				{include file="b2c_product/tablefields.html"}
+				<div class="btn-row-submit" id="attBox-close">关闭</div>
+			</div>	
+		</div>
+		
+		
+		{include file="footer.html"}
+		<script src="/plugin/swiper/js/swiper.min.js"></script>
+		<script>
+			$(function(){
+				if($("#indexFlash .swiper-slide").length>0){
+					var flash = new Swiper("#indexFlash", {
+						pagination: {
+							el: '.swiper-pagination',
+						}
+					});
+				}else{
+					$("#indexFlash").hide();
+				}
+				
+			})
+			
+		</script>
+		<script>
+			var ksid = "{$ksid}";
+			var productid = "{$data.id}";
+			
+		</script>
+		<script src="{$skins}/b2c_product/show.js"></script>
+		<script src="/plugin/vue/vue.min.js"></script>
+		<script src="/plugin/dt-ui/raty.vue.js"></script>
+		<script src="{$skins}b2c_product/show.comment.js"></script>
+	</body>
+</html>

@@ -15,7 +15,9 @@ class navbarModel extends model{
 		if($res){
 			foreach($res as $k=>$rs){
 				$rs["logo"]=images_site($rs["logo"]);
+				$rs["child"]=$this->navlist($gid,$rs["id"]);
 				$res[$k]=$rs;
+				
 			}
 		}
 		return $res;
@@ -36,11 +38,10 @@ class navbarModel extends model{
 	public function getGroup(){
 		return array(
 			1=>"后台顶部", 
-			2=>"后台左边", 
-			4=>"wap", 
-			14=>"uniApp", 	 
-			7=>"wap用户",
-			17=>"uniApp用户",
+			2=>"后台左边",
+			3=>"PC主导航",
+			4=>"wap导航",
+			14=>"uniApp导航"
 			
 		 
 			

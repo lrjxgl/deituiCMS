@@ -98,7 +98,14 @@ class table_dataModel extends model{
 		return $res;
 	}
 	public function get($tableid,$id=0){
-		$tableid=intval($tableid);
+		if($tableid>0){
+			$tableid=intval($tableid);
+		}else{
+			$table=M("table")->selectRow("tablename='".$tableid."' ");
+			if(!$table) return false;
+			$tableid=$table["tableid"];
+		}
+		
 		$id=intval($id);
 		
 		if(!$id){
@@ -122,8 +129,36 @@ class table_dataModel extends model{
 		$fdata=str2arr($rs["content"]);
 		 
 		$fieldsList=$this->parse($fdata,$fieldsList);
+	 
 		return $fieldsList;
 	}
+	
+	public function getData($tableid,$id=0){
+		if($tableid>0){
+			$tableid=intval($tableid);
+		}else{
+			$table=M("table")->selectRow("tablename='".$tableid."' ");
+			if(!$table) return false;
+			$tableid=$table["tableid"];
+		}
+		$id=intval($id);
+		
+		if(!$id){
+			$where="status in(0,1,2)  AND tableid=".$tableid;
+			$row=$this->selectRow($where);
+			
+			if($row){
+				$id=$row["id"];
+			}else{
+				return false;
+			}
+			
+		}
+	 
+		$rs=M("table_data")->selectRow("id=".$id);
+		return $fdata=str2arr($rs["content"]);
+	}
+	
 	public function saveTable($tableid,$id=0){
 		 
 		if(!$tableid) return 0;

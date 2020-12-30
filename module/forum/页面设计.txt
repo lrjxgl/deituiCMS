@@ -1,0 +1,14 @@
+老雷项目实战之论坛页面设计
+forum 帖子	
+	index 首页
+	list 列表页
+	add  添加
+	my 我的
+	search 搜索
+	show 详情
+	user 用户中心
+forum_comment
+	my 我的评论
+forum_group
+	index 版块
+	

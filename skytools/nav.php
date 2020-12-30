@@ -13,6 +13,4 @@ pre{border: 4px solid rgb(156, 235, 235);display: block;padding: 10px;}
 <a href="sqlpost.php">保存处理</a>
  
 
-<a href="sqlinsert.php">测试数据</a>
-
 </div>

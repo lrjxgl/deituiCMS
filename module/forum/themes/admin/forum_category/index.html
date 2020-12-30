@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+ <div class="tophd">
+	{$group.title}::分类管理
+</div>
+<div class="main-body">
+<style>
+	.tophd{
+		padding: 10px;
+		margin-bottom: 10px;
+		border-bottom: 1px solid #eee;
+	}
+	.list-item{
+		margin-bottom: 10px;
+		padding: 10px;
+		background-color: #fff;
+		margin-bottom: 5px;
+	}
+	.list-item .text{
+		width: 400px;
+		margin-bottom: 0px;
+		height: 36px;
+	}
+	.list-item .money{
+		width:100px;
+		margin-bottom: 0px;
+		height: 36px;
+	}
+</style>
+<div class="mui-content">
+   <div class="list">
+   		<form>
+   		<div class="list-item">
+   			<input type="hidden" name="gid" value="{$group.gid}" />
+   			名称： <input type="text" class="text"  name="title" />
+   			排序：<input type="text" class="money" name="orderindex" />
+   			 
+   			<div id="addSubmit" class="btn btn-success">添加</div>
+   		</div>
+   		</form>
+   		<div id="list">
+   		{foreach item=c from=$data}
+   		<form>
+   			<div class="list-item">
+   				<input type="hidden" name="catid" value="{$c.catid}" />
+   				名称： <input type="text" class="text" value="{$c.title}" name="title" />
+   				排序：<input type="text" class="money" value="{$c.orderindex}" name="orderindex" />
+   				 
+   				<div id="editSubmit" class="btn btn-success">保存</div>
+   				<div id="delSubmit" v="{$c.catid}" class="btn btn-danger">删除</div>
+   			</div>
+   		</form>
+   		{/foreach}
+   		</div>
+   </div>
+</div>
+{include file="footer.html"}
+<script src="/plugin/jquery/template-native.js"></script>
+<script id="list-tpl" type="text/html">
+	 
+	<%for(var i in data){%>
+		<% var $c=data[i];%>
+   		<form>
+   			<div class="list-item">
+   				<input type="hidden" name="catid" value="<%=$c.catid%>" />
+   				名称： <input type="text" class="text" value="<%=$c.title%>" name="title" />
+   				排序：<input type="text" class="money" value="<%=$c.orderindex%>" name="orderindex" />
+   				<div id="editSubmit" class="btn btn-success">保存</div>
+   				<div id="delSubmit" v="<%=$c.catid%>" class="btn btn-danger">删除</div>
+   			</div>
+   		</form>
+   	<%}%>
+</script>
+<script>
+	function getList(){
+		$.get("/moduleadmin.php?m=forum_category&ajax=1&gid={$group.gid}",function(data){
+			var html=template("list-tpl",data.data);
+			$("#list").html(html);
+		},"json")
+	}
+	$(document).on("click","#addSubmit",function(){
+		var $p=$(this).parents("form");
+		$.post("/moduleadmin.php?m=forum_category&a=save&ajax=1",
+			$(this).parents("form").serialize(),
+			function(data){
+				skyToast(data.message);
+				$p.find('[name="title"]').val("");
+				$p.find('[name="orderindex"]').val("");
+				getList();
+			},
+			"json"
+		)
+	})
+	$(document).on("click","#editSubmit",function(){
+		var $p=$(this).parents("form");
+		$.post("/moduleadmin.php?m=forum_category&a=save&ajax=1",
+			$(this).parents("form").serialize(),
+			function(data){
+				skyToast(data.message);
+				 
+			},
+			"json"
+		)
+	})
+	
+	$(document).on("click","#delSubmit",function(){
+		var $p=$(this).parents("form");
+		if(!confirm('确认删除吗')){
+			return false;
+		}
+		$.post("/moduleadmin.php?m=forum_category&a=delete&ajax=1",
+			{
+				catid:$(this).attr("v")
+			},
+			function(data){
+			skyToast(data.message);
+				$p.remove();
+			},
+			"json"
+		)
+	})
+</script>
+</body>
+</html>

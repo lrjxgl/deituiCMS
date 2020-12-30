@@ -9,7 +9,7 @@ if(!file_exists("config/install.lock"))
 } 
 require("config/version.php");
 require(ROOT_PATH."config/config.php");
-require(ROOT_PATH."config/const.php");
+ 
 require(ROOT_PATH."config/setconfig.php");
 /***解析pathinfo*/
 $url=$_SERVER['REQUEST_URI'];

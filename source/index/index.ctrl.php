@@ -40,7 +40,8 @@ class indexControl extends skymvc
 			"articleList"=>$articleList,
 			"navList"=>$navList
 		));
-		$this->smarty->display("index.html");
+		$tpl=M("pagetpl")->get("index","index","index.html");
+		$this->smarty->display($tpl);
 	}
 }
 

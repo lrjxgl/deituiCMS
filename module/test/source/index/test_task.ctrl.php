@@ -8,24 +8,27 @@ class test_taskControl extends skymvc{
 	    return preg_match("/cli/i", php_sapi_name()) ? true : false;
 	}
 	public function echoMsg($msg){
+		if(!$this->is_cli()){
+			echo str_repeat(" ", 44096);
+		}
 		if($this->is_cli()){
-			echo  iconv("utf-8","gbk",$msg);
+			echo $msg;//echo  iconv("utf-8","gbk",$msg);
 		}else{
 			echo $msg;
 		}
+		ob_flush();
+		flush();
 	}
 	public function onDefault(){
 		header("Content-type:text/html;charset=utf-8");
 		set_time_limit(0);
 		session_write_close();
-		require "extends/queue/mysql.php";
+		
 		$que=new queue("mysql");
 		ob_implicit_flush(); 
 		while(true){
 			$task=$que->rpop();
-			if(!$this->is_cli()){
-				echo str_repeat(" ", 44096);
-			}
+			
 			 
 			if(empty($task)){
 				$this->echoMsg("任务全部完成");			
@@ -53,7 +56,7 @@ class test_taskControl extends skymvc{
 		$this->echoMsg("给".$conf["telephone"]."发送了一条短息".$conf["content"]);
 	}
 	public function onAdd(){
-		require "extends/queue/mysql.php";
+		
 		$que=new queue("mysql");
 		$que->lpush(array(
 			"action"=>"sendSms",

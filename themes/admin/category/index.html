@@ -45,7 +45,7 @@
   <br>
   
   <a href="{$appadmin}?m=category&a=add&catid={$c.catid}&tablename={$c.tablename}">编辑</a> 
-  <a href="javascript:;" class="js-delete" url="{$appadmin}?m=category&a=delete&catid={$c.catid}">删除</a></td>
+  <a href="javascript:;" class="js-delete" url="{$appadmin}?m=category&a=delete&ajax=1&catid={$c.catid}">删除</a></td>
 </tr>
 {if $c.child}
 {foreach item=cc from=$c.child}
@@ -62,7 +62,7 @@
    <a href="{$appadmin}?m=category&a=addmore&catid={$cc.catid}&tablename={$cc.tablename}" style="color:red;">批量添加</a>  
  
   <a href="{$appadmin}?m=category&a=add&catid={$cc.catid}&tablename={$cc.tablename}">编辑</a>
-  <a href="javascript:;" class="del" url="{$appadmin}?m=category&a=delete&catid={$cc.catid}&tablename={$cc.tablename}">删除</a>
+  <a href="javascript:;" class="js-delete" url="{$appadmin}?m=category&a=delete&ajax=1&catid={$cc.catid}&tablename={$cc.tablename}">删除</a>
   </td>
 </tr>
 {/foreach} 

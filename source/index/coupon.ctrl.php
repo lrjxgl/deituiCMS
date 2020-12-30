@@ -50,7 +50,7 @@ class couponControl extends skymvc{
 		 
 		$this->smarty->goassign(array(
 			"data"=>$data,
-			"type_list"=>M("coupon")->type_list()
+			 
 		));
 		$this->smarty->display("coupon/my.html");
 	}

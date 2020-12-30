@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">论坛版块</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			<div class="row-box">
+				 
+				<div class="flexlist">
+					{foreach item=c from=$list}
+						<div class="flexlist-item" gourl="/module.php?m=forum&a=list&gid={$c.gid}">
+							<img  src="{$c.imgurl}.100x100.jpg" class="flexlist-img" />
+							<div class="flex-1">
+								<div class="flexlist-title">{$c.title}</div>
+								<div class="flexlist-row">
+									主题数
+									<text class="cl-num mgl-5 mgr-10">{$c.topic_num}</text> 
+									 
+									评论数
+									<text class="cl-num  mgl-5">{$c.comment_num}</text>
+								</div>
+								<div class="flexlist-desc">{$c.description}</div>
+							</div>
+						</div>
+					{/foreach}
+				</div>
+			</div>
+		</div>
+		{include file="ftnav.html"}
+		{include file="footer.html"}
+	</body>
+</html>

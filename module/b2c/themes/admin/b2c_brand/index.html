@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+{include file='b2c_brand/nav.html'}
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>brandid</td>
+   <td>名称</td>
+    <td>图片</td>
+   <td>排序</td>
+   <td>状态</td>
+   
+  
+   
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$list}
+<tr>
+   <td>{$c.brandid}</td>
+   <td>{$c.title}</td>
+   <td>
+   	   <img src="{$c.imgurl|images_site}.100x100.jpg" class="wh-40" />
+   
+   
+   </td>
+   <td>{$c.orderindex}</td>
+   <td>{$c.status}</td>
+    
+   
+   
+<td><a href="moduleadmin.php?m=b2c_brand&a=add&brandid={$c.brandid}">编辑</a> <a target="_blank" href="/module.php?m=b2c_brand&a=show&brandid={$c.brandid}">查看</a> <a href="javascript:;" class="js-delete" url="moduleadmin.php?m=b2c_brand&a=delete&ajax=1&brandid={$c.brandid}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

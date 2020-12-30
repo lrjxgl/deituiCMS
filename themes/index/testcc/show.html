@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+
+<body>
+<div class="header">
+	<div class="header-back"></div>
+	<div class="header-title">头部</div>
+</div>
+<div class="header-row"></div>
+<div class="main-body">
+    
+    	 <table class="table table-bordered" width="100%">
+  <tr><td>id：</td><td>{$data.id}</td></tr>
+  <tr><td>标题：</td><td>{$data.title}</td></tr>
+  <tr><td>分类：</td><td>{$data.catid}</td></tr>
+  <tr><td>一级分类：</td><td>{$data.catid_top}</td></tr>
+  <tr><td>二级分类：</td><td>{$data.catid_2nd}</td></tr>
+  <tr><td>喜欢数：</td><td>{$data.love_num}</td></tr>
+  <tr><td>收藏数：</td><td>{$data.fav_num}</td></tr>
+  <tr><td>描述：</td><td>{$data.description}</td></tr>
+  <tr><td>状态：</td><td>{$data.status}</td></tr>
+  <tr><td>是否推荐：</td><td>{$data.is_recommend}</td></tr>
+  <tr><td>图片：</td><td>{$data.imgurl}</td></tr>
+  <tr><td>创建时间：</td><td>{$data.createtime}</td></tr>
+  <tr><td>评论数：</td><td>{$data.comment_num}</td></tr>
+  <tr><td>tpl：</td><td>{$data.tpl}</td></tr>
+  <tr><td>author：</td><td>{$data.author}</td></tr>
+  <tr><td>最新：</td><td>{$data.isnew}</td></tr>
+  <tr><td>最热：</td><td>{$data.ishot}</td></tr>
+  <tr><td>访问数：</td><td>{$data.view_num}</td></tr>
+  <tr><td>产品价格：</td><td>{$data.price}</td></tr>
+  <tr><td>市场价格：</td><td>{$data.market_price}</td></tr>
+  <tr><td>库存数：</td><td>{$data.total_num}</td></tr>
+  <tr><td>销售数：</td><td>{$data.sold_num}</td></tr>
+  <tr><td>grade：</td><td>{$data.grade}</td></tr>
+  <tr><td>下载地址：</td><td>{$data.downurl}</td></tr>
+  <tr><td>downsize：</td><td>{$data.downsize}</td></tr>
+  <tr><td>videourl：</td><td>{$data.videourl}</td></tr>
+  <tr><td>是否首页：</td><td>{$data.isindex}</td></tr>
+  <tr><td>tags：</td><td>{$data.tags}</td></tr>
+  <tr><td>图集：</td><td>{$data.imgsdata}</td></tr>
+ </table>
+
+    
+</div>
+{include file="footer.html"}
+</body>
+</html>

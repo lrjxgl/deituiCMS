@@ -49,13 +49,13 @@ class registerControl extends skymvc{
 		
 		$key="reg_sms".$telephone.$yzm;
 		if(SMS_TEST==true){
-			$res=true;
+			$this->goAll("短信已发送".$yzm);
 		}
 		
 		if($res){
 			cache()->set($key,1,300);
 			cache()->set("reg_".$telephone,time(),60);
-			$this->goAll("短信已发送，请在5分钟内验证注册".(SMS_TEST==true?$yzm:""));
+			$this->goAll("短信已发送，请在5分钟内验证注册");
 		}else{
 			$this->goAll("短信发送失败",1);
 		}

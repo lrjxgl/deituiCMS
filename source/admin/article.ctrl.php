@@ -22,15 +22,15 @@
 					$url.="&type=".$type;	
 					break;
 				case "pass":
-					$where=" status=2 ";
+					$where=" status=1 ";
 					$url.="&type=".$type;	
 					break;
 				case "forbid":
-					$where=" status=4 ";
+					$where=" status=2 ";
 					$url.="&type=".$type;	
 					break;
 				default:
-					$where=" status in(0,1,2,4) ";
+					$where=" status in(0,1,2) ";
 					break;
 			}
 			$s_recommend=get("s_recommend");
@@ -128,6 +128,7 @@
 			$id=get_post("id","i");
 			$data=M("article")->postData();
 			$content=post("content","x");
+			$data["status"]=1;
 			if($id){
 				M("article")->update($data,"id='$id'");
 				M("article_data")->update(array(
@@ -146,15 +147,25 @@
 		
 		public function onStatus(){
 			$id=get_post('id',"i");
-			$status=get_post("status","i");
+			$row=M("article")->selectRow("id=".$id);
+			if($row["status"]==1){
+				$status=2;
+			}else{
+				$status=1;
+			}
 			M("article")->update(array("status"=>$status),"id=$id");
-			$this->goall("状态修改成功",0);
+			$this->goall("状态修改成功",0,$status);
 		}
 		public function onRecommend(){
 			$id=get('id','i');
-			$is_recommend=get('is_recommend','i');
-			M("article")->update(array("is_recommend"=>$is_recommend),array("id"=>$id));	
-			echo json_encode(array("error"=>0,"message"=>$this->lang['save_success']));	 
+			$row=M("article")->selectRow("id=".$id);
+			if($row["is_recommend"]==1){
+				$status=0;
+			}else{
+				$status=1;
+			}
+			M("article")->update(array("is_recommend"=>$status),array("id"=>$id));	
+			$this->goall("状态修改成功",0,$status); 
 		}
 		public function onDelete(){
 			$id=get_post('id',"i");

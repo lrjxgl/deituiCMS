@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-title">购物车</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body" id="app" style="display: none;" v-if="pageLoad">
+			<div v-if="pageData.cartList==null" class="emptyData">购物车，暂无商品</div>
+			<div v-else>
+				<div class="flexlist" >
+					<div class="flexlist-item" v-for="(item,index) in pageData.cartList" :key="index">
+						<img :src="item.imgurl+'.100x100.jpg'" class="flexlist-img" />
+						<div class="flex-1">
+							<div class="flexlist-title">{{item.title}}</div>
+							<div class="flexlist-row">
+								<div class="">{{item.ks_title}}</div>
+								<div class="cl-money">
+									￥{{item.price}}
+								</div>
+								<div class="flex-1"></div>
+								<div   class="numbox">
+									<div @click="minusCart(item.productid,item.amount,item.ksid)" class="numbox-minus">-</div>
+									<input type="text" name="amount" v-model="item.amount" class="numbox-num" />
+									<div @click="plusCart(item.productid,item.amount,item.ksid)" class="numbox-plus">+</div>	
+								</div>
+							</div>
+							
+						</div>
+					</div>	
+				</div>
+				<div class="pd-10 flex">
+					<div class="flex-1">
+						共{{pageData.total_num}}件，总{{pageData.total_money}}元
+					</div>
+					<div gourl="/module.php?m=b2c_order&a=confirm" class="btn">确认购买</div>
+				</div>
+			</div>
+		</div>
+		{assign var="ftnav" value="b2c_cart"}
+		{include file="ftnav.html"}
+		{include file="footer.html"}
+		<script src="{$skins}/b2c_cart/index.js"></script>
+	</body>
+</html>

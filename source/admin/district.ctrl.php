@@ -72,7 +72,8 @@
 			$id=get_post('id',"i");
 			$status=get_post("status","i");
 			M("district")->update(array("status"=>$status),"id=$id");
-			$this->sexit(json_encode(array("error"=>0,"message"=>"状态修改成功")));
+			$this->goAll("状态修改成功");
+			
 		}
 		
 		

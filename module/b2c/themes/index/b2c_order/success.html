@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-title">下单成功</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			{if $order.ispin}
+			<div class="row-box mgb-10">
+				<div class="text-center fwb">还差{$need_num}人，赶快邀请好友来拼单吧</div>
+				<div onclick="$('#mdEwm').show()" class="btn-row-submit mgb-10" style="background-color: #e02e24;">邀请好友拼单</div>
+				<div gourl="/" class="btn-row-submit btn-outline-danger mgt-5 cl1" style="background-color:#f1a7a4">去首页逛逛</div>
+				<div class="flex" style="display: none!important;">
+					<div class="flex-1 text-center">添加推荐语言</div>
+					<div class="flex-1 text-center">面对面扫码拼单</div>
+				</div>
+			</div>
+			<div class="row-box">
+				<div class="flex flex-wrap">
+					<div></div>
+				</div>
+				<div gourl="/module.php?m=b2c_order&a=show&orderid={$order.orderid}" class="row-item">
+					<div>订单详情</div>
+					<div class="flex-1"></div>
+					<div class="f14">订单商品</div>
+				</div>
+				<div class="row-item-text">
+					<div>拼单规则</div>
+					<div class="flex-1"></div>
+					<div class="mgr-5">好友拼单</div>
+					<div class="mgr-5">·</div>
+					<div class="mgr-5">人满发货</div>
+					<div class="mgr-5">·</div>
+					<div>不满退货</div>
+				</div>
+			</div>
+			{else}
+			<div class="row-box mg-10 bd-radius-10 ">
+				<div class="flex flex-center mgb-20 mgt-10">
+					<div class="iconfont icon-squarecheck cl-red f36 mgr-5"></div>
+					<div class="">
+						<div class="f18">恭喜下单成功</div>
+						<div class="f14">感谢您的下单！</div>
+					</div>
+				</div>
+				<div class="flex flex-jc-center  mgb-20">
+					 
+					<div class="btn btn-primary" gourl="/">返回首页</div>
+				</div>
+			</div>
+			{/if}
+		</div>
+		<div class="modal-group" id="mdEwm">
+			<div class="modal-mask"></div>
+			<div class="modal">
+				<div class="flex flex-center">
+					<img src="{$pt_ewm}">
+				</div>
+				<div class="text-center mgb-10 cl-red">让好友扫一扫，或者长按保存分享图片</div>
+			</div>
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

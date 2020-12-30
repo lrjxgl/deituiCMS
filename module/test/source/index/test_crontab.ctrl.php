@@ -6,7 +6,7 @@ class test_crontabControl extends skymvc{
 	}
 	public function onDefault(){
 		$type=get("type","h");
-		echo $type;
+		echo date("H:i:s ").$type;
 	}
 	 
 	

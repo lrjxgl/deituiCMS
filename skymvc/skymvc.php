@@ -26,10 +26,11 @@ if(!defined("LANG")){
 **载入函数库
 **/
 $st=microtime(true);
+require("function/function.php");
 require("function/fun_error.php");
 require("function/fun_file.php");
 require_once("function/fun_url.php");
-require("function/function.php");
+require("function/fun_other.php");
 require("function/fun_gps.php");
 $dbclass=isset($dbclass)?$dbclass:"pdo";
 require("class/cls_".$dbclass.".php");//引入数据库文件
@@ -62,11 +63,9 @@ if(!empty($user_extends)){
 if(!defined("REWRITE_TYPE")){
 	define("REWRITE_TYPE","");
 }
-if(!defined("WAP_DOMAIN")){
-	define("WAP_DOMAIN","");
-}
+ 
 url_get($_SERVER['REQUEST_URI']);
-if(is_mobile() or get('iswap') or WAP_DOMAIN==$_SERVER['HTTP_HOST']){
+if(is_mobile() or get('iswap')){
 	define("ISWAP",1);
 }else{
 	define("ISWAP",0);
@@ -94,14 +93,25 @@ define("S_COMPILE_DIR",isset($compile_dir)?$compile_dir:ROOT_PATH."temp/compiled
 define("S_REWRITE_ON",$rewrite_on);
 $_GET['m']=$m=isset($_GET['m'])?htmlspecialchars($_GET['m']):"index";
 $m=str_replace(array("/","\\",".."),"",$m);
- 
-if(!file_exists(CONTROL_DIR."/$m.ctrl.php"))
+$mfile= CONTROL_DIR."/$m.ctrl.php";
+$mafile="";
+$apiVersion=get("apiVersion","h");
+if($apiVersion){
+	if(!preg_match("/\W/",$apiVersion)){
+		$mafile= CONTROL_DIR."/$m.ctrl.".$apiVersion.".php";
+	}
+}
+if($mafile!="" && file_exists($mafile) ){
+	include($mafile);
+}elseif(!file_exists($mfile))
 {
 	error404();
 	
+}else{
+	include($mfile);
 }
 
-include(CONTROL_DIR."/$m.ctrl.php");
+
 
 $classname = $m.'Control';
 

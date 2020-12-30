@@ -12,6 +12,7 @@ function _implode($array) {
 	}
 }
 function echoflush($str){
+	echo str_repeat(" ", 44096);
 	echo "<div class='logs'>".$str."</div>";
 	flush();
 	ob_flush();

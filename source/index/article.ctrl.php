@@ -11,7 +11,7 @@
 		}
 		
 		public function onDefault(){
-			$where=" status=2 ";
+			$where=" status=1 ";
 			$url="/index.php?m=article&a=default";
 			$limit=24;
 			$start=get("per_page","i");
@@ -54,10 +54,11 @@
 					"url"=>$url
 				)
 			);
+			 
 			$this->smarty->display("article/index.html");
 		}
 		public function onList(){
-			$where=" status=2  ";
+			$where=" status=1  ";
 			$type=get_post('type','h');
 			$parent=$cat_2nd=$cat_3nd=array();
 			$catid=get('catid','i');
@@ -69,19 +70,16 @@
 				);
 				$cat_top=$cat;
 				if($cat['pid']){
+					$parent=M("category")->selectRow(array("where"=>array("catid"=>$cat['pid'])));
 					
-					$parent=M("category")->selectRow(array("where"=>"catid=".$cat['pid']));
-					if($cat['pid']){
-						$parent=M("category")->selectRow(array("where"=>array("catid"=>$cat['pid'])));
-						if($parent['pid']){
-							$cat_2nd=$parent;
-							$cat_top=M("category")->selectRow(array("where"=>array("catid"=>$parent['pid'])));
-							$cat_3nd=$cat;
-						}else{
-							$cat_top=$parent;
-							$cat_2nd=$cat;
-						}			 
-					}
+					if($parent['pid']){
+						$cat_2nd=$parent;
+						$cat_top=M("category")->selectRow(array("where"=>array("catid"=>$parent['pid'])));
+						$cat_3nd=$cat;
+					}else{
+						$cat_top=$parent;
+						$cat_2nd=$cat;
+					}	
 					
 				}
 			
@@ -100,7 +98,7 @@
 				}
 			}
 			
-			$catlist=M("category")->children($catid,"article") ; 
+			$catlist=M("category")->children($cat_top["catid"],"article") ; 
 			$rscount=true;
 			
 			
@@ -137,7 +135,15 @@
 			}
 			$start=get_post('per_page','i');
 			$limit=20;
-			 
+			//价格区间
+			$choicePrice=get("choicePrice","h");
+			if(!empty($choicePrice)){
+				$arr=explode("-",$choicePrice);
+				$min=floatval($arr[0]);
+				$max=floatval($arr[1]);
+				$where.=" AND (price>".$min." AND price<".$max." ) ";
+				$url.="&choicePrice=".$choicePrice;
+			} 
 			$option=array(
 				"where"=>$where,
 				"start"=>$start,
@@ -180,7 +186,31 @@
 			$data["imgurl"]=images_site($data["imgurl"]);
 			$data['timeago']=timeago(strtotime($data['createtime']));
 			$cat=M("category")->selectRow("catid=".$data['catid']);
-		 
+			$catid=$cat["catid"];
+			if($catid){	
+				$cat=M("category")->selectRow(array("where"=>"catid=$catid"));
+				$seo=array(
+					"title"=>$cat['title'],
+					"description"=>$cat['description']
+				);
+				$cat_top=$cat;
+				if($cat['pid']){
+					$parent=M("category")->selectRow(array("where"=>array("catid"=>$cat['pid'])));
+					
+					if($parent['pid']){
+						$cat_2nd=$parent;
+						$cat_top=M("category")->selectRow(array("where"=>array("catid"=>$parent['pid'])));
+						$cat_3nd=$cat;
+					}else{
+						$cat_top=$parent;
+						$cat_2nd=$cat;
+					}	
+					
+				}
+			 
+			}
+			
+			$catlist=M("category")->children($cat_top["catid"],"article") ;
 			$userid=M("login")->userid;
 			
 			$data['content']=M("article_data")->selectOne(array(
@@ -213,21 +243,30 @@
 					);
 				}
 			} 
+			 
 			$this->smarty->goAssign(array(
 				"seo"=>$seo,
 				"islove"=>$islove,
 				"isfav"=>$isfav,
 				"data"=>$data,
-				 
+				"catlist"=>$catlist, 
 				"cat"=>$cat,
 				"comment_objectid"=>$id,
 				"comment_tablename"=>"article",
 				"comment_f_userid"=>$data['shopid'],
 				"imgsdata"=>$imgsdata 
 			));
+			
 			$tpl="article/show.html";
-			$tpl=$data['tpl']?$data['tpl']:$tpl;
-		 
+			$cattpl=M("category")->getTpl($data["catid"],2);
+			if($data["tpl"]){
+				$tpl=$data["tpl"];
+			}elseif($cattpl){
+				$tpl=$cattpl;
+			}
+			
+			 
+			
 			$this->smarty->display($tpl);
 		}
 		public function onAddClick(){

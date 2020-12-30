@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		{include file='b2c_category/nav.html'}
+		<div class="main-body">
+		<form method="post" action="/moduleadmin.php?m=b2c_category&a=save">
+			<input type="hidden" name="catid" style="display:none;" value="{$data.catid}">
+			<table class="table-add">
+				<tr>
+					<td>分类名称：</td>
+					<td><input type="text" name="title" id="title" value="{$data.title}"></td>
+				</tr>
+				<tr>
+					<td>图片：</td>
+					<td>
+						<div class="js-upload-item">
+							<input type="file" id="upa" class="js-upload-file" style="display: none;" />
+							<div class="upimg-btn js-upload-btn">+</div>
+							<input type="hidden" name="imgurl" class="js-imgurl" value="{$data.imgurl}" />
+							<div class="js-imgbox">
+								{if $data.imgurl}
+								<img src="{$data.imgurl|images_site}.100x100.jpg">
+								{/if}
+							</div>
+						</div>
+				
+					</td>
+				</tr>
+				 
+				<tr>
+					<td>上级分类：</td>
+					<td> 
+						<select  name="pid">
+							<option  value="0">请选择</option>
+							{foreach item=c from=$catlist}
+							<option value="{$c.catid}" {if $c.catid eq $data.pid}selected{/if}>{$c.title}</option>
+							{/foreach}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>排序：</td>
+					<td><input type="text" name="orderindex" id="orderindex" value="{$data.orderindex}"></td>
+				</tr>
+				<tr>
+					<td>状态</td>
+					<td>
+						<input type="radio" {if $data.status neq 1} checked="" {/if} name="status" value="2" /> 下线
+						<input type="radio" {if $data.status eq 1} checked="" {/if} name="status" value="1" /> 上线
+					</td>
+				</tr>
+				<tr>
+					<td>表单扩展</td>
+					<td>
+						<select name="ex_table_id">
+							<option value="0">请选择</option>
+							{foreach item=c from=$tableList}
+							<option {if $c.tableid==$data.ex_table_id}selected{/if} value="{$c.tableid}">{$c.title}</option>
+							{/foreach}
+						</select>
+					</td>
+				</tr> 
+			</table>
+			<div class="btn-row-submit js-submit">保存</div>
+		</form>
+		</div>
+		{include file="footer.html"}
+		<script src="/static/admin/js/upload.js"></script>
+	</body>
+</html>
