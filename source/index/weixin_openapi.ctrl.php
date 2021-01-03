@@ -428,7 +428,14 @@ class weixin_openapiControl extends skymvc{
 			case 7:
 			case 8:
 					if($row['sc_id']) $this->wx_sucai($row['sc_id']);
-					$this->wx_tuwen($row['content']);
+					if($row["command"]=='我要红包'){
+						$token=md5(date("Y-m-d"));
+						
+						$this->wx_tuwen("https://www.fd175.com/module.php?m=hongbao_day&token=".$token);
+					}else{
+						$this->wx_tuwen($row['content']);
+					}
+					
 				break;
 				
 			

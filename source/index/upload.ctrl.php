@@ -215,15 +215,19 @@ class uploadControl extends skymvc{
 		$file=$dir.$maxid.".jpg";
  
  		$content=substr(strstr( $_POST['content'] ,','),1);
-		$content=base64_decode( $content);
-		$im=@imagecreatefromstring($content);
-		if(!$im){
-			exit("图片不支持");
+		$content=base64_decode($content);
+		if(function_exists("exif_read_data")){
+			$this->roateImg($content,$file);
+		}else{
+			$im=@imagecreatefromstring($content);
+			if(!$im){
+				exit("图片不支持");
+			}
+			 
+			imagejpeg($im,$file);
 		}
-		$w=imagesx($im);
-		$h=imagesy($im);
 		
-		imagejpeg($im,$file);
+		 
 		M("attach")->add(array(
 			"url"=>$file
 		));
@@ -289,10 +293,11 @@ class uploadControl extends skymvc{
 		$this->upload->uploaddir="attach/".$dir; 
 		$this->upload->upimg=true;
 		$data=$this->upload->uploadfile("upimg");
-		M("attach")->add(array(
-			"url"=>$data["filename"]
-		));
+		 
 		if($data['err']==''){
+			M("attach")->add(array(
+				"url"=>$data["filename"]
+			));
 			$this->loadClass("image",false,false);
 			$img=new image();
 			$data['imgurl']=$data['filename'];
@@ -316,5 +321,55 @@ class uploadControl extends skymvc{
 		return (($id/1000000)%100)."/".(($id/10000)%100)."/".(($id/100)%100)."/".($id%100)."/".$id."/";
 	}
 	
+	public function onDownweixin(){
+		$media_id=get_post("media_id","h");
+		$token=get_weixin_access_token();
+		$url="https://api.weixin.qq.com/cgi-bin/media/get?access_token=".$token["access_token"]."&media_id=".$media_id;
+		$res=file_get_contents($url);
+		if(strlen($res)>500){
+			$_POST["content"]="a,".base64_encode($res);
+			$this->onBase64();
+		}else{
+			echo $res;
+		}
+		
+	}
+	
+	public function roateImg($str,$filename){
+		 
+	
+		$image = imagecreatefromstring($str);
+		if(!$image){
+			exit("图片不支持");
+		} 
+		$size=getimagesizefromstring($str);
+		switch($size["mime"]){
+			case "image/png":
+				$name=$filename.".png";
+				break;
+			case "image/gif":
+				$name=$filename.".gif";
+				break;
+			default:
+				$name=$filename;
+		}
+		file_put_contents($name,$str);
+		$exif = exif_read_data($name);
+		
+		if(!empty($exif['Orientation'])) {
+			switch($exif['Orientation']) {
+			 case 8:
+			  $image = imagerotate($image,90,0);
+			  break;
+			 case 3:
+			  $image = imagerotate($image,180,0);
+			  break;
+			 case 6:
+			  $image = imagerotate($image,-90,0);
+			  break;
+			}
+		}
+		imagejpeg($image,$filename);
+	}
 }
 ?>

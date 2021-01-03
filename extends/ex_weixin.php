@@ -49,7 +49,7 @@ function wx_mb_send($token,$json){
 	return $data=curl_post_json($url,$json);
 }
 /****网页模板****/
-function wx_jssdk(){
+function wx_jssdk($debug=false){
 	$wx=M("weixin")->selectRow(array("where"=>" status=1 ","order"=>"id DESC"));
 	if(empty($wx)){
 		return $false;

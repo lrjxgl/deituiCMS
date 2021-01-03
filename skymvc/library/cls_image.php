@@ -53,11 +53,12 @@ function makethumb($dstimg,$img,$dstw,$dsth=999,$all=false)
 	$alpha = imagecolorallocatealpha($im, 0, 0, 0, 127);
 	imagefill($im, 0, 0, $alpha);
 	$imgtype=$this->getimgtype($img);
-	$image = $this->imagecreatefrom($img,$imgtype);
-	
+	//$image = $this->imagecreatefrom($img,$imgtype);
+	 
+	$image=imagecreatefromstring(file_get_contents($img));
 	imagecopyresampled($im, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 	imagesavealpha($im, true);
-	$this->imagesave($im, $dstimg,$imgtype);
+	$this->imagesave($im, $dstimg,'jpg');
 	return $dstimg;
 }
 
@@ -117,13 +118,15 @@ function addwater($config)
 	
 	list($dw,$dh)=getimagesize($config['dstimg']);	
 	$dsttype=$this->getimgtype($config['dstimg']);
-	$dstim=$this->imagecreatefrom($config['dstimg'],$dsttype);
+	//$dstim=$this->imagecreatefrom($config['dstimg'],$dsttype);
+	$dstim=imagecreatefromstring(file_get_contents($config["dstimg"]));
 	if(!$config['type'])
 	{
 		//水印图片
 		list($w,$h)=getimagesize($config['img']);
 		$imgtype=$this->getimgtype($config['img']);
-		$im=$this->imagecreatefrom($config['img'],$imgtype);
+		//$im=$this->imagecreatefrom($config['img'],$imgtype);
+		$im=imagecreatefromstring(file_get_contents($config["img"]));
 	}else
 	{
 		if(!file_exists($config['font'])) return false;
@@ -257,6 +260,9 @@ function getimgtype($img)
 			break;
 			case 'image/png':
 			return 'png';
+			break;
+			case "image/webp":
+				return "webp";
 			break;
 			default:
 			return '';

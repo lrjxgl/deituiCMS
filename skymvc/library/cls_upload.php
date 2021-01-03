@@ -3,8 +3,8 @@ if(!defined("ROOT_PATH")){
 	define("ROOT_PATH",dirname(str_replace("\\", "/", dirname(__FILE__)))."/");
 }
 class upload{
-	public $allowtype=array("gif","jpg","bmp","png",'jpeg');//允许上传的文件类型
-	public $sysallowtype=array('gif','jpg','bmp','png','jpeg','txt','mpeg',"mp4","ogg",'avi','rm','rmvb','wmv','flv','mp3','wav','wma','swf','doc','pdf','zip','tar','svg');
+	public $allowtype=array("gif","jpg","bmp","png",'jpeg',"webp");//允许上传的文件类型
+	public $sysallowtype=array('gif','jpg','bmp','png','jpeg',"webp",'txt','mpeg',"mp4","ogg",'avi','rm','rmvb','wmv','flv','mp3','wav','wma','swf','doc','pdf','zip','tar','svg');
 	//系统默认允许上传
 	//上传文件夹
 	public $uploaddir="attach/uploads/";
@@ -119,6 +119,9 @@ class upload{
 				return 'jpg';
 			case "image/pjpeg":
 				return 'jpeg';
+			break;
+			case "image/webp":
+				return "webp";
 			break;
 			case 'text/plain':
 				return 'txt';
