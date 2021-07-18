@@ -7,7 +7,7 @@
  *	 "param"=>array()
  * )
  * **/
-function sendSms($mobile,$config=array()){
+function sendSms($mobile,$config=array(),$smsLogid=0){
 	require_once "api/aliSms/SignatureHelper.php";
 	require_once "api/aliSms/aliSmsConfig.php";
 	$params = array ();
@@ -74,7 +74,13 @@ function sendSms($mobile,$config=array()){
         // fixme 选填: 启用https
         // ,true
     );
+	 
 	if($res->Code=='OK'){
+		if($smsLogid){
+			M("sms_log")->update(array(
+				"status"=>1
+			),"id=".$smsLogid);
+		}
 		return true;
 	}else{
 		//print_r($res);

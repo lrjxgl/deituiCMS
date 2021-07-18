@@ -8,6 +8,13 @@
 		</div>
 		<div class="header-row"></div>
 		<div class="main-body">
+			<div class="tabs-border">
+				<?php $_from = $this->_var['catlist']; if (!is_array($_from) && !is_object($_from)) { $_from=array();}; $this->push_vars('', 'c');if (count($_from)):
+    foreach ($_from AS $this->_var['c']):
+?>
+				<div gourl="/index.php?m=article&a=list&catid=<?php echo $this->_var['c']['catid']; ?>" class="tabs-border-item"><?php echo $this->_var['c']['cname']; ?></div>
+				<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+			</div>
 			<div class="pd-10 bg-fff">
 				<?php $_from = $this->_var['list']; if (!is_array($_from) && !is_object($_from)) { $_from=array();}; $this->push_vars('', 'c');if (count($_from)):
     foreach ($_from AS $this->_var['c']):

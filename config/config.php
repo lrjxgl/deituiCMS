@@ -1,7 +1,9 @@
 <?php
- 
+
 require "database.php";
+
 require "extends.php";
+
 //require "cache.php";
 
 //require "session.php";
@@ -21,7 +23,7 @@ define("SITEID",1);
 //短信测试
 define("SMS_TEST",false);
 //开启重写
-define("TESTMODEL",0);//开发测试模式
+define("TESTMODEL",false);//开发测试模式
 define("SQL_SLOW_LOG",0);//记录慢查询
 //UPLOAD_OSS--- aliyun/qiniu/upyun/0 不分离上传设为0
 define("UPLOAD_OSS",0);
@@ -31,5 +33,5 @@ define("IMAGES_SITE",$http.$_SERVER["HTTP_HOST"]."/");
 //静态文件
 define("STATIC_SITE",$http.$_SERVER["HTTP_HOST"]."/");
 define("HTTP_HOST",$http.$_SERVER["HTTP_HOST"]."/");
-
+define("JS_VERSION","v1");
 ?>

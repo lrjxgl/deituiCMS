@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+<div class="shd">短信记录</div>
+<div class="main-body">
+ <table class="tbs">
+	 <colgroup>
+		 <col width="100" />
+		 <col width="200" />
+		 <col />
+		 <col width="100" />
+	 </colgroup>
+<thead>  <tr>
+    
+   <td>手机</td>
+   
+   <td>时间</td>
+   <td>内容</td>
+   <td>状态</td>
+ </tr>
+  </tr>
+</thead> {foreach item=c from=$data}
+<tr>
+    
+   <td>{$c.telephone}</td>
+    
+   <td>{$c.dateline|date:Y-m-d H:i:s}</td>
+   <td>{$c.content}</td>
+   <td>{if $c.status eq 1}成功{else}失败{/if}</td>
+ 
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

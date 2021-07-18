@@ -1,54 +1,60 @@
-{include file="header.html"}
- <ul class="nav nav-tabs">
-<li class="active"><a href="{$appadmin}?m=weixin_reply&wid={$weixin.id}">微信回复消息</a></li>
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
  
-</ul>
+<div class="tabs-border">
+	<a class="item tabs-border-active" href="{$appadmin}?m=weixin_reply&wid={$weixin.id}">微信回复消息</a>
+</div>
+
 <div class="main-body">
  
  
-<div class="search-form">
-<form method="get" action="{$appadmin}">
-<input type="hidden" name="m" value="weixin_reply" />
-用户：<input type="text" name="openid" value="{$smarty.get.openid|html}" />
-状态：<select name="s_status">
-<option value="0">请选择</option>
-<option value="1" {if get('s_status') eq 1} selected="selected"{/if}>已解决</option>
-<option value="2" {if get('s_status') eq 2} selected="selected"{/if}>未解决</option>
-</select>
-<input type="submit" value="搜索" class="btn" />
-</form>
+	<div class="search-form">
+		<form method="get" action="{$appadmin}">
+		<input type="hidden" name="m" value="weixin_reply" />
+		用户：<input class="w100" type="text" name="openid" value="{$smarty.get.openid|html}" />
+		状态：<select  class="w100" name="s_status">
+		<option value="0">请选择</option>
+		<option value="1" {if get('s_status') eq 1} selected="selected"{/if}>已解决</option>
+		<option value="2" {if get('s_status') eq 2} selected="selected"{/if}>未解决</option>
+		</select>
+		<input type="submit" value="搜索" class="btn" />
+		</form>
+	</div>
+	 <table class="tbs">
+		<thead>
+	  <tr>
+	   <td>用户</td>
+	   <td>状态</td>
+	   <td>消息类型</td>
+	   <td>时间</td>
+	   <td>文本消息内容</td>
+	   <td>图片</td>
+	   <td>图文消息标题</td>
+	   <td>图文消息说明</td>
+	   <td>消息链接</td>
+	<td>操作</td>
+	  </tr>
+	  </thead>
+	 {foreach item=c from=$data}
+	<tr>
+	   <td>{$c.openid}</td>
+	   <td>{if $c.status}已解决{else}未解决{/if}</td>
+	   <td>{$c.msgtype}</td>
+	   <td>{$c.createtime|date:m-d H:m}</td>
+	   <td>{$c.content}</td>
+	   <td>{if $c.picurl}<img src="{$c.picurl}" style="width:50px; height:50px;" />{/if}</td>
+	   <td>{$c.title}</td>
+	   <td>{$c.description}</td>
+	   <td>{if $c.url}<a href="{$c.url}" target="_blank">查看</a>{/if}</td>
+	<td><a href="javascript:;" class="js-delete" url="admin.php?m=weixin_reply&a=delete&id={$c.id}">删除</a></td>
+	  </tr>
+	   {/foreach}
+	 </table>
+	<div>{$pagelist}</div>
 </div>
- <table class="tbs">
- 	<thead>
-  <tr>
-   <td>用户</td>
-   <td>状态</td>
-   <td>消息类型</td>
-   <td>时间</td>
-   <td>文本消息内容</td>
-   <td>图片</td>
-   <td>图文消息标题</td>
-   <td>图文消息说明</td>
-   <td>消息链接</td>
-<td>操作</td>
-  </tr>
-  </thead>
- {foreach item=c from=$data}
-<tr>
-   <td>{$c.openid}</td>
-   <td>{if $c.status}已解决{else}未解决{/if}</td>
-   <td>{$c.msgtype}</td>
-   <td>{$c.createtime|date:m-d H:m}</td>
-   <td>{$c.content}</td>
-   <td>{if $c.picurl}<img src="{$c.picurl}" style="width:50px; height:50px;" />{/if}</td>
-   <td>{$c.title}</td>
-   <td>{$c.description}</td>
-   <td>{if $c.url}<a href="{$c.url}" target="_blank">查看</a>{/if}</td>
-<td><a href="javascript:;" class="js-delete" url="admin.php?m=weixin_reply&a=delete&id={$c.id}">删除</a></td>
-  </tr>
-   {/foreach}
- </table>
-<div>{$pagelist}</div>
-</div>
- 
+
 {include file="footer.html"}
+</body> 
+</html>

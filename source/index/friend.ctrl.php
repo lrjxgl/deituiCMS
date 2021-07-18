@@ -50,13 +50,14 @@ class friendControl extends skymvc{
 		$str="abcdefghijklmnopqrstuvwxyz";
 		$slist=array();
 		for($i=0;$i<strlen($str);$i++){
-			$slist[strtoupper($str{$i})]=array();
+			$x=strtoupper(substr($str,$i,1));
+			$slist[$x]=array();
 		}
 		$slist["#"]=array(); 
 		loadFun("pinyin");
 		foreach($list as $v){
 			$pinyin=pinyin($v["nickname"]);
-			$zm=strtoupper($pinyin{0});
+			$zm=strtoupper(substr($pinyin,0,1));
 			if(!isset($slist[$zm])){
 				$slist["#"]["child"][]=$v;
 			}else{

@@ -16,7 +16,7 @@ class weixin_openapiControl extends skymvc{
 		}
 		 
 		$this->wx=M("weixin")->selectRow(array("where"=>$where,"order"=>"id DESC"));
-		define("WID",2);
+		define("WID",$this->wx["id"]);
 		define("WXTOKEN",$this->wx['token']);
 	}
 	
@@ -117,6 +117,7 @@ class weixin_openapiControl extends skymvc{
 
         //valid signature , option
         if($this->checkSignature()){
+			skyLog("wx.txt","success:".$echoStr);
         	echo $echoStr;
         	exit;
         }

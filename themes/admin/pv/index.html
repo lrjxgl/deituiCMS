@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="tabs-border">
+			<div class="tabs-border-item tabs-border-active">统计</div>
+		</div>
+		<style>
+			.mui-content{
+				background-color: #fff;
+			}
+			.sbox{
+				display: flex;
+				padding: 10px;
+			}
+			.sbox .label{
+				height: 36px;
+				line-height: 36px;
+				padding: 0 ;
+				display: block;
+				width: 40px;
+				margin: 0;
+				 
+			}
+			.sbox .text{
+				height: 36px;
+				line-height: 36px;
+				padding: 0 5px;
+				display: block;
+				width: 200px;
+				margin: 0;
+				margin-right: 10px;
+			}
+			.sbox .bt{
+				background-color: #008000;
+				color: #fff;
+				display: block;
+				line-height: 36px;
+				text-align: center;
+				cursor: pointer;
+				width: 80px;
+				margin-right: 10px;
+			}
+			.sbox .st{
+				line-height: 36px;
+			}
+		</style>
+		<div class="mui-content">
+			<div class="sbox">
+				<label class="label">地址</label>
+				<input class="text" id="url" type="text" />
+				<div class="bt" id="setUrl">设定</div>
+				<div class="bt" id="clearUrl">清除</div>
+				<div class="st">总计 <span id="total">0</span></div>
+			</div>
+			<div class="tabs-border">
+				<div class="item active js-stat-tabs" v="dayStat">当天</div>
+				<div class="item   js-stat-tabs" v="hourStat">小时</div>
+				<div class="item js-stat-tabs" v="weekStat">7天</div>
+				<div class="item js-stat-tabs" v="monthStat">月份</div>
+			</div>
+			<div id="canvasHtml" style="width: 90%; margin: 10px auto;" >
+				 
+		    	
+				
+			</div>
+			<style>
+				.mfooter .item{
+					line-height: 40px;
+				}
+			</style>
+			<div class="footer">
+				<a href="javascript:;" v="pv" class="footer-item setType footer-active">PV</a>
+				<a href="javascript:;" v="uv" class="footer-item setType ">UV</a>
+				<a href="javascript:;" v="ip" class="footer-item setType ">IP</a>
+			</div>
+		    
+		</div>
+		 
+		{include file="footer.html"}
+		 <script src="/plugin/chart/Chart.min.js"></script>
+		<script>
+			$(function(){
+				statType="{$statType}";
+				var url="";
+				var statType="uv";
+				var statTime="dayStat";
+				var timer=0;
+				setInterval(function(){
+					timer++;
+				},600);
+				
+				function loadStat(){
+					switch(statType){
+						case "uv":
+							$url="/admin.php?m=pv_uv&ajax=1";
+							break;
+						case "ip":
+							$url="/admin.php?m=pv_ip&ajax=1";
+							break;
+						default:
+							$url="/admin.php?m=pv&ajax=1";
+							break;
+							
+					}
+					
+					switch(statTime){
+						case "hourStat":
+							$url+="&a=stathour";
+							break;
+						case "weekStat":
+							$url+="&a=statweek";
+							break;
+						case "monthStat":
+							$url+="&a=statmonth";
+							break;
+						default:
+							$url+="&a=statday";
+							break;
+					}
+					$.get($url,{
+						url:url
+					},function(data){
+						$("#total").html(data.data.total);
+						var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+						var lineChartData = {
+							labels : data.data.labels,
+							datasets : [
+								{
+									label: "My First dataset",
+									fillColor : "rgba(220,220,220,0.2)",
+									strokeColor : "rgba(220,220,220,1)",
+									pointColor : "rgba(220,220,220,1)",
+									pointStrokeColor : "#fff",
+									pointHighlightFill : "#fff",
+									pointHighlightStroke : "rgba(220,220,220,1)",
+									data : data.data.moneys
+								} 
+							]
+				
+						}
+						var id="canvas"+timer;
+						$("#canvasHtml").html('<canvas id="'+id+'"  width="300" ></canvas>');
+						var ctx = document.getElementById(id).getContext("2d");
+						var line = new Chart(ctx).Line(lineChartData, {
+							responsive: true
+						});
+					},"json")
+				}
+				$(document).on("click","#setUrl",function(){
+					url=$("#url").val();
+					loadStat();
+				})
+				$(document).on("click","#clearUrl",function(){
+					$("#url").val("");
+					url="";
+					loadStat();
+				})
+				
+				$(document).on("click",".setType",function(){
+					statType=$(this).attr("v");
+					$(this).addClass("footer-active").siblings().removeClass("footer-active");
+					loadStat();
+				})
+				
+				$(document).on("click",".js-stat-tabs",function(){
+					statTime=$(this).attr("v");
+					$(this).addClass("active").siblings().removeClass("active");
+					loadStat();
+				})
+				
+				loadStat();
+			})
+			
+		</script>
+	</body>
+</html>

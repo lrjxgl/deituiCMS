@@ -25,6 +25,7 @@ define("WATER_SIZE","0");
 define("REWRITE_ON","1");
 define("SPREAD_ON","0");
 define("SPREAD_DISCOUNT","0");
+define("SPREAD_MONEY","0");
 define("SPREAD_TYPE","0");
 define("GRADE_ON","0");
 define("OPENTIME","0");

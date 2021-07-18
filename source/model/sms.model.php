@@ -1,7 +1,7 @@
 <?php
 class smsModel extends model{
 	
-	public function __construct(&$base=null){
+	public function __construct(){
 		parent::__construct ();
 	}
 	
@@ -22,8 +22,13 @@ class smsModel extends model{
 		if($row){
 			return false;
 		}
+		$logid=M("sms_log")->insert(array(
+			"telephone"=>$mobile,
+			"content"=>$con,
+			"dateline"=>time()
+		));
 		if(function_exists("sendsms")){
-			return sendSMS($mobile,$content);
+			return sendSMS($mobile,$content,$logid);
 		}
 		if(is_array($content)){
 			$content=$content['content'];
@@ -56,6 +61,9 @@ class smsModel extends model{
 		$result =file_get_contents($sendurl) ;
 		 
 		if($result==0){
+			M("sms_log")->update(array(
+				"status"=>1
+			),"id=".$logid);
 			return true; 
 		}else{
 			return false; 

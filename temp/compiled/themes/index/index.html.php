@@ -9,7 +9,7 @@
 </div>
 <div class="header-row"></div>
 <div class="main-body">
-	<div class="swiper-container" id="indexFlash">
+	<div class="swiper-container" style="width: 100%;" id="indexFlash">
 		<div class="swiper-wrapper" >
 			<?php $_from = $this->_var['flashList']; if (!is_array($_from) && !is_object($_from)) { $_from=array();}; $this->push_vars('', 'c');if (count($_from)):
     foreach ($_from AS $this->_var['c']):

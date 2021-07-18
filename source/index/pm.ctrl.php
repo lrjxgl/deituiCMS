@@ -184,6 +184,9 @@ class pmControl extends skymvc{
 	}
 	public function onDetail(){
 		$t_userid=get('t_userid','i');
+		if(!$t_userid){
+			$t_userid=get("userid","i");
+		}
 		$userid=M("login")->userid;
 		$t_user=M("user")->getUser($t_userid,"nickname,userid,user_head");
 		$user=M("login")->getUser();

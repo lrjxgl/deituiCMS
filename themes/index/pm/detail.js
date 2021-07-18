@@ -128,6 +128,7 @@ var App = new Vue({
 			var that = this;
 			$.ajax({
 				dataType:"json",
+				method:"POST",
 				url: "/index.php?m=pm&a=sendSave&ajax=1",
 				data: {
 					t_userid: that.t_userid,

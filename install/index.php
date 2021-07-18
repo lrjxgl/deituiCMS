@@ -44,8 +44,7 @@ switch($step){
 				"password"=>$pwd1
 			); 
 			 
-		$str='
-			<?php
+		$str='<?php
 			define("MYSQL_CHARSET", "utf8mb4");
 			define("TABLE_PRE", "sky_");
 			$dbclass="mysqli";
@@ -71,7 +70,7 @@ switch($step){
 			);
 			*/ 
 			
-		';
+		?>';
 		file_put_contents("../config/database.php",$str);
 		echo "success";
 		break;

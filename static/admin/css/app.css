@@ -178,7 +178,21 @@ a {
 	border: 1px solid #ddd;
 	box-sizing: border-box;
 }
+.tbs-fixed tbody {
+	display:block;
+	height:505px;
+	overflow-y:auto;
+	overflow-x: hidden;
+}
 
+.tbs-fixed thead,  .tbs-fixed tbody tr {
+	display:table;
+	width:100%;
+	table-layout:fixed;
+}
+.tbs-fixed thead{
+	 width: calc( 100% - 17px );
+}
 /**table-add****/
 .table-add {
 	width: 100%;

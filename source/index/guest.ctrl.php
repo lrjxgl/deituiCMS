@@ -27,7 +27,7 @@
 			$pagelist=$this->pagelist($rscount,$limit,$url);
 			$this->smarty->goassign(
 				array(
-					"data"=>$data,
+					"list"=>$data,
 					"pagelist"=>$pagelist,
 					"rscount"=>$rscount,
 					"url"=>$url,

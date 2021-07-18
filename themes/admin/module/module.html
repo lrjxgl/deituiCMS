@@ -28,7 +28,8 @@
 	
 	<a href="/module.php?m={$c.module}" target="_blank">查看</a>
 	<a href="javascript:;" onclick="window.parent.goPluginMenu('{$c.adminurl}')" >管理</a>
-	<a href="javascript:;" class="js-nav-add" title="{$c.title}" url='{$c.adminurl}' >添加到导航</a>   
+	<a href="javascript:;" class="js-nav-add" title="{$c.title}" url='{$c.adminurl}' >添加到导航</a> 
+	<a href="{$appadmin}?m=module&a=update&inmodule={$c.module}">更新</a>  
 	{else}<a href='{$appadmin}?m=module&a=install&inmodule={$c.module}'>安装</a>{/if}
 	 
 	 

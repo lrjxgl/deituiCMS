@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<style>
+		.uBox{
+			display: flex;
+			flex-direction: row;
+			border: 1px solid #eee;
+			padding: 6px 10px;
+		}
+		.uBox-nick{
+			color: #646464;
+		}
+		.uBox-del{
+			cursor: pointer;
+			margin-left: 5px;
+			color: red;
+		}
+	</style>
+	<body>
+		<div class="shd">{$group.title} 成员管理</div>
+		<div class="main-body" id="App">
+			<div class="flex">
+				<div class="input-flex flex-1">
+					<div class="input-flex-label">昵称</div>
+					<input v-model="nickname" class="input-flex-text" />
+					
+					<div @click="search" class="input-flex-btn">搜一下</div>
+					
+				</div>
+				<div v-if="suser_true" class="input-flex  flex-1">
+					<div class="input-flex-label">{{suser.nickname}}</div>
+					<div @click="add" class="input-flex-btn">添加</div>
+				</div>
+			</div>
+			<div class="flex flex-wrap">
+				<div v-for="(item,index) in list" :key="index" class="uBox">
+					<div class="uBox-nick">{{item.nickname}}</div>
+					<div @dblclick="del(item)" class="uBox-del">x</div>
+				</div>
+				
+			</div>
+		</div>
+		{include file="footer.html"}
+		<script>
+			var gid="{$group.gid}";
+		</script>
+		<script src="{$skins}user_group/people.js"></script>
+	</body>
+</html>

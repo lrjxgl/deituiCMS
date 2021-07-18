@@ -15,8 +15,10 @@
 				<div class="flex-1 mgr-10">
 					<div class="row-box">
 						<div class="row-box-hd mgb-5">数据统计</div>
-						<div>
-							<div id="pv" style="width: 100%;height:400px;"></div>
+						<div class="flex">
+							<div id="pv" style="flex:1;margin-right:5px;height:400px;"></div>
+							<div id="userStat" style="flex:1;margin-right:5px;height:400px;"></div>
+							<div id="moneyStat" style="flex:1;height:400px;"></div>
 						</div>
 					</div>
 				</div>
@@ -56,61 +58,6 @@
 		{include file="footer.html"}
 		<script src="/plugin/echarts/echarts.common.min.js"></script>
 		<script src="{$skins}index/version.js"></script>
-		<script>
-		var myChart = echarts.init(document.getElementById('pv'));
-		getPvStat();
-		function getPvStat(){
-			$.get("/admin.php?m=index&a=statWeekAll&ajax=1",function(res){
-				var option = {
-				    title: {
-				        text: ''
-				    },
-				    tooltip: {
-						trigger: 'axis'
-					},
-					legend: {
-						data:['pv','ip','uv',"新用户"]
-					},
-				    xAxis: {
-						type: 'category',
-						data: res.data.labels
-					},
-					yAxis: {
-						type: 'value'
-					},
-					series: [
-						{
-							name:"pv",
-							data: res.data.pvMoneys,
-							type: 'line',
-							smooth: true
-						},{
-							name:"ip",
-							data: res.data.ipMoneys,
-							type: 'line',
-							smooth: true,
-						},{
-							name:"uv",
-							data: res.data.uvMoneys,
-							type: 'line',
-							smooth: true,
-						},{
-							name:"新用户",
-							data: res.data.userMoneys,
-							type: 'line',
-							smooth: true,
-						}			
-						
-					]
-				};
-				 myChart.setOption(option);
-			},"json")
-		}
-        // 指定图表的配置项和数据
-        
-
-        // 使用刚指定的配置项和数据显示图表。
-       
-		</script>
+		<script src="{$skins}index/main.js"></script> 
 	</body>
 </html>

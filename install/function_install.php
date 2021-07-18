@@ -126,7 +126,7 @@ function sqlConn(){
 	
 		$link=mysqli_connect($dbconfig['master']['host'],$dbconfig['master']['user'],$dbconfig['master']['pwd']) or die("数据库连接出错了");
 		mysqli_select_db($link,$dbconfig['master']['database']);
-		mysqli_query($link,"SET NAMES utf8");
+		mysqli_query($link,"SET NAMES utf8mb4");
 		mysqli_query($link,"SET sql_mode=''");
 		return $link;
 }

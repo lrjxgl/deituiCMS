@@ -30,7 +30,8 @@
 	
 	<a href="/module.php?m=<?php echo $this->_var['c']['module']; ?>" target="_blank">查看</a>
 	<a href="javascript:;" onclick="window.parent.goPluginMenu('<?php echo $this->_var['c']['adminurl']; ?>')" >管理</a>
-	<a href="javascript:;" class="js-nav-add" title="<?php echo $this->_var['c']['title']; ?>" url='<?php echo $this->_var['c']['adminurl']; ?>' >添加到导航</a>   
+	<a href="javascript:;" class="js-nav-add" title="<?php echo $this->_var['c']['title']; ?>" url='<?php echo $this->_var['c']['adminurl']; ?>' >添加到导航</a> 
+	<a href="<?php echo $this->_var['appadmin']; ?>?m=module&a=update&inmodule=<?php echo $this->_var['c']['module']; ?>">更新</a>  
 	<?php else: ?><a href='<?php echo $this->_var['appadmin']; ?>?m=module&a=install&inmodule=<?php echo $this->_var['c']['module']; ?>'>安装</a><?php endif; ?>
 	 
 	 

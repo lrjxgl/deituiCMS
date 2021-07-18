@@ -49,6 +49,7 @@ class registerControl extends skymvc{
 		
 		$key="reg_sms".$telephone.$yzm;
 		if(SMS_TEST==true){
+			cache()->set($key,1,300);
 			$this->goAll("短信已发送".$yzm);
 		}
 		

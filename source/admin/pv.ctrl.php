@@ -3,6 +3,7 @@ class pvControl extends skymvc{
 	
 	public function __construct(){
 		parent::__construct();
+		session_write_close();
 	}
 	
 	public function onDefault(){
@@ -125,7 +126,7 @@ class pvControl extends skymvc{
 	}
 	public function onNew(){
 		$where="1 ";
-		$url="/admin.php?m=pv";
+		$url="/admin.php?m=pv&a=new";
 		 
 		$limit=200;
 		$start=get("per_page","i");

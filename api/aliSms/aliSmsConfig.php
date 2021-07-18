@@ -13,7 +13,7 @@ class aliSmsConfig{
 		"change_telephone_old"=>"SMS_142954539",
 		"change_telephone_new"=>"SMS_142954540",
 		"shopapply_pass"=>"SMS_142954902",
-		"apply_forbid"=>A"SMS_142954896",
+		"apply_forbid"=>"SMS_142954896",
 		"code"=>"SMS_180340966",//通用验证码
 	);
 }

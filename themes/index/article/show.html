@@ -2,13 +2,24 @@
 <html>
 	{include file="head.html"}
 	<link href="/plugin/swiper/css/swiper.min.css" rel="stylesheet" />
+	 
 	<body>
 		<div class="header">
 			<div class="header-back"></div>
 			<div class="header-title">{$data.title}</div>
 		</div>
 		<div class="header-row"></div>
-		<div class="main-body mgb-10">
+		<div class="main-body mgb-10"> 
+			{if $data.videourl!=''}
+			<video 
+				style="width: 100%;margin-bottom: 10px;"
+				src="{$data.videourl}" 
+				x5-playsinline="true"
+				x-webkit-airplay="true"
+				 playsinline="true" 
+				 webkit-playsinline="true" 
+			  controls="controls" autoplay=""></video>
+			{/if}
 			<div class="swiper-container" style="width: 100%;" id="indexFlash">
 				<div class="swiper-wrapper" >
 					{foreach item=c from=$imgsdata}
@@ -34,8 +45,8 @@
 		</div>
 		{include file="inc/comment.html"}
 		{include file="footer.html"}
-		<script src="{$skins}inc/comment.js"></script>
-		<?php wx_jssdk();?>
+		<script src="{$skins}inc/comment.js?{const.JS_VERSION}"></script>
+		<?php wx_jssdk();?> 
 		<script type="text/javascript">
 			wxshare_title="{$data.title}";
 			{if $data.imgurl} 

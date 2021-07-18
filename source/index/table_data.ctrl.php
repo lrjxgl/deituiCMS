@@ -102,7 +102,7 @@
 					$rss[$k]=stripslashes($v);
 				}
 				$rss["userid"]=$userid;
-				$rss["createtime"]=datetime("Y-m-d H:i:s");
+				$rss["createtime"]=date("Y-m-d H:i:s");
 				$content=arr2str($rss);
 			}
 			if($id){

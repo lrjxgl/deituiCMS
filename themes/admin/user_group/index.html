@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+{include file='user_group/nav.html'}
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>gid</td>
+   <td>名称</td>
+   <td>状态</td>
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$data}
+<tr>
+   <td>{$c.gid}</td>
+   <td>{$c.title}</td>
+   <td>{$c.status}</td>
+<td><a href="admin.php?m=user_group&a=add&gid={$c.gid}">编辑</a> 
+<a href="admin.php?m=user_group&a=people&gid={$c.gid}">成员管理</a> 
+<a href="javascript:;" class="js-delete" url="admin.php?m=user_group&a=delete&ajax=1&gid={$c.gid}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

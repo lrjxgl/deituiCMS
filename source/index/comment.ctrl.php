@@ -22,6 +22,8 @@ class commentControl extends skymvc{
 		if(!in_array($tablename,$this->tables)){
 			//$this->goAll("参数出错",1);
 		}
+		$fields=M($tablename)->getFields();
+		$idField=$fields[0]['Field'];
 		$table=$tablename;
 		$tableComment=$tablename."_comment";
 		$objectid=get("objectid","i");
@@ -30,7 +32,7 @@ class commentControl extends skymvc{
 		}
 		$start=get("per_page","i");
 		$limit=24;
-		$row=M($table)->selectRow("id=".$objectid);
+		$row=M($table)->selectRow($idField."=".$objectid);
 		$where=" status in(0,1) AND objectid=".$objectid." AND pid=0";
 		$option=array(
 			"where"=>$where,
@@ -101,6 +103,10 @@ class commentControl extends skymvc{
 	}
 	public function onSave(){
 		M("login")->checkLogin();
+		$noticeType=get_post("noticeType","h");
+		if(!$noticeType){
+			$noticeType="user";
+		}
 		$userid=M("login")->userid;
 		M("blacklist")->check($userid);
 		M("blacklist_post")->check($userid);
@@ -158,7 +164,7 @@ class commentControl extends skymvc{
 				M("forum_group")->changenum("comment_num",1,"gid=".$row['gid']);
 			}
 			$data['createtime']=date("Y-m-d H:i:s");
-			if($row['userid']){
+			if($noticeType=="user" && $row['userid']){
 				M("notice")->add(array(
 					"content"=>"有人评论了你：".$data['content'],
 					"userid"=>intval($row['userid']),
@@ -170,7 +176,7 @@ class commentControl extends skymvc{
 						"param"=>"&id=".$data['objectid']
 					)
 				));
-			}elseif($row['shopid']){
+			}elseif($noticeType=="shop"){
 				M("apppush")->sendShop(array(
 					"table"=>"shop",
 					"content"=>"有人评论了你：".$data['content'],

@@ -276,6 +276,10 @@ class model{
 	public function postData($unPost=array()){
 		$table=$this->tmpTable?$this->tmpTable:($this->table_all?$this->table_all:$this->table);
 		$fields=$this->getFields();
+		/*
+		$noPost=["status","isnew",'isrecommend','isindex'];
+		$unPost+=$noPost;
+		*/
 		if($fields){
 			foreach($fields as $k=>$v){
 				if($k==0) continue;

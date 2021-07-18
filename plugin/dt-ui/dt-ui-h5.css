@@ -1,10 +1,16 @@
 page{
 	 
  }
+ html{
+	 font-size: 16px;
+ }
  html,body{
 	 margin: 0;
 	 padding: 0;
 	 background-color: #efeff4;
+}
+body{
+	font-size: 1rem;
 }
 p,ol,ul,li{
 	margin: 0;
@@ -17,20 +23,18 @@ a{
 [gourl]{
 	cursor: pointer;
 }	
-.main-body{
-	max-width: 640px;
-	margin: 0 auto;
-	width: 100%;
-} 
+.iconfont:before{
+	line-height: 1.5;
+}
+ 
 view,div{
-	    display: flex;
-	    flex-direction: column; 
+	display: flex;
+	flex-direction: column;
 	color: #323232;
 	box-sizing: border-box;
 	flex-shrink:0;
 	font-size: 14px;
 }
-
  
 text{
 	display: inline-block;
@@ -43,7 +47,11 @@ navigator{
 	flex-direction: column;
 	box-sizing: border-box;
 }
-
+.main-body{
+	max-width: 640px;
+	margin: 0 auto;
+	width: 100%;
+}
  /*****详情******/
 .d-userbox{
 	display: flex;
@@ -402,7 +410,7 @@ navigator{
     display: flex;
 	flex-direction: row;
     border-bottom: 1px solid #ddd;
-
+	position: relative;
     margin-bottom: 5px;
     padding: 10px;
     background-color: #fff;
@@ -437,6 +445,11 @@ navigator{
 .comment-item-time{
 	color: #969696;
 	font-size: 12px;
+}
+.comment-item-del{
+	position: absolute;
+	right: 0;
+	top: 0;
 }
 .comment-item-content {
     color: #646464;
@@ -1249,6 +1262,7 @@ navigator{
 	background-color: #fff;
 	padding: 10px 0px 0px 0px;
 	flex-wrap: wrap;
+	justify-content: center;
 }
 .m-navPic-item{
 	width: 20%;
@@ -1262,7 +1276,7 @@ navigator{
 }
 
 .m-navPic-img{
-	width: 70%;
+	width: 3rem;
 	height: auto;
 	margin-bottom: 5px;
 	line-height: 1;
@@ -1286,7 +1300,7 @@ navigator{
 	right: 0;
 	top:0;
 	bottom: 0;
-	z-index: 998;
+	z-index: 98;
 }
 .confirm-group,.alert-group{
 	display: none;
@@ -1299,7 +1313,7 @@ navigator{
 	left: 50%;
 	margin-left: -130px;
 	margin-top: -100px;
-	z-index: 9999;
+	z-index: 999;
 	padding: 0px;
 	font-size: 14px;
 	border-radius: 20px;
@@ -1419,7 +1433,7 @@ navigator{
 	right: 0;
 	top:0;
 	bottom: 0;
-	z-index: 998;
+	z-index: 98;
 }
 .modal{
 	position: fixed;
@@ -2038,13 +2052,13 @@ button{
  }
 
  .btn-small {
- 	padding: 8px 12px;
+ 	padding: 6px 10px;
  	font-size: 14px;
  	background-color: #007AFF;
  	color: #fff;
  	display: inline-flex;
  	cursor: pointer;
- line-height: 1;
+	line-height: 1;
  	border-radius: 5px;
 	text-align: center;
  }
@@ -2056,7 +2070,7 @@ button{
  	color: #fff;
  	display: inline-flex;
  	cursor: pointer;
-	line-height: 1.5;
+	line-height: 1;
 	text-align: center;
 	border-radius: 5px;
  }
@@ -2453,11 +2467,12 @@ button{
  .wh-150{width: 150px; height: 150px;}
  .wh-200{width: 200px; height: 200px;}
  .wmax{ max-width: 100%; height:auto;}
- .w50{width: 50px !important;}
- .w60{width: 60px !important;}
- .w100{width: 100px !important;}
- .w150{width: 150px !important;}
- .w300{width: 300px !important;}
+ .w50{width: 50px !important;flex: none;}
+ .w60{width: 60px !important;flex: none;}
+ .w100{width: 100px !important;flex: none;}
+ .w150{width: 150px !important;flex: none;}
+ .w200{width: 200px !important;flex: none;}
+ .w300{width: 300px !important;flex: none;}
  .h30{ height: 30px !important;}
  .h60{height:60px !important;}
  .h100{ height: 100px !important;}
@@ -2642,4 +2657,16 @@ button{
 	 border-radius: 50%;
  }
 
-
+.bc-recommend, .bc-red{
+	border: 1px solid #007AFF;
+	line-height: 1;
+	padding: 2px;
+	border-radius: 50%;
+	font-size: 12px;
+	color: #007AFF;
+	align-self: center;
+}
+.bc-red {
+    border: 1px solid #f00;
+    color: #f00;
+}

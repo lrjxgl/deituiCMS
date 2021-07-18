@@ -71,7 +71,7 @@
 	<body>
 		<div class="header">
 			<div class="header-back"></div>
-			<div class="header-title">私信</div>
+			<div class="header-title">{$t_nickname}</div>
 		</div>
 		<div class="header-row"></div>
 		<div class="main-body none" :class="'flex-col'"  id="App">
@@ -81,7 +81,7 @@
 				<div class="row-box mgb-5" v-for="(item,index) in list" :key="index">
 					<div class="flex flex-ai-center" v-if="item.isme">
 						<div class="flex-1">
-							<div class="flex">
+							<div class="flex mgb-5">
 								<div class="f12 cl3">{{item.timeago}}</div>
 								<div class="flex-1"></div>
 								<div class="mgl-5 f12 cl3">我</div>

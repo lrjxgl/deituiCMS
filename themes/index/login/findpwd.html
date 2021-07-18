@@ -26,7 +26,7 @@
 				<div class="input-flex-label">重复密码</div>
 				<input class="input-flex-text" name="password2" placeholder="请再次输入密码" type="password" />
 			</div>
-			<div class="btn-row-submit" id="login-submit">登录</div>
+			<div class="btn-row-submit" id="login-submit">确认修改</div>
 		</form>
 		{include file="footer.html"}
 		<script type="text/javascript">
@@ -38,7 +38,7 @@
 					skyToast(res.message);
 				},"json");
 			})
-			$(document).on("click","#reg-submit",function(){
+			$(document).on("click","#login-submit",function(){
 				$.post("/index.php?m=login&a=FindPwdSave&ajax=1",$("#fdForm").serialize(),function(res){
 					skyToast(res.message);
 					if(!res.error){

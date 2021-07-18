@@ -49,7 +49,7 @@
   <br>
   
   <a href="<?php echo $this->_var['appadmin']; ?>?m=category&a=add&catid=<?php echo $this->_var['c']['catid']; ?>&tablename=<?php echo $this->_var['c']['tablename']; ?>">编辑</a> 
-  <a href="javascript:;" class="js-delete" url="<?php echo $this->_var['appadmin']; ?>?m=category&a=delete&catid=<?php echo $this->_var['c']['catid']; ?>">删除</a></td>
+  <a href="javascript:;" class="js-delete" url="<?php echo $this->_var['appadmin']; ?>?m=category&a=delete&ajax=1&catid=<?php echo $this->_var['c']['catid']; ?>">删除</a></td>
 </tr>
 <?php if ($this->_var['c']['child']): ?>
 <?php $_from = $this->_var['c']['child']; if (!is_array($_from) && !is_object($_from)) { $_from=array();}; $this->push_vars('', 'cc');if (count($_from)):
@@ -68,7 +68,7 @@
    <a href="<?php echo $this->_var['appadmin']; ?>?m=category&a=addmore&catid=<?php echo $this->_var['cc']['catid']; ?>&tablename=<?php echo $this->_var['cc']['tablename']; ?>" style="color:red;">批量添加</a>  
  
   <a href="<?php echo $this->_var['appadmin']; ?>?m=category&a=add&catid=<?php echo $this->_var['cc']['catid']; ?>&tablename=<?php echo $this->_var['cc']['tablename']; ?>">编辑</a>
-  <a href="javascript:;" class="del" url="<?php echo $this->_var['appadmin']; ?>?m=category&a=delete&catid=<?php echo $this->_var['cc']['catid']; ?>&tablename=<?php echo $this->_var['cc']['tablename']; ?>">删除</a>
+  <a href="javascript:;" class="js-delete" url="<?php echo $this->_var['appadmin']; ?>?m=category&a=delete&ajax=1&catid=<?php echo $this->_var['cc']['catid']; ?>&tablename=<?php echo $this->_var['cc']['tablename']; ?>">删除</a>
   </td>
 </tr>
 <?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?> 

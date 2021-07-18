@@ -105,3 +105,166 @@ sql错误：UPDATE sky_mod_queue SET orderindex=orderindex+1 WHERE k=''   Table 
 D:\www\product\deituiCMSBase\skymvc\skymvc.php:130行,调用方法:onDefault 
 D:\www\product\deituiCMSBase\module.php:63行,调用方法:require 
 
+
+---2021-01-06 16:45:03--/admin.php?m=module&a=uninstall&inmodule=b2c--
+sql错误：drop table sky_mod_b2c_brand ; Unknown table 'deituicmsbase.sky_mod_b2c_brand'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2021-04-15 12:01:31--/admin.php?m=module&a=uninstall&inmodule=fenlei--
+sql错误：drop table sky_mod_fenlei ; Unknown table 'deituicmsbase.sky_mod_fenlei'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2021-04-15 12:01:43--/admin.php?m=module&a=uninstall&inmodule=fenlei--
+sql错误：drop table sky_mod_fenlei ; Unknown table 'deituicmsbase.sky_mod_fenlei'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2021-04-15 12:02:41--/admin.php?m=module&a=uninstall&inmodule=fenlei--
+sql错误：drop table sky_mod_fenlei ; Unknown table 'deituicmsbase.sky_mod_fenlei'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2021-04-15 12:02:46--/admin.php?m=module&a=uninstall&inmodule=fenlei--
+sql错误：drop table sky_mod_fenlei ; Unknown table 'deituicmsbase.sky_mod_fenlei'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2021-04-15 12:03:04--/admin.php?m=module&a=uninstall&inmodule=fenlei--
+sql错误：drop table sky_mod_fenlei ; Unknown table 'deituicmsbase.sky_mod_fenlei'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2021-04-15 12:03:28--/admin.php?m=module&a=uninstall&inmodule=fenlei--
+sql错误：drop table sky_mod_fenlei ; Unknown table 'deituicmsbase.sky_mod_fenlei'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2021-04-27 09:04:16--/moduleadmin.php?m=b2b_stat&a=adminIndexStat&ajax=1--
+sql错误：SELECT sum(money) FROM sky_mod_b2b_order   where  status in(1,2,3)   LIMIT 0,1  Table 'deituicmsbase.sky_mod_b2b_order' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:223行,调用方法:getOne 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:112行,调用方法:selectOne 
+D:\www\product\deituiCMSBase\module\b2b\source\admin\b2b_stat.ctrl.php:37行,调用方法:selectOne 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onAdminIndexStat 
+D:\www\product\deituiCMSBase\moduleadmin.php:37行,调用方法:require 
+
+
+---2021-04-27 09:05:02--/moduleadmin.php?m=b2b_stat&a=adminIndexStat&ajax=1--
+sql错误：SELECT sum(money) FROM sky_mod_b2b_order   where  status in(1,2,3)   LIMIT 0,1  Table 'deituicmsbase.sky_mod_b2b_order' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:223行,调用方法:getOne 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:112行,调用方法:selectOne 
+D:\www\product\deituiCMSBase\module\b2b\source\admin\b2b_stat.ctrl.php:37行,调用方法:selectOne 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onAdminIndexStat 
+D:\www\product\deituiCMSBase\moduleadmin.php:37行,调用方法:require 
+
+
+---2021-04-27 09:05:17--/moduleadmin.php?m=b2b_stat&a=adminIndexStat&ajax=1--
+sql错误：SELECT sum(money) FROM sky_mod_b2b_order   where  status in(1,2,3)   LIMIT 0,1  Table 'deituicmsbase.sky_mod_b2b_order' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:223行,调用方法:getOne 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:112行,调用方法:selectOne 
+D:\www\product\deituiCMSBase\module\b2b\source\admin\b2b_stat.ctrl.php:37行,调用方法:selectOne 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onAdminIndexStat 
+D:\www\product\deituiCMSBase\moduleadmin.php:37行,调用方法:require 
+
+
+---2021-04-27 09:07:15--/moduleadmin.php?m=b2b_stat&a=adminIndexStat&ajax=1--
+sql错误：SELECT sum(money) FROM sky_mod_b2b_order   where  status in(1,2,3)   LIMIT 0,1  Table 'deituicmsbase.sky_mod_b2b_order' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:223行,调用方法:getOne 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:112行,调用方法:selectOne 
+D:\www\product\deituiCMSBase\module\b2b\source\admin\b2b_stat.ctrl.php:37行,调用方法:selectOne 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onAdminIndexStat 
+D:\www\product\deituiCMSBase\moduleadmin.php:37行,调用方法:require 
+
+
+---2021-04-27 09:34:32--/moduleadmin.php?m=b2b_stat&a=adminIndexStat&ajax=1--
+sql错误：SELECT sum(money) FROM sky_mod_b2b_order   where  status in(1,2,3)   LIMIT 0,1  Table 'deituicmsbase.sky_mod_b2b_order' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:223行,调用方法:getOne 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:112行,调用方法:selectOne 
+D:\www\product\deituiCMSBase\module\b2b\source\admin\b2b_stat.ctrl.php:38行,调用方法:selectOne 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onAdminIndexStat 
+D:\www\product\deituiCMSBase\moduleadmin.php:37行,调用方法:require 
+
+
+---2021-05-19 11:41:06--/admin.php?m=module&a=uninstall&inmodule=household--
+sql错误：drop table sky_mod_household_bankcard ; Unknown table 'deituicmsbase.sky_mod_household_bankcard'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2021-05-19 11:42:55--/admin.php?m=module&a=uninstall&inmodule=b2b--
+sql错误：drop table sky_mod_b2b_admin ; Unknown table 'deituicmsbase.sky_mod_b2b_admin'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:25行,调用方法:require 
+
+
+---2021-05-20 10:59:29--/module.php?m=house--
+sql错误：SELECT  *  FROM sky_mod_house_loupan   where  isrecommend=1 AND status=1   LIMIT 0,4  Table 'deituicmsbase.sky_mod_house_loupan' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:210行,调用方法:getAll 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:103行,调用方法:SELECT 
+D:\www\product\deituiCMSBase\module\house\source\model\house_loupan.model.php:9行,调用方法:select 
+D:\www\product\deituiCMSBase\module\house\source\index\house.ctrl.php:10行,调用方法:Dselect 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onDefault 
+D:\www\product\deituiCMSBase\module.php:63行,调用方法:require 
+
+
+---2021-05-24 15:36:48--/module.php?m=house--
+sql错误：SELECT  *  FROM sky_mod_house_loupan   where  isrecommend=1 AND status=1   LIMIT 0,4  Table 'deituicmsbase.sky_mod_house_loupan' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:210行,调用方法:getAll 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:103行,调用方法:SELECT 
+D:\www\product\deituiCMSBase\module\house\source\model\house_loupan.model.php:9行,调用方法:select 
+D:\www\product\deituiCMSBase\module\house\source\index\house.ctrl.php:10行,调用方法:Dselect 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onDefault 
+D:\www\product\deituiCMSBase\module.php:63行,调用方法:require 
+
+
+---2021-05-27 15:59:39--/module.php?m=house--
+sql错误：SELECT  *  FROM sky_mod_house_loupan   where  isrecommend=1 AND status=1   LIMIT 0,4  Table 'deituicmsbase.sky_mod_house_loupan' doesn't exist
+D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php:210行,调用方法:getAll 
+D:\www\product\deituiCMSBase\skymvc\class\cls_model.php:103行,调用方法:SELECT 
+D:\www\product\deituiCMSBase\module\house\source\model\house_loupan.model.php:9行,调用方法:select 
+D:\www\product\deituiCMSBase\module\house\source\index\house.ctrl.php:10行,调用方法:Dselect 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onDefault 
+D:\www\product\deituiCMSBase\module.php:63行,调用方法:require 
+
+
+---2021-06-03 13:51:29--/admin.php?m=module&a=uninstall&inmodule=fenlei--
+sql错误：drop table sky_mod_fenlei ; Unknown table 'deituicmsbase.sky_mod_fenlei'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:19行,调用方法:require 
+
+
+---2021-06-03 13:51:34--/admin.php?m=module&a=uninstall&inmodule=fenlei--
+sql错误：drop table sky_mod_fenlei ; Unknown table 'deituicmsbase.sky_mod_fenlei'
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:197行,调用方法:query 
+D:\www\product\deituiCMSBase\source\admin\module.ctrl.php:127行,调用方法:dosql 
+D:\www\product\deituiCMSBase\skymvc\skymvc.php:140行,调用方法:onUninstall 
+D:\www\product\deituiCMSBase\admin.php:19行,调用方法:require 
+

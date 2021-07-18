@@ -14,5 +14,15 @@ class pvControl extends skymvc{
 		echo "success";
 		 
 	}
+	
+	/**
+	清除今日之前的数据
+	**/
+	public function onClear(){
+		$day=date("Y-m-d 00:00:01");
+		M("pv_day")->delete("createtime<'".$day."' ");
+		echo "success";
+	}
+	
 }
 ?>

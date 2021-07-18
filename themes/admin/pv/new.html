@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="tabs-border">
+			<div class="item active">最近访问</div>
+		</div>
+		<div class="main-body">
+			<table class="tbs">
+				<thead>
+					<tr>
+						<td>时间</td>
+						<td>Ip</td>
+						<td>url</td>
+						 
+					</tr>
+				</thead>
+				<tbody>
+					{foreach item=c from=$data}
+					<tr>
+						<td>{$c.createtime}</td>
+						<td>{$c.ip}</td>
+						<td><a class="block" target="_blank" href="{$c.url}">{$c.url}</a></td>
+						 
+					</tr>
+					
+					{/foreach}
+				</tbody>
+			</table>
+			
+			{$pagelist}
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

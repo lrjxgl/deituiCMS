@@ -109,7 +109,7 @@ function parseStrLink($str){
 	if(!isset($arr["m"])){
 		return false;
 	}
-	if(substr($arr["m"],0,4)=="mod_"){
+	if(!isset($arr["path"]) && substr($arr["m"],0,4)=="mod_"){
 		$arr["path"]="/module.php";
 		$arr["m"]=str_replace("mod_","",$arr["m"]);
 	}

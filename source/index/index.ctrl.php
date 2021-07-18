@@ -31,7 +31,7 @@ class indexControl extends skymvc
 		}
 		
 		$articleList=M("article")->Dselect(array(
-			"where"=>" is_recommend=1 AND status=2 ",
+			"where"=>" is_recommend=1 AND status=1 ",
 			"limit"=>6,
 			"order"=>" id DESC"
 		));

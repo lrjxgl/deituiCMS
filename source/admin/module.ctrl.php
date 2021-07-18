@@ -245,6 +245,11 @@ class moduleControl extends skymvc{
 		$this->goAll("success");
 	}
 	
+	public function onUpdate(){
+		$module=str_replace("/","",get_post('inmodule','h'));
+		
+		echo "success";
+	}
 }
 
 ?>

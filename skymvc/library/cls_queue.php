@@ -7,7 +7,7 @@ class queue{
 	public $file;
 	 
 	public $key=1;
-	public function __construct($type="",$key=1){
+	public function __construct($key=1,$type=""){
 		$this->type=$type;
 		if($this->type==""){
 			 
@@ -82,9 +82,11 @@ class queue{
 		}
 	}
 	public function getList(){
+		 
 		switch($this->type){
 			case "file":
-				return $this->file_get();
+				$this->file_get();
+				return $this->list;
 				break;
 			case "redis":
 				return redisQueue::getList($this->k,$v);
@@ -100,6 +102,7 @@ class queue{
 	public function file_lpush($v){
 		$this->file_get();
 		array_unshift($this->list,$v);
+		 
 		$this->file_save();
 	}
 	
@@ -118,11 +121,12 @@ class queue{
 	}
 	
 	public function file_get(){
+		
 		if(file_exists($this->file)){
 	 
 			$con=file_get_contents($this->file);
 			$this->list=json_decode($con,true);
-			 
+		 
 		}else{
 			$this->list=[];
 		}

@@ -1,6 +1,8 @@
 <?php
+
 $jssdk = new JSSDK($wx['appid'], $wx['appkey']);
 $signPackage = $jssdk->GetSignPackage();	
+
 ?>
 <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
 <script>
@@ -11,7 +13,7 @@ $signPackage = $jssdk->GetSignPackage();
 			$(function(){
 				 
 				wx.config({
-					debug:<?=$debug?>, 
+					debug:<?php if($debug):?>true<?php else:?>false<?php endif;?>, 
 					appId: '<?php echo $signPackage["appId"];?>',
 				    timestamp: <?php echo $signPackage["timestamp"];?>,
 				    nonceStr: '<?php echo $signPackage["nonceStr"];?>',
@@ -65,6 +67,7 @@ $signPackage = $jssdk->GetSignPackage();
 					    },
 					    cancel: function () { 
 					        // 用户取消分享后执行的回调函数
+							skyToast("失败")
 					    }
 					});
 					//分享给朋友
@@ -78,6 +81,7 @@ $signPackage = $jssdk->GetSignPackage();
 					    },
 					    cancel: function () { 
 					        // 用户取消分享后执行的回调函数
+							skyToast("失败")
 					    }
 					});
 

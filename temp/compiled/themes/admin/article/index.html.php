@@ -79,18 +79,11 @@ ID:<input class="w100" type="text" name="id" value="<?php echo intval($_GET['id'
    <td><?php echo $this->_var['c']['fav_num']; ?></td>
     
    <td>
-   	 <?php if ($this->_var['c']['status'] == 2): ?>
-   <img src='/static/admin/img/yes.gif' class="ajax_no" url='<?php echo $this->_var['appadmin']; ?>?m=article&a=status&id=<?php echo $this->_var['c']['id']; ?>&status=4' rurl='<?php echo $this->_var['appadmin']; ?>?m=article&a=status&id=<?php echo $this->_var['c']['id']; ?>&status=2'>
-    <?php else: ?>
-    <img src='/static/admin/img/no.gif' class="ajax_yes" url='<?php echo $this->_var['appadmin']; ?>?m=article&a=status&id=<?php echo $this->_var['c']['id']; ?>&status=2' rurl='<?php echo $this->_var['appadmin']; ?>?m=article&a=status&id=<?php echo $this->_var['c']['id']; ?>&status=4'>
-    <?php endif; ?>
+	   <div url='<?php echo $this->_var['appadmin']; ?>?m=article&a=status&id=<?php echo $this->_var['c']['id']; ?>&ajax=1' class="<?php if ($this->_var['c']['status'] == 1): ?>yes<?php else: ?>no<?php endif; ?> js-toggle-status"></div>
+   	  
    </td>
    <td>
-   	<?php if ($this->_var['c']['is_recommend'] == 1): ?>
-   <img src='/static/admin/img/yes.gif' class="ajax_no" url='<?php echo $this->_var['appadmin']; ?>?m=article&a=recommend&id=<?php echo $this->_var['c']['id']; ?>&is_recommend=0' rurl='<?php echo $this->_var['appadmin']; ?>?m=article&a=recommend&id=<?php echo $this->_var['c']['id']; ?>&is_recommend=2'>
-    <?php else: ?>
-    <img src='/static/admin/img/no.gif' class="ajax_yes" url='<?php echo $this->_var['appadmin']; ?>?m=article&a=recommend&id=<?php echo $this->_var['c']['id']; ?>&is_recommend=1' rurl='<?php echo $this->_var['appadmin']; ?>?m=article&a=recommend&id=<?php echo $this->_var['c']['id']; ?>&is_recommend=0'>
-    <?php endif; ?>
+   	<div url='<?php echo $this->_var['appadmin']; ?>?m=article&a=recommend&id=<?php echo $this->_var['c']['id']; ?>&ajax=1' class="<?php if ($this->_var['c']['is_recommend'] == 1): ?>yes<?php else: ?>no<?php endif; ?> js-toggle-status"></div>
    </td>
    
    <td><?php echo $this->_var['c']['createtime']; ?></td>

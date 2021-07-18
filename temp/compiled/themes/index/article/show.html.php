@@ -2,13 +2,24 @@
 <html>
 	<?php echo $this->fetch('head.html'); ?>
 	<link href="/plugin/swiper/css/swiper.min.css" rel="stylesheet" />
+	 
 	<body>
 		<div class="header">
 			<div class="header-back"></div>
 			<div class="header-title"><?php echo $this->_var['data']['title']; ?></div>
 		</div>
 		<div class="header-row"></div>
-		<div class="main-body mgb-10">
+		<div class="main-body mgb-10"> 
+			<?php if ($this->_var['data']['videourl'] != ''): ?>
+			<video 
+				style="width: 100%;margin-bottom: 10px;"
+				src="<?php echo $this->_var['data']['videourl']; ?>" 
+				x5-playsinline="true"
+				x-webkit-airplay="true"
+				 playsinline="true" 
+				 webkit-playsinline="true" 
+			  controls="controls" autoplay=""></video>
+			<?php endif; ?>
 			<div class="swiper-container" style="width: 100%;" id="indexFlash">
 				<div class="swiper-wrapper" >
 					<?php $_from = $this->_var['imgsdata']; if (!is_array($_from) && !is_object($_from)) { $_from=array();}; $this->push_vars('', 'c');if (count($_from)):
@@ -36,8 +47,8 @@
 		</div>
 		<?php echo $this->fetch('inc/comment.html'); ?>
 		<?php echo $this->fetch('footer.html'); ?>
-		<script src="<?php echo $this->_var['skins']; ?>inc/comment.js"></script>
-		<?php wx_jssdk();?>
+		<script src="<?php echo $this->_var['skins']; ?>inc/comment.js?<?php echo JS_VERSION; ?>"></script>
+		<?php wx_jssdk();?> 
 		<script type="text/javascript">
 			wxshare_title="<?php echo $this->_var['data']['title']; ?>";
 			<?php if ($this->_var['data']['imgurl']): ?> 

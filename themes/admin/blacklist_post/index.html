@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="tabs-border">
+			<div class="item active">禁言名单</div>
+		</div>
+		<form class="search-form" method="get" action="/admin.php">
+			<input type="hidden" name="m" value="blacklist_post" />
+
+			昵称：<input type="text" name="nickname" class="w150" />
+
+			<button type="submit" class="btn btn-success">搜一下</button>
+		</form>
+		<div class="main-body">
+			<table class="tbs">
+				<thead>
+					<tr>
+						<td>id</td>
+						<td>昵称</td>
+						<td>
+							头像
+						</td>
+						<td>截止时间</td>
+						<td>操作</td>
+					</tr>
+					</tr>
+				</thead> {foreach item=c from=$list}
+				<tr>
+					<td>{$c.userid}</td>
+					<td>{$c.nickname}</td>
+					<td>
+						<img class="w60" src="{$c.user_head}.100x100.jpg" />
+					</td>
+					<td>{$c.etime|date:Y-m-d H:i:s}</td>
+					<td>
+						<a href="javascript:;" class="js-delete" url="{const.APPADMIN}?m=blacklist_post&a=delete&ajax=1&id={$c.id}">删除</a></td>
+				</tr>
+				{/foreach}
+			</table>
+			<div>{$pagelist}</div>
+		</div>
+		{include file="footer.html"}
+
+	</body>
+</html>

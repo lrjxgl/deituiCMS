@@ -645,3 +645,71 @@ error:1416F086:SSL routines:tls_process_server_certificate:certificate verify fa
 ---2020-12-30 21:59:14--/admin.php?m=index&a=shouquan--
 <div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
 error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：147 </div>
+
+---2021-01-06 16:45:15--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：147 </div>
+
+---2021-01-07 17:18:44--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：147 </div>
+
+---2021-01-10 14:37:14--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：147 </div>
+
+---2021-01-11 12:41:04--/index.php?m=weixin_openapi&wid=2--
+<div class='item'>错误类型：WARNING<br> 内容：mysqli::__construct(): (HY000/2002): 由于目标计算机积极拒绝，无法连接。
+  错误位置：D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php 行：65 </div>
+
+---2021-01-11 12:41:09--/index.php?m=weixin_openapi&wid=2--
+<div class='item'>错误类型：WARNING<br> 内容：mysqli::__construct(): (HY000/2002): 由于目标计算机积极拒绝，无法连接。
+  错误位置：D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php 行：65 </div>
+
+---2021-01-11 12:41:17--/index.php?m=weixin_openapi&wid=2--
+<div class='item'>错误类型：WARNING<br> 内容：mysqli::__construct(): (HY000/2002): 由于目标计算机积极拒绝，无法连接。
+  错误位置：D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php 行：65 </div>
+
+---2021-01-11 12:41:22--/index.php?m=weixin_openapi&wid=2--
+<div class='item'>错误类型：WARNING<br> 内容：mysqli::__construct(): (HY000/2002): 由于目标计算机积极拒绝，无法连接。
+  错误位置：D:\www\product\deituiCMSBase\skymvc\class\cls_mysqli.php 行：65 </div>
+
+---2021-04-04 18:32:07--/test.php--
+<div class='item'>错误类型：WARNING<br> 内容：Use of undefined constant PHONE_USER - assumed 'PHONE_USER' (this will throw an Error in a future version of PHP)  错误位置：D:\www\product\deituiCMSBase\source\model\sms.model.php 行：38 </div>
+
+---2021-04-04 18:32:31--/test.php--
+<div class='item'>错误类型：WARNING<br> 内容：Use of undefined constant PHONE_USER - assumed 'PHONE_USER' (this will throw an Error in a future version of PHP)  错误位置：D:\www\product\deituiCMSBase\source\model\sms.model.php 行：38 </div>
+
+---2021-04-04 18:32:31--/test.php--
+<div class='item'>错误类型：WARNING<br> 内容：Use of undefined constant PHONE_USER - assumed 'PHONE_USER' (this will throw an Error in a future version of PHP)  错误位置：D:\www\product\deituiCMSBase\source\model\sms.model.php 行：38 </div>
+
+---2021-04-04 18:33:03--/test.php--
+<div class='item'>错误类型：WARNING<br> 内容：Use of undefined constant PHONE_USER - assumed 'PHONE_USER' (this will throw an Error in a future version of PHP)  错误位置：D:\www\product\deituiCMSBase\source\model\sms.model.php 行：38 </div>
+
+---2021-04-15 11:35:01--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：86 </div>
+
+---2021-04-15 11:48:11--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：86 </div>
+
+---2021-04-15 11:48:36--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：86 </div>
+
+---2021-04-15 11:59:23--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：86 </div>
+
+---2021-04-15 12:25:18--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：86 </div>
+
+---2021-04-15 12:31:52--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：86 </div>
+
+---2021-04-15 12:39:16--/admin.php?m=index&a=shouquan--
+<div class='item'>错误类型：WARNING<br> 内容：file_get_contents(): SSL operation failed with code 1. OpenSSL Error messages:
+error:1416F086:SSL routines:tls_process_server_certificate:certificate verify failed  错误位置：D:\www\product\deituiCMSBase\source\admin\index.ctrl.php 行：86 </div>

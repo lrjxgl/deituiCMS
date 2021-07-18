@@ -10,8 +10,8 @@
 		public function onDefault(){
 			 
 			$pid=get("pid",'i');
-			$parent=M("site_city")->selectRow(array("where"=>" sc_id=".$pid." AND siteid=".SITEID." "));
-			$where=" siteid=".SITEID." AND pid=".$pid;
+			$parent=M("site_city")->selectRow(array("where"=>" sc_id=".$pid));
+			$where="  pid=".$pid;
 			$url=APPADMIN."?m=site_city&a=default";
 			$limit=20;
 			$start=get("per_page","i");
@@ -66,7 +66,7 @@
 					}
 				}
 			}
-			$pid_top_list=M("site_city")->id_title(array("where"=>" pid=0  AND siteid=".SITEID.""));
+			$pid_top_list=M("site_city")->id_title(array("where"=>" pid=0 "));
 			$this->smarty->assign(array(
 				"data"=>$data,
 				"pid_top_list"=>$pid_top_list,

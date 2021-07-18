@@ -44,8 +44,10 @@
 			$catlist=M("category")->children(0,"article");
 			$per_page=$start+$limit;
 			$per_page=$per_page>=$rscount?0:$per_page;
+			$seo=M("seo")->get("article");
 			$this->smarty->goassign(
 				array(
+					"seo"=>$seo,
 					"list"=>$data,
 					"pagelist"=>$pagelist,
 					"rscount"=>$rscount,

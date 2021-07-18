@@ -145,7 +145,7 @@
             || !array_key_exists("prepay_id", $UnifiedOrderResult)  
             || $UnifiedOrderResult['prepay_id'] == "")  
         {  
-        	echo "参数出错";
+        	echo "<script>history.go(-3);</script>";
             throw new WxPayException("参数错误");  
         }  
         $jsapi = new WxPayJsApiPay();  

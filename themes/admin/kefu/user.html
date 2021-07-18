@@ -10,8 +10,8 @@
 		<div class="tabs-border">
 			<div class="item active">和{$user.nickname}对话</div>
 		</div>
-		<div class="main-body" >
-			<div v-if="pageLoad" class="list" id="app">
+		<div id="app" class="main-body" >
+			<div v-if="pageLoad" class="list" >
 				 
 				<div v-for="(item,index) in pageData.list" :key="index" class="bg-white pd-10">
 					 
@@ -54,11 +54,15 @@
 				data:function(){
 					return {
 						pageLoad:false,
-						pageData:[]
+						pageData:[],
+						content:""
 					}
 				},
 				created:function(){
 					this.getPage();
+					setInterval(function(){
+						app.getPage();
+					},10000)
 				},
 				methods:{
 					getPage:function(){
@@ -72,30 +76,35 @@
 							success:function(res){
 								that.pageLoad=true;
 								that.pageData=res.data
-								console.log(res.data);
+								that.$nextTick(function(){
+									window.scrollTo(0,10000);
+								})
 							}
 						})
 					},
 					submit:function(){
-						
+						var that=this;
+						$.ajax({
+							url:"/admin.php?m=kefu&a=save&ajax=1",
+							type:"POST",
+							dataType:"json",
+							data:{
+								content:this.content,
+								userid:userid
+							},
+							success:function(res){
+								skyToast(res.message);
+								if(res.error){
+									return false;
+								}
+								that.content="";
+								that.getPage();
+							}
+						})
 					}
 				}
 			})
-			$(function(){
-				setInterval(function(){
-					app.getPage();
-				},20000)
-				$(document).on("click","#submit",function(){
-					var content=$("#content").val();
-					$.post("/admin.php?m=kefu&a=save&ajax=1",{
-						content:content,
-						userid:userid
-					},function(res){
-						app.getPage();
-						$("#content").val("");
-					},"json")
-				})
-			})
+			 
 		</script>
 	</body>
 </html>

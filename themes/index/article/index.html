@@ -8,6 +8,11 @@
 		</div>
 		<div class="header-row"></div>
 		<div class="main-body">
+			<div class="tabs-border">
+				{foreach item=c from=$catlist}
+				<div gourl="/index.php?m=article&a=list&catid={$c.catid}" class="tabs-border-item">{$c.cname}</div>
+				{/foreach}
+			</div>
 			<div class="pd-10 bg-fff">
 				{foreach item=c from=$list}
 				<a href="/index.php?m=article&a=show&id={$c.id}" class="sglist-item">
