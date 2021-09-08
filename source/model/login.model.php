@@ -31,18 +31,19 @@ class loginModel extends model{
 		return (isset($_SESSION['ssuser']['userid'])?intval($_SESSION['ssuser']['userid']):0);
 	}
 	
-	public function checklogin($ajax=0){
-		if(get_post('ajax')) $ajax=1;
-		if($ajax){
+	public function checklogin($setBack=false){
+		 
+		if(get_post('ajax')){
 			if(empty($_SESSION['ssuser']['userid'])){
-				closeDb();
+				if($setBack){
+					$this->setBackurl();
+				} 
 				exit(json_encode(array("error"=>1000,"nologin"=>1,"message"=>"请先登录") ));
 				 
 			}
 		}else{
 			if(empty($_SESSION['ssuser']['userid'])){
-				closeDb();
-				$_SESSION["backurl"]=HTTP_HOST."/".$_SERVER["REQUEST_URI"];
+				$this->setBackurl();
 				header("Location: /index.php?m=login");
 				exit;
 			}
@@ -162,6 +163,19 @@ class loginModel extends model{
 		C()->goAll("请先登录",1,0,APPADMIN."?m=admin_login");
 		 
 		 
+	} 
+	
+	public function setBackurl(){
+		$_SESSION["backurl"]=HTTP_HOST.$_SERVER["REQUEST_URI"];
+	}
+	public function getBackurl(){
+		if($url=get_post('backurl',"h")){
+			return $url;
+		}elseif(isset($_SESSION["backurl"])){
+			return $_SESSION["backurl"];
+		}else{
+			return HTTP_HOST;
+		}
 	} 
 	
 }

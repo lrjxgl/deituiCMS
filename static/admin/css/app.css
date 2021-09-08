@@ -178,20 +178,17 @@ a {
 	border: 1px solid #ddd;
 	box-sizing: border-box;
 }
-.tbs-fixed tbody {
-	display:block;
-	height:505px;
-	overflow-y:auto;
-	overflow-x: hidden;
+.tbs-fixed{
+	position: fixed;
+	display: flex;
+	background-color: #f2f2f2;
+		color: #323232;
 }
-
-.tbs-fixed thead,  .tbs-fixed tbody tr {
-	display:table;
-	width:100%;
-	table-layout:fixed;
-}
-.tbs-fixed thead{
-	 width: calc( 100% - 17px );
+.tbs-fixed div{
+	padding: 0px 10px;
+	line-height: 40px;
+	border: 1px solid #ddd;
+	box-sizing: border-box;
 }
 /**table-add****/
 .table-add {

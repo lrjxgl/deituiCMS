@@ -22,7 +22,7 @@ class statControl extends skymvc{
 			if($url){
 				$w=" url like '".$url."%' AND ";
 			}
-			$sql="select count(*) from ".table('pv')." where ".$w." createtime like '".$h."%'";
+			$sql="select count(*) from ".table('pv_day')." where ".$w." createtime like '".$h."%'";
 			 
 			$pvMoneys[]=$count=M("pv")->getOne($sql);
 			 

@@ -8,7 +8,11 @@ define("CONTROL_DIR","source/index");
 define("MODEL_DIR","source/model");
 require("./skymvc/skymvc.php");
 function userinit(){
-	M("sms")->sendSMS("15985840591","你好啊"); 
+	$res=M("ad")->field("id,title,tag_id")
+				->order("id ASC")
+				->where(" tag_id=? ")
+				->all(1);
+	print_r($res); 
 	exit;
 }
 

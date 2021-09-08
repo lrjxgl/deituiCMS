@@ -1,0 +1,70 @@
+/**头部风格***/
+.header,.header-show{
+ background-color: #c223c2;	
+ box-shadow: none;  
+}
+.header-back:after,.header-title{color: #fff;}
+
+.header-search{
+	background-color: rgba(0,0,0,.1);
+	border: 0 !important;
+	color: #fff;
+}
+.header-search::-webkit-input-placeholder { /* Edge */
+  color: #fff;
+}
+
+.header-search:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #fff;
+}
+
+.header-search::placeholder {
+  color: #fff;
+}
+.header-search-icon{
+	color: #fff;
+}
+.header-search-btn{
+	background-color: #c223c2;
+    color: #fff;
+}
+.header-right{
+	color: #fff;
+}
+.header-right-btn{
+	color: #fff;
+	border-color: #fff;
+}
+/*****底部风格****/
+
+		 
+		.footer-item,.footer-item:before{
+			 
+			color:#6d6d6d;
+		}
+		.footer-add:after{
+			background-color: #c223c2;
+			color: #fff;
+		}
+		.footer-active, .footer-active:before {
+		    background: none;
+			font-weight:600; 
+			color:#c223c2;
+		}
+	
+ 
+/*********/
+.btn-primary,.btn-row-submit,.input-flex-btn{
+	background-color: #c223c2;
+	border-color:#c223c2;
+}
+.cart-list-btn{
+	background-color:#c223c2 !important;
+}
+
+.btn,.btn-buy{
+	background-color: #c223c2;
+}
+.toast-success{
+	background-color: #c223c2  !important;
+}

@@ -1,1 +1,0 @@
-{"expire":1625710200,"data":{"authcode":"12JTddcCbJ6T2Iby6d3SeUcy5M8i5U5z2Q1TdQlMkMlMjJwJTIyJTNBJTIyZTYxMjkwJTIyJTJDJTIyYSUyMiUzQSUyMmZhMmUlMjIlMkMlMjJlJTIyJTNBMTYyNTA5NDIwMSU3RA==","user":{"userid":4,"nickname":"lrjxgl","telephone":"15985840591","user_head":"attach\/2020\/12\/27\/49.jpg","gold":246,"money":"61.00"}}}

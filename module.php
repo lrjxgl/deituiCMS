@@ -5,7 +5,8 @@ if(!file_exists("config/install.lock"))
 {
 	header("Location: install/");
 	exit;
-} 
+}
+define("ROOT_PATH",  str_replace("\\", "/", dirname(__FILE__))."/"); 
 require("config/version.php"); 
 require("config/config.php");
 require "config/setconfig.php";

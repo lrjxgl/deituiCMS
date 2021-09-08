@@ -23,7 +23,10 @@
 		        $where="";
 		    }
 		    $this->alipay=M("open_alipay")->selectRow(array("where"=>$where,"order"=>"id DESC"));
-		    return $this->alipay;
+		    if(empty($this->alipay)){
+		    	exit("请先配置支付宝");
+		    }
+			return $this->alipay;
 		}
 		
 		/**

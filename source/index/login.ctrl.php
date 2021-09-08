@@ -65,11 +65,18 @@ class loginControl extends skymvc{
 		if(empty($user)){
 			$this->goall('账号不存在',1,"",$_SERVER['HTTP_REFERER']);
 		}
+		$loginKey="loguser".$user["userid"];
+		$num=cache()->get($loginKey);
+		if($num>=5){
+			$this->goall("密码输错5次，请10分钟后再来",1);
+		} 
 		//检测黑名单
 		M("blacklist")->check($user['userid']);
 		$puser=M("user_password")->selectRow("userid=".$user['userid']);
 		if($puser['password']!=umd5($password.$puser['salt'])){
-			$this->goall("密码出错了",1,"",$_SERVER['HTTP_REFERER']);
+			$num=intval($num)+1;
+			cache()->set($loginKey,$num,600);
+			$this->goall("密码出错,还能再输".(5-$num)."次",1,"",$_SERVER['HTTP_REFERER']);
 		}
 		$_SESSION['ssuser']=$user;
 		$backurl=get_post('backurl','x');
@@ -79,6 +86,7 @@ class loginControl extends skymvc{
 		if(preg_match("/login/i",$backurl)){
 			$backurl="/index.php";
 		}
+		cache()->del($loginKey);
 		$auth=M("login")->setCode($puser);
 		$authcode=$auth['authcode'];
 		cache()->set("authcode",$authcode,3600*24*30);

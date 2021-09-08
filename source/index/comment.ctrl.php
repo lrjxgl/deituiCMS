@@ -193,7 +193,11 @@ class commentControl extends skymvc{
 			
 			M($tableComment)->insert($data);
 		}
-		
+		//通知网站
+		M("site_msg")->add([
+			"tablename"=>$tableComment,
+			"content"=>"有人发布评论了，快去审核吧"
+		]);
 		$this->goAll("保存成功");
 	}
 	

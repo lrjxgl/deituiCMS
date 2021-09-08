@@ -33,7 +33,7 @@
    
      <div class="index_mian_right_two_two_o_ly"><b>数据库主机：</b><input class="index_mian_right_two_two_text_ly" name="mysql_host" value="localhost" type="text" /><span>一般为localhost</span></div>
      <div class="index_mian_right_two_two_o_ly"><b>数据库用户：</b><input class="index_mian_right_two_two_text_ly" name="mysql_user" type="text" /></div>
-     <div class="index_mian_right_two_two_o_ly"><b>数据库密码：</b><input class="index_mian_right_two_two_text_ly" name="mysql_pwd" type="text" /></div>
+     <div class="index_mian_right_two_two_o_ly"><b>数据库密码：</b><input class="index_mian_right_two_two_text_ly" name="mysql_pwd" type="password" /></div>
      <div class="index_mian_right_two_two_o_ly"><b>数据表前缀：</b><input class="index_mian_right_two_two_text_ly" name="tblpre" type="text" value="sky_" /></div>
      <div class="index_mian_right_two_two_o_ly"><b>数据库名称：</b><input class="index_mian_right_two_two_text_ly" name="mysql_db" type="text" /></div>
      
@@ -47,8 +47,8 @@
    <div class="index_mian_right_three_two_ly">
    
      <div class="index_mian_right_three_two_o_ly"><b>用户名：</b><input class="index_mian_right_two_two_text_ly" name="adminname" type="text" /></div>
-     <div class="index_mian_right_three_two_n_ly"><b>密码：</b><input class="index_mian_right_two_two_text_ly" name="pwd1" type="text" /></div>
-      <div class="index_mian_right_three_two_n_ly"><b style="margin-left: 46px;">确认密码：</b><input class="index_mian_right_two_two_text_ly" name="pwd2" type="text" /></div>
+     <div class="index_mian_right_three_two_n_ly"><b>密码：</b><input class="index_mian_right_two_two_text_ly" name="pwd1" type="password" /></div>
+      <div class="index_mian_right_three_two_n_ly"><b style="margin-left: 46px;">确认密码：</b><input class="index_mian_right_two_two_text_ly" name="pwd2" type="password" /></div>
    </div>
   </div>
   <!--管理员初始密码结束-->

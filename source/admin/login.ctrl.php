@@ -24,17 +24,23 @@ class loginControl extends skymvc{
 	public function onLogin_save(){
 		$username=post('username','h');
 		$password=post('password','h');
-		 
+		$key="logadmin".md5($username);
+		$num=cache()->get($key);
+		if($num>=5){
+			$this->goall("密码输错5次，请10分钟后再来",1);
+		} 
 		$data=M("admin")->selectRow(array("where"=>array("username"=>$username)));
 		if(umd5($password.$data['salt'])==$data['password']){
 			unset($data['password']);
 			$_SESSION['ssadmin']=$data;			
-			
+			cache()->del($key);
 			$authcode=md5(time());
 			cache()->set("adminAuth-".$authcode,$data,3600*24); 
 			$this->goall("登录成功",0,$authcode,APPADMIN."?m=iframe");
 		}else{
-			$this->goall("密码出错",1);
+			$num=intval($num)+1;
+			cache()->set($key,$num,600);
+			$this->goall("密码出错,还能再输".(5-$num)."次",1);
 		}
 	}
 	

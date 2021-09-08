@@ -15,7 +15,7 @@ class commentControl extends skymvc{
 		$start=get("per_page","i");
 		$limit=24;
 		$url="/admin.php?m=comment";
-		$where=" 1 ";
+		$where=" status in(0,1,2) ";
 		$option=array(
 			"where"=>$where,
 			"start"=>$start,
@@ -43,4 +43,17 @@ class commentControl extends skymvc{
 		$this->smarty->display("comment/index.html");
 	}
 	
+	public function onDelete(){
+		$id=get("id","i");
+		$tablename=get_post("tablename","h");
+		if(empty($tablename)){
+			$tablename="article";
+		} 
+		$tableComment=$tablename."_comment";
+		$row=M($tableComment)->selectRow("id=".$id);
+		M($tableComment)->update(array("status"=>11),"id=".$id);
+		M($tablename)->changenum("comment_num",-1,"id=".$row["objectid"]);
+		$this->goAll("delete success",0,);
+		
+	}
 }

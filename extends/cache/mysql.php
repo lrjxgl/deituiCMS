@@ -23,7 +23,7 @@ class mysqlCache{
 		
 		return false;
 	}
-	public static function delete($k){
+	public static function del($k){
 		$row=M('dbcache')->delete("k='".$k."'");
 	}
 }	 

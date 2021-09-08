@@ -181,9 +181,9 @@
 		}
 		public function onShow(){
 			$id=get_post("id","i");
-			$data=M("article")->selectRow(array("where"=>"id={$id}"));
+			$data=M("article")->selectRow(array("where"=>"id={$id} AND status in(0,1) "));
 			if(empty($data)){
-				$this->goAll("文章不存在",1);
+				$this->goAll("文章已下架",1);
 			}
 			$data["imgurl"]=images_site($data["imgurl"]);
 			$data['timeago']=timeago(strtotime($data['createtime']));

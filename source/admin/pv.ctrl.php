@@ -154,5 +154,11 @@ class pvControl extends skymvc{
 		);
 		$this->smarty->display("pv/new.html");
 	}
+	
+	public function onClear(){
+		$time=date("Y-m-d H:i:s",time()-3600*24*8);
+		M("pv_day")->delete("createtime<'".$time."' ");
+		$this->goAll("清除成功");
+	}
 }
 ?>

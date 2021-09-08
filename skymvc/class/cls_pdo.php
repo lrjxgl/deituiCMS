@@ -73,7 +73,7 @@ class mysql
 	 /**
 	  * 执行sql语句
 	  */
-	 public function query($sql){
+	 public function query($sql,$param=[]){
 		try{   
 			if($this->testmodel){
 				
@@ -108,7 +108,7 @@ class mysql
 					showError("sql错误：".$sql." ".$e[2]);
 					exit;
 				}else{
-					showError("sql错误");
+					return false;
 					exit;
 				}
 			};
@@ -144,16 +144,18 @@ class mysql
 	/**
 	 * 将结果集解析成数组
 	 */
-	public function fetch_array($result_type=PDO::FETCH_ASSOC){
-		$this->query-> setFetchMode ( $result_type );
-		return $this->query->fetchAll();	
+	public function fetch_array($query,$result_type=PDO::FETCH_ASSOC){
+		$result_type=$result_type=='num'?PDO::FETCH_NUM:PDO::FETCH_ASSOC;
+	 
+		return $query->fetch($result_type);	
 	}
 	
 	/**
 	 * 从结果集中取一行
 	 */
-	public function fetch_row($result_type=PDO::FETCH_ASSOC){
-		return $this->query->fetch($result_type);	
+	public function fetch_row($query,$result_type=PDO::FETCH_ASSOC){
+		$result_type=$result_type=='num'?PDO::FETCH_NUM:PDO::FETCH_ASSOC;
+		return $query->fetch();	
 	}
 	
 	
@@ -261,8 +263,12 @@ class mysql
 	/**
 	 * 获取全部数据
 	 */
-	public function getAll($sql){
-		$res=$this->query($sql);
+	public function getAll($sql,...$params){
+		if(count($params)>0){
+			$res=$this->query($sql);
+		}else{
+			$res=$this->preQuery($sql,...$params);
+		}
 		if($res!==false)
 		{
 			$res-> setFetchMode ( PDO :: FETCH_ASSOC );
@@ -279,7 +285,12 @@ class mysql
 	/**
 	 * 获取一个字段
 	 */
-	public function getOne($sql){
+	public function getOne($sql,...$params){
+		if(count($params)>0){
+			$res=$this->query($sql);
+		}else{
+			$res=$this->preQuery($sql,...$params);
+		}
 		$res=$this->query($sql);
 		if($res !==false){
 			$rs=$res->fetch();
@@ -297,7 +308,12 @@ class mysql
 	}
 		
 	/*获取一行*/
-	 public function getRow($sql){
+	 public function getRow($sql,...$params){
+		 if(count($params)>0){
+		 	$res=$this->query($sql);
+		 }else{
+		 	$res=$this->preQuery($sql,...$params);
+		 }
         $res = $this->query($sql);
         if ($res !== false){
 			$res-> setFetchMode ( PDO :: FETCH_ASSOC );
@@ -309,8 +325,13 @@ class mysql
         }
     }
     /*获取一列*/
-    public function getCols($sql)
+    public function getCols($sql,...$params)
 	{
+		if(count($params)>0){
+			$res=$this->query($sql);
+		}else{
+			$res=$this->preQuery($sql,...$params);
+		}
 		$res=$this->query($sql);
 		if($res!==false){
 			$res-> setFetchMode ( PDO :: FETCH_NUM );
@@ -432,6 +453,20 @@ class mysql
 		preg_match("/from (.*) [where]?/is",$sql,$data);
 		$table=trim($data[1]);
 		return "sql".$table."_".$key;
+	}
+	//增加预处理
+	public function preQuery($sql,...$params){
+		$stmt = $this->db->prepare($sql);
+		$str=str_repeat("s",count($params));
+		if(count($params)>0){
+			foreach($params as $k=>$p){
+				$stmt->bindParam($k+1, $p, PDO::PARAM_STR);
+			}
+		} 
+		
+		$stmt->execute();
+		 
+		return $stmt;
 	}
 	 
 

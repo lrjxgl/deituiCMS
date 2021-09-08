@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-title">网站动态</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			<div class="">
+				{foreach item=c from=$list}
+				<div class="row-box js-item mgb-5">
+					<div class="flex flex-ai-center mgb-5">
+						<div class="cl-status">{$c.tablename}</div>
+						<div class="flex-1"></div>
+						<div class="cl3">{$c.createtime}</div>
+						<div url="/index.php?m=site_msg&a=delete&tablename={$c.tablename}&ajax=1" class="btn-mini js-delete mgl-10 btn-danger">删除</div>
+					</div>
+					<div class="cl3">
+						{$c.content}
+					</div>
+				</div>
+				{/foreach}
+			</div>
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

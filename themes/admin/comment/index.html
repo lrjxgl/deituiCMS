@@ -25,13 +25,14 @@
 			<td>{$c.createtime}</td>
 			<td>{$c.content}</td>
 			<td>
-				删除
+				<div url="/admin.php?m=comment&a=delete&id={$c.id}&ajax=1" class="btn-small btn-danger js-delete">删除</a>
 			</td>
 		</tr>
 		{/foreach}
 		
 	</table>
+	{$pagelist}
 </div>
-
+{include file="footer.html"}
 </body>
 </html>

@@ -1,11 +1,4 @@
 <?php
-define("QQID","");
-define("QQKEY","");
-define("WBID","");
-define("WBKEY","");
-define("TBID","");
-define("TBKEY","");
-define("TBPID","");
 define("PHONE_ON","1");
 define("PHONE_REG","1");
 define("PHONE_USER","admin");
@@ -56,9 +49,6 @@ define("FENQI","0");
 define("FENQI_LILV","0.01");
 define("SHOPLISTSHOW","0");
 define("HAS_PRINTER","0");
-define("PLUGIN_KDYUAN","0");
-define("PLUGIN_KDYUAN_TYPE","0");
-define("PLUGIN_KDYUAN_MI","3000");
 define("RURL301","");
 define("BDMAPKEY_PHP","99b0c7faf7c6bd62ecd70d4e0f1b315c");
 define("SMS_QIANMING","得推网络");
@@ -67,4 +57,6 @@ define("REG_INVITECODE","0");
 define("S_BANK_NAME","支付宝");
 define("S_BANK_USER","雷日锦");
 define("S_BANK_NUM","362606856@qq.com");
+define("SKINSCOLOR","c223c2");
+define("SKINS_FTTYPE","color");
 ?>

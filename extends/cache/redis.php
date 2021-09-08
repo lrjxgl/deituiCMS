@@ -21,7 +21,7 @@ class redisCache{
 		return $val;
 	}
 	
-	public static function delete($key){
+	public static function del($key){
 		 
 		return self::$redis->del(self::$redisKey.$key);
 	}

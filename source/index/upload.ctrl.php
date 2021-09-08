@@ -211,7 +211,7 @@ class uploadControl extends skymvc{
 			$dir="attach/".$dir.date("Y/m/d/").$this->dirId(get('id','i'));
 		}
 		umkdir($dir);
-		$maxid=M("maxid")->insert(array("t"=>0));
+		$maxid=M("maxid")->get();
 		$file=$dir.$maxid.".jpg";
  
  		$content=substr(strstr( $_POST['content'] ,','),1);

@@ -104,6 +104,10 @@ class mysql
 		}
 		 
 		if($this->errno() >0 ){
+			if(!TESTMODEL){
+				return false;
+			}
+			
 			$e=$this->error();
 			$debug=debug_backtrace();
 			unset($debug[0]);
@@ -147,16 +151,17 @@ class mysql
 	/**
 	 * 将结果集解析成数组
 	 */
-	public function fetch_array($result_type=MYSQLI_ASSOC){
- 
-		return $this->query->fetch_array($result_type);	
+	public function fetch_array($query,$result_type=MYSQLI_ASSOC){
+		$result_type=$result_type=='num'?MYSQLI_NUM:MYSQLI_ASSOC;
+		return $query->fetch_array($result_type);	
 	}
 	
 	/**
 	 * 从结果集中取一行
 	 */
-	public function fetch_row($result_type=MYSQLI_ASSOC){
-		return $this->query->fetch_array($result_type);	
+	public function fetch_row($query){
+		 
+		return $query->fetch_row();	
 	}
 	
 	
@@ -264,8 +269,13 @@ class mysql
 	/**
 	 * 获取全部数据
 	 */
-	public function getAll($sql){
-		$res=$this->query($sql);
+	public function getAll($sql,...$params){
+		if(count($params)>0){
+			$res=$this->query($sql);
+		}else{
+			$res=$this->preQuery($sql,...$params);
+		}
+		
 		$data=array();
 		if($res!==false)
 		{
@@ -285,8 +295,12 @@ class mysql
 	/**
 	 * 获取一个字段
 	 */
-	public function getOne($sql){
-		$res=$this->query($sql);
+	public function getOne($sql,...$params){
+		if(count($params)>0){
+			$res=$this->query($sql);
+		}else{
+			$res=$this->preQuery($sql,...$params);
+		}
 		
 		if($res !==false){
 			$rs=$res->fetch_array(MYSQLI_ASSOC);
@@ -306,8 +320,12 @@ class mysql
 	}
 		
 	/*获取一行*/
-	 public function getRow($sql){
-        $res = $this->query($sql);
+	 public function getRow($sql,...$params){
+        if(count($params)>0){
+        	$res=$this->query($sql);
+        }else{
+        	$res=$this->preQuery($sql,...$params);
+        }
         
         if ($res !== false){
 		 	
@@ -319,9 +337,13 @@ class mysql
         }
     }
     /*获取一列*/
-    public function getCols($sql)
+    public function getCols($sql,...$params)
 	{
-		$res=$this->query($sql);
+		if(count($params)>0){
+			$res=$this->query($sql);
+		}else{
+			$res=$this->preQuery($sql,...$params);
+		}
 		$data=array();
 		if($res!==false){
 			while($rs=$res->fetch_array(MYSQLI_ASSOC)){
@@ -439,7 +461,48 @@ class mysql
 		$table=trim($data[1]);
 		return "sql".$table."_".$key;
 	}
-	 
+	//增加链式操作和prepare
+	public function preQuery($sql,...$params){
+		if(!@$this->db->ping()){
+			$this->connect();
+			return $this->preQuery($sql,...$params);
+			 
+		} 
+		$stmt = $this->db->prepare($sql);
+		$str=str_repeat("s",count($params));
+		if(count($params)>0){
+			$res=$stmt->bind_param($str, ...$params);
+			if(!$res){
+				if($this->errno() >0 ){
+					if(!TESTMODEL){
+						return false;
+					}
+					
+					$e=$this->error();
+					$debug=debug_backtrace();
+					unset($debug[0]);
+					$html="";
+					foreach($debug as $row)
+					{
+					   $html .=$row['file'].':'.$row['line'].'行,调用方法:'.$row['function']." \n\r";
+					}
+					skyLog("sqlerror.txt","sql错误：".$sql." ".$e."\n\r".$html);
+					if(TESTMODEL){
+						showError("sql错误：".$sql." ".$e);
+						exit;
+					}else{
+						showError("sql错误");
+						exit;
+					}
+				};
+			}
+			$stmt->execute();
+			return  $stmt->get_result();
+		}else{
+			return $this->query($sql);
+		} 
+		 
+	} 
 
 }	
 

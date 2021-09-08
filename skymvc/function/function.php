@@ -179,9 +179,10 @@ function str_format($str,$format='',$len=0){
 					case "r":
 							$str=round($str,$len);
 							break;
-					case "a"://返回全部
-					
+					default:
+							
 							break;
+					
                 }
         }
         return $str;
