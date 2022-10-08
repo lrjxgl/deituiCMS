@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<link href="/plugin/swiper/css/swiper.min.css" rel="stylesheet" />
+	<body>
+		{include file="header.html"}
+		<div class="main-body mgb-10">
+			<div class="flex">
+				<div class="flex-1">
+					<div class="flex mgb-10 flex-ai-center">
+											<div>当前位置：</div>
+											<a href="/">首页</a>
+											
+											<div>&gt;</div>
+											<div> 文章详情</div>
+										</div>
+					<div class="row-box mgb-5">
+						<div class="d-title">{$data.title}</div>
+						
+						<div class="d-tool bg-white">
+							{$data.author}  {$data.createtime|cutstr:11}
+						</div>
+					</div>
+					{if !empty($imgsdata)}
+					<div class="row-box mgb-5">
+						<div class="swiper-container" id="indexFlash">
+							<div class="swiper-wrapper" >
+								{foreach item=c from=$imgsdata}
+								<div class="swiper-slide">
+									<img class="wmax" src="{$c.trueimgurl}" />
+								</div>
+								{/foreach}
+							</div>
+							 
+							<div class="swiper-pagination flex flex-jc-center"></div>
+						 
+						</div>
+					</div>
+					{/if}
+					<div class="row-box mgb-5">
+						<div class="d-content"> {$data.content} </div>
+					</div>
+					
+					
+					{include file="inc/comment.html"}
+					
+				</div>
+				<div class="page-side mgl-10">
+					 {include file="side.html"}
+				</div>
+			</div>
+			
+		{include file="footer.html"}
+		{include file="foot-all.html"}
+		<script src="{$skins}inc/comment.js"></script>
+		<?php wx_jssdk();?>
+		<script type="text/javascript">
+			wxshare_title="{$data.title}";
+			{if $data.imgurl} 
+			 wxshare_imgUrl="{$data.imgurl|images_site}.100x100.jpg";
+			 {/if}
+		</script>
+		<script>
+			setTimeout(function(){
+				$.get("/index.php?m=article&a=addclick&id={$data.id}&ajax=1")
+			},3000);
+			
+		</script>
+		<script src="/plugin/swiper/js/swiper.min.js"></script>
+		<script>
+			$(function(){
+				if($("#indexFlash .swiper-slide").length>0){
+					var flash = new Swiper("#indexFlash", {
+						 slidesPerView: 3,
+						      spaceBetween: 30,
+						pagination: {
+							el: '.swiper-pagination',
+						}
+					});
+				}else{
+					$("#indexFlash").hide();
+				}
+				
+			})
+			
+		</script>
+	</body>
+	
+</html>

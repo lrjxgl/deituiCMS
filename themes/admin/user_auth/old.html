@@ -27,7 +27,7 @@
         <td width="70">电话</td>
          <td width="120">身份证</td> 
         <td width="100">提交时间</td>
-        <td width="50">状态</td>
+         
        
         </tr>
         </thead>
@@ -38,8 +38,8 @@
         <td>{$c.truename}</td>
         <td>{$c.telephone}</td>
         <td>{$c.user_card}</td>
-        <td>{$c.lasttime|date:Y-m-d}</td>
-        <td>{if $c.status eq 0}未审核{elseif $c.status eq 1}已通过{else}未通过{/if}</td> 
+        <td>{$c.createtime}</td>
+         
          
         </tr>
        {/foreach} 

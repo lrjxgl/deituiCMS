@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		{include file="header.html"}
+		<div class="main-body">
+			<div class="flex">
+				{include file="user_side.html"}
+				<div class="flex-1">
+					<div class="btn btn-danger mgb-10">消费记录</div>
+					{if !$rscount}
+						<div class="emptyData">暂无消费记录</div>
+					 
+					{else}
+						{foreach item=item from=$list}
+						<div class="row-box mgb-5">
+							<div class="flex bd-mp-5">
+								<div class="cl1">{$item.timeago}</div>
+								<div class="flex-1"></div>
+								<div class="cl-money">￥{$item.money}</div>
+							</div>
+							<div class="cl3">{$item.content}</div>
+					
+						</div>
+						{/foreach}
+					{/if}
+				</div>
+			</div> 
+			
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

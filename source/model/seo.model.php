@@ -7,7 +7,7 @@ class seoModel extends model{
 		$this->table="seo";	
 	}
 	
-	public function get($m,$a="default",$object_id=0){
+	public function get($m="index",$a="default",$object_id=0){
 		$m=$m?$m:"index";
 		$where['m']=$m;
 		$a=$a?$a:"default";

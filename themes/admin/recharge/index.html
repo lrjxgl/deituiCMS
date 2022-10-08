@@ -38,6 +38,7 @@
 				<td width="10%">交易状态</td>
 				<td width="18%">交易时间</td>
 				<td>内容</td>
+				<td>操作</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -49,9 +50,15 @@
 				<td>{$c.money}</td>
 				<td>{$c.pay_type_name}</td>
 
-				<td>{if $c.status eq 1}成功{else}失败{/if}</td>
+				<td>{if $c.status eq 1}
+				<span>成功</span>
+				 
+				{else}失败{/if}</td>
 				<td>{$c.dateline|date:Y-m-d H:i:s}</td>
 				<td>{$c.orderinfo}</td>
+				<td>
+					<a href="?m=recharge&a=show&id={$c.id}">详情</a>
+				</td>
 			</tr>
 			{/foreach}
 

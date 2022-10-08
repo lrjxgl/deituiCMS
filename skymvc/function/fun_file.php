@@ -2,6 +2,51 @@
 if(!defined("ROOT_PATH")){
 	define("ROOT_PATH",dirname(str_replace("\\", "/", dirname(__FILE__)))."/");
 }
+/*
+*检测根目录
+*/
+function checkFileDir($str,$pre="attach"){
+	$len=strlen($pre);
+	if(substr($str,0,$len)==$pre){
+		return true;
+	}
+	return false;
+}
+/**
+ * @param {Object} $imgsdata
+ * 解析图集
+ */
+function parseImgsData($imgsdata){
+	if(empty($imgsdata)) return [];
+	$ex=explode(",",$imgsdata);
+	$rss=[];
+	foreach($ex as $a){
+		if(!checkFileDir($a)){
+			continue;
+		} 
+		$rss[]=array(
+			"imgurl"=>$a,
+			"trueimgurl"=>images_site($a)
+		);
+	}
+	return $rss;
+}
+/**
+ * @param {Object} $imgsdata
+ * 处理图集
+ */
+function safeImgsData($imgsdata){
+	if(empty($imgsdata)) return "";
+	$ex=explode(",",$imgsdata);
+	$rss=[];
+	foreach($ex as $a){
+		if(!checkFileDir($a)){
+			continue;
+		}
+		$rss[]=$a;
+	}
+	return implode(",",$rss);
+}
 
 function getMime($url=""){
 	$isremote=false;

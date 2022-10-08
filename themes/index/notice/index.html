@@ -8,21 +8,33 @@
 			<div class="header-title">我的消息</div>
 		</div>
 		<div class="header-row"></div>
-		<div class="main-body">
+		<div id="App" class="main-body">
+			<div class="tabs-border">
+				<a href="/index.php?m=notice" class="tabs-border-item tabs-border-active">我的消息</a>
+				<a href="/index.php?m=sysmsg" class="tabs-border-item">系统通知</a>
+			</div>
 			<div class="list ">
-				{foreach item=c from=$data}
-				<div class="row-box mgb-5">
-					<div class="cl3 bd-mp-5">{$c.content}</div>
+				 
+				<div v-for="(item,index) in list" :key="index" class="row-box mgb-5">
+					<div class="flex bd-mp-5">
+						<div class="cl-status">{{item.status_name}}</div>
+						<div class="flex-1"></div>
+						<div class="f12 cl2">{{item.timeago}}</div>
+					</div>
+					<div class="cl3 bd-mp-5">{{item.content}}</div>
 					<div class="flex">
-					<div class="flex-1 cl2">{$c.timeago}</div>
-					<div gourl="{$c.linkurl}" class="btn-mini btn-outline-primary">去查看</div>
+						<div class="flex-1"></div>
+						<div @click="read(item)" class="btn-mini btn-outline-primary mgr-5">已阅</div>
+						<div :gourl="item.linkurl" class="btn-mini btn-outline-primary">去查看</div>
 					</div>
 				</div>
-				{/foreach}
+				 
 				 
 			</div>
+			<div v-if="per_page>0" class="loadMore" @click="getList()">加载更多</div> 
 		</div>
 		
 	{include file="footer.html"} 
+	<script src="{$skins}notice/index.js"></script>
 	</body>
 </html>

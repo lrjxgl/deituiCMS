@@ -5,7 +5,13 @@
 			<input class="w300" type="text" name="rurl301" value="{$data.rurl301}" /> <span>默认为空</span>
 		</td>
 	</tr>
-	
+	<tr>
+		<td>微信登录</td>
+		<td>
+			<input  type="radio" {if $data.wx_auto_login eq 1}checked{/if} name="wx_auto_login" value="1"/>开启
+			<input  type="radio" {if $data.wx_auto_login neq 1}checked{/if} name="wx_auto_login" value="0"/>关闭
+		</td>
+	</tr>
 	
 	<tr>
 		<td>百度地图：</td>

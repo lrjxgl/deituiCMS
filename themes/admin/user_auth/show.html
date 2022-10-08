@@ -8,12 +8,9 @@
 	</div>
     
    <div class="main-body"> 
-    	<style>
-        	.ua .box{ width:48%;  float:left;}
-			.ua .box.m{margin-right:2%;}
-        </style>
-    	<div class="ua">
-        	<div class="box m">
+    	 
+    	<div class="flex">
+        	<div class="flex-1 row-box">
             	<table class="table-add">
                 	<tr>
                     	<td width="100">姓名</td>
@@ -29,23 +26,12 @@
                         <td>{$data.telephone}</td>
                     </tr>
                     
-                    <tr>
-                    	<td width="100">收入</td>
-                        <td>{$data.income}</td>
-                    </tr>
                     
-                    <tr>
-                    	<td width="100">简介</td>
-                        <td>{$data.info}</td>
-                    </tr>
                     
                     <tr>
                     	<td>照片</td>
                         <td>
-                        	{get data=imgs model=imgs fun=get("user_auth_new","$data.userid")}
-                            {foreach item=c from=$imgs}
-                            <a href="{$c.imgurl|images_site}" target="_blank"><img src="{$c.imgurl|images_site}.small.jpg" width="120"></a>
-                            {/foreach}
+                        	<img class="w300" src="{$data.true_user_head|images_site}" />
                         </td>
                     </tr>
                     
@@ -53,17 +39,17 @@
                     	<td width="100"></td>
                         <td> <div id="row-status">
 						{if $data.status eq 0}
-						<a href="javascript:;" class="btn" id="apass" userid="{$data.userid}">通过</a>  
-                        	<a href="javascript:;" class="btn btn-warning" id="aforbid" userid="{$data.userid}">不通过</a> 
+						<a href="javascript:;" class="btn" id="apass" did="{$data.id}">通过</a>  
+                        	<a href="javascript:;" class="btn btn-warning" id="aforbid" did="{$data.id}">不通过</a> 
                             {else}
-                            	{if $data.status eq 1}审核通过{else}审核不通过{/if}
+                             <div class="cl-status">{if $data.status eq 1}审核通过{else}审核不通过{/if}</div>	
                             {/if}
                             </div>
                         </td>
                     </tr>
                 </table>
             </div>
-       		<div class="box">
+       		<div class="flex-1 row-box">
             {if $odata.truename}
             	<table class="table-add">
                 	<tr>
@@ -80,23 +66,12 @@
                         <td>{$odata.telephone}</td>
                     </tr>
                     
-                    <tr>
-                    	<td width="100">收入</td>
-                        <td>{$odata.income}</td>
-                    </tr>
-                    
-                    <tr>
-                    	<td width="100">简介</td>
-                        <td>{$odata.info}</td>
-                    </tr>
+                   
                     
                     <tr>
                     	<td>照片</td>
                         <td>
-                        	{get data=imgs model=imgs fun=get("user_auth","$odata.userid")}
-                            {foreach item=c from=$imgs}
-                            <a href="{$c.imgurl|images_site}" target="_blank"><img src="{$c.imgurl|images_site}.small.jpg" width="120"></a>
-                            {/foreach}
+                        	<img class="w300" src="{$odata.true_user_head|images_site}" />
                         </td>
                     </tr>
                     
@@ -110,7 +85,7 @@
 {include file="footer.html"}
 <script>
 $(document).on("click","#apass",function(){
-	$.get("{$appadmin}?m=user_auth&a=pass&ajax=1&userid="+$(this).attr("userid"),function(data){
+	$.get("{$appadmin}?m=user_auth&a=pass&ajax=1&id="+$(this).attr("did"),function(data){
 		if(data.error){
 			skyToast(data.message);
 		}else{
@@ -121,7 +96,7 @@ $(document).on("click","#apass",function(){
 });
 
 $(document).on("click","#aforbid",function(){
-	$.get("{$appadmin}?m=user_auth&a=forbid&ajax=1&userid="+$(this).attr("userid"),function(data){
+	$.get("{$appadmin}?m=user_auth&a=forbid&ajax=1&id="+$(this).attr("did"),function(data){
 		if(data.error){
 			skyToast(data.message);
 		}else{

@@ -42,7 +42,7 @@ ID:<input class="w100" type="text" name="id" value="{$smarty.get.id|intval}" cla
 </form>
 </div>
 <div class="main-body">
-	<form method="post" action="{$appadmin}?m=article&a=category">
+	<form id="cForm">
  <table class="tbs">
 <thead>  <tr>
    <td>id</td>
@@ -100,7 +100,18 @@ ID:<input class="w100" type="text" name="id" value="{$smarty.get.id|intval}" cla
                 {/foreach}
     </select>
     
-    <input type="submit" class="btn" value="修改分类" />
+     
+	<div  class="btn"  id="changeCategory">修改分类</div>
+	 
+		聚合：
+		<select name="tagid" class="w100 mgr-5">
+			<option value="0">请选择</option>
+			{foreach item=c from=$taglist}
+			<option value="{$c.tagid}">{$c.title}</option>
+			{/foreach}
+		</select>
+		<div  class="btn"  id="changeGroup">聚合产品</div>
+		<div class="btn btn-danger mgl-5" id="delAll">批量删除</div>
 </div>
 <div>{$pagelist}</div>
 </div> 
@@ -117,6 +128,44 @@ ID:<input class="w100" type="text" name="id" value="{$smarty.get.id|intval}" cla
 			}
 		},"json")
 	})
+	$(document).on("click","#changeCategory",function(){
+		$.post("/admin.php?m=article&a=category&ajax=1",$("#cForm").serialize(),function(res){
+			skyToast(res.message);
+			if(!res.error){
+				window.location.reload();
+			}
+		},"json");
+	})
+	$(document).on("click","#changeGroup",function(){
+		skyJs.confirm({
+			content:"确认聚合吗",
+			success:function(){
+				$.post("/admin.php?m=article&a=tags&ajax=1",$("#cForm").serialize(),function(res){
+					skyToast(res.message);
+					if(!res.error){
+						window.location.reload();
+					}
+				},"json");
+			}
+		})
+		
+	})
+	
+	$(document).on("click", "#delAll", function() {
+		skyJs.confirm({
+			content:"确认删除吗",
+			success:function(){
+				$.post("/admin.php?m=article&a=delAll&ajax=1", $("#cForm").serialize(), function(res) {
+					skyToast(res.message);
+					if (!res.error) {
+						window.location.reload();
+					}
+				}, "json");
+			}
+		});	
+		
+	})
+	
 </script>
 </body>
 </html>

@@ -27,18 +27,23 @@ class pmControl extends skymvc{
 		$rscount=true;
 		$msglist=M("pm_index")->select($option,$rscount);
 		if($msglist){
+			foreach($msglist as $v){
+				$uids[]=$v["t_userid"];
+			}
+			$us=M("user")->getUserByIds($uids);
+			
 			foreach($msglist as $k=>$v){
-				$d=M("pm")->selectRow(array("where"=>"userid=".$v['userid']." AND t_userid=".$v['t_userid']." ","order"=>" id DESC"));
-				$v['content']=$d['content'];
+				
 				$v['timeago']=timeago($v['dateline']);
 				$v["isme"]=$v["type_id"]==2?1:0;
-				$u=M("user")->selectRow(array("where"=>" userid=".$v['t_userid']));
+				$u=$us[$v["t_userid"]];
 				$v['t_nickname']=$u['nickname'];
 				$v['t_user_head']=images_site($u['user_head']);
 				$v["user_head"]=$user["user_head"];
 				$v["nickname"]=$user["nickname"];
 				$msglist[$k]=$v;
 			}
+			 
 		}
  
 		$this->smarty->goAssign(array(
@@ -144,7 +149,9 @@ class pmControl extends skymvc{
 			"t_userid"=>$t_userid,
 			"dateline"=>time(),
 			"type_id"=>2,
-			"status"=>2
+			"status"=>2,
+			"content"=>$content,
+			"isme"=>1
 		);	
 		if($d=M("pm_index")->selectRow(array("where"=>" userid=$userid AND t_userid={$t_userid}" ))){						 
 			$pi_data["pm_num"]=$d['pm_num']+1;
@@ -169,7 +176,9 @@ class pmControl extends skymvc{
 			"userid"=>$t_userid,
 			"type_id"=>1,
 			"t_userid"=>$userid,
-			"dateline"=>time()
+			"dateline"=>time(),
+			"content"=>$content,
+			"isme"=>0
 		);						
 		if($d=M("pm_index")->selectRow(array("where"=>" userid=".$t_userid." AND  t_userid=".$userid."  ") )){
 			$pi_data["pm_num"]=$d['pm_num']+1;
@@ -222,7 +231,7 @@ class pmControl extends skymvc{
 			}
 			array_multisort ( $times ,  SORT_ASC ,  $pmlist );
 		}
-		$pagelist=$this->pagelist($rscount,$pagesize,"index.php?m=pm&a=detail&t_userid={$t_userid}");
+		$pagelist=$this->pagelist($rscount,$pagesize,"/index.php?m=pm&a=detail&t_userid={$t_userid}");
 		$per_page=$start+$pagesize;
 		$per_page=$per_page>$rscount?0:$per_page;
 		$this->smarty->goassign(

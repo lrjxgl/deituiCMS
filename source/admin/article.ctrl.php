@@ -84,13 +84,17 @@
 			}
 			$pagelist=$this->pagelist($rscount,$limit,$url);
 			$catlist=M("category")->children(0,"article");
+			$taglist=M("article_tags")->select(array(
+				"where"=>" status=1"
+			));
 			$this->smarty->goassign(
 				array(
 				"catlist"=>$catlist,
 					"data"=>$data,
 					"pagelist"=>$pagelist,
 					"rscount"=>$rscount,
-					"url"=>$url
+					"url"=>$url,
+					"taglist"=>$taglist
 				)
 			);
 			$this->smarty->display("article/index.html");
@@ -105,6 +109,7 @@
 					"where"=>" id=".$id,
 					"fields"=>"content"
 				));
+				$data["true_videourl"]=images_site($data["videourl"]);
 				if(!empty($data['imgsdata'])){
 					$imgs=explode(",",$data['imgsdata']);
 					foreach($imgs as $v){
@@ -126,8 +131,10 @@
 		
 		public function onSave(){
 			$id=get_post("id","i");
-			$data=M("article")->postData();
 			$content=post("content","x");
+			$data=M("article")->postData();
+			
+			$content=ueditor_replace($content);
 			$data["status"]=1;
 			if($id){
 				M("article")->update($data,"id='$id'");
@@ -185,6 +192,47 @@
 			}
 			$this->goall("修改成功");
 		}
+		
+		public function onTags(){
+			$ids=post('ids','i');
+			$tagid=post("tagid","i");
+			if(!$tagid){
+				$this->goAll("请选择归类",1);
+			}
+			if(empty($ids)){
+				$this->goAll("请选择产品",1);
+			}
+			$hasids=M("article_tags_index")->selectCols(array(
+				"where"=>" tagid=".$tagid." AND objectid in("._implode($ids).") ",
+				"fields"=>"objectid"
+			));
+			$newids=$ids;
+			if($hasids){
+				$newids=array_diff($ids,$hasids);
+			}
+			if(!empty($newids)){
+				foreach($newids as $objectid){
+					M("article_tags_index")->insert(array(
+						"tagid"=>$tagid,
+						"objectid"=>$objectid,
+						"orderindex"=>11
+					));
+				}
+			}
+			$this->goAll("success");
+		}
+		
+		public function onDelAll(){
+			$ids=post('ids','i');
+			if($ids){
+				foreach($ids as $id){
+					$id=intval($id);
+					M("article")->update(array("status"=>11),"id=".$id);
+				}
+			}
+			$this->goAll("删除成功");
+		}
+		
 		
 	}
 

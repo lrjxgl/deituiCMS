@@ -47,17 +47,31 @@
 		public function onData(){
 			$userid=get("userid","i"); 
 			$where="status=1 AND userid=".$userid;
+			$start=get("per_page","i");
+			$rscount=true;
+			$limit=24;
 			$list=M("kefu_msg")->select(array(
 				"where"=>$where,
 				"order"=>" id DESC",
-				"limit"=>100
+				"limit"=>$limit,
+				"start"=>$start
 			));
+			if(!empty($list)){
+				foreach($list as $k=>$v){
+					$ids[]=$v["id"];
+				}
+				array_multisort($list,$ids,SORT_DESC);
+			}
+			$per_page=$start+$limit;
+			$per_page=$per_page>$rscount?0:$per_page;
 			$this->smarty->goAssign(array(
-				"list"=>$list
+				"list"=>$list,
+				"per_page"=>$per_page,
+				"rscount"=>$rscount
 			));
 		}
 		public function onSave(){
-			M("login")->checkLogin();
+			 
 			$userid=get_post("userid","i");
 			$content=post("content","h");
 			M("kefu_msg")->insert(array(
@@ -82,6 +96,9 @@
 					"createtime"=>date("Y-m-d H:i:s")
 				));
 			}
+			//网站通知
+			M("site_msg")->remove("kefu");
+			 
 			$this->goAll("保存成功");
 		}
 	}

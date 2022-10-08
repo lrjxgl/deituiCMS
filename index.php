@@ -28,10 +28,16 @@ $smarty_caching=true;//是否开启缓存
 $smarty_cache_lifetime=3600;//缓存时间
 define("SMARTYPHP","smarty");
  
-
 require("./skymvc/skymvc.php");
+
 //用户自定义初始化函数
 function userinit(){
+	$ip=ip();
+	M("badip")->check($ip);
+	//邀请人
+	if(get_post('invite_userid')){
+		setcookie("invite_uid",get_post('invite_userid'),time()+3600*24*3,"/",DOMAIN);
+	}
 	//判断是否在公众号
 	$referer=$_SERVER["HTTP_REFERER"];
 	if(get('fromapp')=="wxapp" || substr($referer,0,strlen('https://servicewechat.com'))=="https://servicewechat.com" ){
@@ -50,12 +56,12 @@ function userinit(){
 	
 	global $wap_template_dir,$template_dir;
 	$skins=ISWAP?$wap_template_dir:$template_dir;
-	$ip=ip();
-	M("badip")->check($ip);
+	
 	if(!isset($_SESSION["ssuser"])){
-		if((isset($_COOKIE['authcode']) or get_post('authcode') ) && get('m')!="login"){
+		$wxArray=['open_weixin','login',"checkcode"];
+		if((isset($_COOKIE['loginToken']) or get_post('loginToken') ) && get('m')!="login"){
 			M('login')->CodeLogin();
-		}elseif(get('m')!='open_weixin' && get('m')!="login" && INWEIXIN && get('m')!="checkcode"){
+		}elseif(!in_array(get('m'),$wxArray)  && INWEIXIN && WX_AUTO_LOGIN){
 			$backurl=get_post('backurl','x');
 			if(!$backurl){
 				$backurl=HTTP_HOST.$_SERVER['REQUEST_URI'];
@@ -63,6 +69,7 @@ function userinit(){
 			if(preg_match("/login/i",$backurl)){
 				$backurl="/index.php";
 			} 
+			M("login")->setBackurl();
 			header("Location: /index.php?m=open_weixin&a=Geturl&backurl=".urlencode($backurl));
 			exit;	 
 		}	

@@ -328,7 +328,7 @@ class skymvc
 			}else{
 				$this->smarty->assign("message",$message);
 				$this->smarty->assign("url",$url?$url:$_SERVER['HTTP_REFERER']);
-				if($tpl){
+				if(isset($tpl)){
 					$this->smarty->template_dir=$tpl;
 				}
 				$this->smarty->display("gomsg.html");

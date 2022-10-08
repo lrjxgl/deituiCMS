@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		{include file="header.html"}
+		<div class="main-body" id="App">
+			<div style="width: 640px; border-radius: 10px; margin: 0 auto; margin-bottom: 10px;" class="row-box">
+				<div class="tabs-border none">
+					<div @click="setType('')" :class="tablename==''?'tabs-border-active':''" class="tabs-border-item ">综合</div>
+					<div @click="setType(item.tablename)"  :class="tablename==item.tablename?'tabs-border-active':''" v-for="(item,index) in tableList" :key="index" class="tabs-border-item">{{item.title}}</div>
+					 
+				</div>
+				<div class="input-flex">
+					<input v-model="keyword" placeholder="搜一下" type="text" class="input-flex-text" />
+					<div @click="search()" class="input-flex-btn">搜索</div>
+				</div>
+			</div>
+			<div v-if="!isFirst"  class="row-box">
+				<div v-if="!list || list.length==0"  class="emptyData">暂无信息</div>
+				<div v-else>
+					<div class="flex-center mgb-10">搜索{{keyword}}有关内容，共{{rscount}}条记录</div>
+					<div @click="goDetail(item)" v-for="(item,index) in list" :key="index" class="bd-mp-10 pointer">
+						<div class="cl1 mgb-10">{{item.title}}</div>
+						<div class="cl3">{{item.description}}</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		{include file="footer.html"}
+		{include file="foot-all.html"}
+		<script>
+		var keyword="{$keyword}";
+		</script>
+		<script src="{$skins}search/index.js?v3"></script>
+	</body>
+</html>

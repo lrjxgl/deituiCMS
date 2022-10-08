@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<style>
+		.gold-form{
+			width: 480px;
+			margin: 0 auto;
+			margin-top: 20px;
+			background-color: #fff;
+			padding: 20px;
+		}
+		.gold-form .title{
+			
+			font-weight: 600; 
+			font-size: 20px;
+			color: #333;
+			margin-bottom: 20px;
+		}
+		.gold-form .layui-btn{
+			margin-left: 60px;
+		}
+		.gold-form .layui-input-text{
+			line-height: 36px;
+		}
+	</style>
+	<body>
+		{include file="header.html"}
+		<div class="layui-main fly-marginTop">
+			<form class="gold-form">
+				<input type="hidden" id="referer" value="{$referer}" />
+				<div class="title">金币购买</div>
+				<div class="layui-form-item">
+				    <label class="layui-form-label">金币数量</label>
+				    <div class="layui-input-block">
+				      <input type="text" name="gold" id="gold" value="{$gold}"   placeholder="请输入购买金币数量" autocomplete="off" class="layui-input">
+				    </div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">价格</label>
+					<div class="layui-input-block  layui-input-text" id="money">
+						10 元
+					</div>
+				</div>
+				<button class="layui-btn" id="js-gold-submit" type="button">确认购买</button>
+			</form>
+		</div>
+		
+		{include file="foot-all.html"}
+		<script>
+			var gold=$("#gold").val()?parseInt($("#gold").val()):0;
+			var money=gold/10;
+			$("#money").html(money);
+			$(document).on("keyup","#gold",function(){
+				var gold=parseInt($("#gold").val());
+				var money=gold/10;
+				$("#money").html(money);
+			})
+			$(document).on("click","#js-gold-submit",function(){
+				var gold=$("#gold").val();
+				$.post("/index.php?m=gold&a=order&ajax=1",{
+					gold:gold,
+					"referer":$("#referer").val()
+				},function(data){
+					if(data.error) {
+						layer.msg(data.message);
+						return false;
+					}
+					if(data.data.action=="success"){
+						layer.msg("金币购买成功");
+						goBack();
+					}else if(data.data.action=="recharge"){
+						window.location=data.data.url;
+					}
+					
+				},"json")
+			})
+		</script>
+		{include file="footer.html"}
+	</body>
+</html>

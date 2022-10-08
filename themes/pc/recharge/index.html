@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+
+	<body>
+		{include file="header.html"}
+		<div class="main-body">
+			<div class="flex">
+				{include file="user_left.html"}
+				<div class="flex-1">
+					<div class="btn btn-danger mgb-10">在线充值</div>
+					<div class="row-box" >
+						<form id="rcform" method="post" action="/index.php?m=recharge&a=recharge" target="_blank">
+							<input type="hidden" name="pay_type" id="pay_type" value="alipay">
+							<div class="input-flex">
+								<div class="input-flex-label">充值金额</div>
+								<input class="input-flex-text" type="text" name="order_price"  value="1">
+							</div> 
+							<div id="rcbtn"   class="btn-row-submit">充值</div> 
+
+						</form>
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>	
+			 
+			{include file="footer.html"}
+			<div id="rcts">
+				<div style="font-size:14px; line-height:25px; height:140px;">感谢您对本站的支持</div>
+				<div class="center" style="margin-top:10px;">
+					<a href="javascript:;" class="btn btn-info" onclick="showboxClose()">完成充值</a>
+					<a href="javascript:;" onclick="showboxClose()" class="btn btn-danger">充值失败</a>
+				</div>
+			</div>
+			<script>
+				$(function() {
+					$(document).on("click", "#paylist .item", function() {
+						$("#paylist .item").removeClass("active");
+						$("#pay_type").val($(this).attr("v"));
+						$(this).addClass("active");
+					});
+
+					$("#rcbtn").bind("click", function() {
+						if ($("#order_price").val() == '') {
+							skyToast('请输入充值金额');
+						} else {
+							showbox('充值提示', $("#rcts").html(), 400, 200);
+							$("#rcform").submit();
+						}
+					});
+				});
+			</script>
+
+	</body>
+
+</html>

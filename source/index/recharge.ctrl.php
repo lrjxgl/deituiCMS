@@ -178,7 +178,7 @@ class rechargeControl extends skymvc{
 		
 		$bank_type="";
 		
-		$url=$_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/index.php?m=recharge_{$pay_type}&a=go";
+		$url=HTTP_HOST."/index.php?m=recharge_{$pay_type}&a=go";
 		$url.="&orderno=$orderno";
 		$url.="&bank_type=".$bank_type;
 		$url.="&order_product=".urlencode($order_product);

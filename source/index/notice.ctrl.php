@@ -18,11 +18,15 @@ class noticeControl extends skymvc{
 			"fields"=>" count(*) as ct"
 		));
 		//客服
-		$msgNum=M("mod_kefu_msg_index")->selectOne(array(
-			"where"=>"userid=".$this->userid." AND isread=0",
-			"order"=>"id DESC",
-			"fields"=>" count(*) as ct"
-		));
+		$msgNum=0;
+		if(M("module")->isInstall("kefu")){
+			$msgNum=M("mod_kefu_msg_index")->selectOne(array(
+				"where"=>"userid=".$this->userid." AND isread=0",
+				"order"=>"id DESC",
+				"fields"=>" count(*) as ct"
+			));
+		}
+		
 		$num=$noticeNum+$msgNum;
 		$data=array(
 			"noticeNum"=>intval($noticeNum),
@@ -37,13 +41,18 @@ class noticeControl extends skymvc{
 			"isread"=>1
 			
 		),"userid=".$this->userid." AND isread=0");
-		echo "success";
+		$this->goAll("success");
 	}
 	public function onReadNotice(){
+		$where=" userid=".$this->userid." AND status=0 ";
+		$id=get("id","i");
+		if($id){
+			$where.=" AND id=".$id;
+		}
 		M("notice")->update(array(
-			"status"=>2
-		),"userid=".$this->userid." AND status=0");
-		echo "success";
+			"status"=>1
+		),$where);
+		$this->goAll("success");
 	}
 	
 	public function onDefault(){
@@ -62,7 +71,7 @@ class noticeControl extends skymvc{
 		if($data){
 			foreach($data as $k=>$v){
 				$ids[]=$v['id'];
-				$v['status_name']=$v['status']==1?"已读":"未读";
+				$v['status_name']=$v['status']==0?"未读":"已读";
 				$v['timeago']=timeago($v['dateline']);
 				$v['linkdata']=str2arr($v['linkurl']);
 				$v['linkurl']=parseStrLink($v['linkurl']);

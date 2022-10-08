@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">我的收藏</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			 
+			{if !$rscount}
+				<div class="emptyData">暂无收藏</div>
+			 
+			{else}
+				{foreach item=item from=$list}
+				<div class="row-box mgb-5">
+					<div class="flex  bd-mp-5">
+						<div class="flex-1 cl-money">￥{$item.money}</div>
+						<div class="cl3">{$item.timeago}</div>
+						<div class="btn-mini btn-outline-success pdl-5 pdr-5  mgl-10">{$item.status_name}</div>
+					</div>
+					<div class="cl3">{$item.orderinfo}</div>
+
+				</div>
+				{/foreach}
+			{/if}
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

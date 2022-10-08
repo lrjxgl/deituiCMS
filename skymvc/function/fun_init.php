@@ -1,4 +1,21 @@
 <?php
+function initTableData($add=[]){
+	$data=array(
+		"id"=>0,
+		"title"=>"",
+		"imgurl"=>"",
+		"content"=>"",
+		"videourl"=>"",
+		"description"=>"",
+		"trueimgurl"=>"",
+		"imgsdata"=>"",
+		"payMoney"=>0
+	);
+	if($add){
+		$data=$data+$add;
+	}
+	return $data;
+}
 /*配置数据库*/
 $_DBS=array();
 $_MDS=array();
@@ -78,6 +95,9 @@ function closeDb(){
 }
 /*加载模型*/
 function M($model){
+	if(function_exists("mRpc")){
+		return mRpc($model);
+	}
 	global $_MDS;
 	$model=strtolower($model);
 	 
@@ -99,6 +119,7 @@ function M($model){
 			return $_MDS[$model.'Model'];
 
 		}else{
+			 
 			//controler  model调用
 			$_model="{$model}Model";
 			 		
@@ -115,6 +136,9 @@ function M($model){
 }
 /*加载模块的模型*/
 function MM($module,$model){
+	if(function_exists("mmRpc")){
+		return mmRpc($module,$model);
+	}
 	global $_MDS;
 	if(isset($_MDS[$model.'MModel'])){
 	 
@@ -129,6 +153,7 @@ function MM($module,$model){
 			$_MDS[$model.'MModel']=$m;		 
 			return $_MDS[$model.'MModel'];
 		}else{
+			 
 			//controler  model调用
 			$_model="{$model}Model";
 			 			

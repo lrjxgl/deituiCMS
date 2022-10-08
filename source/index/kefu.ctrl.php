@@ -4,6 +4,7 @@
 			parent::__construct();
 		}
 		public function onDefault(){
+			M("login")->checkLogin();
 			$this->smarty->display("kefu/index.html");
 		}
 		
@@ -16,6 +17,13 @@
 				"order"=>" id DESC",
 				"limit"=>100
 			));
+			if(!empty($list)){
+				$ids=[];
+				foreach($list as $v){
+					$ids[]=$v["id"];
+				}
+				array_multisort($list,$ids,SORT_ASC);
+			}
 			$this->smarty->goAssign(array(
 				"list"=>$list
 			));
@@ -24,6 +32,9 @@
 			M("login")->checkLogin();
 			$userid=M("login")->userid;
 			$content=post("content","h");
+			if(empty($content)){
+				$this->goAll("内容不能为空",1);
+			}
 			M("kefu_msg")->insert(array(
 				"userid"=>$userid,
 				"content"=>$content,
@@ -45,6 +56,11 @@
 					"createtime"=>date("Y-m-d H:i:s")
 				));
 			}
+			//通知网站
+			M("site_msg")->add([
+				"tablename"=>"kefu",
+				"content"=>"有人在客服中心咨询了"
+			]);
 			$this->goAll("保存成功");
 		}
 	}

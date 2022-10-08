@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		{include file="header.html"}
+		<div class="main-body">
+			<div class="flex">
+				{include file="user_left.html"}
+				<div class="flex-1">
+			<div class="row-box">
+				<div class="row-item"  gourl="/index.php?m=user&a=user_head">
+					<div class="row-item-icon icon-people"></div>
+					<div class="flex-1"> 头像修改</div>
+					
+				</div>
+				<div class="row-item"  gourl="/index.php?m=user&a=info">
+					<div class="row-item-icon icon-people"></div>
+					<div class="flex-1"> {$data.nickname}</div>
+					
+				</div>
+				
+				<div class="row-item" gourl="/index.php?m=user&a=password" >
+					<div class="row-item-icon icon-password"></div>
+					<div class="flex-1">登录密码</div>
+				</div>
+				<div class="row-item" gourl="/index.php?m=user&a=paypwd" >
+					<div class="row-item-icon icon-password"></div>
+					<div class="flex-1">支付密码</div>
+				</div> 
+			</div>
+			
+			<div class="btn-row-submit bg-danger js-logout" >注销</div>
+			
+		</div>
+		</div>
+		</div>
+		{include file="footer.html"}
+		<script>
+			$(function(){
+				$(document).on("click",".js-logout",function(){
+					$.get("/index.php?m=login&a=logout&ajax=1",function(res){
+						window.location="/index.php?m=login"
+					},"json")
+				})
+			})
+		</script>
+	</body>
+</html>

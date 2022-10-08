@@ -1,0 +1,14 @@
+<div class="footer-row"></div>
+<div class="footer">
+	<a href="/" class="footer-item {if $ftnav eq 'index'}footer-active{/if} icon-home">
+		首页
+	</a>
+	<a href="/index.php?m=article" class="footer-item {if $ftnav eq 'article'}footer-active{/if}  icon-goods">
+		资讯
+	</a>
+	 
+	
+	<a href="{if $smarty.session.ssuser}/index.php?m=user{else}/index.php?m=login{/if}" class="footer-item  {if $ftnav eq 'user'}footer-active{/if}  icon-my_light">
+		我的
+	</a>
+</div>

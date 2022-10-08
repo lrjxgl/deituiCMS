@@ -25,7 +25,7 @@ var skyJs={
 		}
 		setTimeout(function(){
 			$("#skyJs-toast").hide();
-		},1000)
+		},2000)
 	},
 	alert:function(ops){
 		var ops=ops;
@@ -91,6 +91,8 @@ var skyJs={
 			$("#skyJs-confirm").show(); 
 			
 		}		
+		$(document).off("click","#skyJs-confirm-success");
+		$(document).off("click","#skyJs-fail-success");	
 		$(document).one("click","#skyJs-confirm-success",function(){
 			ops.success();
 			$("#skyJs-confirm").hide();
@@ -109,7 +111,7 @@ var skyJs={
 			ops.width=320;
 		}
 		if(typeof(ops.height)=="undefined"){
-			ops.width=200;
+			ops.height=200;
 		}
 		var width=ops.width;
 		var height=ops.height;
@@ -144,5 +146,24 @@ var skyJs={
 			width:480,
 			height:320
 		});
+	},
+	showIframe:function(url){
+		 
+		var w=$(window).width()-200;
+		var h=$(window).height()-100;
+		var mh=h-100;
+		var html=`
+			<style>
+				.modal-body{max-height:`+mh+`px;height:`+mh+`px;}
+			</style>
+			<iframe style="border:0;width:99%;height:98%;" src="`+url+`"></iframe>
+		`;
+		$("#skyJs-showBox").remove();
+		skyJs.showBox({
+			title:"新窗口",
+			content:html,
+			width:w,
+			height:h
+		})
 	}
 }

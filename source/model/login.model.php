@@ -57,21 +57,20 @@ class loginModel extends model{
 	* )
 	* **/
 	public function setCode($user,$el=false){
+		$userid=$user["userid"];
+		$salt=rand(1000,9999);
 		$pwd=substr($user['password'],0,6);
-		$agent=substr(md5(substr($_SERVER['HTTP_USER_AGENT'],0,20)),0,4);
-		$data=array(
-			"u"=>$user['userid'],
-			"p"=>$pwd,
-			"a"=>$agent,
-			"e"=>time()+3600*24*2,
-		);
-		
-		$authcode=jiami(json_encode($data));
-		$data['el']=time()+3600*24*300;
-		$authCodeLong=jiami(json_encode($data));
+		$p1=substr($userid.umd5($pwd.$salt),0,24);
+		$p2=substr($userid.md5($pwd.$salt),0,24);
+		$token="u.l.".$p1;
+		$token_expire=3600*24*3;
+		$refresh_token="u.r.".$p2;
+		$refresh_token_expire=3600*24*31;
+		cache()->set($token,$userid,$token_expire);
+		cache()->set($refresh_token,$userid,$refresh_token_expire);
 		$redata=array(
-			"authcode"=>$authcode,
-			"authcodeLong"=>$authCodeLong
+			"token"=>$token,
+			"refresh_token"=>$refresh_token
 		);
 		return $redata;
 	}
@@ -103,53 +102,27 @@ class loginModel extends model{
 	}  
 	 
 	public function CodeLogin(){
+		$token=get_post("loginToken","h");
+		if(empty($token)){
+			$token=sql($_COOKIE["loginToken"]);
+		}
 		 
-		if(get_post('authcode')){
-			$authcode=get_post('authcode');			
-		}else{
-			$authcode=$_COOKIE['authcode'];
-		}	 
-		if($authcode=='' or !$authcode) return false;
-		$arr=$this->getCode($authcode); 
+		if($token){
+			$userid=cache()->get($token);
+			
+			if($userid){
+				$user=M('user')->selectRow(array(
+					"where"=>"userid='".$userid."' ",
+					"fields"=>"userid,nickname,telephone,user_head,gold,money"
+				));
+				if(!empty($user)){
+					$this->set("ssuser",$user);
+					$this->userid=$user['userid'];
+					return true;
+				}
+			}
+		} 
 		
-		$userid=intval($arr['u']);
-		$key="login_codelogin_".$userid;
-		$islogin=false;
-		 
-		if($c=cache()->get($key)){
-			if($authcode==$c['authcode']){
-				$this->userid=$c['user']['userid'];
-				$this->set("ssuser",$c['user']);
-				$islogin=true;
-			}else{
-				cache()->set($key,"");
-			}
-		}
-		if(!$islogin){
-			$user=M('user')->selectRow(array(
-				"where"=>"userid='".$userid."' ",
-				"fields"=>"userid,nickname,telephone,user_head,gold,money"
-			));
-			if(empty($user)){
-				return false;
-			}
-			$puser=M("user_password")->selectRow("userid=".$userid);
-			if( $arr['p']!=substr($puser['password'],0,6)){			
-				setcookie("authcode","",time()-3999,"/",DOMAIN);		
-			}else{
-				if(isset($arr['el'])){
-					$auth=$this->setCode($puser,true);
-					setcookie("authcode",$auth['authcode'],time()+3600000,"/",DOMAIN);
-				}				
-				$this->userid=$user['userid']; 
-				$this->set("ssuser",$user);
-				$cacheData=array(
-					"authcode"=>$authcode,
-					"user"=>$user
-				);
-				cache()->set($key,$cacheData,3600);		
-			}		
-		}
 	}
 	
 	public function getAdmin($id=0){
@@ -163,8 +136,7 @@ class loginModel extends model{
 		C()->goAll("请先登录",1,0,APPADMIN."?m=admin_login");
 		 
 		 
-	} 
-	
+	}
 	public function setBackurl(){
 		$_SESSION["backurl"]=HTTP_HOST.$_SERVER["REQUEST_URI"];
 	}
@@ -177,6 +149,9 @@ class loginModel extends model{
 			return HTTP_HOST;
 		}
 	} 
+	
+	 
+	
 	
 }
 

@@ -1,6 +1,7 @@
 {
     "require": {
         "phpoffice/phpspreadsheet": "^1.8",
-        "workerman/crontab": "^1.0"
+        "workerman/crontab": "^1.0",
+        "nikic/fast-route": "^1.3"
     }
 }

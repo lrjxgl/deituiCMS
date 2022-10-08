@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		{include file='open_map/nav.html'}
+		<div class="main-body">
+			<form method="post" action="/admin.php?m=open_map&a=save">
+				<input type="hidden" name="id" style="display:none;" value="{$data.id}">
+				<table class="table-add">
+					<tr>
+						<td>名称：</td>
+						<td><input type="text" name="title" id="title" value="{$data.title}"></td>
+					</tr>
+					<tr>
+						<td>地图平台：</td>
+						<td>
+							<input type="radio" {if $data.map_com=='gaode'}checked{/if} name="map_com"  value="gaode"> 高德
+							<input type="radio" {if $data.map_com=='baidu'}checked{/if} name="map_com"  value="baidu"> 百度
+							<input type="radio" {if $data.map_com=='qq'}checked{/if} name="map_com"  value="qq"> 腾讯
+						</td>
+					</tr>
+					<tr>
+						<td>类型：</td>
+						<td>
+							<input type="radio" name="map_app" {if $data.map_app=='web'}checked{/if}  value="web"> web
+							<input type="radio" name="map_app" {if $data.map_app=='server'}checked{/if}   value="server"> server
+						
+						</td>
+					</tr>
+					<tr>
+						<td>key：</td>
+						<td><input type="text" name="mkey" id="mkey" value="{$data.mkey}"></td>
+					</tr>
+					<tr>
+						<td>密码：</td>
+						<td><input type="text" name="msecret" id="msecret" value="{$data.msecret}"></td>
+					</tr>
+					<tr>
+						<td>状态：</td>
+						<td>
+							<input type="radio" name="status" {if $data.status eq 1}checked{/if}  value="1"> 上线
+							<input type="radio" name="status" {if $data.status neq 1}checked{/if}   value="2"> 下线
+						
+						</td>
+					</tr>
+				</table>
+				<div class="btn-row-submit js-submit">保存</div>
+			</form>
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

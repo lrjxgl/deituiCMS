@@ -157,7 +157,20 @@ class userModel extends model{
 		$uids=array_unique($uids);
 		return $uids;
 	}
-	
+	/**
+	 * 检测发布权限
+	*/
+	public function canPost($userid,$type="topic"){
+		$config=M("config")->get();
+		if($config["post_topic_isauth"]==1 || $config["post_comment_isauth"]==1){
+			$isAuth=M("user_auth")->isAuth($userid);
+			if(!$isAuth){
+				C()->goAll("请先实名认证",1,0,"/index.php?m=user_auth");
+			}
+		}
+		//黑名单
+		
+	}
 	
 }
 ?>

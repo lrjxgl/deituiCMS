@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div id="map" style="width: 100%;height: 100%; position: relative;"></div>
+		<script src="https://webapi.amap.com/maps?v=1.4.15&key={$key}"></script>
+		<script type="text/javascript">
+			var parentIframe = window.parent.document.getElementById("mapFrame");
+			 
+		    document.getElementById("map").style.height=parentIframe.style.height;
+			var map = new AMap.Map('map', {
+		       center:[{$lng},{$lat}],
+		       zoom:17
+		    });
+			var marker = new AMap.Marker({
+			    position: new AMap.LngLat("{$lng}", "{$lat}") 
+			});
+			map.add(marker); 
+		</script>
+	</body>
+</html>

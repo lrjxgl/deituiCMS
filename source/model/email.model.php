@@ -1,4 +1,11 @@
 <?php
+use PHPMailer\PHPMailer;
+require_once ROOT_PATH."/skymvc/library/phpmailer/PHPMailer.php";
+require_once ROOT_PATH."/skymvc/library/phpmailer/SMTP.php";
+require_once ROOT_PATH."/skymvc/library/phpmailer/Exception.php";
+require_once ROOT_PATH."/skymvc/library/phpmailer/OAuthTokenProvider.php";
+require_once ROOT_PATH."/skymvc/library/phpmailer/OAuth.php";
+
 class emailModel extends model{
 	 
 	public $emailServer=NULL;
@@ -21,7 +28,7 @@ class emailModel extends model{
 	 
 	
 	public function sendEmail( $smtpemailto, $mailsubject, $mailbody , $mailtype="html"){
-		C()->loadClass("phpmailer",false,false);
+		
 		
 		if(!$this->emailServer){
 			$smptArr=array(
@@ -36,20 +43,22 @@ class emailModel extends model{
 		
 		}
 		//开始发送
-		$mail             = new PHPMailer();
+		$mail             = new PHPMailer\PHPMailer();
 		$mail->IsSMTP();
 		$mail->Host       = $smptArr['smtphost'];
 		$mail->SMTPAuth   = true;
+		$mail->SMTPSecure = PHPMailer\PHPMailer::ENCRYPTION_SMTPS;  
 		$mail->Port       = $smptArr['smtpport'];
 		$mail->Username   = $smptArr['smtpuser']; 
 		$mail->Password   = $smptArr['smtppwd'];
-		$mail->SetFrom($smptArr['smtpemail']);
+		$mail->SetFrom($smptArr['smtpuser']);
 		$mail->Subject    = $mailsubject;
-
+		//$mail->SMTPDebug  = 2; 
 		$address = $smtpemailto;
 		$mail->AddAddress($address);
 		$mail->MsgHTML($mailbody);  
-		if(!$mail->Send()) {
+		if(!$res=$mail->Send()) {
+			 
 		  return false;
 		} else {
 		  return true;

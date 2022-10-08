@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+
+	<body>
+
+		{include file="header.html"}
+		<div class="main-body">
+			<div class="flex">
+				{assign var="uSide" value="invite"}
+				{include file="user_left.html"}
+				<div class="flex-1">
+					<div class="mgb-10 cl-primary">赏金日志</div>
+					{foreach item=c from=$data}
+					<div class="row-box mgb-5">
+						 
+						 <div class="mgb-5 flex">
+							 <div class="f12 cl-money">￥{$c.money}</div>
+							 <div class="flex-1"></div>
+							 <div class="f12">{$c.dateline|date:Y-m-d H:i:s}</div>
+						 </div>
+						 <div class="cl2 f12">{$c.content}</div>
+						
+					</div>
+					 {/foreach}
+					<div>{$pagelist}</div>
+				</div>
+
+			</div>
+		</div>	
+			{include file="footer.html"}
+
+	</body>
+
+</html>

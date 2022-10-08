@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		{include file="header.html"}
+		<div class="main-body">
+			<div class="flex">
+				{include file="user_left.html"}
+				<div class="flex-1">
+			<form method="post" action="/index.php?m=user&a=save&ajax=1">
+				<view class="input-flex">
+					<view class="input-flex-label">昵称</view>
+					<input class="input-flex-text" name="nickname"  value="{$data.nickname}" >
+				</view>
+				<div class="btn-row-submit js-submit">提交</div>
+			</form>
+		</div>
+		</div>
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

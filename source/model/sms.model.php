@@ -1,7 +1,7 @@
 <?php
 class smsModel extends model{
 	
-	public function __construct(){
+	public function __construct(&$base=null){
 		parent::__construct ();
 	}
 	
@@ -17,11 +17,30 @@ class smsModel extends model{
 	function sendSMS($mobile,$content,$time=0,$mid=0){
 		$con=is_array($content)?$content['content']:$content;
 		skyLog("smslog.txt",$mobile.$con);
+		
 		//判断是否黑名单
 		$row=M("badphone")->selectRow("telephone='".$mobile."'");
 		if($row){
 			return false;
 		}
+		
+		//检测短信异常
+		$ip=ip();
+		$key="smsCheck".md5($ip);
+		$num=cache()->get($key);
+		if($num>5){		 
+			return false;
+		}
+		$num=$num+1;
+		cache()->set($key,$num,300);
+		//检测单个号
+		$key="smsCheck".$mobile;
+		$num=cache()->get($key);
+		if($num>5){		 
+			return false;
+		}
+		$num=$num+1;
+		cache()->set($key,$num,3600);
 		$logid=M("sms_log")->insert(array(
 			"telephone"=>$mobile,
 			"content"=>$con,

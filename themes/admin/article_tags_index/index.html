@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+<div class="tabs-border">
+	<div>{$group.title}::</div>
+	<div class="item active">文章列表</div>
+ 
+</div>
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>id</td>
+   
+   <td>帖子</td>
+   <td>排序</td>
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$list}
+<tr>
+   <td>{$c.id}</td>
+    
+   <td>{$c.title}</td>
+   <td>
+		 <div class="flex">
+		<input class="js-order w60" type="text" gpid="{$c.id}" value="{$c.orderindex}" />
+		</div>
+	 </td>
+<td>
+ <a href="/index.php?m=article&a=show&id={$c.objectid}" target="_blank">查看</a> 
+ <a href="javascript:;" class="js-delete" url="/admin.php?m=article_tags_index&a=delete&ajax=1&id={$c.id}">删除</a>
+ </td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+<script>
+	$(function(){
+		$(document).on("change",".js-order",function(){
+			var gpid=$(this).attr("gpid");
+			var orderindex=$(this).val();
+			$.post("/admin.php?m=article_tags_index&a=orderindex&ajax=1",{
+				id:gpid,
+				orderindex:orderindex
+			},function(res){
+				skyToast(res.message);
+			},"json");
+		})
+	})
+</script>
+</body>
+</html>

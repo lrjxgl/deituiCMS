@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+<div class="main-body">
+ 
+<div class="tabs-border">
+<a class="item active" href="{$appadmin}?m=sysmsg">系统消息管理</a>
+<a class="item"  href="{$appadmin}?m=sysmsg&a=add">系统消息添加</a>
+</div>
+<table class="tbs">
+<tr>
+	<td width="5%">ID</td>
+    <td width="31%">标题</td>
+    <td width="10%">状态</td>
+    <td width="19%">开始时间</td>
+    <td width="25%">结束时间</td>
+    <td width="10%">操作</td>
+</tr>
+{foreach item=c from=$data}
+<tr>
+  <td>{$c.id}</td>
+  <td>{$c.title}</td>
+  <td>{if $c.status}正常{else}禁止{/if}</td>
+  <td>{$c.start_time|date:Y-m-d H@m}</td>
+  <td>{$c.end_time|date:Y-m-d H@m}</td>
+  <td>
+	  <a href="{$appadmin}?m=sysmsg&a=push&id={$c.id}">推送</a> 
+	  <a href="{$appadmin}?m=sysmsg&a=add&id={$c.id}">编辑</a> 
+  <a href="javascript:;" class="delete" url="{$appadmin}?m=sysmsg&a=delete&id={$c.id}">删除</a></td>
+</tr>
+{/foreach}
+ 
+</table>
+{$pagelist}
+</div>
+</div>
+
+{include file="footer.html"}
+</body>
+</html>

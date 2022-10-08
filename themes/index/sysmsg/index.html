@@ -1,0 +1,49 @@
+<!DOCTYPE>
+<html>
+{include file="head.html"}
+<body> 
+<div class="header">
+	<div class="header-back"></div>
+	<div class="header-title">系统消息</div>
+</div>	
+<div class="header-row"></div>
+ 
+ 
+<div class="main-body">
+<div class="tabs-border">
+	<a href="/index.php?m=notice" class="tabs-border-item">我的消息</a>
+	<a href="/index.php?m=sysmsg" class="tabs-border-item tabs-border-active">系统通知</a>
+</div>
+
+{if $list}
+<div>
+	{foreach item=c from=$list}
+	<div class="row-box js-item mgb-5">
+		<div class="flex mgb-5">
+			<div class="cl-status">{$c.status_name}</div>
+			<div class="flex-1"></div>
+			<div class="f12 cl3">{$c.createtime}</div>
+		</div>
+		<div class="mgb-5">{$c.title}</div>
+		<div class="flex">
+			<div class="flex-1"></div>
+			<div gourl="/index.php?m=sysmsg&a=show&id={$c.id}" class="btn-mini mgr-5">查看</div>
+			<div url="/index.php?m=sysmsg&a=delete&id={$c.id}" class="btn-mini btn-danger js-delete">删除</div>
+		</div>
+	</div>
+	{/foreach}
+</div>	
+{$pagelist}
+{else}
+<div class="emptyData">暂无消息</div>
+{/if}
+</div>
+
+</div>
+</div>
+
+</div>
+{include file="footer.html"}
+ 
+</body>
+</html>

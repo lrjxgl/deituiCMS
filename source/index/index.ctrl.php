@@ -13,7 +13,23 @@ class indexControl extends skymvc
 
 	public function onDefault()
 	{
-		if(defined("RURL301") && RURL301!=""){
+		if(defined("RURL301") && RURL301!="" && !get("ajax")){
+			$arr=parse_url(RURL301);
+			parse_str($arr["query"],$get);
+			 
+			if($arr["path"]=="/module.php" && isset($get["m"])){
+				$m=preg_replace("/\W/iUs","",$get["m"]);
+				
+				CC($m,$m)->smarty->assign("skins","module/".$m."/themes/index/");
+				CC($m,$m)->smarty->template_dir="module/".$m."/themes/index/";
+				require_once(ROOT_PATH."module/".$m."/module.php");
+				if(function_exists("moduleInit")){
+					moduleInit();
+				}
+				CC($m,$m)->onDefault();
+				exit;
+			}
+			
 			header("HTTP/1.1 301 Moved Permanently");			
 			header("Location: ".RURL301);			
 			exit();

@@ -12,7 +12,19 @@
 		
 		public function onDefault(){
 			$where="status in(0,1,2)";
-			$url="/admin.php?m=sms_log&a=default";
+			$type=get("type","i");
+			if($type==1){
+				$where=" status=1 ";
+			}elseif($type==2){
+				$where=" status=0 ";
+			}
+			$url="/admin.php?m=sms_log&type=".$type;
+			$telephone=get("telephone","h");
+			if($telephone){
+				$where.=" AND telephone='".$telephone."' ";
+				$url.="&telephone=".$telephone;
+			}
+			
 			$limit=20;
 			$start=get("per_page","i");
 			$option=array(
@@ -32,7 +44,9 @@
 					"per_page"=>$per_page,
 					"pagelist"=>$pagelist,
 					"rscount"=>$rscount,
-					"url"=>$url
+					"url"=>$url,
+					"type"=>$type,
+					"telephone"=>$telephone
 				)
 			);
 			$this->smarty->display("sms_log/index.html");

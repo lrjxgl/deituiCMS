@@ -1,0 +1,11 @@
+ <li {if $c.imgurl} class="hasimg"{/if}>
+            <a class="aurl" href="{R("/index.php?m=show&id=$c.id")}">
+               {if $c.imgurl} <img src="{const.IMAGES_SITE}{$c.imgurl}.100x100.jpg"/>{/if}
+                <dl>
+                    <dt>{$c.title}</dt>
+                    <dd class="time">{$c.dateline|timeago}</dd>
+                    <dd class="content">{$c.description}</dd>
+                     
+                </dl>
+            </a>
+        </li>

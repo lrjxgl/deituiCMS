@@ -54,9 +54,9 @@ function Pinyin($_String){
 	 $_String = iconv("utf-8","gbk",$_String);
 	$_Res = '';
 	for($i=0; $i<strlen($_String); $i++){
-		$_P = ord($_Z = $_String{$i});
+		$_P = ord($_Z = substr($_String,$i,1));
 		if($_P>160){
-			$_Q = ord($_String{++$i});
+			$_Q = ord(substr($_String,++$i,1));
 			$_P = $_P*256 + $_Q - 65536;
 			if($_P>=-20319 && $_P<=-10247)
 				foreach($_Data as $k=>$v)if($v<=$_P){$_Res .=  $k; break;}
@@ -103,9 +103,9 @@ function FirstLetter($string, $number = 0){
 	 $_String = iconv("utf-8","gbk",$_String);
 
 	for($i=0, $l = strlen($string); $i < $l; $i++){
-		$_P = ord($_Z = $string{$i});
+		$_P = ord($_Z = substr($string,$i,1));
 		if($_P>160){
-			$_Q = ord($string{++$i});
+			$_Q = ord(substr($string,++$i,1));
 			$_P = $_P*256 + $_Q - 65536;
 			if($_P>=-20319 && $_P<=-10247)
 				foreach($letter as $k => $v)

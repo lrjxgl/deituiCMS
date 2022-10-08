@@ -4,43 +4,118 @@
 	<body class="fullBody bg-fff">
 		<div class="header-back-fixed goBack"></div>
 		<div class="header-row"></div>
-		<div class="main-body">
-			<div class="flex-center pd-10 bg-fff">
-				<image class="wh-100 bd-radius-50" src="{$site.logo}.100x100.jpg"></image>
+		<div class="main-body" id="App">
+			<div v-if="page=='login'">
+				<div class="flex-center pd-10 bg-fff">
+					<image class="wh-100 bd-radius-50" src="{$site.logo}.100x100.jpg"></image>
 
-
-			</div>
-			<input type="hidden" id="backurl" name="backurl" value="{$backurl}" />
-	
-			<div class="input-flex">
-				<div class="input-flex-label">手机</div>
-				<input type="text" class="input-flex-text" id="telephone" name="telephone" placeholder="请输入手机号码" />
-			</div>
-			<div class="input-flex">
-				<div class="input-flex-label">密码</div>
-				<input type="password" class="input-flex-text" id="password" type="text" placeholder="请输入密码" passowrd />
-			</div>
-			<div class="row-box">
-				<div class="btn-row-submit" id="login-submit">登录</div>
-				<div class="flex pdl-10 pdr-10">
-					<a class="cl2 mgb-10" href="index.php?m=login&a=findpwd">找回密码</a>
-					<div class="flex-1"></div>
-					<a class="mgb-10 cl2" href="index.php?m=register">立即注册</a>
-					
 				</div>
+				<input type="hidden" id="backurl" name="backurl" value="{$backurl}" />
+					
+				<div class="input-flex">
+					<div class="input-flex-label">手机</div>
+					<input type="text" class="input-flex-text" id="telephone" name="telephone" placeholder="请输入手机号码" />
+				</div>
+				<div class="input-flex">
+					<div class="input-flex-label">密码</div>
+					<input type="password" class="input-flex-text" id="password" type="text" placeholder="请输入密码" passowrd />
+				</div>
+				<div class="row-box">
+					<div class="btn-row-submit" id="login-submit">登录</div>
+					<div class="flex pdl-10 pdr-10">
+						<a class="cl2 mgb-10" @click="setPage('findpwd')">找回密码</a>
+						<div class="flex-1"></div>
+						<a class="mgb-10 cl2"  @click="setPage('reg')">立即注册</a>
+						
+					</div>
+				</div>
+				{if INWEIXIN}
+				<div class="otherBox mgb-20">
+					<div class="otherBox-line"></div>
+					<div class="otherBox-text">其它方式登录</div>
+				</div>
+				<div class="flex flex-center mgb-20">
+					<div gourl="/index.php?m=open_weixin&a=Geturl&backurl={$backurl|urlencode}" class="btn btn-round bg-success iconfont icon-weixin"></div>
+				</div>
+				{/if}
 			</div>
-			 
-			{if INWEIXIN}
-			<div class="otherBox mgb-20">
-				<div class="otherBox-line"></div>
-				<div class="otherBox-text">其它方式登录</div>
+			<div v-else-if="page=='reg'">
+				<div @click="setPage('login')" class="header-back-fixed"></div>
+				<div class="flex-center pd-10 bg-fff">
+					<image class="wh-100 bd-radius-50" src="{$site.logo}.100x100.jpg"></image>
+					
+				
+				</div>
+				<form id="regForm">
+				
+				<div class="input-flex">
+					<div class="input-flex-label">手机</div>
+					<input class="input-flex-text" id="telephone" name="telephone" placeholder="请输入手机号码" />
+				</div>
+				<div class="input-flex">					
+					<div class="input-flex-label">验证码</div>					 
+					<input type="text" name="yzm" class="input-flex-text">				 
+					<div class="input-flex-btn" id="sendSms2">获取验证码</div>
+				</div>
+				<div class="input-flex">
+					<div class="input-flex-label">昵称</div>
+					<input class="input-flex-text" name="nickname" placeholder="请输入昵称" />
+				</div>
+				<div class="input-flex">
+					<div class="input-flex-label">密码</div>
+					<input class="input-flex-text" name="password" type="password" placeholder="请输入密码" type="password" />
+				</div>
+				<div class="input-flex">
+					<div class="input-flex-label">重复密码</div>
+					<input class="input-flex-text" name="password2" placeholder="请再次输入密码" type="password" />
+				</div>
+				{if $reg_invitecode}
+				<div class="input-flex">
+					<div class="input-flex-label">邀请码</div>
+					<input class="input-flex-text" name="invitecode" placeholder="请输入邀请码" />
+				</div>
+				{/if}
+				<div class="row-box">
+					<button type="button" id="reg-submit" class="btn-row-submit">立即注册</button>
+					<div class="flex-center">
+						<a class="mgb-10 cl2" @click="setPage('login')" >已有账号？立即登录</a>
+						
+					</div>
+				</div>
+				</form>
 			</div>
-			<div class="flex flex-center mgb-20">
-				<div gourl="/index.php?m=open_weixin&a=Geturl" class="btn btn-round bg-success iconfont icon-weixin"></div>
+			<div v-else-if="page=='findpwd'">
+				<div @click="setPage('login')" class="header-back-fixed"></div>
+				<div class="flex-center pd-10 bg-fff">
+					<image class="wh-100 bd-radius-50" src="{$site.logo}.100x100.jpg"></image>
+					
+				
+				</div>
+				<form id="fdForm">
+					<div class="input-flex">
+						<div class="input-flex-label">手机</div>
+						<input class="input-flex-text" id="telephone" name="telephone" placeholder="请输入手机号码" />
+					</div>
+					<div class="input-flex">					
+						<div class="input-flex-label">验证码</div>					 
+						<input type="text" name="yzm" class="input-flex-text">				 
+						<div class="input-flex-btn" id="sendSms">获取验证码</div>
+					</div>
+				 
+					<div class="input-flex">
+						<div class="input-flex-label">密码</div>
+						<input class="input-flex-text" name="password" type="password" placeholder="请输入密码" type="password" />
+					</div>
+					<div class="input-flex">
+						<div class="input-flex-label">重复密码</div>
+						<input class="input-flex-text" name="password2" placeholder="请再次输入密码" type="password" />
+					</div>
+					<div class="btn-row-submit" id="findpwd-submit">确认修改</div>
+				</form>
 			</div>
-			{/if}
 		</div>
 		{include file="footer.html"}
+		<script src="{$skins}login/index.js"></script>
 		<style>
 			.otherBox {
 			position: relative;
@@ -68,25 +143,6 @@
 		
 		}
 		</style>
-		<script>
-		$(function(){
-			$(document).on("click","#login-submit",function(){		
-				$.post("/index.php?m=login&a=loginSave&ajax=1",{
-					telephone:$("#telephone").val(),
-					password:$("#password").val(),
-					backurl:$("#backurl").val()
-				},function(data){
-					if(data.error==1){
-						skyToast(data.message);
-					}else{
-						skyToast("登陆成功");
-						setTimeout(function(){
-							window.location=data.data.backurl;
-						},700);
-					}
-				},"json");
-			});
-		});
-		</script>
+		 
 	</body>
 </html>

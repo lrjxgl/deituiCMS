@@ -15,7 +15,7 @@
 			$this->onMy();
 		}
 		public function onMy(){
-			$where=" status=1 AND  userid=".$this->userid;
+			$where=" status in(0,1) AND  userid=".$this->userid;
 			$url="/index.php?m=user_address&a=default";
 			$limit=20;
 			$start=get("per_page","i");
@@ -41,13 +41,16 @@
 				} 
 			}
 			$pagelist=$this->pagelist($rscount,$limit,$url);
+			$per_page=$start+$limit;
+			$per_page=$per_page>$rscount?0:$per_page;
 			$this->smarty->goassign(
 				array(
 					"list"=>$data,
 					"pagelist"=>$pagelist,
 					"rscount"=>$rscount,
 					"url"=>$url,
-					"dist_list"=>$dist_list
+					"dist_list"=>$dist_list,
+					"per_page"=>$per_page
 				)
 			);
 			$this->smarty->display("user_address/my.html");

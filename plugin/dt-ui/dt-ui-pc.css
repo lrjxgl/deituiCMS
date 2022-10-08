@@ -1354,7 +1354,7 @@ navigator{
 	font-weight: 600;
 	cursor: pointer;
 	text-align: center;
-	
+	justify-content:center;
 }
 
 .alert-ft-success {

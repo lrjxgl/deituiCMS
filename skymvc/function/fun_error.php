@@ -78,6 +78,9 @@ function my_error_handler($errno=NULL, $errstr=NULL, $errfile=NULL, $errline=NUL
 	
 	foreach($array as $row)
     {
+		if(!isset($row["file"])){
+			continue;
+		} 
        $html .="<div class='item'>".$row['file'].':'.$row['line'].'行,调用方法:'.$row['function']." </div>";
     }
 	$html.='<div class="item">请联系管理员</div></div>';

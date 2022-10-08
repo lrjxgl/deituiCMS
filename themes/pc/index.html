@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+{include file="head.html"}
+<link href="/plugin/swiper/css/swiper.min.css" rel="stylesheet" />
+<body>
+{assign var="navbar" value="index"}
+ {include file="header.html"}
+  <div class="main-body">
+	  <div class="flex"  >
+		  <div class="flex-1" style="overflow: hidden;">
+			  <div  >
+				  <div class="swiper-container"  id="indexFlash">
+				  	<div class="swiper-wrapper"    >
+				  		{foreach item=c from=$flashList}
+				  		<div class="swiper-slide" >
+				  			<img  class="imgWidth" src="{$c.imgurl}" />
+				  		</div>
+				  		{/foreach}
+				  	</div>
+				  	 
+				  	<div class="swiper-pagination flex flex-jc-center"></div>
+				   
+				  </div>
+			  </div>
+			  
+			  {foreach item=item from=$articleList}
+			   <div class="row-box mgb-5">
+				   <div class="flex">
+					   {if $item.imgurl}
+					   <a href="/index.php?m=article&a=show&id={$item.id}" target="_blank"><img class="w150 mgr-10" src="{$item.imgurl}.small.jpg" /></a>
+					   {/if}
+					   <div class="flex-1">
+						   <a href="/index.php?m=article&a=show&id={$item.id}"  target="_blank" class="sglist-title inlineblock">{$item.title}</a>
+						   <div class="sglist-desc">{$item.description}</div>
+						   <div class="sglist-ft">
+						   	<div class="sglist-ft-love">{$item.love_num}</div>
+						   	<div class="sglist-ft-cm">{$item.comment_num}</div>
+						   	<div class="sglist-ft-view">{$item.view_num}</div>
+						   </div> 
+					   </div>
+					   
+				   </div>
+				   
+			   </div>
+			   {/foreach}
+		  </div>
+		  <div class="page-side mgl-10">
+			  {include file="side.html"}
+			  
+		  </div>
+	  </div>
+  </div>
+	
+	 
+	 
+	 
+ {include file="footer.html"}
+  
+ {include file="footjs.html"}
+ <script src="/plugin/swiper/js/swiper.min.js"></script>
+ <script>
+ 	$(function(){
+ 		var flash = new Swiper("#indexFlash", {
+ 			pagination: {
+ 				el: '.swiper-pagination',
+ 			}
+ 		});
+ 	})
+ 	
+ </script>
+ 
+</body>
+</html>

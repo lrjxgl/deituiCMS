@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		{if !$site}
+		{get data=site model=site fun=get()}
+		{/if}
+		<title>{if $seo}{$seo.title}{else}{$site.title}{/if}</title>
+		
+		<link href="/plugin/dt-ui/dt-ui-pc.css" rel="stylesheet" />
+		<style>
+			.main{
+				flex: 1;
+				background-color: #fff;
+				position: relative;
+				margin-right: 1px;
+				background-image: url({$skins}img/index-bg.jpg);
+				background-size: cover;
+			}
+			.side{
+				width:320px;
+				height: 423px;
+				background-color: #fff;
+				padding: 10px;
+				
+			}
+			.main-body{
+				width:1120px;
+				margin: 0 auto;
+			}
+			.bgax{
+				 
+				background-color: #fff;
+				position: absolute;
+				top:0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+			}
+			.index-title{
+				width:300px;
+				background-color: #AA5500;
+				border-radius: 20px;
+				margin: 20px auto 20px auto;
+				padding: 20px;
+				color: #fff;
+				font-size: 32px;
+				text-align: center;
+				 
+			}
+			.index-bg{
+				width:100%;
+			}
+			.block{
+				display: block !important;
+			}
+		</style>
+	</head>
+	<body class="bga">
+	 <div class="main-body">
+		 <img src="{$skins}img/index-logo.png" style="height:100px;margin-left: -10px;" />
+	 </div>
+	  
+		<div  id="App" class="none" :class="'block'">
+			
+			<div class="main-body">
+				<div class="flex">
+					<div class="main">
+						 
+					</div>
+					<div class="side">
+						<div class="tabs-border">
+							<div @click="tab='login'" :class="tab=='login'?'tabs-border-active':''" class="tabs-border-item ">登录</div>
+							<div @click="tab='reg'" :class="tab=='reg'?'tabs-border-active':''" class="tabs-border-item">注册</div>
+						</div>
+						<form id="loginForm" v-if="tab=='login'">
+							<div class="input-flex">
+								<div class="input-flex-label">手机</div>
+								<input type="text" class="input-flex-text" name="telephone"  />
+							</div>
+							<div class="input-flex">
+								<div class="input-flex-label">密码</div>
+								<input type="password" class="input-flex-text" name="password" />
+							</div>
+							<div class="flex">
+								<div @click="login" class="btn-row-submit">登录</div>
+							</div>
+							<div class="flex pdl-10 pdr-10">
+								<a class="cl2 mgb-10" href="index.php?m=login&a=findpwd">找回密码</a>
+								<div class="flex-1"></div>
+								<div class="mgb-10 pointer cl2" @click="tab='reg'">去注册</div>
+								
+							</div>
+						</form>
+						<form id="regForm" v-if="tab=='reg'">
+							<div class="input-flex">
+								<div class="input-flex-label">手机</div>
+								<input type="text" class="input-flex-text" name="telephone" id="telephone" />
+							</div>
+							<div class="input-flex">
+								<div class="input-flex-label">验证码</div>					 
+								<input type="text" name="yzm" class="input-flex-text">				 
+								<div class="input-flex-btn" @click="sendSms">获取验证码</div>
+							</div>
+							<div class="input-flex">
+								<div class="input-flex-label">昵称</div>
+								<input class="input-flex-text" name="nickname" placeholder="请输入昵称" />
+							</div>
+							<div class="input-flex">
+								<div class="input-flex-label">密码</div>
+								<input type="password" class="input-flex-text" name="password" id="password" />
+							</div>
+							<div class="input-flex">
+								<div class="input-flex-label">邀请码</div>
+								<input class="input-flex-text" name="invitecode" placeholder="请输入邀请码" />
+							</div>
+							<div class="flex">
+								<div @click="regSubmit" class="btn-row-submit">注册</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		{include file="footer.html"}
+	<script src="/plugin/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/plugin/vue/vue.min.js"></script>
+	<script src="/plugin/dt-ui/dt-ui-h5.js"></script>
+	<script src="{$skins}index/unindex.js"></script>
+	 
+	</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+ {include file="header.html"}
+<div class="layui-container fly-marginTop fly-user-main">
+
+	{assign var="userTab" value="gold_log"}
+  {include file="user_left.html"}
+  <div class="fly-panel" pad20>
+  	<div style="margin-bottom: 10px;">
+  	<div class="layui-btn">金币日志</div>
+  	<a href="/index.php?m=gold&a=buy" class="layui-btn layui-btn-primary">购买金币</a>
+  	</div>
+<table class='table table-bordered' width='100%'>
+  <tr>
+   <td>id</td>
+   <td>时间</td>
+    
+   
+   <td>日志内容</td>
+ 
+   <td>金币</td>
+   
+ 
+ 
+  </tr>
+ {foreach item=c from=$list}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+    
+   
+   <td>{$c.content}</td>
+  
+   <td>{$c.money}</td>
+  
+ 
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div>
+<div class="clearfix"></div>
+</div>
+</div>
+ 
+{include file="footer.html"}  
+</body>
+</html>

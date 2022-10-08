@@ -1,0 +1,268 @@
+/**
+ * @author 老雷 362606856@qq.com
+ */
+ /*****定义flex*****/
+ 
+ 
+[gourl]{
+	cursor: pointer;
+}	
+ 
+ 
+text{
+	display: inline-block;
+	line-height: 1.5;
+}
+navigator{
+	display: flex;
+	color: #323232;
+	text-decoration: none;
+	flex-direction: column;
+	box-sizing: border-box;
+}
+image{
+	display: flex;
+}
+ 
+.pointer{
+	cursor: pointer;
+}
+.none{display: none !important;}
+.flex{
+ 	display: flex!important;
+ 	flex-direction: row!important;
+ }
+ .flex-col{
+	display: flex!important;
+	flex-direction: column!important;
+ }
+ .flex-1{
+ 	flex: 1;
+ }
+.flex-wrap{
+	flex-wrap: wrap;
+}
+ /***定义了 flex 容器中 flex 成员项在纵轴方向上如何排列以处理空白部分***/
+ .flex-ai-stretch{ align-items: stretch;}
+ .flex-ai-start{ align-items: flex-start;}
+ .flex-ai-end{ align-items: flex-end;}
+ .flex-ai-center{ align-items: center;}
+ /***定义了 flex 容器中 flex 成员项在主轴方向上如何排列以处理空白部分***/
+ .flex-jc-start{justify-content: flex-start;}
+ .flex-jc-end{justify-content: flex-end;}
+ .flex-jc-center{justify-content: center;}
+ .flex-jc-bettwen{justify-content: space-between;}
+ .flex-center{text-align: center;justify-content:center;align-items: center;}
+ /****浮动****/
+ .fr{ float: right;}
+ .fl{float: left;}
+ .clearfix{clear: both; display: flex; width: 100%;}
+ .text-right{
+	 text-align: right  !important;
+ }
+ .text-center{
+	 text-align: center !important;
+ }
+ .text-left{
+	 text-align: left !important;
+ }
+ /****定位*****/
+ .pos-fixed{position: fixed !important;}
+ .pos-abs{position: absolute !important;}
+ .pos-relative{position: relative !important;}
+ /**高度宽度**/
+
+ .wh-30{ width: 30px; height: 30px;}
+ .wh-40{width: 40px; height: 40px;}
+ .wh-60{ width: 60px !important; height: 60px !important;}
+ .wh-100{width:100px; height: 100px;}
+ .wh-150{width: 150px; height: 150px;}
+ .wh-200{width: 200px; height: 200px;}
+ .wmax{ max-width: 100%; height:auto;}
+ .w60{width: 60px !important;}
+ .w100{width: 100px !important;}
+ .w150{width: 150px !important;}
+ .h30{ height: 30px !important;}
+ .h60{height:60px !important;}
+ .h100{ height: 100px !important;}
+ .h160{height: 160px !important;}
+ .h200{height: 200px !important;}
+ /***fontsize**/
+ .f36{ font-size: 36px !important;}
+ .f28{ font-size: 28px !important;}
+ .f22{font-size: 22px!important;}
+ .f20{font-size: 20px!important;}
+ .f18{font-size: 18px!important;}
+ .f16{font-size: 16px!important;}
+ .f14{font-size:14px!important;}
+ .f12{font-size: 12px!important;}
+ .fw-600{font-weight:600;}
+ /***col1 2 3 内容字体差异 主标题 副标题 描述****/
+ .cl1{color: #323232!important;}
+ .cl2{color: #646464!important;}
+ .cl3{color: #969696!important;}
+ .cl-f30{color: #f30 !important;}
+ .cl-red{color: #c12725 !important;}
+ .cl-primary { color: #007bff!important;}
+ .cl-secondary {color: #6c757d!important;}
+ .cl-success{color: #28a745!important;}
+ .cl-danger{color: #dc3545!important}
+ .cl-warning{color: #ffc107!important}
+ .cl-info { color: #17a2b8!important;}
+ .cl-light { color: #f8f9fa!important;}
+ .cl-dark{color:#343a40!important;}
+ .cl-muted {color: #6c757d!important;}
+ .cl-white{color: #fff !important;}
+ .cl-money{color: #FF6600!important;}
+ .cl-num{color: #f70!important;}
+ /***background-color***/
+ .bg-ef{ background-color: #efefef !important;}
+ .bg-fff{background-color: #fff!important;}
+ .bg-f30{
+ 	background-color: #f30 !important;
+ }
+ .bg-primary { background-color: #007bff!important;}
+ .bg-secondary {
+    background-color: #6c757d!important;
+}
+.bg-success {
+    background-color: #28a745!important;
+}
+.bg-danger {
+    background-color: #dc3545!important;
+}
+.bg-warning {
+    background-color: #ffc107!important;
+}
+.bg-info {
+    background-color: #17a2b8!important;
+}
+.bg-light {
+    background-color: #f8f9fa!important;
+}
+.bg-dark {
+    background-color: #343a40!important;
+}
+.bg-white {
+    background-color: #fff!important;
+}
+ .bg-transparent {background-color: transparent !important;}
+ .bg-royal{background-color:#8a6de9 !important;}
+ .bg-disabled{background-color:#FBFBFB !important;}
+ /****固定颜色****/
+ 
+ /***padding****/
+ .pd-5{padding: 5px !important;}
+ .pdl-5{padding-left: 5px !important;}
+ .pdr-5{padding-right: 5px !important;}
+ .pdt-5{padding-top: 5px !important;}
+ .pdb-5{padding-bottom: 5px !important;}
+ .pd-10{padding: 10px !important;}
+ .pdl-10{padding-left: 10px !important;}
+ .pdr-10{padding-right: 10px !important;}
+ .pdt-10{padding-top: 10px !important;}
+ .pdb-10{padding-bottom: 10px !important;}
+ .pdb-30{padding-bottom: 30px !important;}
+ .pdt-0{ padding-top: 0px !important;}
+ /***margin****/
+ .mg-5{margin: 5px!important;}
+ .mgb-5{margin-bottom: 5px!important;}
+ .mgt-5{margin-top: 5px!important;}
+ .mgl-5{margin-left: 5px!important;}
+ .mgr-5{margin-right: 5px!important;}
+ .mg-10{margin: 10px!important;}
+ .mgb-10{margin-bottom: 10px!important;}
+ .mgt-10{margin-top: 10px!important;}
+ .mgl-10{margin-left: 10px!important;}
+ .mgr-10{margin-right: 10px!important;}
+ .mgr-20{ margin-right: 20px !important;}
+ .mgb-20{margin-bottom: 20px!important;}
+ .mgl-20{margin-left: 20px !important;}
+ .mgt-20{margin-top: 20px !important;}
+ .mgb-0{margin-bottom: 0px !important;}
+ /***border***/
+ .bd-mp-5{
+	 border-bottom: 1px solid #eee !important;
+	 padding-bottom: 5px !important;
+	 margin-bottom: 5px !important;
+ }
+ .bd-mp-10{
+ 	border-bottom: 1px solid #eee !important;
+ 	padding-bottom: 10px !important;
+ 	margin-bottom: 10px !important;
+ }
+ .bd-mp-0{
+	 border-bottom: 0 !important;
+	 padding-bottom: 0 !important;
+	 margin-bottom: 0 !important;
+ }
+ .bd { border: 1px solid #dee2e6 !important; }
+ .bdt { border-top: 1px solid #dee2e6 !important;}
+ .bdr {border-right: 1px solid #dee2e6 !important; } 
+ .bdb { border-bottom: 1px solid #dee2e6 !important;}
+ .bdl { border-left: 1px solid #dee2e6 !important;}
+ 
+ .bd-0 {
+   border: 0 !important;
+ }
+ 
+ .bdt-0 {
+   border-top: 0 !important;
+ }
+ 
+ .bdr-0 {
+   border-right: 0 !important;
+ }
+ 
+ .bdb-0 {
+   border-bottom: 0 !important;
+ }
+ 
+ .bdl-0 {
+   border-left: 0 !important;
+ }
+ /***border-color**/
+ .bd-primary { border-color: #007bff !important;}
+ 
+ .bd-secondary {
+   border-color: #6c757d !important;
+ }
+ 
+ .bd-success {border-color: #28a745 !important;}
+ 
+ .bd-info {
+   border-color: #17a2b8 !important;
+ }
+ 
+ .bd-warning {
+   border-color: #ffc107 !important;
+ }
+ 
+ .bd-danger {
+   border-color: #dc3545 !important;
+ }
+ 
+ .bd-light {
+   border-color: #f8f9fa !important;
+ }
+ 
+ .bd-dark {
+   border-color: #343a40 !important;
+ }
+ 
+ .bd-white {
+   border-color: #fff !important;
+ }
+ /****border-radius***/
+ .bd-radius-5{border-radius: 5px;}
+ .bd-radius-10{
+ 	border-radius: 10px;
+ }
+ .bd-radius-20{
+ border-radius: 20px;
+ }
+ .bd-radius-50{
+	 border-radius: 50%;
+ }
+
+

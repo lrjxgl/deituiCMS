@@ -1,3 +1,4 @@
+<input type="hidden" name="phone_reg"  value="1" />
 <table class="table-add">
    <tr>
     <td height="30" align="right">开启短信通知：</td>
@@ -9,7 +10,7 @@
 	<tr >
   	<td height="30" align="right">短信方</td>
     <td>
-    	<input type="radio" name="sms_type" {if $data.sms_type neq 'alisms'}checked{/if}  value="default"> 短信宝
+    	<input type="radio" name="sms_type" {if $data.sms_type neq 'alisms'}checked{/if}  value="default"> 默认
     	<input type="radio" name="sms_type" {if $data.sms_type eq 'alisms'}checked{/if} value="alisms"> 阿里云
         
     </td>

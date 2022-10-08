@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+
+	<body>
+		{include file="header.html"}
+		<div class="main-body">
+			<div class="flex">
+				{assign var="userTab" value="recharge"}
+				{include file="user_left.html"}
+				<div class="flex-1">
+					<div class="btn btn-danger mgb-10">充值记录</div>
+					<table class="tbs">
+						<thead>
+							<tr align="center">
+								<td width="15%">订单号</td>
+								<td width="10%">交易金额</td>
+								<td width="10%">充值类型</td>
+				
+								<td width="10%">交易状态</td>
+								<td width="18%">交易时间</td>
+								<td>内容</td>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach item=c from=$data}
+							<tr align="center">
+								<td>{$c.orderno}</td>
+								<td>{$c.money}</td>
+								<td>{if $c.pay_type eq 'alipay'}支付宝{elseif $c.pay_type eq 'tenpay'}财付通{elseif $c.pay_type eq 'mibao'}密保卡{else}直接充值{/if}</td>
+				
+								<td>{if $c.status eq 1}成功{else}失败{/if}</td>
+								<td>{$c.dateline|date:Y-m-d H:i:s}</td>
+								<td>{$c.orderinfo}</td>
+							</tr>
+							{/foreach}
+				
+						</tbody>
+					</table>
+					<div class="pages">{$pagelist}</div>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		{include file="footer.html"}
+
+	</body>
+
+</html>

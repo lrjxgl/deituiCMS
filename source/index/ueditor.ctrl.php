@@ -140,7 +140,7 @@ class ueditorControl extends skymvc{
 			$this->upload_oss($data["filename"]);
 			$re=array(
 			"state" => "SUCCESS", 
-			"url" => UPLOAD_OSS?IMAGES_SITE.$data["filename"]:$data["filename"] ,
+			"url" => images_site($data["filename"]) ,
 			"title" => "图片上传成功",
 			 "original" => $data["original"] , 
 			 "type" => $data['type'],
@@ -176,7 +176,7 @@ class ueditorControl extends skymvc{
 			
 			$re=array(
 			"state" => "SUCCESS", 
-			"url" => UPLOAD_OSS?IMAGES_SITE.$data["filename"]:$data["filename"] ,
+			"url" => images_site($data["filename"]) ,
 			"title" => "文件上传成功",
 			 "original" => $data["original"] , 
 			 "type" => $data['type'],

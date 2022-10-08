@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+		<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<title>map</title>
+	 
+	</head>
+	<style>
+		 #tip {
+		            background-color: #ddf;
+		            color: #333;
+		            border: 1px solid silver;
+		            box-shadow: 3px 4px 3px 0px silver;
+		            position: absolute;
+		            top: 10px;
+		            right: 10px;
+		            border-radius: 5px;
+		            overflow: hidden;
+		            line-height: 20px;
+		        }
+		        #tip input[type="text"] {
+		            height: 25px;
+		            border: 0;
+		            padding-left: 5px;
+		            width: 280px;
+		            border-radius: 3px;
+		            outline: none;
+		        }
+
+	</style>
+	<body>
+		<div id="map" style="width: 100%;height: 100%; position: relative;"></div>
+		<div id="tip">
+		    <input type="text" id="keyword" name="keyword" value="请输入关键字：(选定后搜索)" onfocus='this.value=""'/>
+		</div>
+		<script src="https://webapi.amap.com/maps?v=1.4.15&key={$key}"></script>
+		<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+		<script type="text/javascript">
+			var parentIframe = window.parent.document.getElementById("mapFrame");
+			 
+		    document.getElementById("map").style.height=parentIframe.style.height;
+			var map = new AMap.Map('map', {
+				resizeEnable: true,
+		       center:[117.000923,36.675807],
+		       zoom:11
+		    });
+			{if $lat==0}
+			AMap.plugin('AMap.Geolocation', function() {
+			  var geolocation = new AMap.Geolocation({
+			    // 是否使用高精度定位，默认：true
+			    enableHighAccuracy: true,
+			    // 设置定位超时时间，默认：无穷大
+			    timeout: 10000,
+			    // 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
+			    buttonOffset: new AMap.Pixel(10, 20),
+			    //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+			    zoomToAccuracy: true,     
+			    //  定位按钮的排放位置,  RB表示右下
+			    buttonPosition: 'RB'
+			  })
+			
+			  geolocation.getCurrentPosition()
+			  AMap.event.addListener(geolocation, 'complete', onComplete)
+			  AMap.event.addListener(geolocation, 'error', onError)
+			
+			  function onComplete (data) {
+			    map.setCenter(data.position)
+			  }
+			
+			  function onError (data) {
+			    // 定位出错
+			  }
+			})
+			{/if}
+			AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+			      var autoOptions = {
+			        city: "北京", //城市，默认全国
+			        input: "keyword"//使用联想输入的input的id
+			      };
+			      autocomplete= new AMap.Autocomplete(autoOptions);
+			      var placeSearch = new AMap.PlaceSearch({
+			            city:'北京',
+			            map:map
+			      })
+			      AMap.event.addListener(autocomplete, "select", function(e){
+			         //TODO 针对选中的poi实现自己的功能
+			         placeSearch.setCity(e.poi.adcode);
+			         placeSearch.search(e.poi.name)
+			      });
+			    });
+			map.on('click', function(ev) {
+				window.parent.setMap(ev.lnglat.lat,ev.lnglat.lng)
+				console.log(ev.lnglat);
+				map.clearMap();
+				var marker = new AMap.Marker({
+				    position: ev.lnglat 
+				});
+				map.add(marker);
+			});
+		</script>
+	</body>
+</html>

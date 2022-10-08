@@ -45,14 +45,14 @@ class registerControl extends skymvc{
 			"code"=>$yzm,
 			"tpl"=>"reg"
 		);
-		$res=M("sms")->sendSms($telephone,$content);
+		
 		
 		$key="reg_sms".$telephone.$yzm;
 		if(SMS_TEST==true){
 			cache()->set($key,1,300);
 			$this->goAll("短信已发送".$yzm);
 		}
-		
+		$res=M("sms")->sendSms($telephone,$content);
 		if($res){
 			cache()->set($key,1,300);
 			cache()->set("reg_".$telephone,time(),60);
@@ -138,10 +138,9 @@ class registerControl extends skymvc{
 			"password"=>umd5($password.$salt)
 		);
 		$_SESSION['ssuser']=$user=M("user")->selectRow("userid=".$userid);
-		$auth=M("login")->setCode($puser);
-		$authcode=$auth['authcode'];
-		setcookie("authcode",$authcode,time()+3600000,"/",DOMAIN);
-		$this->goall("注册成功",0,0,"/index.php");
+		$auth=M("login")->setCode($puser);	 
+		setcookie("token",$auth["refresh_token"],time()+3600000,"/",DOMAIN);
+		$this->goall("注册成功",0,$auth,"/index.php");
 		 
 	}
 	

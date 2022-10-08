@@ -63,9 +63,11 @@ if(!empty($user_extends)){
 if(!defined("REWRITE_TYPE")){
 	define("REWRITE_TYPE","");
 }
- 
+if(!defined("WAP_DOMAIN")){
+	define("WAP_DOMAIN","");
+}
 url_get($_SERVER['REQUEST_URI']);
-if(is_mobile() or get('iswap')){
+if(is_mobile() or get('iswap') or WAP_DOMAIN==$_SERVER['HTTP_HOST']){
 	define("ISWAP",1);
 }else{
 	define("ISWAP",0);

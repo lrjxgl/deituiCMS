@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<style>
+		.ubox {
+			display: flex;
+		}
+
+		.ubox .img {
+			width: 60px;
+			height: 60px;
+			margin-right: 10px;
+		}
+
+		.ubox .flex-1 {
+			flex: 1;
+		}
+
+		.ubox .nick {
+			font-size: 16px;
+			margin-bottom: 5px;
+		}
+
+		.ubox .row-gold {
+			margin-bottom: 5px;
+			color: #333;
+			font-size: 14px;
+		}
+
+		.ubox .row-gold .gold {
+			color: #f60;
+		}
+	</style>
+	<body>
+		{include file="header.html"}
+		<div class="main-body">
+			<div class="header-bottom"></div>
+			<div class="flex">
+				{include file="user_left.html"}
+				<div class="flex-1">
+					<div class="row-box">
+						<div class="ubox">
+							<img gourl="/index.php?m=user&a=user_head" class="img" src="{$data.user_head}.100x100.jpg" />
+							<div class="flex-1">
+								<div class="nick">{$data.nickname}</div>
+								<div class="flex">
+									<span>金币</span>
+									<span class="cl-money mgr-20">{$data.gold}个</span>
+									<span>余额</span>
+									<span class="cl-money mgr-20">{$data.money}元</span>
+									<div gourl="/index.php?m=recharge" class="btn-mini btn-outline-primary">去充值</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+
+
+			{include file="footer.html"}
+	</body>
+</html>

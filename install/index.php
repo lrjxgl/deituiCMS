@@ -128,12 +128,8 @@ switch($step){
 		 $adminname=trim($_SESSION["installadmin"]['adminname']);
 		 $pwd1=trim($_SESSION["installadmin"]['password']);
 		 $salt=rand(1000,9999);
-		 $res=mysqli_query($link,"SELECT * FROM ".TABLE_PRE."admin WHERE username='".$adminname."' ");
-		 if(mysqli_num_rows($res)){
-		 	mysqli_query($link,"update ".TABLE_PRE."admin set password='".umd5($pwd1.$salt)."',isfounder=1,salt='".$salt."' ");
-		 }else{
-		 	mysqli_query($link,"insert into ".TABLE_PRE."admin(username,password,isfounder,salt) values('$adminname','".umd5($pwd1.$salt)."',1,'".$salt."')");
-		 }
+		 $res=mysqli_query($link,"delete  FROM ".TABLE_PRE."admin   ");
+		 mysqli_query($link,"insert into ".TABLE_PRE."admin(username,password,isfounder,salt) values('$adminname','".umd5($pwd1.$salt)."',1,'".$salt."')");
 		 //添加默认站点
 		 //添加默认用户
 		 $r2=mysqli_query($link,"select * from ".TABLE_PRE."user where userid=1 ");

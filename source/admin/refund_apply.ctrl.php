@@ -81,53 +81,58 @@
 		}
 		public function alipay($apply){
 			/**支付宝配置***/
-			$ali=M("open_alipay")->selectRow("status=1"); 
+			$config=M("open_alipay")->selectRow("status=1"); 
 			 
 			$config['app_id']=$ali['appid'];
-			$config['merchant_private_key']=$ali['merchant_private_key'];
-			$config['alipay_public_key']=$ali['alipay_public_key'];
+			$appCertPath = ROOT_PATH.$config["appcert_path"];
+			$alipayCertPath = ROOT_PATH.$config["alicert_path"];
+			$rootCertPath = ROOT_PATH.$config["rootcert_path"];
+			 
 			/***end配置***/
-			require_once 'api/alipay/pc/pagepay/service/AlipayTradeService.php';
-			require_once 'api/alipay/pc/pagepay/buildermodel/AlipayTradeRefundContentBuilder.php';
-			require_once ROOT_PATH.'api/alipay/pc/config.php';
-		    //商户订单号，商户网站订单系统中唯一订单号
-		    $out_trade_no = $apply['recharge_orderno'];// trim($_POST['WIDTRout_trade_no']);
-		
-		    //支付宝交易号
-		    $trade_no =$apply['recharge_pay_orderno'];// trim($_POST['WIDTRtrade_no']);
-		    //请二选一设置
-		
-		    //需要退款的金额，该金额不能大于订单金额，必填
-		    $refund_amount = $apply['money'];
-		
-		    //退款的原因说明
-		    $refund_reason = $apply['content'];
-		
-		    //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传
-		    $out_request_no = md5($apply['id'].time());
-		
-		    //构造参数
-			$RequestBuilder=new AlipayTradeRefundContentBuilder();
-			$RequestBuilder->setOutTradeNo($out_trade_no);
-			$RequestBuilder->setTradeNo($trade_no);
-			$RequestBuilder->setRefundAmount($refund_amount);
-			$RequestBuilder->setOutRequestNo($out_request_no);
-			$RequestBuilder->setRefundReason($refund_reason);
-		
-			$aop = new AlipayTradeService($config);
+			require_once ROOT_PATH.'api/alimini/AopCertClient.php';
+			require_once ROOT_PATH.'api/alimini/AopCertification.php';
+			require_once ROOT_PATH.'api/alimini/request/AlipayTradeRefundRequest.php';
+		    /**具体处理**/
+			$aop = new AopCertClient ();
+			$aop->gatewayUrl = 'https://openapi.alipay.com/gateway.do';
+			$aop->appId = $config["appid"];
+			$aop->rsaPrivateKey = $config["merchant_private_key"];
+			$aop->alipayrsaPublicKey = $aop->getPublicKey($alipayCertPath);
+			$aop->apiVersion = '1.0';
+			$aop->signType = 'RSA2';
+			$aop->postCharset='utf-8';
+			$aop->format='json';
+			$aop->isCheckAlipayPublicCert = true;//是否校验自动下载的支付宝公钥证书，如果开启校验要保证支付宝根证书在有效期内
+			$aop->appCertSN = $aop->getCertSN($appCertPath);//调用getCertSN获取证书序列号
+			$aop->alipayRootCertSN = $aop->getRootCertSN($rootCertPath);//调用getRootCertSN获取支付宝根证书序
+			//处理请求
+			$object = new stdClass();
+			$object->trade_no = $apply["recharge_pay_orderno"];
+			$object->refund_amount = $apply["money"];
+			$object->out_request_no = $apply["recharge_orderno"];
+			$object->refund_reason=$apply["content"];
 			
-			/**
-			 * alipay.trade.refund (统一收单交易退款接口)
-			 * @param $builder 业务参数，使用buildmodel中的对象生成。
-			 * @return $response 支付宝返回的信息
-			 */
-			$response = $aop->Refund($RequestBuilder);
-			//print_r($apply);
-			//print_r($response);;
+			//// 返回参数选项，按需传入
+			//$queryOptions =[
+			//   'refund_detail_item_list'
+			//];
+			//$object->query_options = $queryOptions;
+			$json = json_encode($object);
+			$request = new AlipayTradeRefundRequest();
+			$request->setBizContent($json);
+			
+			$result = $aop->execute ( $request); 
+			
+			$responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
+			$resultCode = $result->$responseNode->code;
 			$success=0;
-			if($response->code==10000){
+			if(!empty($resultCode)&&$resultCode == 10000){
 				$success=1;
+			} else {
+				$success=0;
+				print_r($result->$responseNode);exit;
 			}
+			//业务代码 
 			
 			if($success){
 				M("refund_apply")->update(array(
@@ -139,7 +144,7 @@
 				M("refund")->insert($data);
 				$this->goAll("退款成功");
 			}else{
-				$this->goAll("退款失败",1);
+				$this->goAll("退款失败",1,0,$response);
 			}
 		}
 		public function getWeixin(){

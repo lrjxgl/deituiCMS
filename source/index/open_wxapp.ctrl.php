@@ -105,7 +105,9 @@ class open_wxappControl extends skymvc{
 						"userid"=>$user['userid'],
 						"authcode"=>$authcode,
 						"authcodeLong"=>$auth['authcodeLong'],
-						"user_head"=>$user_head,
+						"token"=>$auth["token"],
+						"refresh_token"=>$auth["refresh_token"],
+						"user_head"=>images_site($user["user_head"]),
 						"nickname"=>$nickname,
 						"gender"=>$gender,
 						"openid"=>$json['openid']
@@ -157,7 +159,7 @@ class open_wxappControl extends skymvc{
 	
 	public function openlogin($ouser){
 		if($this->wx['openlogin']){
-			$openToken=Md5("openlogintoken".rand(1111,9999));
+			$openToken=microtime(true).$ouser['id'];
 			cache()->set($openToken,$ouser['id'],120);
 			$rdata=array(
 				"action"=>"openlogin",
@@ -215,6 +217,8 @@ class open_wxappControl extends skymvc{
 				"userid"=>$userid,
 				"authcode"=>$authcode,
 				"authcodeLong"=>$auth['authcodeLong'],
+				"token"=>$auth["token"],
+				"refresh_token"=>$auth["refresh_token"],
 				"user_head"=>$data['user_head'],
 				"nickname"=>$data['nickname'],
 				"gender"=>$data['gender'],
@@ -225,6 +229,36 @@ class open_wxappControl extends skymvc{
 		}
 	} 
 	
+	public function onGetPhone(){
+		$wx=$this->getWeiXin();
+		$code=get("code","h");
+		$token=ex_wx_mini::get_weixin_access_token();
+		$res=curl_post_json("https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=".$token["access_token"],json_encode([
+			"code"=>$code
+		]));
+		 
+		$json=json_decode($res,true);
+		$this->goAll("success",0,$json);
+	}
+	
+	/**
+		 * https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=ACCESS_TOKEN
+		 */
+		public function onGetWXACode(){
+			$wx=$this->getWeiXin();
+			$access_token=M("open_wxapp")->get_access_token($wx);
+			$wxdata=get("data","h");
+			$data=json_decode(base64_decode($wxdata),true);
+			
+			$c=curl_post_json("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=".$access_token,json_encode($data));
+			$res=json_decode($c,true);
+			if(isset($res["errcode"])){
+				echo $res["errmsg"];
+			}else{
+				header("Content-type:image/png;");
+				echo $c;
+			}
+		}
 	
 }
 ?>

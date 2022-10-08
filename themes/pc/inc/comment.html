@@ -1,0 +1,49 @@
+<div id="commentApp">
+	<div class="fw-600 pd-10">评论列表</div>
+	
+	 
+	<div class="row-box mgb-5">
+		<div class="comment-input-btn" v-if="cmBtn" @click="formShow=true;cmBtn=false" id="comment-btn">写跟帖</div>
+		<form class="comment-formbox-form flex-col" v-if="formShow" id="comment-formbox-form">
+			<textarea  v-model="content" id="comment-content" class="comment-formbox-textarea"></textarea>
+			<div class="comment-formbox-btns">
+				
+				<div class="comment-formbox-bt btn-light" @click="cancel">取消</div>
+				<div class="comment-formbox-bt btn-primary" @click="submit">评论</div> 
+			</div>
+		</form>
+	</div>
+	<div id="comment-list" class="comment-list">
+		<div v-for="(item,index) in list" :key="index" class="comment-item">
+			<image @click="goHome(item.userid)" class="comment-item-head pointer" :src="item.user_head+'.100x100.jpg'"></image>
+			<div class="flex-1">
+				<div  @click="goHome(item.userid)"  class="comment-item-nick pointer">
+					{{item.nickname}}
+				</div>
+				<div class="comment-item-tools">
+					<div class="comment-item-addr">
+						{{item.ip_city}}
+					</div>
+					<div class="comment-item-time">
+						{{item.timeago}}
+					</div>
+				</div>
+				<div @click="reply(item.id,item.nickname)" class="comment-item-content">
+					{{item.content}}
+				</div>
+			</div>
+		</div>
+		<div class="loadMore" @click="getList()" v-if="per_page>0">加载更多</div>
+	</div>
+</div>
+
+ 
+<script>
+  
+    var comment_objectid = '{$comment_objectid}';
+    var comment_tablename = '{$comment_tablename}';
+    var comment_f_userid = "{$comment_f_userid}";
+	var comment_pid=0;
+ 
+
+</script>

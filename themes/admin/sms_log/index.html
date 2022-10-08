@@ -4,6 +4,17 @@
 	<body>
 <div class="shd">短信记录</div>
 <div class="main-body">
+	<form action="/admin.php" class="search-form">
+		<input type="hidden" name="m" value="sms_log"/>
+		<div class="flex flex-ai-center">
+			<div>手机</div>
+			<input class="w150" type="text" name="telephone" value="{$telephone}" />
+			<div>状态</div>
+			<input type="radio" {if $type eq 1}checked{/if} value="1" name="type" />成功
+			<input type="radio" {if $type eq 2}checked{/if} value="2" name="type" />失败
+			<button class="btn" type="submit">搜索</button>
+		</div>
+	</form>
  <table class="tbs">
 	 <colgroup>
 		 <col width="100" />
@@ -24,7 +35,7 @@
 <tr>
     
    <td>{$c.telephone}</td>
-    
+     
    <td>{$c.dateline|date:Y-m-d H:i:s}</td>
    <td>{$c.content}</td>
    <td>{if $c.status eq 1}成功{else}失败{/if}</td>

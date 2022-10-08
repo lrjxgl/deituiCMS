@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		{include file="header.html"}
+		<div class="main-body">
+		<div class="input-row"><label>充值金额</label> <input type="text" id="money" ></div>
+			<div>
+				<button class="btn" type="button" id="getEwm">确认金额</button>
+			</div>
+			<div style="color: #f90; font-size: 14px; line-height: 40px;">扫码充值方法：先确认金额获取二维码,再长按二维码图片即可</div>
+			<div id="ewm" style="text-align: center;">二维码加载中....</div>
+			
+		</div>
+	</div>
+		<script>
+			$(function(){
+				$(document).on("click","#getEwm",function(){
+					var money=$("#money").val();
+					$.get("/index.php?m=recharge_wxpay3&a=ewm",{
+						money:money,
+					},function(data){
+						$("#ewm").html('<img src="/api/wxpay3/example/qrcode.php?data='+data.url2+'"/>');
+					},"json");
+				})
+				
+			})
+		</script>
+	</body>
+</html>

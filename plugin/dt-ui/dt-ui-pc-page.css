@@ -1,0 +1,167 @@
+.main-body {
+	width: 1120px;
+	margin: 0 auto;
+}
+
+.page-side {
+	width: 300px;
+	margin-left: 10px;
+}
+
+/***tbs****/
+.tbs {
+	width: 100%;
+	border: 0;
+	border-collapse: collapse;
+	border-radius: 10px;
+	border: 1px solid #ddd;
+}
+
+.tbs thead tr {
+	background-color: #f2f2f2;
+	color: #323232;
+}
+
+.tbs td {
+	border: 1px solid #ddd;
+
+	padding: 10px 10px;
+}
+
+.tbs thead td {
+	padding: 0px 10px;
+	line-height: 40px;
+	border: 1px solid #ddd;
+	box-sizing: border-box;
+}
+
+/**table-add****/
+.table-add {
+	width: 100%;
+}
+
+.table-add tr td {
+	padding: 6px;
+}
+
+.table-add tr td:first-child {
+	width: 100px;
+}
+/***form**/
+select,
+[type="text"],
+[type="password"],
+textarea {
+	color: #646464;
+	outline: none;
+}
+
+select {
+	width: 100%;
+	height: 36px;
+	line-height: 36px;
+	box-sizing: border-box;
+	padding: 0px 6px;
+	border: 1px solid #ddd;
+}
+
+select option {
+	padding: 10px 5px;
+}
+
+[type="text"],
+[type="password"] {
+	height: 36px;
+	line-height: 36px;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0px 6px;
+	border-radius: 10px;
+	border: 1px solid #ddd;
+}
+
+.input-small {
+	height: 24px;
+	line-height: 24px;
+}
+
+textarea {
+	width: 100%;
+	box-sizing: border-box;
+	height: 60px;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	padding: 5px 6px;
+}
+
+.upimg-btn {
+	width: 60px;
+	height: 60px;
+	line-height: 60px;
+	font-size: 32px;
+	text-align: center;
+	border: 1px solid #eee;
+	margin-right: 10px;
+	color: #646464;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	float: left;
+}
+
+.upimg-btn-icon {
+	font-style: normal;
+}
+
+.upimg-btn-icon:before {
+	font-family: iconfont;
+	color: #969696;
+	font-size: 24px;
+	font-weight: 100;
+	content: "\e6da";
+}
+
+.btn-upload {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	border: 1px solid #eee;
+	color: #ddd;
+	font-size: 36px;
+	font-weight: 100;
+	cursor: pointer;
+}
+
+.btn-upload-file {
+	display: none;
+}
+
+.btn-upload-text {
+	display: inline-block;
+}
+.pages {
+	border-left: 1px solid #d8d8d8;
+	text-align: center;
+	font-size: 0;
+	line-height: 0;
+	display: inline-block;
+	*display: inline;
+	vertical-align: middle;
+	font-size: 16px;
+	margin: 10px;
+}
+
+.pages a,
+.pages strong {
+	padding: 0 15px;
+	border: 1px solid #d8d8d8;
+	border-left: 0;
+	display: inline-block;
+	height: 40px;
+	line-height: 40px;
+	color: #666;
+	float: left;
+	background-color: #f0f0f0
+}

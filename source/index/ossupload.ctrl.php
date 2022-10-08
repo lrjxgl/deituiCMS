@@ -35,7 +35,7 @@ class ossuploadControl extends skymvc{
 		$url="https://".$config['bucket'].".".$config['endpoint'];
 		$bucket=$config['bucket'];
 		 
-		$callbackUrl = HTTP_HOST."index.php/ossupload/callback";
+		$callbackUrl = HTTP_HOST."/index.php/ossupload/callback";
 		/**end config**/
 		$dir=isset($_GET['dir'])?str_replace("/","",$_GET['dir'])."/":"video/";
 		$options = array();

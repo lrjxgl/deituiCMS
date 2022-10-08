@@ -10,6 +10,14 @@ class user_authModel extends model{
 		 
 		$this->table="user_auth";
 	}
+	public function isAuth($userid){
+		$row=$this->selectRow("userid=".$userid." AND status=1 ");
+		if($row){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
 
 ?>

@@ -110,6 +110,7 @@ class commentControl extends skymvc{
 		$userid=M("login")->userid;
 		M("blacklist")->check($userid);
 		M("blacklist_post")->check($userid);
+		M("user")->canPost($userid,"comment");
 		$id=get_post("id","i");
 		$tablename=get_post("tablename","h");
 		if(empty($tablename)){

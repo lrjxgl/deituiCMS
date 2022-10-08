@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		{include file="header.html"}
+		<div class="main-body">
+			<div class="flex">
+				{include file="user_left.html"}
+				<div class="flex-1">
+			<form autocomplete="off" method="post" action="/index.php?m=user&a=paypwdsave&ajax=1">
+				<div class="input-flex">
+					<div class="input-flex-label">支付密码</div>
+					<input type="password" class="input-flex-text" name="paypwd"   >
+				</div>
+				<div class="input-flex">
+					<div class="input-flex-label">登录密码</div>
+					<input type="password" class="input-flex-text" name="password"   >
+				</div>
+				 
+				<div class="btn-row-submit js-submit">提交</div>
+			</form>
+		</div>
+		</div>
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

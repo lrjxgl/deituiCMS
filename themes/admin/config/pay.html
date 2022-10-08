@@ -22,14 +22,14 @@
       开启
       <input name="alipay" type="radio"  value="0"  {if $data.alipay eq 0} checked="checked"{/if} />
       关闭  
-       </td>
+      (打开请在api/alipay/alipay.config.php配置相关参数) </td>
   </tr>
   <tr>
     <td width="158" height="30" align="right">微信支付：</td>
     <td width="938" height="30"><input type="radio" name="wxpay"  value="1" {if $data.wxpay eq 1} checked="checked"{/if} />
       开启
       <input name="wxpay" type="radio"  value="0"   {if $data.wxpay eq 0} checked="checked"{/if} />
-      关闭 </td>
+      关闭 (打开请在api/wxpay/WxPayPubHelperWxPay.pub.config.php配置相关参数) </td>
   </tr>
    
 </table>

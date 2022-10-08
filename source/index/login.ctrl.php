@@ -13,21 +13,13 @@ class loginControl extends skymvc{
 			header("Location:/");
 			exit;
 		}
-	 
-	 
-		 
-		if(get('backurl')){
-			$backurl=get('backurl','h');
-		}else{
-			$backurl=$_SERVER['HTTP_REFERER'];
+		if(get("setback")){
+			$_SESSION["backurl"]=$_SERVER["HTTP_REFERER"];
 		}
-		if($backurl){
-			$_SESSION["backurl"]=$backurl;
-		}
+	  
 		
-		 
 		$this->smarty->goAssign(array(
-			"backurl"=>$backurl,
+			 
 			"openid"=>$openid,
 			"appname"=>$appname
 		));
@@ -40,7 +32,9 @@ class loginControl extends skymvc{
 	 
 	
 	 
-	
+	public function onSave(){
+		$this->onLoginSave();
+	}
 	public function onLoginSave(){
 		$username=post('username','h');
 		 
@@ -65,51 +59,52 @@ class loginControl extends skymvc{
 		if(empty($user)){
 			$this->goall('账号不存在',1,"",$_SERVER['HTTP_REFERER']);
 		}
-		$loginKey="loguser".$user["userid"];
-		$num=cache()->get($loginKey);
-		if($num>=5){
-			$this->goall("密码输错5次，请10分钟后再来",1);
-		} 
 		//检测黑名单
 		M("blacklist")->check($user['userid']);
 		$puser=M("user_password")->selectRow("userid=".$user['userid']);
 		if($puser['password']!=umd5($password.$puser['salt'])){
-			$num=intval($num)+1;
-			cache()->set($loginKey,$num,600);
-			$this->goall("密码出错,还能再输".(5-$num)."次",1,"",$_SERVER['HTTP_REFERER']);
+			$this->goall("密码出错了",1,"",$_SERVER['HTTP_REFERER']);
 		}
 		$_SESSION['ssuser']=$user;
-		$backurl=get_post('backurl','x');
-		if(!$backurl){
-			$backurl=$_SERVER['HTTP_REFERER'];
-		}
-		if(preg_match("/login/i",$backurl)){
-			$backurl="/index.php";
-		}
-		cache()->del($loginKey);
+		$backurl=M("login")->getBackurl();
+		 
 		$auth=M("login")->setCode($puser);
-		$authcode=$auth['authcode'];
-		cache()->set("authcode",$authcode,3600*24*30);
-		setcookie("authcode",$authcode,time()+3600000,"/",DOMAIN);
-		//处理推送相关
+		setcookie("loginToken",$auth["refresh_token"],time()+3600000,"/",DOMAIN);
+		
 		M("apppush")->add("userid",$user);
 		$data=array(
-			"authcode"=>$authcode,
-			"authcodeLong"=>$auth['authcodeLong'],
 			"backurl"=>$backurl,
-			 
+			"token"=>$auth["token"],
+			"refresh_token"=>$auth["refresh_token"]
 		);
 		$this->goall("登陆成功",0,$data,$backurl);
 	}
 	
- 
+	/*
+	*刷新token
+	*/
+	public function onRefreshToken(){
+		$refreshToken=get_post("refreshToken","h");
+		$userid=cache()->get($refreshToken);
+		if($userid){
+			$user=M('user')->selectRow(array(
+				"where"=>"userid='".$userid."' ",
+				"fields"=>"userid,nickname,telephone,user_head,gold,money"
+			));
+			$puser=M("user_password")->selectRow("userid=".$userid);
+			$data=M("login")->setCode($puser);
+			$this->goall("刷新权限成功",0,$data);
+		}else{
+			$this->goAll("刷新权限失败",1);
+		}
+	}
 	
  
 	
 	public function onLogout(){
 		unset($_SESSION['ssuser']);
 		setcookie("authcode","",time()-3999,"/",DOMAIN);
-			
+		setcookie("loginToken","",time()-360,"/",DOMAIN);	
 		$this->goall("注销成功",0,0,"/index.php");
 	}
 	
@@ -134,11 +129,14 @@ class loginControl extends skymvc{
 			"tpl"=>"findpwd"
 			
 		);
-		$res=M("sms")->sendSms($telephone,$content);
-		if(SMS_TEST==true){
-			$this->goAll("短信已发送，请在5分钟内找回密码".$yzm);
-		}
 		$key="login_findpwd_sms".$telephone.$yzm;
+		if(SMS_TEST==true){
+			cache()->set($key,1,300);
+			$this->goAll("短信已发送".$yzm);
+		}
+		$res=M("sms")->sendSms($telephone,$content);
+		
+		
 		
 		if($res){
 			cache()->set($key,1,300);

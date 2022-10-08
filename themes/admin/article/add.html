@@ -55,6 +55,31 @@
 		  </td>
 		</tr>
 		<tr>
+			<td>视频：</td>
+			<td>
+				<div class="videoBox">
+					<div style="display: none;">
+						<input type="file" id="up-video" name="upfile" />
+					</div>
+					<div class="upimg-btn" id="js-upbtn">
+						<div class="upimg-btn-icon">
+											
+						</div>
+					</div>
+											
+					<span id="progress"></span>
+					<div style="padding: 10px; color: #f60;">视频小于100M，只支持mp4格式</div>
+					<div id="mp4box">
+						{if $data.videourl}
+						<video autoplay="autoplay" style="width: 300px;" controls="" src="{$data.true_videourl}" class="video"></video>
+						{/if}
+					</div>
+					<input type="hidden" name="videourl" id="mp4url" value="{$data.videourl}" />
+					 
+				</div>
+			</td>
+		</tr>
+		<tr>
 			<td>作者</td>
 			<td>
 				<input type="text" name="author" value="{$data.author}" />
@@ -101,7 +126,7 @@
 		<tr>
 			<td>内容</td>
 			<td>
-				<script type="text/plain" id="content" name="content" >{$data.content}</script>
+				<script class="d-content" type="text/plain" id="content" name="content" >{$data.content}</script>
 			</td>
 		</tr>
 		</table>
@@ -160,6 +185,69 @@ $(document).on("click","#js-view",function(){
 	html='<div class="d-content">'+html+'</td>'
 	showbox("文章预览",html,375,500);
 })
+$(document).on("click", "#js-upbtn", function() {
+			$("#up-video").click();
+		})
+		
+		function onprogress(evt) {
+			var loaded = evt.loaded; //已经上传大小情况 
+			var tot = evt.total; //附件总大小 
+			var per = Math.floor(100 * loaded / tot); //已经上传的百分比 
+			$("#progress").html(per + "%");
+			$("#progress").css("width", per + "%");
+			if (per >= 100) {
+				$("#progress").hide();
+			}
+		}
+		
+		$(document).on("change", "#up-video", function() {
+			var fdata = new FormData();
+		
+			$.get("/index.php?m=ossupload&a=auth&ajax=1", function(data) {
+				var file = document.querySelector("#up-video").files[0];
+		
+				if (file == undefined) {
+					console.log("Empty");
+					return false;
+				}
+			
+				fdata.append("OSSAccessKeyId", data.accessid);
+				fdata.append("policy", data.policy);
+				fdata.append("Signature", data.sign);
+				fdata.append("key", data.key + file.name);
+				fdata.append("callback", data.callback);
+		
+				fdata.append("file", file);
+				
+				$.ajax({
+					url: data.url,
+					type: 'POST',
+					data: fdata,
+					contentType: false,
+					processData: false,
+					dataType: "json",
+					xhr: function() {
+						var xhr = $.ajaxSettings.xhr();
+						if (onprogress && xhr.upload) {
+							xhr.upload.addEventListener("progress", onprogress, false);
+							return xhr;
+						}
+					},
+					success: function(data) {
+						console.log(data);
+						$("#mp4url").val(data.filename);
+						var html = '<video controls="" src="' + data.truename + '" class="video"></video>';
+						$("#mp4box").html(html);
+		
+					},
+					error: function(returndata) {
+						console.log(returndata);
+		
+					}
+				});
+			}, "json")
+		
+		})
 </script>
 </body>
 </html>

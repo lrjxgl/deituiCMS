@@ -9,7 +9,7 @@ function skyToast(msg){
 	}
 	setTimeout(function(){
 		$("#toast").hide();
-	},1000)
+	},2000)
 }
 /*弹框*/
 function showbox(title,content,width,height){
@@ -200,13 +200,18 @@ $(function(){
 		$.post(
 			$(this).parents("form").attr("action")+"&ajax=1",
 			$(this).parents("form").serialize(),
-			function(data){
-				skyToast(data.message);
-				if(data.error){
+			function(res){
+				skyToast(res.message);
+				if(res.error){
 					return false;
 				}
+				 
 				if(obj.attr("ungo")=="1"){
 					return true;
+				}else if(res.url!=""){
+					setTimeout(function(){
+						window.location=res.url;
+					},1000)
 				}else{
 					setTimeout(function(){
 						window.history.back();

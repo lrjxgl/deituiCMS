@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+{include file='article_tags/nav.html'}
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>id</td>
+   <td>名称</td>
+   <td>标签</td>
+   <td>记录数</td>
+   
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$list}
+<tr>
+   <td>{$c.tagid}</td>
+   <td>{$c.title}</td>
+   <td>{$c.gkey}</td>
+   <td>{$c.gnum}</td>
+  
+<td>
+	<a href="/index.php?m=article_tags_index&tagid={$c.tagid}" target="_blank">查看</a> 
+	<a href="/admin.php?m=article_tags&a=add&tagid={$c.tagid}">编辑</a>
+ <a href="/admin.php?m=article_tags_index&tagid={$c.tagid}">文章管理</a> 
+ <a href="javascript:;" class="js-delete" url="/admin.php?m=article_tags&a=delete&tagid={$c.tagid}">删除</a>
+  <a href="javascript:;" class="js-clear" url="/admin.php?m=article_tags&a=clear&tagid={$c.tagid}">清空</a>
+  </td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+<script>
+	$(document).on("click",".js-clear",function(){
+		var that=$(this);
+		if(confirm("确认清空商品吗？")){
+			$.get(that.attr("url"),function(res){
+				skyToast(res.message);
+			},"json")
+		}	
+	})
+</script>
+</body>
+</html>

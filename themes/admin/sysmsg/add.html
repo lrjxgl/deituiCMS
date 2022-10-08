@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="main-body">
+			<div class="tabs-border">
+				<a class="item" href="{$appadmin}?m=sysmsg">系统消息管理</a>
+				<a class="item active" href="{$appadmin}?m=sysmsg&a=add">系统消息添加</a>
+			</div>
+			<form method="post" action="{$appadmin}?m=sysmsg&a=save">
+				<input type="hidden" name="id" value="{$data.id}">
+				<table class="table-add">
+					<tr>
+						<td width="13%">标题：</td>
+						<td width="87%"><input type="text" name="title" value="{$data.title}"></td>
+					</tr>
+					<tr>
+						<td>类型：</td>
+						<td><select name="type_id">
+								{foreach item=c key=k from=$type_list}
+								<option value="{$k}" {if $data.type_id eq $k} selected{/if}>{$c}</option>
+								{/foreach}
+							</select></td>
+					</tr>
+					<tr>
+						<td>状态：</td>
+						<td>
+							<input {if $data.status eq 1}checked{/if} type="radio" name="status" value="1" /> 上架
+							<input {if $data.status neq 1}checked{/if}  type="radio" name="status" value="2" /> 下架
+						</td>
+					</tr>
+					<tr>
+						<td>开始时间：</td>
+						<td><input name="start_time" type="text" id="start_time"
+								value="{if $data.start_time}{$data.start_time|date:Y-m-d H:m:s}{/if}"
+								 ></td>
+					</tr>
+					<tr>
+						<td>结束时间：</td>
+						<td><input name="end_time" type="text" id="end_time"
+								value="{if $data.end_time}{$data.end_time|date:Y-m-d H:m:s}{/if}"
+								 ></td>
+					</tr>
+					{if $data}
+					<tr>
+						<td>添加时间：</td>
+						<td>{$data.dateline|date:Y-m-d}</td>
+					</tr>
+					{/if}
+					<tr>
+						<td>内容：</td>
+						<td>
+							<script class="d-content" type="text/plain" id="content" name="content">{$data.content}
+							</script>
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><input type="submit" name="button" id="button" class="btn btn-success" value="提交"></td>
+					</tr>
+
+				</table>
+
+
+			</form>
+
+		</div>
+
+		{include file="footer.html"}
+		{php loadEditor();}
+		<script src="/plugin/laydate/laydate.js"></script>
+		<script>
+			var editor = UE.getEditor('content', options);
+			laydate.render({
+			  elem: '#start_time',
+			  type: 'datetime'
+			});
+			laydate.render({
+			  elem: '#end_time',
+			  type: 'datetime'
+			});
+		</script>
+	</body>
+</html>

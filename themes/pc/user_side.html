@@ -1,0 +1,57 @@
+<style>
+	.u-side{
+		margin-right: 30px;
+		background-color: #393D49;
+		width:200px;
+	}
+	.u-side-item{
+		color: #fff;
+		padding:16px 20px;
+		cursor: pointer;
+		font-size: 16px;
+		display: block;
+	}
+	.u-side-active{
+		background-color: #009688;
+		
+	}
+	.u-side-item .iconfont{
+		color: #fff;
+		font-weight: 600;
+		margin-right: 5px;
+		font-size: 16px;
+	}
+	.uc-side{
+		padding-left: 20px;
+	}
+</style>
+<div class="u-side">
+	<a href="/index.php?m=user" class="u-side-item"><i class="iconfont icon-home"></i>个人中心</a>
+	<a href="/index.php?m=notice&a=my" class="u-side-item  {if get('m')=='noctice'}u-side-active{/if} ">
+		<i class="iconfont icon-notice"></i>我的消息
+	</a>
+	
+	<a href="/index.php?m=invite&a=my" class="u-side-item {if $uSide=='invite'}u-side-active{/if}">
+		<i class="iconfont icon-friendfill"></i>邀请好友
+	</a>
+	{if $uSide=='invite'}
+	<div class="uc-side">
+		<a href="/index.php?m=invite&a=my" class="u-side-item">
+			 邀请好友
+		</a>
+		<a href="/index.php?m=invite_account_log" class="u-side-item">
+			 赏金日志
+		</a>
+	</div>
+	{/if}
+	<a href="/index.php?m=comment&a=my" class="u-side-item  {if get('m')=='noctice'}u-side-active{/if} ">
+		<i class="iconfont icon-comment"></i>我的评论
+	</a> 
+ 
+	<a href="/index.php?m=pay_log&a=my" class="u-side-item  {if get('m')=='noctice'}u-side-active{/if} ">
+		<i class="iconfont icon-moneybag"></i>消费日志
+	</a>
+	<a href="/index.php?m=user&a=set" class="u-side-item  ">
+		<i class="iconfont icon-settings"></i>账号设置
+	</a> 
+</div>

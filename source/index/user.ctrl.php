@@ -44,8 +44,7 @@ class userControl extends skymvc{
 	
  	public function onSet(){
  		$user=M("user")->selectRow(array("where"=>" userid=".M("login")->userid));
-		unset($user['password']);
-		unset($user['salt']);
+	 
 		$user['user_head']=images_site($user['user_head']);
 		$this->smarty->goAssign(array(
 			"data"=>$user
@@ -125,6 +124,9 @@ class userControl extends skymvc{
 	public function onUser_head_Save(){
 		$userid=$this->userid;
 		$user_head=get_post('user_head','h');
+		if(!checkFileDir($user_head)){
+			$this->goAll("头像上传失败",1);
+		}
 		M("user")->update(array("user_head"=>$user_head),"userid=".$userid);
 		$this->goAll("上传成功");
 	}

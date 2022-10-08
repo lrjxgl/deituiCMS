@@ -211,5 +211,23 @@ $(function(){
 			 
 		},"json");
 	})
-	
+	//iframe弹框
+	$(document).on("click",".js-iframe-btn",function(){
+		var url=$(this).attr("url");
+		var w=$(window).width()-200;
+		var h=$(window).height()-100;
+		var mh=h-100;
+		var html=`
+			<style>
+				.modal-body{max-height:`+mh+`px;height:`+mh+`px;}
+			</style>
+			<iframe style="border:0;width:99%;height:98%;" src="`+url+`"></iframe>
+		`;
+		skyJs.showBox({
+			title:"新窗口",
+			content:html,
+			width:w,
+			height:h
+		})
+	})
 })

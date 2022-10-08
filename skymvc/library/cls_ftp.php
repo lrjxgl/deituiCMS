@@ -1,4 +1,3 @@
-
 <?php
 	
 class ftp 
@@ -17,7 +16,9 @@ class ftp
   { 
     $this->conn_id = @ftp_connect($FTP_HOST,$FTP_PORT) or die("FTP服务器连接失败"); 
     @ftp_login($this->conn_id,$FTP_USER,$FTP_PASS) or die("FTP服务器登陆失败"); 
-    @ftp_pasv($this->conn_id,1); // 打开被动模拟 
+	@ftp_set_option($this->conn_id, FTP_USEPASVADDRESS, false);@
+	@ftp_pasv($this->conn_id,1); // 打开被动模拟 
+	
   } 
   
   function chmod($mod,$file){

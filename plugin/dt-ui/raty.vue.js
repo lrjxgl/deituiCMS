@@ -47,6 +47,12 @@ Vue.component('sky-raty', {
 		this.num = this.grade;
 		this.gradeItems = gradeItems;
 	},
+	watch:{
+		num:function(n,o){
+			 
+			this.$emit("call-parent",n);
+		}
+	},
 	methods: {
 		setRaty: function(index) {
 			if (this.readonly) {

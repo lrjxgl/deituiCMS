@@ -1,0 +1,33 @@
+
+ <div class="page-side mgl-10">
+	{get model=category data=catList fun=children(0,"article",1)}
+	 <div class="row-box mgb-5"> 
+	        <div class="row-box-hd" style=""><span>栏目推荐</span></div>
+			{foreach item=c key=k from=$catList}
+				<a href="{R("/index.php?m=article&a=list&catid=$c.catid")}"  class="row-item">
+					<div  class="row-item-title">{$c.cname}</div>
+				</a>
+				{if $c.child}
+					{foreach item=cc from=$c.child}
+					<a href="{R("/index.php?m=article&a=list&catid=$cc.catid")}"  class="row-item">
+						<div  class="row-item-title">|--{$cc.cname}</div>
+					</a>
+					{/foreach}
+				{/if} 
+			{/foreach}   
+			    
+	</div> 
+	{get data=t_c model=article fun=recList("$cat.catid",10)}
+	<div class="row-box"> 
+	           <div class="row-box-hd"><span>推荐文章</span></div>
+	           {foreach item=c from=$t_c}
+	   
+	    <a href="/index.php?m=article&a=show&id={$c.id}" class="row-item">
+			<div class="row-item-title">{$c.title|cutstr:36:..}</div>
+		</a>
+	   
+	  {/foreach}
+	 </div>          
+	  
+ </div>
+ 

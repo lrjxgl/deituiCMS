@@ -65,6 +65,7 @@ class ComposerStaticInitf3e60c585e75095e834a6101cd603f0c
         'aa53dcba601214d17ad405b7c291b7e8' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/operations/multiply.php',
         '75c79eb1b25749b05a47976f32b0d8a2' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/operations/divideby.php',
         '6ab8ad87a734f276a6bcd5a0fe1289be' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/operations/divideinto.php',
+        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -81,6 +82,10 @@ class ComposerStaticInitf3e60c585e75095e834a6101cd603f0c
         'M' => 
         array (
             'Matrix\\' => 7,
+        ),
+        'F' => 
+        array (
+            'FastRoute\\' => 10,
         ),
         'C' => 
         array (
@@ -109,10 +114,18 @@ class ComposerStaticInitf3e60c585e75095e834a6101cd603f0c
         array (
             0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
         ),
+        'FastRoute\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nikic/fast-route/src',
+        ),
         'Complex\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
         ),
+    );
+
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -120,6 +133,7 @@ class ComposerStaticInitf3e60c585e75095e834a6101cd603f0c
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitf3e60c585e75095e834a6101cd603f0c::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitf3e60c585e75095e834a6101cd603f0c::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitf3e60c585e75095e834a6101cd603f0c::$classMap;
 
         }, null, ClassLoader::class);
     }

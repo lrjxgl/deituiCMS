@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		{include file="header.html"}
+		<div class="main-body">
+			
+			<div class="flex">
+				<div class="flex-1">
+					<div class="flex mgb-10 flex-ai-center">
+						<div>当前位置：</div>
+						<a href="/">首页</a>
+						
+						<div>&gt;</div>
+						<a href="/index.php?m=article&a=list&catid={$cat.catid}">{$cat.cname}</a>
+						<div>&gt;</div>
+						<div> 文章列表</div>
+					</div>
+					{if empty($list)}
+					<div class="emptyData">暂无文章</div> 
+					{/if} 
+					{foreach item=c from=$list}
+					<a href="/index.php?m=article&a=show&id={$c.id}" class="sglist-item flex">
+						{if $c.imgurl}
+					 
+							<img class="w150 mgr-10" src="{$c.imgurl|images_site}.middle.jpg" />
+					 
+						{/if}
+						<div class="flex-1">
+							<div class="sglist-title">{$c.title}</div>
+							<div class="sglist-desc">{$c.description}</div>
+							<div class="sglist-ft">
+								<div class="sglist-ft-love">{$c.love_num}</div>
+								<div class="sglist-ft-cm">{$c.comment_num}</div>
+								<div class="sglist-ft-view">{$c.view_num}</div>
+							</div> 
+						</div>
+						
+					</a>
+					{/foreach}
+					{$pagelist}
+				</div>
+				{include file="article/sidebar.html"}
+			</div>	
+			
+		</div>
+		{include file="footer.html"}
+		
+	</body>
+</html>

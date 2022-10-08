@@ -23,7 +23,7 @@ class model{
 	
 	public function setTable($table,$object_id=0,$table_num=10){
 		$this->setDb($table);
-		if($object_id){
+		if($object_id && $table_num){
 			$this->tmpTable=$table."_".($object_id%$table_num);
 		}else{
 			$this->tmpTable=$table;
@@ -38,9 +38,8 @@ class model{
 		return $this;
 	}
 	public function initParam(){
-		$this->table="";
-		$this->where="";
-		$this->fields="";
+		//$this->where="";
+		$this->fields="*";
 		$this->group="";
 		$this->order="";
 		$this->start=0;

@@ -51,14 +51,14 @@ class cache
 	
 	public function defaultType(){
 		 
-		if($this->cacheconfig['redis']){
+		if(isset($this->cacheconfig['redis'])){
 			$this->cache_type="redis";
 			
 			
-		}elseif($this->cacheconfig['memcache']){
+		}elseif(isset($this->cacheconfig['memcache'])){
 			$this->cache_type="memcache";
 			
-		}elseif($this->cacheconfig['mysql']){
+		}elseif(isset($this->cacheconfig['mysql'])){
 			$this->cache_type='mysql';
 		}else{
 			$this->cache_type="file";

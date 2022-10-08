@@ -49,17 +49,7 @@ class open_weixinControl extends skymvc{
 	
 public function onGeturl()
 {
-	if(get('backurl')){
-		$backurl=get('backurl','x');
-	}elseif(!empty($_SESSION["backurl"])){
-		$backurl=$_SESSION["backurl"];
-	}else{
-		$backurl=$_SERVER['HTTP_REFERER'];
-	}
-	if(empty($backurl)){
-		$backurl="/";
-	} 
-	$_SESSION["backurl"]=$backurl; 
+	
 	$url=" https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$this->wx['appid']."&redirect_uri=".urlencode($this->REDIRECT_URI)."&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 	header("Location: $url");
 	exit();
@@ -67,11 +57,14 @@ public function onGeturl()
 
 public function oncallback()
 {
-	$backurl=$_SESSION["backurl"];
-	 
+	$backurl="/index.php";
+	if(isset($_SESSION["backurl"])){
+		$backurl=$_SESSION["backurl"];
+	}
 	if(preg_match("/login/i",$backurl)){
 		$backurl="/index.php";
 	}
+	 
 	 
 	$c=file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=".$this->wx['appid']."&secret=".$this->wx['appkey']."&code=".$_GET['code']."&grant_type=authorization_code");
 	$data=json_decode($c,true);
@@ -123,8 +116,7 @@ public function oncallback()
 					M('login')->set("ssuser",$user);
 					$puser=M("user_password")->selectRow("userid=".$ouser['userid']);
 					$auth=M("login")->setCode($puser);
-					$authcode=$auth['authcode'];
-					setcookie("authcode",$authcode,time()+3600000,"/",DOMAIN);													
+					setcookie("loginToken",$auth["refresh_token"],time()+3600000,"/",DOMAIN);												
 					header("Location:".$backurl);
 					exit;
 				}else{
@@ -227,8 +219,7 @@ public function openlogin($ouser){
 		M("user_password")->insert($puser);
 		
 		$auth=M("login")->setCode($puser);
-		$authcode=$auth['authcode'];
-		setcookie("authcode",$authcode,time()+3600000,"/",DOMAIN);
+		setcookie("loginToken",$auth["refresh_token"],time()+3600000,"/",DOMAIN);
 		//绑定消息通知
 		M("apppush")->insert(array(
 			"userid"=>$userid,

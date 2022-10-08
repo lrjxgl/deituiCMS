@@ -1,0 +1,162 @@
+ <div class="header">
+	<div class="header-box">
+		 
+		<img src="/static/logo.png" class="header-logo"  alt="deituiCMS">
+		 
+		<div class="header-navbar">
+			<a href="/" class="header-navbar-item {if $headerNav eq 'index'}header-navbar-active{/if}">首页</a>
+			{get data=hnavList model=navbar fun=navlist(3)} 
+			{foreach item=c from=$hnavList} 
+			<div class="header-navbar-item {if $headerNav eq 'down'}header-navbar-active{/if}">
+				<a class="cl-white" href="{$c.link_url}">{$c.title}</a>
+				{if $c.child}
+				<div class="header-navbar-childBox">
+					{foreach item=cc from=$c.child}
+					<a href="{$cc.link_url}" class="header-navbar-childBox-item">{$cc.title}</a>
+					{/foreach}
+					 
+				</div>
+				{/if}
+			</div>
+			{/foreach}
+			<a href="/index.php?m=search" class="header-navbar-item">
+				<span class="iconfont icon-search mgr-5"></span>搜一下
+			</a>
+			 
+		</div>
+		<?php
+		if(!isset($this->_var["ssuser"])){
+			$this->_var["ssuser"]=M("login")->getUser();
+		}
+		?>
+		{if $ssuser}
+		<div gourl="/index.php?m=user" class="header-user">
+			<div class="header-user-nick">{$ssuser.nickname}</div>
+			<img class="header-user-head" src="{$ssuser.user_head|images_site}.100x100.jpg">
+		</div>
+		{else}
+		<div class="header-login">
+			<div gourl="/index.php?m=login">登录</div>
+			<div gourl="/index.php?m=register">注册</div>
+		</div>
+		{/if}
+	</div>
+	<div class="header-navbar-action"></div>
+</div>
+<div class="header-row"></div>
+
+<style>
+	a{
+		color: #323232;
+	}
+	div{
+		margin: 0;
+		padding: 0;
+	}
+	body{
+		margin: 0;
+		padding: 0;
+	}
+	.header{
+		height: 60px;
+		background-color: #009688;
+		box-sizing: border-box;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 99;
+	}
+	.header-row{
+		height: 80px;
+	}
+	.header-mgt{
+		margin-top: -20px;
+	}
+	.header-box{
+		width: 1120px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: row;
+	}
+	.header-logo{
+		height: 55px;
+		position: relative;
+		top:3px;
+		margin-right: 10px;
+	}
+	.header-navbar{
+		display: flex;
+		flex-direction: row;
+		flex: 1;
+	}
+	.header-navbar-item{
+		height: 60px;
+		line-height: 60px;
+		padding: 0px 20px;
+		color: #ddd;
+		font-size: 16px;
+	}
+	.header-navbar-item:hover,.header-navbar-active{
+		color: #fff;
+	}
+	.header-navbar-action{
+		position: fixed;
+		top:56px;
+		width: 40px;
+		height: 2px;
+		background-color: #00BCD4;
+	}
+	.header-user{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	.header-user-nick{
+		margin-right: 10px;
+		color: #fff;
+	}
+	.header-user-head{
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+	}
+	.header-login{
+		width: 100px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	.header-login div{
+		color: #fff;
+		text-align: center;
+		flex:1;
+		
+	}
+</style>
+<script>
+	$(function(){
+			if($(".header-navbar-active").length>0){
+				var left=$(".header-navbar-active").offset().left+$(".header-navbar-active").width()/2;
+			}else{
+				var left=$(".header-navbar-item:eq(0)").offset().left+$(".header-navbar-item:eq(0)").width()/2;
+			}
+			
+			$(".header-navbar-action").css({left:left});
+			$(document).on("mouseenter",".header-navbar-item",function(){
+				var w=$(this).width();
+				$(this).addClass("header-navbar-active").siblings().removeClass("header-navbar-active");
+				var left=$(".header-navbar-active").offset().left+w/2;
+				$(".header-navbar-action").animate({left:left},"fast");
+				$(this).find(".header-navbar-childBox").addClass("active")
+			})
+			$(document).on("mouseleave",".header-navbar-item",function(){
+				$(this).find(".header-navbar-childBox").removeClass("active")
+			})
+			$(document).on("click","[gourl]",function(){
+				window.location=$(this).attr("gourl");
+			})
+		})
+	
+	
+</script>

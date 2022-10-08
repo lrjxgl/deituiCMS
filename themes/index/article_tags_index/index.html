@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">{$tags.title}</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body">
+			 
+			<div class="pd-10 bg-fff">
+				{foreach item=c from=$list}
+				<a href="/index.php?m=article&a=show&id={$c.id}" class="sglist-item">
+					{if $c.imgurl}
+					<div class="sglist-imgbox">
+						<img class="sglist-img" src="{$c.imgurl}.middle.jpg" />
+					</div>
+					{/if}
+					<div class="sglist-title">{$c.title}</div>
+					<div class="sglist-desc">{$c.description}</div>
+					<div class="sglist-ft">
+						<div class="sglist-ft-love">{$c.love_num}</div>
+						<div class="sglist-ft-cm">{$c.comment_num}</div>
+						<div class="sglist-ft-view">{$c.view_num}</div>
+					</div> 
+				</a>
+				{/foreach}
+			</div>
+		</div>
+		{include file="footer.html"}
+		
+	</body>
+</html>

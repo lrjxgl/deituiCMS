@@ -85,9 +85,9 @@ class weixin_sucaiControl extends skymvc{
 			$id=M("weixin_sucai")->insert($data);
 		}
 		if($pid){
-			echo "<script>window.parent.location='admin.php?m=weixin_sucai&a=add&wid=".$this->wx['id']."&id=".$pid."';</script>";
+			echo "<script>window.parent.location='/admin.php?m=weixin_sucai&a=add&wid=".$this->wx['id']."&id=".$pid."';</script>";
 		}else{
-			echo "<script>window.parent.location='admin.php?m=weixin_sucai&a=add&wid=".$this->wx['id']."&id=".$id."';</script>";
+			echo "<script>window.parent.location='/admin.php?m=weixin_sucai&a=add&wid=".$this->wx['id']."&id=".$id."';</script>";
 		}
 	}
 	

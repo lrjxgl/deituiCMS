@@ -17,6 +17,7 @@ class rechargeControl extends skymvc{
 		$status=get("status",'i');
 		if($status){
 			$where.=" AND status=".$status;
+			$url.="&status=".$status;
 		}
 		$option=array(
 			"where"=>$where,
@@ -45,6 +46,20 @@ class rechargeControl extends skymvc{
 			"pagelist"=>$pagelist
 		));
 		$this->smarty->display("recharge/index.html");
+	}
+	
+	public function onShow(){
+		$id=get("id","i");
+		$recharge=M("recharge")->selectRow("id=".$id);
+		$refundList=M("refund")->select(array(
+			"where"=>" recharge_orderno='".$recharge["orderno"]."' ",
+			"order"=>"id DESC"
+		));
+		$this->smarty->goAssign(array(
+			"recharge"=>$recharge,
+			"refundList"=>$refundList
+		));
+		$this->smarty->display("recharge/show.html");
 	}
 	
 	public function onMan(){
@@ -90,6 +105,32 @@ class rechargeControl extends skymvc{
 			"orderinfo"=>post('orderinfo','h')
 		));
 		$this->goall("充值成功");
+	}
+	
+	public function onRefund(){
+		$id=get_post("id","i");
+		$recharge=M("recharge")->selectRow("id=".$id);
+		$content=post("content","h");
+		if(empty($content)){
+			$content="人工退款，申请退回支付渠道";
+		}
+		$money=post("money","f");
+		if($money>$recharge["money"]){
+			$this->goAll("退款金额不能大于支付金额",1);
+		} 
+		M("refund_apply")->insert(array(
+			"userid"=>$recharge['userid'],
+			 
+			"paytype"=>$recharge['pay_type'],
+			"createtime"=>date("Y-m-d H:i:s"),
+			"recharge_orderno"=>$recharge['orderno'],
+			"recharge_pay_orderno"=>$recharge['pay_orderno'],
+			"money"=>$money,
+			"recharge_id"=>$id,
+			"content"=>$content
+			 
+		));
+		$this->goAll("退款申请成功");
 	}
 }
 ?>

@@ -1,0 +1,17 @@
+<head>
+<meta charset="utf-8">
+{if !$site}
+{get data=site model=site fun=get()}
+{/if}
+<title>{if $seo}{$seo.title}{else}{$site.title}{/if}</title>
+<meta name="description" content="{if $seo}{$seo.description}{else}{$site.description}{/if}" />
+<link href="//at.alicdn.com/t/font_811242_0zhbr243mw7c.css" rel="stylesheet" />
+<link href="/plugin/dt-ui/dt-ui-pc.css?v3" rel="stylesheet" />
+<link href="/plugin/dt-ui/dt-ui-pc-page.css?v3" rel="stylesheet" />
+<link href="/plugin/dt-ui/dt-ui-pc-header.css?v3" rel="stylesheet" />
+<link href="/themes/index/css/app.css" rel="stylesheet" />
+<script src="/plugin/jquery/jquery.js"></script>
+<script src="/plugin/dt-ui/dt-ui-h5.js"></script>
+
+</head>
+

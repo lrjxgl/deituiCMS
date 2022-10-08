@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+
+<style>
+	.header-search-close{
+		display:none;
+		position:absolute;
+		width:30px;
+		height:30px;
+		right:0px;
+		top:50px;
+		font-family:iconfont;
+		align-items: center;
+		 
+		flex-direction: row;
+		text-align: center;
+		justify-content: center;
+	}
+	.aaBox{
+		display:none;
+		position:absolute;
+		top:100px;
+		left:0px;
+		right:0px;
+		bottom:0px;
+		background-color:#fff;
+		padding:10px 20px;
+		box-sizing: border-box;
+	}
+	.rBox{
+		margin-right: 20px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		margin-bottom: 10px;
+	}
+	.bta{
+		width:24%;
+		font-size: 12px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		margin-right: 1%;
+		margin-bottom: 5px;
+		background-color: #eee;
+		text-align: center;
+		padding: 5px;
+		box-sizing: border-box;
+	}
+	.pBox{
+		position: fixed;
+		top: 90px;
+		right: 0px;
+		background-color: #fff;
+		padding: 5px;
+	}
+	/* #ifdef H5 */
+	.pBox{
+		top:120px
+	}
+	/* #endif */
+	.pBox-item{
+ 
+		text-align: center;
+		width: 18px;
+		height: 18px;
+		line-height: 18px;
+		font-size: 12px;
+		
+	}
+	.pBox-active{
+		background-color: #eee;
+		border-radius: 20px;
+	}
+</style>
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">选择城市</div>
+		</div>
+		<div class="header-row"></div>
+		<div class="main-body" id="App">
+			<div>
+				<div class="row-box">
+					<div class="header-search-box mgb-10">
+						<div class="header-search-icon icon-search"></div>
+						<input  v-model="keyword" @click="searchShow" @input="search" placeholder="输入城市名搜索" type="search" class="header-search" />				
+						<div @click="aaBoxClass=''" :class="aaBoxClass" class="header-search-close icon-close"></div>
+					</div>
+					<div class="flex mgb-20">
+						<div class="iconfont icon-location_light"></div>
+						<div class="mgr-5">当前定位城市</div>
+						<div class="fwb">{{city}}</div>
+					</div>
+					<div class="mgb-10 f14 fwb">热门城市</div>
+					<div class="rBox">
+						<div @click="setCity(item.name,item.id)" v-for="(item,index) in recList" :key="index" class="bta">{{item.name}}</div>
+					
+					</div>
+					<div>
+						<div v-for="(item,name,index) in cityGroup" :key="name">
+							<div :id="'zms'+name" class="f16 zms">{{name}}</div>
+							<div class="mgb-10">
+							<div  v-for="(cc,cckey) in item.child" :key="cckey"  @click="setCity(cc.name,cc.id)" class="row-item-text">
+								<div class="row-item-title">{{cc.name}}</div>
+							</div>
+							</div>
+						</div>
+					</div>
+					<div class="pBox">			
+						<div @click="setZm(name)" v-for="(item,name,index) in cityGroup" :key="index" :class="zm==name?'pBox-active':''" class="pBox-item">{{name}}</div>				
+					</div>
+				</div>
+				<scroll-div scroll-y="true" class="aaBox" :class="aaBoxClass">
+					<div  @click="setCity(item.name)" v-for="(item,index) in searchList" :key="index" class="flex bd-mp-5">
+						<div class="f16 mgb-5 cl1">{{item.name}}</div>
+					</div>
+					
+				</scroll-div>
+			</div>
+		</div>
+		{include file="footer.html"}
+		<script src="/plugin/vue/vue.min.js"></script>
+		<script src="{$skins}city/index.js"></script>
+		
+	</body>
+</html>

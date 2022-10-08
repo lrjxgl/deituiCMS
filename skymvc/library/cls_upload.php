@@ -4,7 +4,7 @@ if(!defined("ROOT_PATH")){
 }
 class upload{
 	public $allowtype=array("gif","jpg","bmp","png",'jpeg',"webp");//允许上传的文件类型
-	public $sysallowtype=array('gif','jpg','bmp','png','jpeg',"webp",'txt','mpeg',"mp4","ogg",'avi','rm','rmvb','wmv','flv','mp3','wav','wma','swf','doc','pdf','zip','tar','svg');
+	public $sysallowtype=array('gif','jpg','bmp','png','jpeg',"webp",'txt','mpeg',"mp4","ogg",'avi','rm','rmvb','wmv','flv','mp3','wav','wma','swf','doc','docx','pdf','zip','tar','svg');
 	//系统默认允许上传
 	//上传文件夹
 	public $uploaddir="attach/uploads/";
@@ -150,6 +150,8 @@ class upload{
 				return 'swf';
 			case 'application/msword':
 				return 'doc';
+			case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+				return 'docx';
 			case 'image/png':
 				return 'png';
 			break;

@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+	{include file="head.html"}
+
+	<body>
+		{include file="header.html"}
+		<div class="main-body">
+			<div class="row-box mgb-5">
+				{get data=tc model=dataapi fun=getword("签到说明")}
+				{$tc.content}
+			</div>
+			<div class="input-flex mgb-5">
+				<input class="input-flex-text" id="checkin-content" placeholder="请说点什么" type="text"> 
+				<div class="input-flex-btn" id="checkin-submit">点我签到</div>
+			</div>	
+			 
+			 
+			<div class="row-box">
+
+				<div class="qdlist">
+					<div class="pd-10 fw-600 bd-mp-10">签到记录</div>
+					{foreach item=c from=$data}
+					<div class="flex bd-mp-10 flex-ai-center">
+						
+						<span class="f14">{$c.content}</span>
+						<span class="cl2 f12 mgl-5">{$c.dateline|date:Y-m-d}</span> 
+					</div>
+					{/foreach}
+				</div>
+			</div>
+			 
+		</div>
+		{include file="footer.html"}
+		{include file="foot-all.html"}
+		<script>
+			$(function() {
+				$("#checkin-submit").on("click", function() {
+					$.post("/index.php?m=checkin&a=save&ajax=1", {
+						content: $("#checkin-content").val()
+					}, function(data) {
+						skyToast(data.message);
+					}, "json")
+				});
+			});
+		</script>
+	</body>
+</html>

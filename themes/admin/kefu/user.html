@@ -36,11 +36,11 @@
 				</div>
 	 
 			</div>
-			<div class="footer-row"></div>
+			<div class="footer-row" style="height: 60px;"></div>
 			<div style="position: fixed;bottom: 0;left: 0;right: 0;">
 				<div class="input-flex">
-					<input type="text" id="content" class="input-flex-text" />
-					<div class="input-flex-btn" id="submit">发送</div>
+					<input type="text" v-model="content" class="input-flex-text" />
+					<div class="input-flex-btn" @click="submit()" id="submit">发送</div>
 				</div>
 			</div>
 		</div>

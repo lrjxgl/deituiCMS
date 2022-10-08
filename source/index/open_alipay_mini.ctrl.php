@@ -121,6 +121,8 @@ class open_alipay_miniControl extends skymvc
 							"userid"=>$user['userid'],
 							"authcode"=>$authcode,
 							"authcodeLong"=>$auth['authcodeLong'],
+							"token"=>$auth["token"],
+							"refresh_token"=>$auth["refresh_token"]
 							"user_head"=>$user_head,
 							"nickname"=>$nickname,
 							"gender"=>$gender,

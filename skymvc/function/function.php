@@ -179,10 +179,9 @@ function str_format($str,$format='',$len=0){
 					case "r":
 							$str=round($str,$len);
 							break;
-					default:
-							
-							break;
+					case "a"://返回全部
 					
+							break;
                 }
         }
         return $str;
@@ -575,7 +574,7 @@ function is_email($user_email)
 
 /*判断是否手机号码*/
 function is_tel($tel){
-	if(preg_match("/1[345879]{1}\d{9}$/",$tel)){
+	if(preg_match("/1[3456879]{1}\d{9}$/",$tel)){
 		return true;
 	}
 	return false;
@@ -671,4 +670,21 @@ function jiemi($str,$miyao=''){
  		C()->goAll($msg,1);
  	}
  }
+ /*防止重复提交*/
+ function checkRePost($expire=1){
+	 if(!empty($_POST)){
+		 
+		$userid=M("login")->userid;
+		if(!$userid){
+			return true;
+		}
+		$key="postTime".$userid;
+		if(!cache()->get($key)){
+			cache()->set($key,1,$expire);
+		}else{
+			C()->goAll("请稍后再试",1);
+		}
+	 }
+ }
+ 
 ?>

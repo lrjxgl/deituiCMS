@@ -462,12 +462,14 @@ class mysql
 		return "sql".$table."_".$key;
 	}
 	//增加链式操作和prepare
+	//增加链式操作和prepare
 	public function preQuery($sql,...$params){
 		if(!@$this->db->ping()){
 			$this->connect();
 			return $this->preQuery($sql,...$params);
 			 
-		} 
+		}
+		 
 		$stmt = $this->db->prepare($sql);
 		$str=str_repeat("s",count($params));
 		if(count($params)>0){

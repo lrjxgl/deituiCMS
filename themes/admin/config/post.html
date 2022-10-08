@@ -1,0 +1,25 @@
+<table class="table-add">
+	<tr>
+		<td>主题</td>
+		<td>
+			<div>
+				<div class="flex">
+					<div>实名认证</div>
+					<input  type="radio" {if $data.post_topic_isauth eq 1}checked{/if} value="1" name="post_topic_isauth"/> 必须
+					<input  type="radio" {if $data.post_topic_isauth neq 1}checked{/if}  value="0" name="post_topic_isauth"/> 非必须
+				</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>评论</td>
+		<td>
+			<div class="flex">
+				<div>实名认证</div>
+				<input  type="radio" {if $data.post_comment_isauth eq 1}checked{/if}  value="1" name="post_comment_isauth"/> 必须
+				<input  type="radio" {if $data.post_comment_isauth neq 1}checked{/if}  value="0" name="post_comment_isauth"/> 非必须
+			</div>
+		</td>
+	</tr>
+	 
+</table>

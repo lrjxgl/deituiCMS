@@ -6,30 +6,45 @@
  
 <div class="tabs-border">
 	<a class="item active" href="{$appadmin}?m=module">插件列表</a>
-	<a class="item" href="http://www.deituicms.com/module.php?m=down" target="_blank">应用商店</a>
+	<a class="item" href="https://www.deituicms.com/module.php?m=down">应用商店</a>
 </div>
 <div class="main-body">
  
+
 <table  class="tbs">
+	<colgroup>
+		<col width="200" />
+		<col width="300" />
+		<col width="150" />
+	</colgroup>	
 <thead>
 	<tr>
 		<td>插件名称</td>
 		<td>插件描述</td>
+		<td>插件版本</td>
+		<td>最新版本</td>
 		<td>操作</td>
 	</tr>
 </thead>	 
 <tr>
 	{foreach item=c from=$mods}
-	<td width="15%">{$c.title}</td>
-	<td width=" ">{$c.info}</td>
-	<td width="22%">
+	<td >{$c.title}</td>
+	<td >{$c.info}</td>
+	<td>{$c.version}</td>
+	<td>{$c.down_version}</td> 
+	<td >
 	{if $c.isinstall}
-	<a href='javascript:;' class="cl-danger" onclick="if(confirm('确认卸载插件吗？')){window.location.href='{$appadmin}?m=module&a=uninstall&inmodule={$c.module}';}">卸载插件</a>
+	{if !$c.incms}
 	
+	{if $c.down_version gt $c.version}
+	<div class="btn-mini mgr-5 js-btn-update" dkey="{$c.module}">更新插件</div>
+	{/if}
+	
+	<a href='javascript:;' class="cl-danger" onclick="if(confirm('确认卸载插件吗？')){window.location.href='{$appadmin}?m=module&a=uninstall&inmodule={$c.module}';}">卸载插件</a>
+	{/if}
 	<a href="/module.php?m={$c.module}" target="_blank">查看</a>
-	<a href="javascript:;" onclick="window.parent.goPluginMenu('{$c.adminurl}')" >管理</a>
-	<a href="javascript:;" class="js-nav-add" title="{$c.title}" url='{$c.adminurl}' >添加到导航</a> 
-	<a href="{$appadmin}?m=module&a=update&inmodule={$c.module}">更新</a>  
+	<a href="javascript:;" onclick="window.parent.goPluginMenu('{$c.adminurl}','{$c.title}')" >管理</a>
+	<a href="javascript:;" class="js-nav-add" title="{$c.title}" url='{$c.adminurl}' >添加到导航</a>  
 	{else}<a href='{$appadmin}?m=module&a=install&inmodule={$c.module}'>安装</a>{/if}
 	 
 	 
@@ -41,7 +56,21 @@
 
 {include file='footer.html'}
 <script>
+
 $(function(){
+	$(document).on("click",".js-btn-update",function(){
+		var dkey=$(this).attr("dkey");
+		showbox("插件更新提示","插件更新耗时较长，请勿关闭窗口",400)
+		$.ajax({
+			url:"/admin.php?m=module&a=update&ajax=1&dkey="+dkey,
+			dataType:"json",
+			success:function(res){
+				showboxClose();
+				skyToast(res.message)
+			}
+		})
+		
+	})
 	$(document).on("click","#yun_app_install",function(){
 		$.post("{$appadmin}?m=module&a=DownInstall&ajax=1&downcode="+$("#downcode").val(),function(data){
 			if(data.error){
@@ -51,7 +80,6 @@ $(function(){
 			}
 		},"json");
 	});
-	
 	$(document).on("click",".js-nav-add",function(e){
 		var url=$(this).attr("url");
 		var title=$(this).attr("title");
@@ -68,7 +96,6 @@ $(function(){
 			}
 		})
 	}) 
-	
 });
 </script>
 </body>

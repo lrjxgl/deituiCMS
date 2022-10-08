@@ -1,0 +1,52 @@
+<div class="row-box mgb-10 bd-radius-10">
+				  <div class="bd-mp-5 fw-600">文章推荐</div>
+				  <div>
+					  {get data=phList model=article fun=recList(0,12)}
+					  {foreach item=item from=$phList}
+					  <div class="bd-mp-5">
+						  <a href="/index.php?m=article&a=show&id={$item.id}" target="_blank">{$item.title}</a>
+					  </div>
+					  {/foreach}
+				  </div>
+			  </div>
+			   
+			  	{get model=category data=catList fun=children(0,"article",1)}
+			  	 <div class="row-box bd-radius-10 mgb-5"> 
+			  	        <div class="row-box-hd" style=""><span>栏目推荐</span></div>
+			  			{foreach item=c key=k from=$catList}
+			  				<a href="{R("/index.php?m=article&a=list&catid=$c.catid")}"  class="row-item">
+			  					<div  class="row-item-title">{$c.cname}</div>
+			  				</a>
+			  				{if $c.child}
+			  					{foreach item=cc from=$c.child}
+			  					<a href="{R("/index.php?m=article&a=list&catid=$cc.catid")}"  class="row-item">
+			  						<div  class="row-item-title">|--{$cc.cname}</div>
+			  					</a>
+			  					{/foreach}
+			  				{/if} 
+			  			{/foreach}   
+			  			    
+			  	</div> 
+			  <div class="row-box mgb-10  bd-radius-10">
+				  <div class="bd-mp-5 fw-600">阅读排行</div>
+				  <div>
+					  {get data=phList model=article fun=Dselect(array("limit"=>12,"where"=>"status=1","order"=>"view_num DESC"))}
+					  {foreach item=item from=$phList}
+					  <div class="bd-mp-5">
+						  <a href="/index.php?m=article&a=show&id={$item.id}" target="_blank">{$item.title}</a>
+					  </div>
+					  {/foreach}
+				  </div>
+			  </div>
+			  
+			  <div class="row-box bd-radius-10">
+				  <div class="bd-mp-5 fw-600">评论排行</div>
+				  <div>
+					  {get data=phList model=article fun=Dselect(array("limit"=>12,"where"=>"status=1","order"=>"comment_num DESC"))}
+					  {foreach item=item from=$phList}
+					  <div class="bd-mp-5">
+						  <a href="/index.php?m=article&a=show&id={$item.id}" target="_blank">{$item.title}</a>
+					  </div>
+					  {/foreach}
+				  </div>
+			  </div>

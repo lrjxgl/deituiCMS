@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="shd">支付详情</div>
+		<div class="main-body">
+			<div class="flex bd-mp-10">
+				<div class="mgr-5">支付状态</div>
+				<div class="cl-status">{if $recharge.status eq 1}成功{else}失败{/if}</div>
+				<div class="mgl-20 mgr-5">支付金额</div>
+				<div class="cl-money">{$recharge.money}元</div>
+				<div class="mgl-20 mgr-5">支付单号</div>
+				<div>{$recharge.orderno}</div>
+			</div>
+			<div class="flex bd-mp-10">
+				<div class="mgr-5">平台单号</div>
+				<div>{$recharge.pay_orderno}</div>
+				<div class="mgl-20">支付时间</div>
+				<div class="mgl-5">{$recharge.dateline|date:Y-m-d H:i:s}</div>
+			</div>
+			<div class="flex bd-mp-10">
+				支付内容：{$recharge.orderinfo}
+			</div>
+			{if $recharge.status==1 && ($recharge.pay_type=='alipay' || $recharge.pay_type=='wxpay')}
+			<div class="flex">
+				<div class="flex-1"></div>
+				<div  class="btn-small js-refund-btn">发起退单</div>
+			</div>
+			{/if} 
+			{if $refundList}
+			<div class="fw-600">退单</div>
+			<div>
+				{foreach item=c from=$refundList}
+				<div>
+					<div class="flex mgb-5">
+						<div>退款金额</div>
+						<div class="cl-money">{$c.money}元</div>
+						<div class="mgl-20">退款时间</div>
+						<div>{$c.createtime}</div>
+					</div>
+					<div class="cl2">{$c.content}</div>
+				</div>
+				{/foreach}
+			</div>
+			{/if}
+		</div>
+		{include file="footer.html"}
+		<script>
+			$(document).on("click",".js-refund-btn",function(){
+				var html=`
+					<div class="input-flex">
+						<div class="input-flex-label">退款金额</div>
+						<input type="text" id="refund-money" class="input-flex-text" />
+						<div class="mgl-5">元</div>
+					</div>
+					<div class="input-flex">
+						<div class="input-flex-label">退款原因</div>
+						<input value="人工退款，申请退回支付渠道" type="text" id="refund-content" class="input-flex-text" />
+					</div>
+					<div id="refund-submit" class="btn-row-submit">确认退款</div>
+				`;
+				
+				showbox("发起退款",html,640,360)
+			})
+			$(document).on("click","#refund-submit",function(){
+				var money=$("#refund-money").val();
+				var content=$("#refund-content").val();
+				var id="{$recharge.id}"
+				$.ajax({
+					url:"/admin.php?m=recharge&a=refund&ajax=1",
+					data:{
+						id:id,
+						money:money,
+						content:content
+					},
+					dataType:"json",
+					type:"POST",
+					success:function(res){
+						skyToast(res.message)
+						if(!res.error){
+							setTimeout(function(){
+								window.location.reload();
+							},1000)
+							
+						}
+					}
+				})
+			})
+		</script>
+	</body>
+</html>

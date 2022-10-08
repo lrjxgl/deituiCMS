@@ -1,11 +1,14 @@
 <?php
 class articleModel extends model{
 	public $table="article";
-	public function __construct(&$base=null){
+	public function __construct(){
 		parent::__construct ();
 	}
 	
 	public function Dselect($option,&$rscount=false){
+		if(!isset($option["fields"])){
+			$option["fields"]="id,title,love_num,view_num,comment_num,fav_num,imgsdata,status,imgurl,description";
+		}
 		$data=$this->select($option,$rscount);
 		 
 		if($data){
@@ -61,5 +64,20 @@ class articleModel extends model{
 		}
 		return $row;
 	}
+	
+	public function getListByIds($ids,$fields="*"){
+		$ids=array_unique($ids);
+		$res=$this->Dselect(array(
+			"where"=>" id in("._implode($ids).") ",
+			"fields"=>$fields
+		));
+		if($res){
+			foreach($res as $rs){
+				$list[$rs["id"]]=$rs;
+			}
+			return $list;
+		}
+	}
+	
 }
 ?>

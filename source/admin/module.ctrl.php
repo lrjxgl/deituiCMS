@@ -10,7 +10,21 @@ class moduleControl extends skymvc{
 		
 		$d=ROOT_PATH."module";
 		$mods=$this->getmods($d);
-		
+		$pros=[];
+		if(!empty($mods)){
+			foreach($mods as $md){
+				$pros[]="mod_".$md["module"];
+			}
+			$url="https://www.deituicms.com/module.php?m=down_update&a=list&pros=".implode(",",$pros);
+			$pros=curl_get_contents($url);
+			$arr=json_decode($pros,true);
+			$sarr=$arr["data"]["list"];
+			 
+			foreach($mods as $k=>$v){
+				$v["down_version"]=$sarr["mod_".$v["module"]]["down_version"];
+				$mods[$k]=$v;
+			}
+		}
 		$this->smarty->assign(
 			array(
 				"mods"=>$mods,
@@ -30,7 +44,7 @@ class moduleControl extends skymvc{
 		$downcode=get_post('downcode','h');
 		$domain=getBaseDomain($_SERVER['HTTP_HOST']);
 	 
-		$data=file_get_contents("http://www.deitui.com/index.php?m=yunmodule&a=down&downcode={$downcode}&domain={$domain}");
+		$data=file_get_contents("http://www.deituicms.com/module.php?m=down_update&a=down&downcode={$downcode}&domain={$domain}");
 		 
 		$json=json_decode($data,true);
 		if(!$json || $json['error']){
@@ -53,7 +67,48 @@ class moduleControl extends skymvc{
 		}
 		
 	}
-
+	
+	public function onUpdate(){
+		$module=get("dkey","h");
+		$dkey="mod_".$module;
+		$downcode=get_post('downcode','h');
+		$domain=getBaseDomain($_SERVER['HTTP_HOST']);
+		$moduleDir=ROOT_PATH."module/$module";
+		@require_once($moduleDir."/config.php"); 
+		$data=file_get_contents("http://www.deituicms.com/module.php?m=down_update&a=update&ajax=1&dvs=".$config["version"]."&dkey=".$dkey."&downcode={$downcode}&domain={$domain}");
+		
+		$json=json_decode($data,true);
+		if(!$json ){
+			$this->goAll("数据出错",1);
+		}elseif($json['error']){
+			$this->goAll($json["message"],1);
+		}else{
+			$this->goAll("数据出错",1);
+			foreach($json["data"]["list"] as $down){
+				if($down["down_version"]<=$config["version"]){
+					continue;
+				} 
+				$file=ROOT_PATH."update/module/".$module.".zip";
+				umkdir(dirname($file));
+				
+				file_put_contents($file,file_get_contents($down['update_url']));
+						 
+				$this->loadClass("pclzip",false,false);
+				$zip = new pclzip($file);
+				$zip->extract($moduleDir);
+				
+				if(file_exists($moduleDir."/"."update.sql.php")){
+					M("module")->begin();
+					$this->dosql($moduleDir."/"."update.sql.php",$config['table_pre']);
+					M("module")->commit();
+				}
+				
+			}
+			
+			$this->goAll("更新成功");
+		}
+		
+	}
 	 
 	
 	 
@@ -77,9 +132,10 @@ class moduleControl extends skymvc{
 						$config['isinstall']=false;
 					}
 					$cms=cmsVersion::get();
-					if(isset($cms["mds"]) && !in_array($config["module"],$cms["mds"])){
-						$mods[]=$config;
+					if(in_array($config["module"],$cms["mds"])){
+						$config["incms"]=1;
 					}
+					$mods[]=$config; 
 					 
 				}
 			}
@@ -245,11 +301,6 @@ class moduleControl extends skymvc{
 		$this->goAll("success");
 	}
 	
-	public function onUpdate(){
-		$module=str_replace("/","",get_post('inmodule','h'));
-		
-		echo "success";
-	}
 }
 
 ?>

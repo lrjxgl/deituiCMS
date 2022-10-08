@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+{include file="head.html"}
+<body> 
+<div class="page"> {include file="header.html"}
+  <div class="main-body">
+     
+    <div class="box960"><div class="row">
+<div class="col-6-1">{include file="user_left.html"}</div>
+<div class="col-6-5">
+{include file='jflog_nav.html'}
+<table class='table table-bordered' width='100%'>
+  <tr>
+   <td>id</td>
+   <td>时间</td>
+ 
+   <td>操作类型</td>
+   <td>日志内容</td>
+ 
+   <td>积分</td>
+ 
+  </tr>
+ {foreach item=c from=$data}
+<tr>
+   <td>{$c.id}</td>
+   <td>{$c.dateline|date:Y-m-d}</td>
+   
+   <td>{$config[grade_log_type_list][$c[type_id]]}</td>
+   <td>{$c.content}</td>
+    
+   <td>{$c.grade}</td>
+   
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+ 
+</div>
+<div class="clearfix"></div>
+</div>
+
+</div>
+{include file="footer.html"} </div>
+</body>
+</html>

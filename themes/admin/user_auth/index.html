@@ -38,10 +38,10 @@
         <td>{$c.truename}</td>
         <td>{$c.telephone}</td>
         <td>{$c.user_card}</td>
-        <td>{$c.lasttime|date:Y-m-d}</td>
+        <td>{$c.createtime}</td>
         <td>{if $c.status eq 0}未审核{elseif $c.status eq 1}已通过{else}未通过{/if}</td> 
         <td> 
-        	<a href="{const.APPADMIN}?m=user_auth&a=show&userid={$c.userid}">查看</a>  
+        	<a href="{const.APPADMIN}?m=user_auth&a=show&id={$c.id}">查看</a>  
         </td>
         </tr>
        {/foreach} 

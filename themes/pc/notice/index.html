@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		{include file="header.html"}
+		<div class="header-bottom"></div>
+		<div class="main-body">
+			<div class="flex">
+				{include file="user_left.html"}
+
+				<div class="flex-1" >
+					<div class="btn btn-danger mgb-10">清空全部消息</div>
+					<div class="row-box">
+						
+						<div  >
+							{if empty($data)}
+							<div class="emptyData">您暂时没有最新消息</div>
+							{else}
+							
+								{foreach item=c from=$data}
+								<div class="flex js-item mgb-10 flex-ai-center">
+									<div class="cl2">
+										{$c.content}
+									</div>
+									<div class="flex-1"></div>
+									<div class="f12 mgr-5">{$c.timeago}</div>
+									<a href="javascript:;" url="/index.php?m=notice&a=delete&id={$c.id}" class="btn-small btn-danger js-delete">删除</a> 
+								</div>
+								{/foreach}
+
+							
+							{/if}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{include file="footer.html"}
+	</body>
+</html>

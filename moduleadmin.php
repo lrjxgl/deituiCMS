@@ -10,6 +10,18 @@ define("ROOT_PATH",  str_replace("\\", "/", dirname(__FILE__))."/");
 require("config/version.php");
 require(ROOT_PATH."config/config.php");
 require(ROOT_PATH."config/setconfig.php");
+/***解析pathinfo*/
+$url=$_SERVER['REQUEST_URI'];
+if(preg_match("/moduleadmin.php\//i",$url)){	 
+	$query=preg_replace("/.*moduleadmin.php/i","",$url);
+	$basename=str_replace($query,"",$url);
+	$para=explode("?",$query);
+	$data=explode("/",$para[0]);
+	if(isset($data[1])){
+		$_GET['m']=$data[1];
+	}
+}	
+/**End**/
 $module=isset($_GET['module'])?$_GET['module']:"";
 $m=isset($_GET['m'])?$_GET['m']:"";
 $mm=explode("_",$m);

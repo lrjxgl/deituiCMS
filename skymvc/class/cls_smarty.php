@@ -271,11 +271,12 @@ class Smarty
 	 	$dir= $this->compile_dir."/".str_replace(ROOT_PATH,"",dirname($filename));
 		umkdir($dir);
         $name =$dir."/".basename($filename) . '.php';
+		$expires=0;
         if ($this->_expires)
         {
             $expires = $this->_expires - $this->cache_lifetime;
         }
-        else
+        elseif(file_exists($name))
         {
             $filestat = @stat($name);
             $expires  = $filestat['mtime'];
@@ -745,6 +746,9 @@ class Smarty
                         break;
 
                     case 'cutstr':
+						if(!isset($s[2])){
+							$s[2]="";
+						}
                         $p = '$this->cutstr(' . $p . ",$s[1],'$s[2]')";
                         break;
 
@@ -1059,9 +1063,13 @@ class Smarty
 
         $output = '<?php ';
       //  $output .= "\$_from = $from; if (!is_array(\$_from) && !is_object(\$_from)) { settype(\$_from, 'array'); }; \$this->push_vars('$attrs[key]', '$attrs[item]');";
+		if(isset($attrs["key"])){
+			$output .= "\$_from = $from; if (!is_array(\$_from) && !is_object(\$_from)) { \$_from=array();}; \$this->push_vars('".$attrs["key"]."', '".$attrs["item"]."');";
+		}else{
+			$output .= "\$_from = $from; if (!is_array(\$_from) && !is_object(\$_from)) { \$_from=array();}; ";
+		}
+ 
 		
-		$output .= "\$_from = $from; if (!is_array(\$_from) && !is_object(\$_from)) { \$_from=array();}; \$this->push_vars('$attrs[key]', '$attrs[item]');";
-
         if (!empty($name))
         {
             $foreach_props = "\$this->_foreach['$name']";
