@@ -55,6 +55,7 @@
 			$data["max_grade"]=post("max_grade","i");
 			$data["discount"]=post("discount","i");
 			$data['logo']=post('logo','h');
+			$data["description"]=post("description","h");
 			if($id){
 				M("user_rank")->update($data,"id='$id'");
 			}else{

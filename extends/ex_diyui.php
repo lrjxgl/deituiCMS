@@ -1,5 +1,7 @@
 <?php
+ 
 function diyUi($m,$a){
+	require_once ROOT_PATH."/uicompent/lazyJs.php";
 	$row=M("pagetpl")->selectRow("m='".sql($m)."' AND a='".sql($a)."' ");
 	if(empty($row) || empty($row["diydata"])){
 		return false;
@@ -29,8 +31,25 @@ function diyUi($m,$a){
 				);
 			}
 		}
-		require "uicompent/".$tpl.".php";
+		require "uicompent/common/".$tpl.".php";
 	}
 	
 	 
+}
+
+function diyuiCompentHtml($file,$diyData=""){
+	require_once ROOT_PATH."/uicompent/lazyJs.php";
+	$file=basename($file);
+	require "uicompent/html/".$file.".php";
+}
+
+function diyuiCompentUser($file,$diyData=""){
+	require_once ROOT_PATH."/uicompent/lazyJs.php";
+	$file=basename($file);
+	require "uicompent/user/".$file.".php";
+}
+function diyuiCommon($file,$diyData=""){
+	require_once ROOT_PATH."/uicompent/lazyJs.php";
+	$file=basename($file);
+	require "uicompent/common/".$file.".php";
 }

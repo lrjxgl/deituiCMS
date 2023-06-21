@@ -55,7 +55,7 @@
 			$data=M("table")->postData();
 			$row=M("table")->selectRow("tablename='".$data["tablename"]."'");
 			if($tableid){
-				if($row["tableid"]!=$tableid){
+				if($row["tableid"] && $row["tableid"]!=$tableid){
 					$this->goAll("表{$data['tablename']}已经存在",1);
 				}
 				M("table")->update($data,"tableid='$tableid'");

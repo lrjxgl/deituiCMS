@@ -120,7 +120,7 @@ class Smarty
 		 
 		if(function_exists("shouQuanTpl")){
 			 
-			$out=shouQuanTpl($out);
+			//$out=shouQuanTpl($out);
 		}
 		if($this->html_file){
 			error_reporting(E_ALL ^ E_NOTICE);

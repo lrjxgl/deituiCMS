@@ -40,6 +40,25 @@ class districtModel extends model{
 		}
 		return $data;
 	}
+	
+	public function id_family($id=0){
+		$id=intval($id);
+		$ids[]=$id;
+		$ids1=$this->selectCols(array("where"=>" upid=".$id."  ","fields"=>"id"));
+		if($ids1){
+			$ids=array_merge($ids,$ids1);
+			$ids2=$this->selectCols(array("where"=>" upid in("._implode($ids1).") ","fields"=>"id"));
+			if($ids2){
+				$ids=array_merge($ids,$ids2);
+				$ids3=$this->selectCols(array("where"=>" upid in("._implode($ids2).") ","fields"=>"id"));
+				if($ids3){
+					$ids=array_merge($ids,$ids3);
+				}
+			}
+		}
+		return $ids;
+		
+	}
 }
 
 ?>

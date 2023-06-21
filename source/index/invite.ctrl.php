@@ -30,6 +30,7 @@ class inviteControl extends skymvc{
 		$iaccount=M("invite_account")->get($userid);
 		$money=$iaccount["income"];
 	 	$user=M("user")->getUser($userid,"userid,nickname,money,user_head");
+		$inviteDesc=M("dataapi")->getWord("邀请奖励");
 		$this->smarty->goassign(array(
 			"list"=>$list,
 			"userid"=>$userid,
@@ -37,6 +38,7 @@ class inviteControl extends skymvc{
 			"rscount"=>$rscount,
 			"money"=>$money,
 			"iaccount"=>$iaccount,
+			"inviteDesc"=>$inviteDesc,
 			"invitecode"=>M("user_invitecode")->getCode($userid), 
 			"ewm"=>HTTP_HOST."/index.php?m=invite&a=ewm&userid=".$userid
 		));
@@ -71,8 +73,9 @@ class inviteControl extends skymvc{
 		//文字
 		$font=ROOT_PATH."/static/msyh.ttf";
 		$black = imagecolorallocate($im, 32, 32, 32);
+		$site=M("site")->get();
 		imagettftext($im, 16, 0, 200, 45, $black, $font, "我是".$user["nickname"]);
-		imagettftext($im, 16, 0, 200, 85, $black, $font, "得推网能不仅省钱还能赚零花钱");
+		imagettftext($im, 16, 0, 200, 85, $black, $font, $site["sitename"]."能不仅省钱还能赚零花钱");
 		imagettftext($im, 16, 0, 200, 125, $black, $font, "快来关注一下吧");
 		imagejpeg($im);
 	}

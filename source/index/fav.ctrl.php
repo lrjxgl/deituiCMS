@@ -104,7 +104,21 @@ class favControl extends skymvc
 		
 	}
 	
-	 
+	public function onisFav(){
+		$userid=M("login")->userid;
+		$isfav=0;
+		if($userid){
+			$objectid=get_post("objectid","i");
+			$tablename=get_post("tablename","h");
+			$row=M("fav")->selectRow("userid=".$userid." AND objectid=".$objectid." AND tablename='".$tablename."' ");
+			
+			if($row){
+				$isfav=1;
+			}
+		}
+		
+		$this->goAll("success",0,$isfav);
+	} 
 	
 	 
 	

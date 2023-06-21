@@ -1,5 +1,5 @@
 <?php
-define("PHONE_ON","1");
+define("PHONE_ON","0");
 define("PHONE_REG","1");
 define("PHONE_USER","admin");
 define("PHONE_PWD","");
@@ -55,11 +55,11 @@ define("POST_TOPIC_ISAUTH","1");
 define("BDMAPKEY_PHP","99b0c7faf7c6bd62ecd70d4e0f1b315c");
 define("SMS_QIANMING","得推网络");
 define("SMS_TYPE","default");
-define("REG_INVITECODE","1");
+define("REG_INVITECODE","0");
 define("S_BANK_NAME","支付宝");
 define("S_BANK_USER","雷日锦");
 define("S_BANK_NUM","362606856@qq.com");
-define("SKINSCOLOR","39ba18");
+define("SKINSCOLOR","");
 define("SKINS_FTTYPE","");
 define("WX_AUTO_LOGIN","0");
 ?>

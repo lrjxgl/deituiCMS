@@ -5,7 +5,7 @@
 	<body>
 
 		<div class="header">
-			<a href="/index.php?m=user" class="header-back"></a>
+			<div class="header-back"></div>
 			<div class="header-title">收货地址</div>
 			<a href="/index.php?m=user_address&a=add" class="header-right-btn">添加</a>
 		</div>
@@ -35,7 +35,7 @@
 						 
 							<a href="/index.php?m=user_address&a=add&id={$c.id}" class="btn-small btn-outline-primary mgr-10">编辑</a> &nbsp;
 							<a href="javascript::" class="js-delete btn-small btn-outline-primary" url="/index.php?m=user_address&a=delete&id={$c.id}">删除</a>
-					 
+						 
 					</div>
 				</div>
 				{/foreach}
@@ -43,7 +43,7 @@
 			 
 		</div>
 
-		 
+		{include file="footer.html"} 
 	</body>
 
 </html>

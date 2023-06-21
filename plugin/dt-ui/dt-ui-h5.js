@@ -1,4 +1,11 @@
-
+function is_weixn(){  
+	 var ua = navigator.userAgent.toLowerCase();  
+	 if(ua.match(/MicroMessenger/i)=="micromessenger") {  
+		 return true;  
+	 } else {  
+		 return false;  
+	 }  
+ } 
 function skyToast(msg){
 	var html='<div id="toast" class="toast toast-success">'+msg+'</div>';
 	if($("#toast").length>0){
@@ -208,10 +215,6 @@ $(function(){
 				 
 				if(obj.attr("ungo")=="1"){
 					return true;
-				}else if(res.url!=""){
-					setTimeout(function(){
-						window.location=res.url;
-					},1000)
 				}else{
 					setTimeout(function(){
 						window.history.back();

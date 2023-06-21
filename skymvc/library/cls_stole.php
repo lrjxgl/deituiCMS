@@ -55,7 +55,7 @@ class stole{
 		 
 	}
 	
-	function curl_get_contents($url,$proxy=""){
+	function curl_get_contents($url,$proxy="",$timeout=3){
 		$ch=curl_init();
 		if(!empty($proxy)){
 			$p=explode(":",$proxy);
@@ -66,14 +66,16 @@ class stole{
 		//$cookie = tempnam('./temp/cookies','cookie');
 		//curl_setopt($ch,CURLOPT_COOKIEJAR,$cookie);
 		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_MAXREDIRS, 2);  
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);  
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查 
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, true);  
 		if($this->iswap){
-			curl_setopt($ch,CURLOPT_USERAGENT,"Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1"); 
+			curl_setopt($ch,CURLOPT_USERAGENT,"Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"); 
 		}else{
-			curl_setopt($ch,CURLOPT_USERAGENT,"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"); 
+			curl_setopt($ch,CURLOPT_USERAGENT,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"); 
 		}
 		
 		curl_setopt($ch, CURLOPT_HEADER, 0);

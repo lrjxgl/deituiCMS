@@ -77,8 +77,8 @@
 			 
 			$data["title"]=post("title","h");
 			$data["info"]=post("info","h");
-			$data["link1"]=post("link1","h");
-			$data["link2"]=post("link2","h");
+			$data["link1"]=post("link1","x");
+			$data["link2"]=post("link2","x");
 			$data["starttime"]=strtotime(post("starttime"));
 			$data["endtime"]=strtotime(post("endtime"));
 			$data["imgurl"]=post("imgurl","h");

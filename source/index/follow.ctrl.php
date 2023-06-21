@@ -60,7 +60,8 @@ class followControl extends skymvc{
 			"per_page"=>$per_page,
 			"user"=>$user,
 			"ta"=>$ta,
-			"type"=>$type
+			"type"=>$type,
+			"tab"=>"follow"
 		));
 		$this->smarty->display("follow/index.html");
 		
@@ -118,9 +119,10 @@ class followControl extends skymvc{
 			"per_page"=>$per_page,
 			"user"=>$user,
 			"ta"=>$ta,
-			"type"=>$type
+			"type"=>$type,
+			"tab"=>"followed"
 		));
-		$this->smarty->display("follow/followed.html");
+		$this->smarty->display("follow/index.html");
 		
 	}
 	
@@ -270,6 +272,19 @@ class followControl extends skymvc{
 			exit(json_encode(array("error"=>0,"message"=>"取消关注成功","status"=>0,"follow"=>0)));
 		}
 	}
+	
+	/**是否关注**/
+	public function onisFollow(){
+		$userid=M("login")->userid;
+		$t_userid=get("t_userid","i");
+		$row=M("follow")->selectRow(array("where"=>"t_userid=".$t_userid." AND userid=".$this->userid."   "));
+		$isFollow=0;
+		if($row){
+			$isFollow=1;
+		}
+		 
+		$this->goAll("success",0,$isFollow);
+	} 
 	
 }
 

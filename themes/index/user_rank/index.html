@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<style>
+		table{
+			background-color: #fff;
+			border-collapse: collapse;
+		}
+		td{
+			border: 1px solid #eee;
+			padding: 5px;
+		}
+		thead td{
+			font-weight: 600;
+		}
+		.img{
+			width: 20px;
+		}
+	</style>
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">用户等级</div>
+		</div>
+		<div class="header-row"></div>
+		<div id="App" class="main-body">
+			<div class="row-box">
+				平台根据积分对用户实行等级划分，积分越高等级越高，优惠越大。
+			</div>
+			<table >
+				<thead>
+					<tr>
+						<td>级别</td>
+						<td>积分</td>
+						<td>优惠</td>
+						<td>说明</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(item,index) in list " :key="index">
+						<td>{{item.rank_name}}
+							<img :src="item.logo" class="img" />
+						</td>
+						<td>{{item.min_grade}}-{{item.max_grade}}</td>
+						<td>{{item.discount}}</td>
+						<td>{{item.description}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		{include file="footer.html"}
+		<script src="{$skins}user_rank/index.js"></script>
+	</body>
+</html>

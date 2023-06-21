@@ -89,12 +89,15 @@ class indexControl extends skymvc
 		echo $data;
 	}
 	public function onUpdate(){
+		session_write_close();
 		set_time_limit(10000);
 		$key="admin_iframe_update";
 		$version=cmsVersion::get(); 
+		
 		$c=file_get_contents($version["onlineupdate"]."&domain=".$_SERVER['HTTP_HOST']);
 		
 		$v=json_decode($c,true);
+		
 		if(isset($v['error'])){
 			exit(json_encode(array("error"=>1,"message"=>$v['message'])));
 		} 

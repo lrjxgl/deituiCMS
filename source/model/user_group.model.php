@@ -4,12 +4,8 @@
 *model 自动生成
 */				
 class user_groupModel extends model{
-	 
-	public function __construct (){
-		parent::__construct ();
-		 
-		$this->table="user_group";
-	}
+	public $table="user_group"; 
+
 }
 
 ?>

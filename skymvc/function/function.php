@@ -485,7 +485,7 @@ function ipCity($ip,$type=0){
 }
 
 /*获取远程内容*/
-function curl_get_contents($url,$timeout=30,$referer="http://www.qq.com"){
+function curl_get_contents($url,$timeout=2,$referer="http://www.qq.com"){
 	 $ch = curl_init();
 	 curl_setopt($ch, CURLOPT_URL, $url);
 	 curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -506,7 +506,8 @@ function curl_post($url, $data)
     curl_setopt($ch, CURLOPT_POST, TRUE); 
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data); 
     curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	 curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 1);
     $ret = curl_exec($ch);
 
     curl_close($ch);
@@ -520,6 +521,7 @@ function curl_post_json($url, $json)
     curl_setopt($ch, CURLOPT_POST, TRUE); 
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json); 
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+	curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 1);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
     'Content-Type: application/json',
     'Content-Length: ' . strlen($json))

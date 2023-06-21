@@ -28,7 +28,7 @@ function skyToast(msg){
 	}
 	setTimeout(function(){
 		$("#toast").hide();
-	},1000)
+	},3000)
 }
 
 /*弹框*/
@@ -99,6 +99,9 @@ $(function(){
 	})
 	$(document).on("click",".js-submit",function(){
 		var obj=$(this);
+		if(!postCheck.canPost()){
+			return false;
+		}
 		$.post(
 			$(this).parents("form").attr("action")+"&ajax=1",
 			$(this).parents("form").serialize(),
@@ -125,10 +128,16 @@ $(function(){
 	//删除
 	$(document).on("click",".js-delete",function(){
 		var obj=$(this);
-		if(confirm("删除后不可恢复，确认删除吗?")){
+		var msg="删除后不可恢复，确认删除吗?";
+		if($(this).attr("msg")!=undefined){
+			msg=$(this).attr("msg");
+			 
+		}
+		if(confirm(msg)){
 			$.get($(this).attr("url"),function(data){
 				if(data.error=='0'){
 					obj.parents("tr").remove();
+					obj.parents(".js-item").remove();
 				}else{
 					alert(data.message);
 				}
@@ -188,6 +197,10 @@ $(function(){
 		var obj=$(this);
 		var url=$(this).attr("url")
 		$.get(url,function(res){
+			if(res.error){
+				skyToast(res.message);
+				return false;
+			}
 			if(res.data==1){
 				obj.addClass("yes").removeClass("no");
 			}else{
@@ -198,19 +211,46 @@ $(function(){
 	//加入黑名单
 	$(document).on("click",".js-join-blacklist",function(){
 		var userid=$(this).attr("userid");
-		$.post(APPADMIN+"?m=blacklist&a=add&ajax=1",{userid:userid},function(res){
-			skyToast(res.message);
-			 
-		},"json");
+		skyJs.confirm({
+			content:"确认拉黑用户吗？",
+			success:function(){
+				$.post(APPADMIN+"?m=blacklist&a=add&ajax=1",{userid:userid},function(res){
+					skyToast(res.message);
+					 
+				},"json");
+			}
+		})
+		
+	})
+	//加入手机黑名单
+	$(document).on("click",".js-join-blacklist",function(){
+		var userid=$(this).attr("userid");
+		skyJs.confirm({
+			content:"确认拉黑用户吗？",
+			success:function(){
+				$.post(APPADMIN+"?m=blacklist&a=add&ajax=1",{userid:userid},function(res){
+					skyToast(res.message);
+					 
+				},"json");
+			}
+		})
+		
 	})
 	//禁止言论
 	$(document).on("click",".js-forbid-post",function(){
 		var userid=$(this).attr("userid");
-		$.post(APPADMIN+"?m=blacklist_post&a=add&ajax=1",{userid:userid},function(res){
-			skyToast(res.message);
-			 
-		},"json");
+		skyJs.confirm({
+			content:"确认禁言用户吗？",
+			success:function(){
+				$.post(APPADMIN+"?m=blacklist_post&a=add&ajax=1",{userid:userid},function(res){
+					skyToast(res.message);
+					 
+				},"json");
+			}
+		})
+		
 	})
+	
 	//iframe弹框
 	$(document).on("click",".js-iframe-btn",function(){
 		var url=$(this).attr("url");
@@ -230,4 +270,5 @@ $(function(){
 			height:h
 		})
 	})
+	
 })

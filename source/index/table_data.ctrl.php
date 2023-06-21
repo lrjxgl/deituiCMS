@@ -150,5 +150,13 @@
 				return $newdata;
 			}
 		}
+		
+		public function onGet(){
+			$tableid=get("tableid","i");
+			$tablename=get("tablename","h");
+			$data=M("table_data")->getData($tablename);
+			$this->goAll("success",0,$data);
+		}
+		
 	}	
 ?>		

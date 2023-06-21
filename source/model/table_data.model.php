@@ -134,6 +134,16 @@ class table_dataModel extends model{
 	}
 	
 	public function getData($tableid,$id=0){
+		$rs=$this->get($tableid,$id);
+		$data=[];
+		if(!empty($rs)){
+			foreach($rs as $k=>$v){
+				$data[$k]=$v["value"];
+			}
+		}
+		
+		return $data;
+		/*
 		if($tableid>0){
 			$tableid=intval($tableid);
 		}else{
@@ -157,6 +167,7 @@ class table_dataModel extends model{
 	 
 		$rs=M("table_data")->selectRow("id=".$id);
 		return $fdata=str2arr($rs["content"]);
+		*/
 	}
 	
 	public function saveTable($tableid,$id=0){

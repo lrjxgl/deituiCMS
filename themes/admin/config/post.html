@@ -1,5 +1,12 @@
 <table class="table-add">
 	<tr>
+		<td>发布审核</td>
+		<td>
+			<input type="radio" name="post_new_publish" {if $data.post_new_publish eq 1}checked{/if} value="1" />先发后审
+			<input type="radio" name="post_new_publish"  {if $data.post_new_publish eq 0}checked{/if} value="0" />先审后发
+		</td>
+	</tr>
+	<tr>
 		<td>主题</td>
 		<td>
 			<div>

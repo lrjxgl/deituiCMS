@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="shd">讯飞开放平台</div>
+		<div id="App" class="main-body">
+			<form action="/admin.php?m=open_xunfei&a=save">
+				<table class="table-add">
+					<tr>
+						<td>app_id</td>
+						<td>
+							<input  type="text" name="app_id"  value="{$data.app_id}" />
+						</td>
+					</tr>
+					<tr>
+						<td>api_sec</td>
+						<td>
+							<input  type="text" name="api_sec"  value="{$data.api_sec}" />
+						</td>
+					</tr>
+					<tr>
+						<td>api_key</td>
+						<td>
+							<input  type="text" name="api_key"  value="{$data.api_key}" />
+						</td>
+					</tr>
+				</table>
+				<div class="btn-row-submit js-submit">保存</div>
+			</form>
+		</div>
+		{include file="footer.html"}
+	</body>
+</html>

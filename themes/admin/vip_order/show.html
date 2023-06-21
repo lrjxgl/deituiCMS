@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+{include file='vip_order/nav.html'}
+<div class="main-body">
+ <table class="table table-bordered" width="100%">
+  <tr><td>orderid：</td><td>{$data.orderid}</td></tr>
+  <tr><td>tokenid：</td><td>{$data.tokenid}</td></tr>
+  <tr><td>status：</td><td>{$data.status}</td></tr>
+  <tr><td>createtime：</td><td>{$data.createtime}</td></tr>
+  <tr><td>userid：</td><td>{$data.userid}</td></tr>
+  <tr><td>num：</td><td>{$data.num}</td></tr>
+  <tr><td>money：</td><td>{$data.money}</td></tr>
+  <tr><td>ispay：</td><td>{$data.ispay}</td></tr>
+  <tr><td>recharge_id：</td><td>{$data.recharge_id}</td></tr>
+  <tr><td>paytype：</td><td>{$data.paytype}</td></tr>
+ </table>
+
+</div> 
+{include file="footer.html"}
+</body>
+</html>

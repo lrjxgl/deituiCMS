@@ -9,7 +9,7 @@ class user_authControl extends skymvc{
 	
 	public function onDefault(){
 		$url=APPADMIN."?m=user_auth";
-		$where=" 1 ";
+		$where=" status=0 ";
 		$userid=get('userid','i');
 		if($userid){
 			$where.=" AND userid=".$userid;
@@ -33,6 +33,7 @@ class user_authControl extends skymvc{
 		);
 		$rscount=true;
 		$data=M("user_auth_new")->select($option,$rscount);
+		 
 		$pagelist=$this->pagelist($rscount,$limit,$url);
 		$this->smarty->assign(array(
 			"data"=>$data,
@@ -97,6 +98,11 @@ class user_authControl extends skymvc{
 			$this->goAll("已经审核过了",1);
 		}
 		$userid=$data["userid"];
+		//检测是否已经实名了
+		$ee=M("user_auth")->selectRow("user_card='".$data["user_card"]."' AND userid!=".$userid);
+		if(!empty($ee)){
+			$this->goAll("身份证已经实名过了",1);
+		}
 		M("user_auth_new")->update(array("status"=>1)," id=".$data["id"]);
 		
 		$odata=M("user_auth")->selectRow("userid=".$userid);

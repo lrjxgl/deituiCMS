@@ -20,7 +20,7 @@
 		    if ($id) {
 		        $where=" id=".$id;
 		    } else {
-		        $where="";
+		        $where="  status=1  ";
 		    }
 		    $this->alipay=M("open_alipay_mini")->selectRow(array("where"=>$where,"order"=>"id DESC"));
 		    if(empty($this->alipay)){

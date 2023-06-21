@@ -16,7 +16,7 @@
 				if($wid){
 				$where=" id=".$wid;
 				}else{
-				$where="";
+				$where="  status=1 ";
 				}
 				$wx=M("weixin")->selectRow(array("where"=>$where,"order"=>"id DESC"));
 				return $wx;

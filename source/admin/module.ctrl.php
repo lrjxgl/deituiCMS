@@ -11,7 +11,7 @@ class moduleControl extends skymvc{
 		$d=ROOT_PATH."module";
 		$mods=$this->getmods($d);
 		$pros=[];
-		if(!empty($mods)){
+		if(1==2 && !empty($mods)){
 			foreach($mods as $md){
 				$pros[]="mod_".$md["module"];
 			}
@@ -83,7 +83,9 @@ class moduleControl extends skymvc{
 		}elseif($json['error']){
 			$this->goAll($json["message"],1);
 		}else{
-			$this->goAll("数据出错",1);
+			if(empty($json["data"]["list"])){
+				$this->goAll("更新出错",1);
+			}
 			foreach($json["data"]["list"] as $down){
 				if($down["down_version"]<=$config["version"]){
 					continue;
@@ -104,7 +106,7 @@ class moduleControl extends skymvc{
 				}
 				
 			}
-			
+
 			$this->goAll("更新成功");
 		}
 		
@@ -136,7 +138,6 @@ class moduleControl extends skymvc{
 						$config["incms"]=1;
 					}
 					$mods[]=$config; 
-					 
 				}
 			}
 		}

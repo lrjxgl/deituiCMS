@@ -75,7 +75,7 @@
 		}
 		
 		
-		public function onMan(){
+	public function onMan(){
 		
 		$this->smarty->display("gold_log/man.html");
 	}

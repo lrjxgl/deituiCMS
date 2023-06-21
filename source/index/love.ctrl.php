@@ -68,6 +68,7 @@ class loveControl extends skymvc
 		$objectid=get_post("objectid","i");
 		$tablename=get_post("tablename","h");
 		$row=M("love")->selectRow("userid=".$userid." AND objectid=".$objectid." AND tablename='".$tablename."' ");
+		
 		$fields=M($tablename)->getFields();
 		$idField=$fields[0]['Field'];
 		if($row){
@@ -75,7 +76,7 @@ class loveControl extends skymvc
 			$action="delete";
 			M($tablename)->changenum("love_num",-1,"{$idField}=".$objectid);
 		}else{
-			M("love")->insert(array(
+			$id=M("love")->insert(array(
 				"objectid"=>$objectid,
 				"userid"=>$userid,
 				"tablename"=>$tablename
@@ -86,7 +87,21 @@ class loveControl extends skymvc
 		$this->goAll("success",0,$action);
 	}
 	
-	 
+	public function onisLove(){
+		$userid=M("login")->userid;
+		$islove=0;
+		if($userid){
+			$objectid=get_post("objectid","i");
+			$tablename=get_post("tablename","h");
+			$row=M("love")->selectRow("userid=".$userid." AND objectid=".$objectid." AND tablename='".$tablename."' ");
+			
+			if($row){
+				$islove=1;
+			}
+		}
+		
+		$this->goAll("success",0,$islove);
+	}  
 	
 	 
 	

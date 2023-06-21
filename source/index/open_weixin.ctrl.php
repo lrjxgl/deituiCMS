@@ -65,7 +65,6 @@ public function oncallback()
 		$backurl="/index.php";
 	}
 	 
-	 
 	$c=file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=".$this->wx['appid']."&secret=".$this->wx['appkey']."&code=".$_GET['code']."&grant_type=authorization_code");
 	$data=json_decode($c,true);
   
@@ -111,8 +110,12 @@ public function oncallback()
 				if($ouser['userid']){
 					$user=M("user")->selectRow(array(
 						"where"=>"userid=".$ouser['userid'],
-						"fields"=>"userid,nickname,user_head"
+						"fields"=>"userid,nickname,user_head,status"
 					));
+					if($user["status"]>1){
+						$this->goAll("账户已禁止",1);
+					}
+					M("blacklist")->check($user['userid']);
 					M('login')->set("ssuser",$user);
 					$puser=M("user_password")->selectRow("userid=".$ouser['userid']);
 					$auth=M("login")->setCode($puser);
@@ -207,6 +210,7 @@ public function openlogin($ouser){
 		),"id=".$ouser['id']);
 		M("invite")->invite_reg($userid,$data['username']);
 		$user=M("user")->getUser($userid);
+		
 		M('login')->set("ssuser",$user);
 		//密码
 		$salt=rand(1000,9000);

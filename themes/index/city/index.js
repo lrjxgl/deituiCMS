@@ -54,7 +54,18 @@ new Vue({
 			localStorage.setItem("city",acity);
 			localStorage.setItem("cityid",cityid);
 			this.city = acity;
-			goBack();
+			$.ajax({
+				url:"/index.php?m=city&a=setcity&ajax=1",
+				dataType:"json",
+				data:{
+					cityid:cityid
+				},
+				success:function(res){
+					goBack();
+				}
+			})
+			
+			
 		},
 		setZm: function(zm) {
 			this.zm = zm;

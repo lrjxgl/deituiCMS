@@ -28,9 +28,10 @@ class couponModel extends model{
 			foreach($da as $v){
 				$ids[]=$v['coupon_id'];
 			}
-			$coupons=$this->select(array("where"=>"  id in("._implode($ids).")  AND lower_money<".$money." "));
+			$coupons=$this->select(array("where"=>"  id in("._implode($ids).")  AND lower_money<=".$money." AND etime<'".time()."' "));
 			return $coupons;
 		}
+		return [];
 	}
 	
 }

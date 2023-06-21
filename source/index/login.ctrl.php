@@ -59,6 +59,9 @@ class loginControl extends skymvc{
 		if(empty($user)){
 			$this->goall('账号不存在',1,"",$_SERVER['HTTP_REFERER']);
 		}
+		if($user["status"]>1){
+			$this->goAll("账户已禁止",1);
+		}
 		//检测黑名单
 		M("blacklist")->check($user['userid']);
 		$puser=M("user_password")->selectRow("userid=".$user['userid']);

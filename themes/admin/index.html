@@ -88,6 +88,11 @@
 	<script src="/plugin/jquery/jquery-2.1.3.min.js"></script>
 	 <script>
 		 function goPluginMenu(url,title){
+			 var p=JSON.stringify({
+				url:url,
+				title:title
+			})
+			localStorage.setItem("pluginMenu",p) 
 			$.get(url,function(res){
 				$("#baseMenu").hide();
 				$("#pluginMenu").html(res).show();
@@ -107,7 +112,6 @@
 			 $("#mainFrame").attr("src","/admin.php?m=index&a=main");
 			 $(".top-item-btn").removeClass("active");
 			 $(obj).addClass("active");
-			 window.location.reload();
 		 }
 		 function goModule(obj){
 			 $(".top-item-btn").removeClass("active");
@@ -147,7 +151,13 @@
 				 $(this).addClass("menu-item-active");
 			 })
 			 $(document).on("click",".js-refresh",function(){
-				 mainFrame.window.location.reload();
+				mainFrame.window.location.reload();
+				var p=localStorage.getItem("pluginMenu");
+				if(p){
+					js=JSON.parse(p);
+					goPluginMenu(js.url,js.title); 
+				}
+				
 			 })
 			 $(document).on("click",".js-back",function(){
 				 mainFrame.window.history.back();

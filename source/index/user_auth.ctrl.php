@@ -33,6 +33,7 @@ class user_authControl extends skymvc{
 		if(!empty($auth) && $auth["status"]==1){
 			$this->goAll("你已经实名认证了",1);
 		}
+		
 		$telephone=post("telephone","h");
 		$yzm=post("yzm","h"); 
 		$key="user_auth_sms".$telephone.$yzm;
@@ -43,7 +44,13 @@ class user_authControl extends skymvc{
 			"where"=>"userid=".$userid,
 			"order"=>"id DESC"
 		));
-		$data=M("user_auth_new")->postData(); 
+		$data=M("user_auth_new")->postData();
+		 //判断身份证
+		$ee=M("user_auth")->selectRow("user_card='".$data["user_card"]."' AND userid!=".$userid);
+		if(!empty($ee)){
+			$this->goAll("该身份证已经实名认证过了",1);
+		}
+		 
 		$data["userid"]=$userid; 
 		$data["createtime"]=date("Y-m-d H:i:s"); 
 		if($row && $row["status"]==0){

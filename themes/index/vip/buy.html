@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">Vip购买</div>
+		</div>
+		<div class="header-row"></div>
+		<div id="App" class="main-body">
+			<div class="row-box">
+				<div class="mgb-10">成为Vip可以体验全部功能</div>
+				<div class="mgb-10" v-if="aiuser.endtime>0">您的Vip到期时间：{{aiuser.vip_etime_date}}</div>
+				 
+				<div>
+					<div class="flex flex-ai-center mgb-10" v-for="(item,index) in list" :key="index">
+						<input name="vipid" v-model="vipid" :value="item.vipid" class="radio" type="radio"/>	{{item.num}}天，{{item.price}}元
+					</div>
+				</div>
+				 
+				<div @click="goBuy()" class="btn-row-submit">立即购买</div>
+			</div>
+		</div>
+		{include file="footer.html"}
+		<script src="{$skins}vip/buy.js"></script>
+	</body>
+</html>

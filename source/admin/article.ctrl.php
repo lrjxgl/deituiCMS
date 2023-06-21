@@ -134,7 +134,7 @@
 			$content=post("content","x");
 			$data=M("article")->postData();
 			
-			$content=ueditor_replace($content);
+			 
 			$data["status"]=1;
 			if($id){
 				M("article")->update($data,"id='$id'");

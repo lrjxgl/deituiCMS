@@ -1,30 +1,50 @@
-{include file="header.html"}
-<div class="row">
-<div class="span12">
-{include file='jflog_nav.html'}
- <table class='table table-bordered' width='100%'>
+<!DOCTYPE  html>
+<html>
+{include file="head.html"}
+<body>
+
+<div class="tabs-border">
+	<a class="item active" href="{$appadmin}?m=grade_log">积分记录</a>
+	<a class="item " href="{$appadmin}?m=grade_log&a=man">改积分</a>
+</div>
+<div class="main-body">
+<form class="search-form" action="{$appadmin}">
+<input type="hidden" name="m" value="grade_log" />
+	用户Id：<input type="text" name="userid"  autocomplete="off" class=" w100"  value="{$smarty.get.userid}" />
+  时间：从
+  <input  class="w100" type="text" id="stime" name="stime" value="{$smarty.get.stime|html}" /> 
+  到
+  <input  class="w100" type="text" id="etime" name="etime" value="{$smarty.get.etime|html}" /> 
+  
+		<input type="submit" class="btn " />
+</form>
+ <table class="tbs">
+	 <thead>
   <tr>
    <td>id</td>
-   <td>时间</td>
-   <td>用户id</td>
-   <td>操作类型</td>
+   <td width="100">时间</td>
+   <td width="100">用户id</td>
+   
+   <td width="100">收支类型</td>
    <td>日志内容</td>
  
-   <td>积分</td>
-  
-<td>操作</td>
+   <td width="60">金钱</td>
+ 
+ 
   </tr>
+	</thead>
  {foreach item=c from=$data}
 <tr>
    <td>{$c.id}</td>
    <td>{$c.dateline|date:Y-m-d}</td>
-   <td>{$c.userid}</td>
-   <td>{$config[grade_log_type_list][$c[type_id]]}</td>
-   <td>{$c.content}</td>
-    
-   <td>{$c.grade}</td>
+   <td>{$c.userid}:{$c.nickname}</td>
    
-<td> <a href="javascript:;" class="js-delete" url="admin.php?m=grade_log&a=delete&id={$c.id}">删除</a></td>
+   <td>{if $c.ispay eq 1}收入{else}支出{/if}</td>
+   <td>{$c.content}</td>
+ 
+   <td>{$c.money}</td>
+   
+ 
   </tr>
    {/foreach}
  </table>
@@ -32,3 +52,16 @@
 </div>
 </div>
 {include file="footer.html"}
+<script src="/plugin/laydate/laydate.js"></script>
+<script>
+	laydate.render({
+		elem:"#stime",
+		type: 'date'
+	})
+	laydate.render({
+		elem:"#etime",
+		type: 'date'
+	})
+</script>
+</body>
+</html>

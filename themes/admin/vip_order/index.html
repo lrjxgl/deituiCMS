@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+{include file='vip_order/nav.html'}
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>orderid</td>
+  
+   
+   <td>用户</td>
+   <td>天数</td>
+   <td>金额</td>
+   <td>支付</td>
+   <td>支付订单</td>
+   <td>支付方式</td>
+   <td>创建时间</td>
+ </tr>
+  </tr>
+</thead> {foreach item=c from=$list}
+<tr>
+   <td>{$c.orderid}</td>
+    
+  
+   <td>{$c.userid}</td>
+   <td>{$c.num}天</td>
+   <td>{$c.money}</td>
+   <td>{if $c.ispay}已支付{else}未支付{/if}</td>
+   <td>{$c.recharge_id}</td>
+   <td>{$c.paytype}</td>
+    <td>{$c.createtime}</td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

@@ -49,7 +49,7 @@ $rewrite_on=REWRITE_ON;//是否开启伪静态 0不开 1开启
 $smarty_caching=true;//是否开启缓存
 $smarty_cache_lifetime=3600;//缓存时间
 //判断是否在公众号
-if(isset($_GET['fromapp']) && $_GET['fromapp']=="wxapp" ){
+if(isset($_GET['fromapp']) && $_GET['fromapp']=="uniapp" ){
 	define("INWEIXIN",0);
 }elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
 	define("INWEIXIN",1);

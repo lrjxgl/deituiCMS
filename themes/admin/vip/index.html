@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+{include file='vip/nav.html'}
+<div class="main-body">
+ <table class="tbs">
+<thead>  <tr>
+   <td>vipid</td>
+  
+   <td>时长</td>
+   <td>价格</td>
+   <td>创建时间</td>
+   <td>排序</td>
+    <td>状态</td>
+<td>操作</td></tr>
+  </tr>
+</thead> {foreach item=c from=$list}
+<tr>
+   <td>{$c.vipid}</td>
+  
+   <td>{$c.num}天</td>
+   <td>{$c.price}元</td>
+   <td>{$c.createtime}</td>
+   <td>{$c.orderindex}</td>
+    <td>
+		<div url="/admin.php?m=vip&a=status&ajax=1&vipid={$c.vipid}" class="js-toggle-status {if $c.status eq 1}yes{else}no{/if}"></div>
+		
+	</td>
+<td><a href="/admin.php?m=vip&a=add&vipid={$c.vipid}">编辑</a>
+<a href="javascript:;" class="js-delete" url="/admin.php?m=vip&a=delete&ajax=1&vipid={$c.vipid}">删除</a></td>
+  </tr>
+   {/foreach}
+ </table>
+<div>{$pagelist}</div>
+</div> 
+{include file="footer.html"}
+</body>
+</html>

@@ -59,6 +59,10 @@ $(document).on("click","#sendSms2",function(res){
 	},"json");
 })
 $(document).on("click","#reg-submit",function(){
+	if(!$("#tongyi").prop("checked")){
+		skyToast("必须同意服务条款和隐私政策才能注册")
+		return false;
+	}
 	$.post("/index.php?m=register&a=regsave&ajax=1",$("#regForm").serialize(),function(res){
 		skyToast(res.message);
 		if(!res.error){

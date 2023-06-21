@@ -29,8 +29,12 @@
 		<input  type="text" name="truename" value="{$data.truename}" class="input-flex-text"/>
 		<span>(审核通过后不可修改)</span>
 	</div>
+	<div class="input-flex">
+		<div class="input-flex-label input-flex-require">身份证<br/>地址</div>
+		<input  type="text" name="address" value="{$data.address}" class="input-flex-text" />
+	</div>
 	<div class="input-flex flex-ai-center">
-		<div class="input-flex-label input-flex-require">本人照片</div>
+		<div class="input-flex-label input-flex-require">身份证</br>人像照</div>
 		<div class="flex-1">
 			<div class="upimg-box bg-fff">
 				
@@ -47,21 +51,25 @@
 			</div> 
 		</div>
 	</div>
-	<div class="input-flex">
-		<div class="input-flex-label">手机：</div>
-		<input  type="text" id="telephone" name="telephone" value="{$data.telephone}"  class="input-flex-text"/>
-		<div id="send-sms" class="input-flex-btn">发送验证码</div>
+	<div id="authShow" {if !empty($data) }class="none"{/if}>
+		<div class="input-flex">
+			<div class="input-flex-label">手机：</div>
+			<input  type="text" id="telephone" name="telephone" value="{$data.telephone}"  class="input-flex-text"/>
+			<div id="send-sms" class="input-flex-btn">发送验证码</div>
+		</div>
+		 <div class="input-flex">
+			<div class="input-flex-label">验证码：</div>
+			<input  type="text" id="yzm" name="yzm" value=""  class="input-flex-text"/>
+			
+		 </div> 
+		 <div class="flex flex-center">
+			 <div class="btn mgr-20 js-submit" url="/">提交认证</div>
+			 <div class="btn btn-warning" gourl="/">返回首页</div>
+		 </div>
 	</div>
-	 <div class="input-flex">
-	 	<div class="input-flex-label">验证码：</div>
-	 	<input  type="text" id="yzm" name="yzm" value=""  class="input-flex-text"/>
-	 	
-	 </div> 
-	 <div class="flex flex-center">
-		 <div class="btn mgr-20 js-submit" url="/">提交认证</div>
-		 <div class="btn btn-warning" gourl="/">返回首页</div>
-	 </div>
-	
+	{if $data &&  $data.status neq 1}
+	<div class="btn-row-submit" id="changeAuth">修改认证</div>
+	{/if}
 </form> 
   
 </div>
@@ -84,6 +92,10 @@
 					skyToast(res.message)
 				}
 			})
+		})
+		$(document).on("click","#changeAuth",function(){
+			$("#authShow").removeClass("none");
+			$("#changeAuth").hide();
 		})
 	})
 </script>

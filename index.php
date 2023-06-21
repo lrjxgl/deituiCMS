@@ -40,7 +40,7 @@ function userinit(){
 	}
 	//判断是否在公众号
 	$referer=$_SERVER["HTTP_REFERER"];
-	if(get('fromapp')=="wxapp" || substr($referer,0,strlen('https://servicewechat.com'))=="https://servicewechat.com" ){
+	if(get('fromapp')=="uniapp" || substr($referer,0,strlen('https://servicewechat.com'))=="https://servicewechat.com" ){
 		define("INWEIXIN",0);
 	}elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
 		define("INWEIXIN",1);

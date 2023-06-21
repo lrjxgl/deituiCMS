@@ -54,5 +54,17 @@ class districtControl extends skymvc{
 		echo "生成成功";
 	}
 	
+	public function onList(){
+		$upid=get("upid","i");
+		$list=M("district")->select(array(
+			"where"=>"upid=".$upid,
+			"fields"=>"id ,name"
+		));
+		$this->goAll("success",0,array(
+			"list"=>$list
+		));
+	}
+	
+	
 }
 ?>

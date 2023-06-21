@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	{include file="head.html"}
+	<body>
+		<div class="header">
+			<div class="header-back"></div>
+			<div class="header-title">新人福利</div>
+		</div>
+		<div class="header-row"></div>
+		<div id="App" class="main-body">
+			<img src="{$skins}img/newuser.jpg" class="wall mgb-10" />
+			<div class="flex flex-center" id="res">
+				{if $isGet}
+				<div class="cl-red">你已经领取过了</div>
+				{else}
+				<div id="submit" class="btn">立即领取</div>
+				{/if}
+			</div>
+		</div>
+		{include file="footer.html"}
+		<script>
+			$(function(){
+				$(document).on("click","#submit",function(){
+					var that=this;
+					$.ajax({
+						url:"/index.php?m=onetask&a=newuser_vip&ajax=1",
+						dataType:"json",
+						success:function(res){
+							skyToast(res.message);
+							if(res.error){
+								return false;
+							}
+							$("#res").html('<div class="cl-red">领取成功</div>');
+						}
+					})
+				})
+			})
+		</script>
+	</body>
+</html>

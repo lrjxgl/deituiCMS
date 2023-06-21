@@ -26,7 +26,7 @@
 <tr>
    <td>{$c.id}</td>
    <td>{if $c.file_group eq 'img'}
-   	<img class="w100" src="{$c.file_url|images_site}.small.jpg" />
+   	<img class="w100"  src="{$c.file_url|images_site}.small.jpg" />
    {else}{$c.file_name}{/if}</td>
    <td>{$c.dateline|date:Y-m-d}</td>
    <td><div url="?m=attach&a=status&ajax=1&id={$c.id}" class="{if $c.status eq 1}yes{else}no{/if} js-toggle-status"></div></td>

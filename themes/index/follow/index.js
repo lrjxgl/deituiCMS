@@ -7,6 +7,7 @@ var App = new Vue({
 		}
 	},
 	created: function() {
+		this.tab=tab;
 		this.getFollow();
 	},
 	methods: {

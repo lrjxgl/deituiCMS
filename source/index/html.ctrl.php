@@ -7,6 +7,7 @@ class htmlControl extends skymvc{
 	}
 	
 	public function onDefault(){
+		$word=get("word","h");
 		switch(get('a','h')){
 			case "aboutus":
 					$word="关于我们";

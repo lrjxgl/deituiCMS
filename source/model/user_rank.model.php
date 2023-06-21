@@ -9,7 +9,9 @@ class user_rankModel extends model{
 	
 	public function getLevel($grade){
 		$grade=intval($grade);
-		return $this->selectRow(array("where"=>" min_grade<=$grade AND max_grade>$grade"));
+		$row=$this->selectRow(array("where"=>" min_grade<=$grade AND max_grade>$grade"));
+		$row["logo"]=images_site($row["logo"]);
+		return $row;
 	}
 	
 	public function rankUsers($users){
